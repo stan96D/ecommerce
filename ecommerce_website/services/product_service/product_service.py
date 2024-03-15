@@ -22,3 +22,4 @@ class ProductService(ProductServiceInterface):
             return Product.objects.filter(id__in=product_ids)
         except Product.DoesNotExist:
             return None
+        

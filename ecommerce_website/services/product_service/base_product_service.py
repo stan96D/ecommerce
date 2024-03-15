@@ -8,3 +8,7 @@ class ProductServiceInterface(ABC):
     @abstractmethod
     def get_all_products(self):
         pass
+
+    @abstractmethod
+    def get_all_products_by_id(self, product_ids):
+        pass
