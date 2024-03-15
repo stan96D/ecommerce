@@ -6,9 +6,9 @@ class ProductSeeder:
     def seed():
         products_data = [
             {'name': 'Classen Skyline Sonolta Eiken Laminaat 56179',
-                'price': 16.95, 'image': 'vloer1.jpg'},
+                'price': 16.95, 'image': 'product_images/vloer1.jpg'},
             {'name': 'Meister Lindura HD 400-270 8923 Eik Authentic Greige',
-                'price': 79.15, 'image': 'vloer2.jpg'},
+                'price': 79.15, 'image': 'product_images/vloer2.jpg'},
         ]
         for data in products_data:
             Product.objects.create(**data)
