@@ -1,5 +1,5 @@
 from ecommerce_website.classes.shopping_cart import ShoppingCart
-from base_shopping_cart_service import AbstractShoppingCartService
+from ecommerce_website.services.shopping_cart_services.base_shopping_cart_service import AbstractShoppingCartService
 
 
 class ShoppingCartService(AbstractShoppingCartService):
