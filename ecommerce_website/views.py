@@ -21,7 +21,7 @@ def products(request):
     products = ProductService.get_all_products()
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)
-
+    
     return render(request, 'products.html', {'products': productViews})
 
 def product_detail(request, id=None):
@@ -57,3 +57,11 @@ def get_cart_count(request):
 
     cart_count = cartService.count
     return JsonResponse({'count': cart_count})
+
+
+def delete_cart_item(request):
+      if request.method == 'POST':
+        product_id = request.POST.get('id')
+        cart_service = ShoppingCartService(request)
+        cart_service.remove_item(product_id)
+        return redirect('cart') 
