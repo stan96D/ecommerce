@@ -27,3 +27,8 @@ class AbstractShoppingCartService(ABC):
     @abstractmethod
     def total_price(self):
         pass
+
+    @property
+    @abstractmethod
+    def count(self):
+        pass

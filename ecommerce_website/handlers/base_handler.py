@@ -6,3 +6,8 @@ class BaseHandlerInterface(ABC):
     @abstractmethod
     def data(self):
         pass
+
+    @property
+    @abstractmethod
+    def count(self):
+        pass

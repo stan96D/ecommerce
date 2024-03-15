@@ -128,8 +128,8 @@
                     <span class="sr-only">Store Cart</span>
                     <i class="fas fa-shopping-cart fa-lg"></i>
                     <!-- Circle indicator -->
-                    <span
-                        class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold">12</span>
+                    <span id="cart-count"
+                        class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold"></span>
                 </button>
 
 
@@ -201,3 +201,32 @@
         </div>
     </nav>
 </header>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        updateCartCount();
+    });
+
+    function updateCartCount() {
+        $.ajax({
+            url: '/get-cart-count/',
+            method: 'GET',
+            success: function (data) {
+                var cartCount = data.count;
+                console.log(cartCount)
+
+                $('#cart-count').text(cartCount);
+                if (cartCount === 0) {
+                    $('#cart-count').hide();  
+                } else {
+                    $('#cart-count').show(); 
+                }
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+    }
+
+</script>

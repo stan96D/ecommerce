@@ -25,3 +25,7 @@ class ShoppingCartService(AbstractShoppingCartService):
     @property
     def total_price(self):
         return self.shopping_cart.total_price
+    
+    @property
+    def count(self):
+        return len(self.shopping_cart.cart_items)
