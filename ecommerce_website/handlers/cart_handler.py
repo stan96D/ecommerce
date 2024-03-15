@@ -36,6 +36,3 @@ class CartHandler(BaseHandlerInterface):
         cart_items_with_attributes = self.__get_cart_items_with_attributes(cart_items)
         return cart_items_with_attributes
     
-    @property
-    def count(self):
-        return self.cart_service.cart_items.count()
