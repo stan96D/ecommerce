@@ -6,5 +6,6 @@ from .models import *
 admin.site.register(Product)
 admin.site.register(ProductAttribute)
 admin.site.register(ProductAttributeType)
+admin.site.register(ProductStock)
 
 

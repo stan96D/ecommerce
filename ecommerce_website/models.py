@@ -22,3 +22,13 @@ class ProductAttribute(models.Model):
     attribute_type = models.ForeignKey(
         ProductAttributeType, on_delete=models.CASCADE)
     value = models.CharField(max_length=100)
+
+
+class ProductStock(models.Model):
+    product = models.OneToOneField(
+        Product, on_delete=models.CASCADE, related_name='stock')
+    quantity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.product.name} - Quantity: {self.quantity}"
+

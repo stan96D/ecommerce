@@ -1,4 +1,5 @@
-from ecommerce_website.models import ProductAttribute, ProductAttributeType, Product
+from ecommerce_website.models import ProductAttribute, ProductAttributeType, Product, ProductStock
+from random import randint
 
 class ProductSeeder:
     @staticmethod
@@ -38,3 +39,12 @@ class ProductAttributeSeeder:
         ]
         for data in product_attributes_data:
             ProductAttribute.objects.create(**data)
+
+
+class ProductStockSeeder:
+    @staticmethod
+    def seed():
+        products = Product.objects.all()
+        for product in products:
+            quantity = randint(0, 100)
+            ProductStock.objects.create(product=product, quantity=quantity)
