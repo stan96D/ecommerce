@@ -4,16 +4,13 @@ from django.shortcuts import redirect
 from ecommerce_website.models import Product
 from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
 from ecommerce_website.handlers.cart_handler import CartHandler
-from ecommerce_website.classes.product_view import ProductView
 from ecommerce_website.services.product_service.product_view_service import ProductViewService
 
 def home(request):
     return render(request, "home.html")
 
 def cart(request):
-
     cartHandler = CartHandler(request)
-
     items = cartHandler.data
 
     return render(request, "cart.html", {'items': items})
@@ -24,6 +21,14 @@ def products(request):
     productViews = productViewService.generate(products)
 
     return render(request, 'products.html', {'products': productViews})
+
+def product_detail(request, id=None):
+
+    product = ProductService.get_product_by_id(id)
+    productViewService = ProductViewService()
+    productView = productViewService.get(product)
+
+    return render(request, 'product_detail.html', {'product': productView})
 
 
 def add_to_cart(request):

@@ -6,3 +6,7 @@ class ViewServiceInterface(ABC):
     def generate(self, items):
         pass
 
+    @abstractmethod
+    def get(self, item):
+        pass
+

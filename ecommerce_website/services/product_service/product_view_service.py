@@ -11,3 +11,7 @@ class ProductViewService(ViewServiceInterface):
             productViews.append(productView)
 
         return productViews
+    
+    def get(self, item):
+        productView = ProductView(item)
+        return productView

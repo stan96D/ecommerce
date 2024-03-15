@@ -5,6 +5,7 @@ class ProductView:
         self.name = product.name
         self.price = product.price
         self.attributes = product.attributes
-        self.image = product.image
+        self.thumbnail = product.thumbnail
+        self.images = product.images
         self.quantity = product.stock.quantity
 
