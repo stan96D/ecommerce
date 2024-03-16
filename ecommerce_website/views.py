@@ -3,19 +3,23 @@ from ecommerce_website.services.product_service.product_service import ProductSe
 from django.shortcuts import redirect
 from ecommerce_website.models import Product
 from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
-from ecommerce_website.handlers.cart_handler import CartHandler
 from ecommerce_website.services.product_service.product_view_service import ProductViewService
 from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
+from ecommerce_website.services.shopping_cart_services.cart_item_view_service import CartItemViewService
 from django.http import JsonResponse
 
 def home(request):
     return render(request, "home.html")
 
 def cart(request):
-    cartHandler = CartHandler(request)
-    items = cartHandler.data
 
-    return render(request, "cart.html", {'items': items})
+    cart_service = ShoppingCartService(request)
+    items = cart_service.cart_items
+
+    cart_item_view_service = CartItemViewService()
+    cart_item_views = cart_item_view_service.generate(items)
+
+    return render(request, "cart.html", {'items': cart_item_views})
 
 def products(request):
     products = ProductService.get_all_products()
