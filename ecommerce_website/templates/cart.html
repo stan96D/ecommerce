@@ -30,6 +30,8 @@
                     {% if items %}
                   <ul role="list" class="divide-y divide-gray-200 border-b border-t border-gray-200">
                       {% for item in items %}
+                                        <input type="hidden" name="id" value="{{ item.id }}">
+
                       {% include 'components/cart_item.html' %}
                       {% endfor %}
                   </ul>

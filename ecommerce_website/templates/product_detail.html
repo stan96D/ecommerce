@@ -62,7 +62,6 @@
             <!-- Product info -->
             <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
                 <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ product.name }}</h1>
-
                 <div class="mt-3">
                     <h2 class="sr-only">Product information</h2>
                     <p class="text-3xl tracking-tight text-gray-900">${{ product.price }}</p>
@@ -70,7 +69,7 @@
 
                 <div class="mt-3">
                     <h3 class="text-xs font-semibold tracking-wide text-gray-500 uppercase">Artikelnummer </h3>
-                    <p class="text-gray-700 text-lg font-medium">{{ product.artikelnummer }}</p>
+                    <p class="text-gray-700 text-sm font-medium">{{ product.attributes.Artikelnummer }}</p>
                 </div>
 
 
@@ -88,7 +87,7 @@
                 
                     <!-- Color selection -->
                     <div class="mt-6">
-                        <h3 class="text-sm text-gray-600">Color</h3>
+                        <h3 class="text-sm text-gray-600">Kleur</h3>
                         <fieldset class="mt-2">
                             <legend class="sr-only">Choose a color</legend>
                             <span class="flex items-center space-x-3">
@@ -104,15 +103,25 @@
                             </span>
                         </fieldset>
                     </div>
-                
+                    {{product.quantity}}
                     <!-- Input for square meters -->
                     <div class="mt-6 bg-gray-100 p-4 rounded-md">
-                        <label for="m2" class="block text-sm font-medium text-gray-700 pb-2">Aantal meter (m2)</label>
-                        <input type="number" id="m2" name="quantity"
-                            class="mt-1 focus:ring-indigo-500 focus:border-gray-300 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
-                            placeholder="0" required min="1">
-
+                        <label for="quantity" class="block text-sm font-medium text-gray-700 pb-2">Aantal meter (m²)</label>
+                        <div class="relative">
+                            <input type="number" id="quantity" name="quantity"  min="1"
+                                max="{{ product.quantity }}"
+                                class="mt-1 focus:ring-indigo-500 focus:border-gray-300 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <!-- Add the arrow icon -->
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd"
+                                        d="M10 12a1 1 0 01-.707-.293l-3-3a1 1 0 111.414-1.414L10 10.586l2.293-2.293a1 1 0 111.414 1.414l-3 3A1 1 0 0110 12z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
+
                 
                     <!-- Submit button -->
                     <div class="mt-10 flex">
@@ -178,23 +187,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    function validateForm() {
-        // Retrieve the value of the quantity field
-        var quantity = document.getElementById('m2').value;
-
-        // Check if quantity is empty or zero
-        if (quantity === '' || parseFloat(quantity) <= 0) {
-            // Display an error message or perform any other action to indicate validation failure
-            alert('Please enter a valid quantity.');
-            // Prevent form submission
-            return false;
-        }
-        // Allow form submission
-        return true;
-    }
-</script>
 
 {% endblock %}
 

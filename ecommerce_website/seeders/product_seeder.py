@@ -17,7 +17,7 @@ class ProductSeeder:
 class ProductAttributeTypeSeeder:
     @staticmethod
     def seed():
-        attribute_types = ['Artikelnummmer', 'Levereenheid', 'Merk', 'Type', 'Kleur']
+        attribute_types = ['Artikelnummer', 'Levereenheid', 'Merk', 'Type', 'Kleur']
         for name in attribute_types:
             ProductAttributeType.objects.create(name=name)
 

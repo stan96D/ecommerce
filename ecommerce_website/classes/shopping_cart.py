@@ -8,8 +8,9 @@ class ShoppingCart:
             cart = self.session['cart'] = {}
         self.cart = cart
 
-    def add_item(self, product_id, quantity=1):
+    def add_item(self, product_id, quantity):
         product_id = str(product_id)
+        print(quantity)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0}
         self.cart[product_id]['quantity'] += quantity

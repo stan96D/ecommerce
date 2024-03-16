@@ -6,7 +6,7 @@ class ShoppingCartService(AbstractShoppingCartService):
     def __init__(self, request):
         self.shopping_cart = ShoppingCart(request)
 
-    def add_item(self, product_id, quantity=1):
+    def add_item(self, product_id, quantity):
         self.shopping_cart.add_item(product_id, quantity)
 
     def remove_item(self, product_id):

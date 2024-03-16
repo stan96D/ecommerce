@@ -7,6 +7,7 @@ from ecommerce_website.services.product_service.product_view_service import Prod
 from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.shopping_cart_services.cart_item_view_service import CartItemViewService
 from django.http import JsonResponse
+import json
 
 def home(request):
     return render(request, "home.html")
@@ -39,7 +40,6 @@ def product_detail(request, id=None):
 
 def add_to_cart(request):
     if request.method == 'POST':
-
         product_id = request.POST.get('product_id')
         quantity_str = request.POST.get('quantity')
 
@@ -54,6 +54,23 @@ def add_to_cart(request):
         cartService.add_item(product.id, quantity)
 
     return redirect('products')
+
+
+def change_quantity_in_cart(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        
+        product_id = data.get('product_id')
+        quantity = data.get('quantity')
+
+        product = Product.objects.get(id=product_id)
+
+        cartService = ShoppingCartService(request)
+        cartService.update_quantity(product.id, quantity)
+        
+        return JsonResponse({'message': 'Product added to cart successfully'}, status=200)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
 def get_cart_count(request):
