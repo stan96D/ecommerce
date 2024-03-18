@@ -66,9 +66,9 @@ class ProductCategoryAttributeSeeder:
     def seed():
         attribute_types = ProductAttributeType.objects.filter(id__range=(3, 5))
 
-        for category in ProductCategory.objects.all():  # Iterate over all ProductCategory instances
+        for category in ProductCategory.objects.all():
             with transaction.atomic():
-                for attribute_type in attribute_types:  # Iterate over all selected attribute types
+                for attribute_type in attribute_types:  
                     category_attribute = ProductCategoryAttribute.objects.create(
                         category=category, attribute_type=attribute_type)
 
@@ -78,5 +78,4 @@ class ProductCategoryAttributeSeeder:
                         list(product_attributes), min(3, len(product_attributes)))
                     category_attribute.attributes.add(*selected_attributes)
 
-        print("ProductCategoryAttribute seeded successfully.")
         
