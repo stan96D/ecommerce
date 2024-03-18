@@ -36,3 +36,13 @@ class ProductStock(models.Model):
 
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='product_images/')
+
+
+class ProductCategory(models.Model):
+    name = models.CharField(max_length=100)
+    active = models.BooleanField(default=True)
+    attribute_types = models.ManyToManyField(
+        'ProductAttributeType', related_name='categories')
+
+    def __str__(self):
+        return self.name

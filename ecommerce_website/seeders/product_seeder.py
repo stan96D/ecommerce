@@ -1,4 +1,4 @@
-from ecommerce_website.models import ProductAttribute, ProductAttributeType, Product, ProductStock
+from ecommerce_website.models import ProductAttribute, ProductAttributeType, Product, ProductStock, ProductCategory
 from random import randint
 
 class ProductSeeder:
@@ -48,3 +48,18 @@ class ProductStockSeeder:
         for product in products:
             quantity = randint(0, 100)
             ProductStock.objects.create(product=product, quantity=quantity)
+
+
+class ProductCategorySeeder:
+    @staticmethod
+    def seed():
+        category_names = ['PVC', 'Laminaat', 'Hout',
+                          'Plinten en Profielen', 'Accessoires']
+
+        attribute_types = ProductAttributeType.objects.all()
+
+        for name in category_names:
+            category = ProductCategory.objects.create(name=name)
+
+            category.attribute_types.set(attribute_types)
+
