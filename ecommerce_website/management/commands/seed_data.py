@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.db import connection
-from ecommerce_website.seeders.product_seeder import ProductSeeder, ProductAttributeTypeSeeder, ProductAttributeSeeder, ProductStockSeeder
-from ecommerce_website.models import Product, ProductAttributeType, ProductAttribute, ProductStock
+from ecommerce_website.seeders.product_seeder import ProductSeeder, ProductAttributeTypeSeeder, ProductAttributeSeeder, ProductStockSeeder, ProductCategorySeeder, ProductCategoryAttributeSeeder
+from ecommerce_website.models import Product, ProductAttributeType, ProductAttribute, ProductStock, ProductCategory, ProductCategoryAttribute
 
 
 class Command(BaseCommand):
@@ -14,6 +14,8 @@ class Command(BaseCommand):
         ProductAttributeType.objects.all().delete()
         ProductAttribute.objects.all().delete()
         ProductStock.objects.all().delete()
+        ProductCategory.objects.all().delete()
+        ProductCategoryAttribute.objects.all().delete()
 
         # Reset primary key sequences for autoincrement fields
         with connection.cursor() as cursor:
@@ -31,5 +33,7 @@ class Command(BaseCommand):
         ProductAttributeTypeSeeder.seed()
         ProductAttributeSeeder.seed()
         ProductStockSeeder.seed()
+        ProductCategorySeeder.seed()
+        ProductCategoryAttributeSeeder.seed()
 
         self.stdout.write(self.style.SUCCESS('Seed data successfully added'))

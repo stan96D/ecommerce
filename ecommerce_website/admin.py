@@ -9,6 +9,7 @@ admin.site.register(ProductAttributeType)
 admin.site.register(ProductStock)
 admin.site.register(ProductImage)
 admin.site.register(ProductCategory)
+admin.site.register(ProductCategoryAttribute)
 
 
 

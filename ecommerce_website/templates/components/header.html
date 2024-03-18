@@ -209,6 +209,7 @@
 <script>
     $(document).ready(function () {
         updateCartCount();
+        getHeaderCategories();
     });
 
     function updateCartCount() {
@@ -225,6 +226,20 @@
                 } else {
                     $('#cart-count').show(); 
                 }
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        });
+    }
+
+    function getHeaderCategories() {
+        $.ajax({
+            url: '/get-header-categories/',
+            method: 'GET',
+            success: function (data) {
+                console.log(data)
+
             },
             error: function (error) {
                 console.log(error)

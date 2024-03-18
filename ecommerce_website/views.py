@@ -6,6 +6,8 @@ from ecommerce_website.services.shopping_cart_services.shopping_cart_service imp
 from ecommerce_website.services.product_service.product_view_service import ProductViewService
 from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.shopping_cart_services.cart_item_view_service import CartItemViewService
+from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
+
 from django.http import JsonResponse
 import json
 
@@ -80,9 +82,18 @@ def get_cart_count(request):
     return JsonResponse({'count': cart_count})
 
 
+def get_header_categories(request):
+
+    categories = ProductCategoryService.get_all_product_categories()
+
+
+    return JsonResponse({'categories': categories})
+
+
 def delete_cart_item(request):
       if request.method == 'POST':
         product_id = request.POST.get('id')
         cart_service = ShoppingCartService(request)
         cart_service.remove_item(product_id)
         return redirect('cart') 
+

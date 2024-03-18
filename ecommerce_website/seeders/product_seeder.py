@@ -1,5 +1,6 @@
-from ecommerce_website.models import ProductAttribute, ProductAttributeType, Product, ProductStock, ProductCategory
-from random import randint
+from ecommerce_website.models import ProductAttribute, ProductAttributeType, Product, ProductStock, ProductCategory, ProductCategoryAttribute
+from random import randint, sample
+from django.db import transaction
 
 class ProductSeeder:
     @staticmethod
@@ -56,10 +57,26 @@ class ProductCategorySeeder:
         category_names = ['PVC', 'Laminaat', 'Hout',
                           'Plinten en Profielen', 'Accessoires']
 
-        attribute_types = ProductAttributeType.objects.all()
-
         for name in category_names:
-            category = ProductCategory.objects.create(name=name)
+            ProductCategory.objects.create(name=name)
 
-            category.attribute_types.set(attribute_types)
 
+class ProductCategoryAttributeSeeder:
+    @staticmethod
+    def seed():
+        attribute_types = ProductAttributeType.objects.filter(id__range=(3, 5))
+
+        for category in ProductCategory.objects.all():  # Iterate over all ProductCategory instances
+            with transaction.atomic():
+                for attribute_type in attribute_types:  # Iterate over all selected attribute types
+                    category_attribute = ProductCategoryAttribute.objects.create(
+                        category=category, attribute_type=attribute_type)
+
+                    product_attributes = ProductAttribute.objects.filter(
+                        attribute_type=attribute_type)
+                    selected_attributes = sample(
+                        list(product_attributes), min(3, len(product_attributes)))
+                    category_attribute.attributes.add(*selected_attributes)
+
+        print("ProductCategoryAttribute seeded successfully.")
+        
