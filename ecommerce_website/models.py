@@ -40,7 +40,6 @@ class ProductImage(models.Model):
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=100)
-    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -51,6 +50,7 @@ class ProductCategoryAttribute(models.Model):
     attribute_type = models.ForeignKey(
         ProductAttributeType, on_delete=models.CASCADE)
     attributes = models.ManyToManyField(ProductAttribute)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.category.name} - {self.attribute_type.name}"
