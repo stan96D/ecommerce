@@ -1,0 +1,30 @@
+<div id="dropdown-{{ header.category_id }}" class="dropdown absolute z-10 left-0 w-full bg-white shadow-lg hidden"
+         onmouseover="mouseOverDropdown('{{ header.category_id }}')"
+         onmouseout="mouseOutDropdown('{{ header.category_id }}')">
+    <div class="absolute inset-x-0 top-full text-gray-500 sm:text-sm">
+        <div class="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true"></div>
+        <div class="relative bg-white">
+
+            <div class="mx-auto max-w-7xl px-8">
+                <div class="grid grid-cols-4 items-start gap-x-8 gap-y-10 pb-12 pt-10">
+                    {% for category_attribute in header.attributes %}
+                    <div>
+                        <p id="desktop-{{ category_attribute.name|lower|slugify }}-heading"
+                            class="font-medium text-gray-900">{{ category_attribute.attribute_type_name }}</p>
+                        <ul role="list" aria-labelledby="desktop-{{ category_attribute.name|lower|slugify }}-heading"
+                            class="mt-6 space-y-6 sm:mt-4 sm:space-y-4 flex flex-wrap"> 
+                            {% for product_attribute in category_attribute.product_attributes %}
+                            <li class="mr-4"> 
+                                <a href="#" class="hover:text-gray-800">{{ product_attribute.value }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

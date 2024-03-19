@@ -125,35 +125,36 @@
                 <!-- Store cart icon -->
                 <button type="button" 
                     class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 w-10 h-10">
-<a href="/cart/"
-    class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 w-10 h-10">
-    <span class="sr-only">Store Cart</span>
-    <i class="fas fa-shopping-cart fa-lg"></i>
-    <!-- Circle indicator -->
-    <span id="cart-count"
-        class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold"></span>
-</a>
+                <a href="/cart/"
+                    class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 w-10 h-10">
+                    <span class="sr-only">Store Cart</span>
+                    <i class="fas fa-shopping-cart fa-lg"></i>
+                    <!-- Circle indicator -->
+                    <span id="cart-count"
+                        class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold"></span>
+                </a>
                 </button>
-
-
 
 
             </div>
         </div>
-        <nav class="hidden lg:flex lg:space-x-8 lg:py-4" aria-label="Global">
+        <nav id="navigation-container" class="hidden lg:flex lg:space-x-6 lg:py-4" aria-label="Global">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="#" class="text-white hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-2 px-3 text-sm font-medium"
-                aria-current="page">PVC</a>
-            <a href="#"
-                class="text-white hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">Hout</a>
-            <a href="#"
-                class="text-white hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">Laminaat</a>
-            <a href="#"
-                class="text-white hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">Plinten en profielen</a>
-                <a href="#"
-                    class="text-white hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">Accessoires
-                    en profielen</a>
+            {% for header in headerData %}
+            <a href="#" id="dropdown-btn-{{ header.category_id }}"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-3 px-4 text-sm font-medium"
+                onmouseover="showDropdown('{{ header.category_id }}')" onmouseout="hideDropdown('{{ header.category_id }}')">
+                {{ header.category_name }}
+            </a>
+            {% endfor %}
         </nav>
+
+            {% for header in headerData %}
+
+                {% include 'components/fly_out_menu_standard.html' %}
+
+            {% endfor %}
+
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
@@ -205,11 +206,11 @@
     </nav>
 </header>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 
 <script>
     $(document).ready(function () {
         updateCartCount();
-        getHeaderCategories();
     });
 
     function updateCartCount() {
@@ -233,18 +234,31 @@
         });
     }
 
-    function getHeaderCategories() {
-        $.ajax({
-            url: '/get-header-categories/',
-            method: 'GET',
-            success: function (data) {
-                console.log(data)
+    let isMouseOverDropdown = {};
 
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        });
+    function showDropdown(categoryId) {
+        document.getElementById('dropdown-' + categoryId).classList.remove('hidden');
     }
+
+    function hideDropdown(categoryId) {
+        if (!isMouseOverDropdown[categoryId]) {
+            // Add a delay of 200 milliseconds before hiding the dropdown
+            setTimeout(() => {
+                if (!isMouseOverDropdown[categoryId]) {
+                    document.getElementById('dropdown-' + categoryId).classList.add('hidden');
+                }
+            }, 200);
+        }
+    }
+
+    function mouseOverDropdown(categoryId) {
+        isMouseOverDropdown[categoryId] = true;
+    }
+
+    function mouseOutDropdown(categoryId) {
+        isMouseOverDropdown[categoryId] = false;
+        hideDropdown(categoryId);
+    }
+
 
 </script>

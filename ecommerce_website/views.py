@@ -6,13 +6,16 @@ from ecommerce_website.services.shopping_cart_services.shopping_cart_service imp
 from ecommerce_website.services.product_service.product_view_service import ProductViewService
 from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.shopping_cart_services.cart_item_view_service import CartItemViewService
-from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
+from ecommerce_website.classes.handlers.product_category_attribute_view_handler import ProductCategoryAttributeViewHandler
 
 from django.http import JsonResponse
 import json
 
 def home(request):
-    return render(request, "home.html")
+
+    headerData = ProductCategoryAttributeViewHandler().get_serialized_product_category_attribute_views()
+
+    return render(request, "home.html", {'headerData': headerData})
 
 def cart(request):
 
@@ -22,14 +25,21 @@ def cart(request):
     cart_item_view_service = CartItemViewService()
     cart_item_views = cart_item_view_service.generate(items)
 
-    return render(request, "cart.html", {'items': cart_item_views})
+    headerData = ProductCategoryAttributeViewHandler().get_serialized_product_category_attribute_views()
 
-def products(request):
+
+    return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData})
+
+def products(request, category_id):
     products = ProductService.get_all_products()
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)
     
-    return render(request, 'products.html', {'products': productViews})
+    headerData = ProductCategoryAttributeViewHandler(
+    ).get_serialized_product_category_attribute_views()
+
+    return render(request, 'products.html', {'products': productViews, 'headerData': headerData})
+
 
 def product_detail(request, id=None):
 
@@ -37,7 +47,10 @@ def product_detail(request, id=None):
     productViewService = ProductViewService()
     productView = productViewService.get(product)
 
-    return render(request, 'product_detail.html', {'product': productView})
+    headerData = ProductCategoryAttributeViewHandler(
+    ).get_serialized_product_category_attribute_views()
+
+    return render(request, 'product_detail.html', {'product': productView, 'headerData': headerData})
 
 
 def add_to_cart(request):
@@ -80,14 +93,6 @@ def get_cart_count(request):
 
     cart_count = cartService.count
     return JsonResponse({'count': cart_count})
-
-
-def get_header_categories(request):
-
-    categories = ProductCategoryService.get_all_product_categories()
-
-
-    return JsonResponse({'categories': categories})
 
 
 def delete_cart_item(request):

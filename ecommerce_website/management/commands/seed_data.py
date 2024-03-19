@@ -27,6 +27,11 @@ class Command(BaseCommand):
                 "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productattribute';")
             cursor.execute(
                 "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productstock';")
+            cursor.execute(
+                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productcategory';")
+            cursor.execute(
+                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productcategoryattribute';")
+
 
         # Seed initial data
         ProductSeeder.seed()
