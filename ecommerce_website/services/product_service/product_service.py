@@ -1,4 +1,4 @@
-from ecommerce_website.models import Product
+from ecommerce_website.models import Product, ProductCategory, ProductCategoryAttribute
 from ecommerce_website.services.product_service.base_product_service import ProductServiceInterface
 
 class ProductService(ProductServiceInterface):
@@ -16,6 +16,14 @@ class ProductService(ProductServiceInterface):
         except Product.DoesNotExist:
             return None
         
+    @staticmethod
+    def get_products_by_attribute(attribute):
+        try:
+            products = Product.objects.filter(attributes__value__iexact=attribute)
+            return products
+        except Product.DoesNotExist:
+            return None
+
     @staticmethod
     def get_all_products_by_id(product_ids):
         try:

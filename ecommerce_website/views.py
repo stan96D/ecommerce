@@ -30,16 +30,32 @@ def cart(request):
 
     return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData})
 
-def products(request, category_id):
-    products = ProductService.get_all_products()
+def products(request, attribute):
+    print(attribute)
+    products = ProductService.get_products_by_attribute(attribute)
+    
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)
     
     headerData = ProductCategoryAttributeViewHandler(
     ).get_serialized_product_category_attribute_views()
 
+    
+
     return render(request, 'products.html', {'products': productViews, 'headerData': headerData})
 
+
+def products_by_attribute(request, category, attribute):
+    print(category, attribute)
+    products = ProductService.get_products_by_attribute(attribute)
+    
+    productViewService = ProductViewService()
+    productViews = productViewService.generate(products)
+
+    headerData = ProductCategoryAttributeViewHandler(
+    ).get_serialized_product_category_attribute_views()
+
+    return render(request, 'products.html', {'products': productViews, 'headerData': headerData})
 
 def product_detail(request, id=None):
 
@@ -68,7 +84,7 @@ def add_to_cart(request):
         cartService = ShoppingCartService(request)
         cartService.add_item(product.id, quantity)
 
-    return redirect('products')
+    return redirect('cart')
 
 
 def change_quantity_in_cart(request):

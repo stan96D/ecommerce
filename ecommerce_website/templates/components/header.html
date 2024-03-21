@@ -141,7 +141,8 @@
         <nav id="navigation-container" class="hidden lg:flex lg:space-x-6 lg:py-4" aria-label="Global">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             {% for header in headerData %}
-            <a href="#" id="dropdown-btn-{{ header.category_id }}"
+
+            <a href="/products/{{header.category_name}}" id="dropdown-btn-{{ header.category_id }}"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-3 px-4 text-sm font-medium"
                 onmouseover="showDropdown('{{ header.category_id }}')" onmouseout="hideDropdown('{{ header.category_id }}')">
                 {{ header.category_name }}
@@ -204,7 +205,15 @@
             </div>
         </div>
     </nav>
+
 </header>
+
+{% if breadcrumData %}
+
+    {% include 'components/breadcrumb.html' %}
+
+{% endif %}
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 
@@ -236,23 +245,23 @@
 
     let isMouseOverDropdown = {};
 
+    let timeoutIds = {};
+
     function showDropdown(categoryId) {
+        clearTimeout(timeoutIds[categoryId]);
         document.getElementById('dropdown-' + categoryId).classList.remove('hidden');
     }
 
     function hideDropdown(categoryId) {
-        if (!isMouseOverDropdown[categoryId]) {
-            // Add a delay of 200 milliseconds before hiding the dropdown
-            setTimeout(() => {
-                if (!isMouseOverDropdown[categoryId]) {
-                    document.getElementById('dropdown-' + categoryId).classList.add('hidden');
-                }
-            }, 200);
-        }
+        timeoutIds[categoryId] = setTimeout(() => {
+            document.getElementById('dropdown-' + categoryId).classList.add('hidden');
+        }, 50); // Set the delay here (in milliseconds)
     }
 
     function mouseOverDropdown(categoryId) {
+        clearTimeout(timeoutIds[categoryId]);
         isMouseOverDropdown[categoryId] = true;
+        showDropdown(categoryId);
     }
 
     function mouseOutDropdown(categoryId) {

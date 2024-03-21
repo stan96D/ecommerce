@@ -18,7 +18,7 @@ class ProductSeeder:
 class ProductAttributeTypeSeeder:
     @staticmethod
     def seed():
-        attribute_types = ['Artikelnummer', 'Levereenheid', 'Merk', 'Type', 'Kleur']
+        attribute_types = ['Artikelnummer', 'Levereenheid', 'Type', 'Merk', 'Kleur']
         for name in attribute_types:
             ProductAttributeType.objects.create(name=name)
 
@@ -29,13 +29,13 @@ class ProductAttributeSeeder:
         product_attributes_data = [
             {'product_id': 1, 'attribute_type_id': 1, 'value': '4828'},
             {'product_id': 1, 'attribute_type_id': 2, 'value': '2.22'},
-            {'product_id': 1, 'attribute_type_id': 3, 'value': 'Classen Skyline'},
-            {'product_id': 1, 'attribute_type_id': 4, 'value': 'Laminaat'},
+            {'product_id': 1, 'attribute_type_id': 4, 'value': 'Classen Skyline'},
+            {'product_id': 1, 'attribute_type_id': 3, 'value': 'Laminaat'},
 
             {'product_id': 2, 'attribute_type_id': 1, 'value': '8439'},
             {'product_id': 2, 'attribute_type_id': 2, 'value': '2.46'},
-            {'product_id': 2, 'attribute_type_id': 3, 'value': 'Meister Lindura'},
-            {'product_id': 2, 'attribute_type_id': 4, 'value': 'PVC'},
+            {'product_id': 2, 'attribute_type_id': 4, 'value': 'Meister Lindura'},
+            {'product_id': 2, 'attribute_type_id': 3, 'value': 'PVC'},
 
         ]
         for data in product_attributes_data:
@@ -64,7 +64,7 @@ class ProductCategorySeeder:
 class ProductCategoryAttributeSeeder:
     @staticmethod
     def seed():
-        attribute_types = ProductAttributeType.objects.filter(id__range=(3, 5))
+        attribute_types = ProductAttributeType.objects.filter(id__range=(4, 5))
 
         for category in ProductCategory.objects.all():
             with transaction.atomic():

@@ -24,6 +24,8 @@ class ProductAttribute(models.Model):
         ProductAttributeType, on_delete=models.CASCADE)
     value = models.CharField(max_length=100)
 
+    def __str__(self):
+        return f"{self.product.name} - {self.attribute_type.name} - {self.value}"
 
 class ProductStock(models.Model):
     product = models.OneToOneField(
@@ -40,6 +42,7 @@ class ProductImage(models.Model):
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=100)
+    description = models.CharField(max_length=200, default=None, null=True)
 
     def __str__(self):
         return self.name

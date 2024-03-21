@@ -14,43 +14,42 @@ class ProductCategoryAttributeViewHandler:
         combined = self.__combine(serialized_category_attribute_views)
         return combined
     
+
     def __combine(self, serialized_category_attribute_views):
-
-        combined_data = {}
-
-        for item in serialized_category_attribute_views:
-            category_id = item['category_id']
-            category_name = item['category_name']
-            attribute_type_id = item['attribute_type_id']
-
-            if category_id not in combined_data:
-                combined_data[category_id] = {
-                    'category_name': category_name,
+        combined = {}
+        for entry in serialized_category_attribute_views:
+            category_id = entry['category_id']
+            if category_id not in combined:
+                combined[category_id] = {
+                    'category_name': entry['category_name'],
                     'category_id': category_id,
-                    'attributes': [{
-                        'attribute_type_name': item['attribute_type_name'],
-                        'attribute_type_id': attribute_type_id,
-                        'product_attributes': [attr for attr in item['product_attributes'] if attr['id'] == attribute_type_id]
-                    }]
+                    'attribute_types': {}
                 }
-            else:
-                category = combined_data[category_id]
-                found = False
-                for attribute in category['attributes']:
-                    if attribute['attribute_type_id'] == attribute_type_id:
-                        attribute['product_attributes'].extend([attr for attr in item['product_attributes'] if attr['id'] == attribute_type_id])
-                        found = True
-                        break
-                if not found:
-                    category['attributes'].append({
-                        'attribute_type_name': item['attribute_type_name'],
-                        'attribute_type_id': attribute_type_id,
-                        'product_attributes': [attr for attr in item['product_attributes'] if attr['id'] == attribute_type_id]
-                    })
+            
+            attribute_types = combined[category_id]['attribute_types']
+            attribute_type_id = entry['attribute_type_id']
+            attribute_type_name = entry['attribute_type_name']
+            product_attributes = entry['product_attributes']
+            
+            if attribute_type_id not in attribute_types:
+                attribute_types[attribute_type_id] = {
+                    'attribute_type_name': attribute_type_name,
+                    'product_attributes': []
+                }
+            
+            attribute_types[attribute_type_id]['product_attributes'].extend(product_attributes)
+        
+        combined_entries = []
+        for category_id, category_data in combined.items():
+            combined_entries.append({
+                'category_name': category_data['category_name'],
+                'category_id': category_id,
+                'attribute_types': list(category_data['attribute_types'].values())
+            })
+        print(combined_entries)
+        return combined_entries
 
 
-        combined_category_attribute_views = list(combined_data.values())
 
-        return combined_category_attribute_views
 
     
