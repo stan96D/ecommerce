@@ -139,13 +139,14 @@
             </div>
         </div>
         <nav id="navigation-container" class="hidden lg:flex lg:space-x-6 lg:py-4" aria-label="Global">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            {% for header in headerData %}
 
-            <a href="/products/{{header.category_name}}" id="dropdown-btn-{{ header.category_id }}"
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+            {% for category in headerData %}
+
+            <a href="/products/{{category.name}}" id="dropdown-btn-{{ category.id }}"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-3 px-4 text-sm font-medium"
-                onmouseover="showDropdown('{{ header.category_id }}')" onmouseout="hideDropdown('{{ header.category_id }}')">
-                {{ header.category_name }}
+                onmouseover="showDropdown('{{ category.id }}')" onmouseout="hideDropdown('{{ category.id }}')">
+                {{ category.name }}
             </a>
             {% endfor %}
         </nav>
@@ -208,7 +209,7 @@
 
 </header>
 
-{% if breadcrumData %}
+{% if breadcrumbs %}
 
     {% include 'components/breadcrumb.html' %}
 

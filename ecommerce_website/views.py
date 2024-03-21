@@ -6,14 +6,16 @@ from ecommerce_website.services.shopping_cart_services.shopping_cart_service imp
 from ecommerce_website.services.product_service.product_view_service import ProductViewService
 from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.shopping_cart_services.cart_item_view_service import CartItemViewService
-from ecommerce_website.classes.handlers.product_category_attribute_view_handler import ProductCategoryAttributeViewHandler
+from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
+from ecommerce_website.services.product_category_service.product_category_attribute_view_service import ProductCategoryViewService
+
 
 from django.http import JsonResponse
 import json
 
 def home(request):
 
-    headerData = ProductCategoryAttributeViewHandler().get_serialized_product_category_attribute_views()
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     return render(request, "home.html", {'headerData': headerData})
 
@@ -25,37 +27,50 @@ def cart(request):
     cart_item_view_service = CartItemViewService()
     cart_item_views = cart_item_view_service.generate(items)
 
-    headerData = ProductCategoryAttributeViewHandler().get_serialized_product_category_attribute_views()
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
 
 
     return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData})
 
-def products(request, attribute):
-    print(attribute)
-    products = ProductService.get_products_by_attribute(attribute)
+def products_by_category(request, category):
+
+    products = ProductService.get_products_by_attribute(category)
     
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)
     
-    headerData = ProductCategoryAttributeViewHandler(
-    ).get_serialized_product_category_attribute_views()
-
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
     
+    breadcrumb = [category]
 
-    return render(request, 'products.html', {'products': productViews, 'headerData': headerData})
+    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'breadcrumbs': breadcrumb})
 
 
-def products_by_attribute(request, category, attribute):
-    print(category, attribute)
+def products_by_subcategory(request, category, subcategory):
+
+    products = ProductService.get_products_by_attribute(subcategory)
+
+    productViewService = ProductViewService()
+    productViews = productViewService.generate(products)
+
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+    breadcrumb = [category, subcategory]
+
+    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'breadcrumbs': breadcrumb})
+
+def products_by_attribute(request, category, subcategory, attribute):
+
     products = ProductService.get_products_by_attribute(attribute)
     
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)
 
-    headerData = ProductCategoryAttributeViewHandler(
-    ).get_serialized_product_category_attribute_views()
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-    return render(request, 'products.html', {'products': productViews, 'headerData': headerData})
+    breadcrumb = [category, subcategory, attribute]
+
+    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'breadcrumbs': breadcrumb})
 
 def product_detail(request, id=None):
 
@@ -63,8 +78,7 @@ def product_detail(request, id=None):
     productViewService = ProductViewService()
     productView = productViewService.get(product)
 
-    headerData = ProductCategoryAttributeViewHandler(
-    ).get_serialized_product_category_attribute_views()
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     return render(request, 'product_detail.html', {'product': productView, 'headerData': headerData})
 

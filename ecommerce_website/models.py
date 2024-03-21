@@ -11,11 +11,27 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
 class ProductAttributeType(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
+
+class ProductCategory(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=200, default=None, null=True)
+    parent_category = models.ForeignKey(
+        'self', on_delete=models.CASCADE, null=True, blank=True, related_name='subcategories')
+    active = models.BooleanField(default=True)
+
+
+    def __str__(self):
+        if self.parent_category:
+            return f"{self.parent_category.name} - {self.name}"
+        else:
+            return self.name
+
     
 class ProductAttribute(models.Model):
     product = models.ForeignKey(
@@ -40,20 +56,7 @@ class ProductImage(models.Model):
     image = models.ImageField(upload_to='product_images/')
 
 
-class ProductCategory(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=200, default=None, null=True)
-
-    def __str__(self):
-        return self.name
 
 
-class ProductCategoryAttribute(models.Model):
-    category = models.ForeignKey(ProductCategory, on_delete=models.CASCADE)
-    attribute_type = models.ForeignKey(
-        ProductAttributeType, on_delete=models.CASCADE)
-    attributes = models.ManyToManyField(ProductAttribute)
-    active = models.BooleanField(default=True)
 
-    def __str__(self):
-        return f"{self.category.name} - {self.attribute_type.name}"
+

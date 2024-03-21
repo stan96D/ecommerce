@@ -1,18 +1,32 @@
 <div class="border-b border-gray-200">
     <nav aria-label="Breadcrumb" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <ol role="list" class="flex items-center space-x-4 py-4">
-            <li>
-                <div class="flex items-center">
-                    <a href="#" class="mr-4 text-sm font-medium text-gray-900">Men</a>
-                    <svg viewBox="0 0 6 20" aria-hidden="true" class="h-5 w-auto text-gray-300">
-                        <path d="M4.878 4.34H3.551L.27 16.532h1.327l3.281-12.19z" fill="currentColor" />
-                    </svg>
-                </div>
-            </li>
 
-            <li class="text-sm">
-                <a href="#" aria-current="page" class="font-medium text-gray-500 hover:text-gray-600">New Arrivals</a>
-            </li>
+            {% for crumb in breadcrumbs %}
+                {% if forloop.first %}
+                    <li>
+                        <div class="flex items-center">
+                            <a href="/products/{{crumb}}" class="mr-4 text-sm font-medium text-gray-900">{{ breadcrumbs.0 }}</a>
+                                <svg viewBox="0 0 6 20" aria-hidden="true" class="h-5 w-auto text-gray-300">
+                                    <path d="M4.878 4.34H3.551L.27 16.532h1.327l3.281-12.19z" fill="currentColor" />
+                                </svg>
+                        </div>
+                    </li>
+                {% else %}
+
+                    {% if forloop.counter == 2 %}
+                    <li class="text-sm">
+                        <a href="/products/{{breadcrumbs.0}}/{{crumb}}" aria-current="page" class="font-medium text-gray-500 hover:text-gray-600">{{crumb}}</a>
+                    </li>                    
+                    {% else %}
+                    <li class="text-sm">
+                        <a href="/products/{{breadcrumbs.0}}/{{breadcrumbs.1}}/{{crumb}}" aria-current="page" class="font-medium text-gray-500 hover:text-gray-600">{{crumb}}</a>
+                    </li>
+                    {% endif %}
+
+                {% endif %}
+
+            {% endfor %}
         </ol>
     </nav>
 </div>

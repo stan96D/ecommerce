@@ -1,4 +1,4 @@
-from ecommerce_website.models import Product, ProductCategory, ProductCategoryAttribute
+from ecommerce_website.models import Product
 from ecommerce_website.services.product_service.base_product_service import ProductServiceInterface
 
 class ProductService(ProductServiceInterface):

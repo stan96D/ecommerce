@@ -13,3 +13,8 @@ class ProductCategoryServiceInterface(ABC):
     @abstractmethod
     def get_all_active_product_categories():
         pass
+
+    @abstractmethod
+    def get_all_active_head_product_categories():
+        pass
+
