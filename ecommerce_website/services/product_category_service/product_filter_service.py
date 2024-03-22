@@ -16,6 +16,13 @@ class ProductFilterService(ProductFilterServiceInterface):
             return ProductFilter.objects.filter(parent_category_id=product_category_id)
         except ProductFilter.DoesNotExist:
             return None
+        
+    @staticmethod
+    def get_product_filters_by_category_name(product_category_name):
+        try:
+            return ProductFilter.objects.filter(parent_category__name=product_category_name)
+        except ProductFilter.DoesNotExist:
+            return None
 
     @staticmethod
     def get_product_filter_by_name(product_filter_name):

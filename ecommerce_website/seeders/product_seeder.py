@@ -65,16 +65,21 @@ class ProductFilterSeeder:
     @staticmethod
     def seed():
         categories = ProductCategory.objects.all()
-
         product_attributes = ProductAttribute.objects.all()
+        product_attribute_types = ProductAttributeType.objects.all()
 
         for category in categories:
-            with transaction.atomic():
-                for product_attribute in product_attributes:
 
-                        ProductFilter.objects.create(
-                            name=f"{product_attribute.attribute_type.name}",
-                            product_attribute=product_attribute,
-                            parent_category=category
-                        )
+            for attribute_type in product_attribute_types:
+
+                with transaction.atomic():
+                    product_filter = ProductFilter.objects.create(
+                        name=attribute_type.name,
+                        parent_category=category
+                    )
+                    for product_attribute in product_attributes:
+                        if attribute_type.id == product_attribute.attribute_type.id:
+                            product_filter.product_attributes.add(product_attribute)
+
+
         

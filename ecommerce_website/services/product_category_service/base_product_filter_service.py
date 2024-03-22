@@ -10,6 +10,9 @@ class ProductFilterServiceInterface():
     def get_product_filters_by_category_id(product_category_id):
         pass
 
+    @abstractmethod
+    def get_product_filters_by_category_name(product_category_name):
+        pass
 
     @abstractmethod
     def get_product_filter_by_name(product_filter_name):

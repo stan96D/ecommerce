@@ -7,8 +7,7 @@ from ecommerce_website.services.product_service.product_view_service import Prod
 from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.shopping_cart_services.cart_item_view_service import CartItemViewService
 from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
-from ecommerce_website.services.product_category_service.product_category_attribute_view_service import ProductCategoryViewService
-
+from ecommerce_website.services.product_category_service.product_filter_service import ProductFilterService
 
 from django.http import JsonResponse
 import json
@@ -45,7 +44,9 @@ def products_by_category(request, category):
     
     categoryData = ProductCategoryService().get_product_category_by_name(category)
 
-    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
+    filterData = ProductFilterService().get_product_filters_by_category_name(category)
+
+    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
 
 
 def products_by_subcategory(request, category, subcategory):
