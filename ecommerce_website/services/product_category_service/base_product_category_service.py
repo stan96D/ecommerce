@@ -7,6 +7,11 @@ class ProductCategoryServiceInterface(ABC):
         pass
 
     @abstractmethod
+    def get_product_category_by_name(product_category_name):
+        pass
+
+
+    @abstractmethod
     def get_all_product_categories():
         pass
 
@@ -17,4 +22,3 @@ class ProductCategoryServiceInterface(ABC):
     @abstractmethod
     def get_all_active_head_product_categories():
         pass
-

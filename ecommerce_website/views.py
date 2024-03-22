@@ -42,8 +42,10 @@ def products_by_category(request, category):
     headerData = ProductCategoryService().get_all_active_head_product_categories()
     
     breadcrumb = [category]
+    
+    categoryData = ProductCategoryService().get_product_category_by_name(category)
 
-    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'breadcrumbs': breadcrumb})
+    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
 
 
 def products_by_subcategory(request, category, subcategory):
@@ -57,7 +59,10 @@ def products_by_subcategory(request, category, subcategory):
 
     breadcrumb = [category, subcategory]
 
-    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'breadcrumbs': breadcrumb})
+    categoryData = ProductCategoryService().get_product_category_by_name(subcategory)
+
+
+    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
 
 def products_by_attribute(request, category, subcategory, attribute):
 
@@ -70,7 +75,9 @@ def products_by_attribute(request, category, subcategory, attribute):
 
     breadcrumb = [category, subcategory, attribute]
 
-    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'breadcrumbs': breadcrumb})
+    categoryData = ProductCategoryService().get_product_category_by_name(attribute)
+
+    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
 
 def product_detail(request, id=None):
 

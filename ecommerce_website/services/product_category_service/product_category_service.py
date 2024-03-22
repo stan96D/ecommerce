@@ -9,6 +9,13 @@ class ProductCategoryService(ProductCategoryServiceInterface):
             return ProductCategory.objects.get(id=product_category_id)
         except ProductCategory.DoesNotExist:
             return None
+        
+    @staticmethod
+    def get_product_category_by_name(product_category_name):
+        try:
+            return ProductCategory.objects.get(name=product_category_name)
+        except ProductCategory.DoesNotExist:
+            return None
 
     @staticmethod
     def get_all_product_categories():
