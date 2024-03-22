@@ -29,41 +29,49 @@
     </div>
 
     <div class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
-      <aside>
-        <h2 class="sr-only">Filters</h2>
-      
-        <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
-        <button type="button" class="inline-flex items-center lg:hidden">
-          <span class="text-sm font-medium text-gray-700">Filters</span>
-          <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path
-              d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-          </svg>
-        </button>
-      
-        <div class="hidden lg:block">
-          <form class="space-y-10 divide-y divide-gray-200">
-            {% for product_filter in filterData %}
-            <div class="pt-10">
-              <fieldset>
-                <legend class="block text-sm font-medium text-gray-900">{{ product_filter.name }}</legend>
-                <div class="space-y-3 pt-6">
-                  {% for product_attribute in product_filter.product_attributes.all %}
+    <aside>
+      <h2 class="sr-only">Filters</h2>
+      <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
+      <button type="button" class="inline-flex items-center lg:hidden">
+        <span class="text-sm font-medium text-gray-700">Filters</span>
+        <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path
+            d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+        </svg>
+      </button>
+      <div class="hidden lg:block">
+        <form class="space-y-5 divide-y divide-gray-200">
+          {% for product_filter in filterData %}
+          <div class="pt-5">
+            <fieldset>
+              <div>
+                <legend class="text-sm font-medium text-gray-900 flex justify-between items-center cursor-pointer"
+                  onclick="toggleFilter('{{ product_filter.name }}')">
+                  <span>{{ product_filter.name }}</span>
+                  <button type="button" class="focus:outline-none">
+                    <i id="arrow-{{ product_filter.name }}"
+                      class="fas fa-chevron-down text-gray-400 transition-transform transform"></i>
+                  </button>
+                </legend>
+              </div>
 
-                  <div class="flex items-center">
-                    <input id="attr-{{ product_attribute.id }}" name="{{ product_filter.name }}"
-                      value="{{ product_attribute }}" type="checkbox"
-                      class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                    <label for="attr-{{ product_attribute.id }}" class="ml-3 text-sm text-gray-600">{{ product_attribute.value }}</label>
-                  </div>
-                  {% endfor %}
+              <div id="{{ product_filter.name }}" class="space-y-3 pt-6 hidden">
+                {% for product_attribute in product_filter.product_attributes.all %}
+                <div class="flex items-center">
+                  <input id="attr-{{ product_attribute.id }}" name="{{ product_filter.name }}"
+                    value="{{ product_attribute.value }}" type="checkbox"
+                    class="filter-checkbox h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-customColor"
+                    onclick="executeSearch()">
+                  <label for="attr-{{ product_attribute.id }}" class="ml-3 text-sm text-gray-600">{{ product_attribute.value }}</label>
                 </div>
-              </fieldset>
-            </div>
-            {% endfor %}
-          </form>
-        </div>
-      </aside>
+                {% endfor %}
+              </div>
+            </fieldset>
+          </div>
+          {% endfor %}
+        </form>
+      </div>
+    </aside>
 
   
       <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
@@ -82,4 +90,46 @@
     </div>
   </main>
 </div>
+
+<script>
+  function toggleFilter(filterName) {
+    const filterDiv = document.getElementById(filterName);
+    const arrowIcon = document.getElementById(`arrow-${filterName}`);
+    const isOpen = filterDiv.classList.toggle('hidden');
+    if (!isOpen) {
+      arrowIcon.classList.remove('fa-chevron-down');
+      arrowIcon.classList.add('fa-chevron-up');
+    } else {
+      arrowIcon.classList.remove('fa-chevron-up');
+      arrowIcon.classList.add('fa-chevron-down');
+    }
+  }
+
+  function executeSearch() {
+      const filters = getFilterCriteria();
+      const queryString = Object.keys(filters).map(key => key + '=' + encodeURIComponent(filters[key])).join('&');
+
+      const newUrl = window.location.pathname + '?' + queryString;
+
+      window.location.href = newUrl;
+    }
+
+  function getFilterCriteria() {
+    const filters = {};
+    const checkboxes = document.querySelectorAll('.filter-checkbox:checked');
+    checkboxes.forEach(function (checkbox) {
+      const filterName = checkbox.getAttribute('name');
+      const filterValue = checkbox.value;
+
+      const attribute = filterValue;
+      if (!filters[filterName]) {
+        filters[filterName] = [];
+      }
+      filters[filterName].push(attribute);
+    });
+    return filters;
+  }
+
+</script>
+
 {% endblock %}

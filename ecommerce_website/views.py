@@ -15,7 +15,7 @@ import json
 def home(request):
 
     headerData = ProductCategoryService().get_all_active_head_product_categories()
-    print(headerData[0].subcategories.all())
+
     return render(request, "home.html", {'headerData': headerData})
 
 def cart(request):
@@ -28,13 +28,17 @@ def cart(request):
 
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-
     return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData})
 
 def products_by_category(request, category):
 
-    products = ProductService.get_products_by_attribute(category)
-    
+    attributes = request.GET
+
+    if len(attributes) > 0:
+        products = ProductService.get_products_by_attributes_and_values(attributes)
+    else:
+        products = ProductService.get_products_by_attribute(category)
+
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)
     
@@ -45,11 +49,18 @@ def products_by_category(request, category):
     categoryData = ProductCategoryService().get_product_category_by_name(category)
 
     filterData = ProductFilterService().get_product_filters_by_category_name(category)
-    print(headerData)
+
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
 
 
 def products_by_subcategory(request, category, subcategory):
+
+    attributes = request.GET
+
+    if len(attributes) > 0:
+        products = ProductService.get_products_by_attributes_and_values(attributes)
+    else:
+        products = ProductService.get_products_by_attribute(category)
 
     products = ProductService.get_products_by_attribute(subcategory)
 
@@ -62,10 +73,18 @@ def products_by_subcategory(request, category, subcategory):
 
     categoryData = ProductCategoryService().get_product_category_by_name(subcategory)
 
+    filterData = ProductFilterService().get_product_filters_by_category_name(category)
 
-    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
+    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
 
 def products_by_attribute(request, category, subcategory, attribute):
+
+    attributes = request.GET
+
+    if len(attributes) > 0:
+        products = ProductService.get_products_by_attributes_and_values(attributes)
+    else:
+        products = ProductService.get_products_by_attribute(category)
 
     products = ProductService.get_products_by_attribute(attribute)
     
@@ -78,7 +97,11 @@ def products_by_attribute(request, category, subcategory, attribute):
 
     categoryData = ProductCategoryService().get_product_category_by_name(attribute)
 
-    return render(request, 'products.html', {'products': productViews, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
+    filterData = ProductFilterService().get_product_filters_by_category_name(category)
+
+    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
+
+
 
 def product_detail(request, id=None):
 
