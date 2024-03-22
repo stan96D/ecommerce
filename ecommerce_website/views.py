@@ -49,7 +49,7 @@ def products_by_category(request, category):
     categoryData = ProductCategoryService().get_product_category_by_name(category)
 
     filterData = ProductFilterService().get_product_filters_by_category_name(category)
-
+    print(filterData)
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
 
 

@@ -55,7 +55,7 @@
                 </legend>
               </div>
 
-              <div id="{{ product_filter.name }}" class="space-y-3 pt-6 hidden">
+              <div id="{{ product_filter.name }}" class="filter-container space-y-3 pt-6 hidden">
                 {% for product_attribute in product_filter.product_attributes.all %}
                 <div class="flex items-center">
                   <input id="attr-{{ product_attribute.id }}" name="{{ product_filter.name }}"
@@ -92,10 +92,42 @@
 </div>
 
 <script>
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const filters = JSON.parse(localStorage.getItem('filters'));
+    const filterStates = JSON.parse(localStorage.getItem('filterStates'));
+    console.log(filterStates)
+    if (filters && filterStates) {
+      Object.keys(filters).forEach(filterName => {
+        const filterValues = filters[filterName];
+        const isOpen = filterStates[filterName];
+        filterValues.forEach(filterValue => {
+          const checkbox = document.querySelector(`.filter-checkbox[name="${filterName}"][value="${filterValue}"]`);
+          if (checkbox) {
+            checkbox.checked = true;
+          }
+        });
+        console.log(isOpen)
+        if (isOpen) {
+          const filterDiv = document.getElementById(filterName);
+          filterDiv.classList.remove('hidden');
+          const arrowIcon = document.getElementById(`arrow-${filterName}`);
+          arrowIcon.classList.remove('fa-chevron-down');
+          arrowIcon.classList.add('fa-chevron-up');
+        }
+      });
+    }
+  });
+
   function toggleFilter(filterName) {
     const filterDiv = document.getElementById(filterName);
     const arrowIcon = document.getElementById(`arrow-${filterName}`);
     const isOpen = filterDiv.classList.toggle('hidden');
+
+    const filterStates = getFilterStates();
+    filterStates[filterName] = !isOpen;
+    localStorage.setItem('filterStates', JSON.stringify(filterStates));
+    
     if (!isOpen) {
       arrowIcon.classList.remove('fa-chevron-down');
       arrowIcon.classList.add('fa-chevron-up');
@@ -106,12 +138,26 @@
   }
 
   function executeSearch() {
-      const filters = getFilterCriteria();
-      const queryString = Object.keys(filters).map(key => key + '=' + encodeURIComponent(filters[key])).join('&');
+    const filters = getFilterCriteria();
+    const filterStates = getFilterStates(); 
+    localStorage.setItem('filters', JSON.stringify(filters)); 
+    localStorage.setItem('filterStates', JSON.stringify(filterStates)); 
+    const queryString = Object.keys(filters).map(key => key + '=' + encodeURIComponent(filters[key])).join('&');
+    const newUrl = window.location.pathname + '?' + queryString;
+    console.log(newUrl)
+    window.location.href = newUrl;
+  }
 
-      const newUrl = window.location.pathname + '?' + queryString;
+  function getFilterStates() {
+      const filterStates = {};
+      const filterDivs = document.querySelectorAll('.filter-container');
+      filterDivs.forEach(filterDiv => {
+        const filterName = filterDiv.id;
+        const isOpen = !filterDiv.classList.contains('hidden');
+        filterStates[filterName] = isOpen;
+      });
 
-      window.location.href = newUrl;
+      return filterStates;
     }
 
   function getFilterCriteria() {
