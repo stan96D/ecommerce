@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.db import connection
-from ecommerce_website.seeders.product_seeder import ProductSeeder, ProductAttributeTypeSeeder, ProductAttributeSeeder, ProductStockSeeder, ProductCategorySeeder, ProductCategoryAttributeSeeder
-from ecommerce_website.models import Product, ProductAttributeType, ProductAttribute, ProductStock, ProductCategory, ProductCategoryAttribute
+from ecommerce_website.seeders.product_seeder import ProductSeeder, ProductAttributeTypeSeeder, ProductAttributeSeeder, ProductFilterSeeder, ProductStockSeeder, ProductCategorySeeder
+from ecommerce_website.models import Product, ProductAttributeType, ProductAttribute, ProductStock, ProductCategory, ProductFilter
 
 
 class Command(BaseCommand):
@@ -15,7 +15,7 @@ class Command(BaseCommand):
         ProductAttribute.objects.all().delete()
         ProductStock.objects.all().delete()
         ProductCategory.objects.all().delete()
-        ProductCategoryAttribute.objects.all().delete()
+        ProductFilter.objects.all().delete()
 
         # Reset primary key sequences for autoincrement fields
         with connection.cursor() as cursor:
@@ -30,7 +30,7 @@ class Command(BaseCommand):
             cursor.execute(
                 "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productcategory';")
             cursor.execute(
-                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productcategoryattribute';")
+                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productfilter';")
 
 
         # Seed initial data
@@ -39,6 +39,6 @@ class Command(BaseCommand):
         ProductAttributeSeeder.seed()
         ProductStockSeeder.seed()
         ProductCategorySeeder.seed()
-        ProductCategoryAttributeSeeder.seed()
+        ProductFilterSeeder.seed()
 
         self.stdout.write(self.style.SUCCESS('Seed data successfully added'))

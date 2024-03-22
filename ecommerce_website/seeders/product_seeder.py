@@ -1,4 +1,4 @@
-from ecommerce_website.models import ProductAttribute, ProductAttributeType, Product, ProductStock, ProductCategory, ProductCategoryAttribute
+from ecommerce_website.models import ProductAttribute, ProductAttributeType, Product, ProductStock, ProductCategory, ProductFilter
 from random import randint, sample
 from django.db import transaction
 
@@ -61,21 +61,20 @@ class ProductCategorySeeder:
             ProductCategory.objects.create(name=name)
 
 
-class ProductCategoryAttributeSeeder:
+class ProductFilterSeeder:
     @staticmethod
     def seed():
-        attribute_types = ProductAttributeType.objects.filter(id__range=(4, 5))
+        categories = ProductCategory.objects.all()
 
-        for category in ProductCategory.objects.all():
+        product_attributes = ProductAttribute.objects.all()
+
+        for category in categories:
             with transaction.atomic():
-                for attribute_type in attribute_types:  
-                    category_attribute = ProductCategoryAttribute.objects.create(
-                        category=category, attribute_type=attribute_type)
+                for product_attribute in product_attributes:
 
-                    product_attributes = ProductAttribute.objects.filter(
-                        attribute_type=attribute_type)
-                    selected_attributes = sample(
-                        list(product_attributes), min(3, len(product_attributes)))
-                    category_attribute.attributes.add(*selected_attributes)
-
+                        ProductFilter.objects.create(
+                            name=f"{product_attribute.attribute_type.name}",
+                            product_attribute=product_attribute,
+                            parent_category=category
+                        )
         

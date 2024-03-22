@@ -56,6 +56,21 @@ class ProductImage(models.Model):
     image = models.ImageField(upload_to='product_images/')
 
 
+class ProductFilter(models.Model):
+    name = models.CharField(max_length=100)
+    product_attribute = models.ForeignKey(
+        ProductAttribute, on_delete=models.CASCADE)
+    parent_category = models.ForeignKey(
+        ProductCategory, on_delete=models.CASCADE)
+
+    def __str__(self):
+        attribute_type = self.product_attribute.attribute_type.name
+        return f"{self.name}: {self.product_attribute.value} (Category: {self.parent_category.name}, Attribute Type: {attribute_type})"
+
+
+
+
+
 
 
 
