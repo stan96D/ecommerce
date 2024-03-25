@@ -16,3 +16,11 @@ class ProductServiceInterface(ABC):
     @abstractmethod
     def get_all_products_by_id(self, product_ids):
         pass
+
+    @abstractmethod
+    def get_products_by_search(search_string):
+        pass
+
+    @abstractmethod
+    def get_products_by_attributes_and_values(attributes, category):
+        pass

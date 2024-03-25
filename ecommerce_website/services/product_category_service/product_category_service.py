@@ -13,7 +13,7 @@ class ProductCategoryService(ProductCategoryServiceInterface):
     @staticmethod
     def get_product_category_by_name(product_category_name):
         try:
-            return ProductCategory.objects.get(name=product_category_name)
+            return ProductCategory.objects.filter(name=product_category_name).first()
         except ProductCategory.DoesNotExist:
             return None
 

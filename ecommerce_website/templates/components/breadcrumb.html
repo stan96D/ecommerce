@@ -17,11 +17,17 @@
                     {% if forloop.counter == 2 %}
                     <li class="text-sm">
                         <a href="/products/{{breadcrumbs.0}}/{{crumb}}" aria-current="page" class="font-medium text-gray-500 hover:text-gray-600">{{crumb}}</a>
-                    </li>                    
+                    </li> 
+                                                    <svg viewBox="0 0 6 20" aria-hidden="true" class="h-5 w-auto text-gray-300">
+                                                        <path d="M4.878 4.34H3.551L.27 16.532h1.327l3.281-12.19z" fill="currentColor" />
+                                                    </svg>
                     {% else %}
                     <li class="text-sm">
                         <a href="/products/{{breadcrumbs.0}}/{{breadcrumbs.1}}/{{crumb}}" aria-current="page" class="font-medium text-gray-500 hover:text-gray-600">{{crumb}}</a>
                     </li>
+                                                    <svg viewBox="0 0 6 20" aria-hidden="true" class="h-5 w-auto text-gray-300">
+                                                        <path d="M4.878 4.34H3.551L.27 16.532h1.327l3.281-12.19z" fill="currentColor" />
+                                                    </svg>
                     {% endif %}
 
                 {% endif %}

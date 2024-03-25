@@ -2,14 +2,28 @@ from ecommerce_website.models import ProductAttribute, ProductAttributeType, Pro
 from random import randint, sample
 from django.db import transaction
 
+
 class ProductSeeder:
     @staticmethod
     def seed():
         products_data = [
             {'name': 'Classen Skyline Sonolta Eiken Laminaat 56179',
-                'price': 16.95, 'thumbnail': 'thumbnails/vloer1.jpg'},
+             'price': 16.95, 'thumbnail': 'thumbnails/vloer1.jpg'},
             {'name': 'Meister Lindura HD 400-270 8923 Eik Authentic Greige',
-                'price': 79.15, 'thumbnail': 'thumbnails/vloer2.jpg'},
+             'price': 79.15, 'thumbnail': 'thumbnails/vloer2.jpg'},
+            {'name': 'Quick-Step Impressive Ultra IMU1859',
+             'price': 49.99, 'thumbnail': 'thumbnails/vloer3.jpg'},
+            {'name': 'Pergo Sensation Authentiek Laminaat - Donker Eiken',
+             'price': 69.99, 'thumbnail': 'thumbnails/vloer4.jpg'},
+            {'name': 'BerryAlloc Spirit - Eik Blond',
+             'price': 54.50, 'thumbnail': 'thumbnails/vloer5.jpg'},
+            {'name': 'Kronotex Mammut Plus - Zilver Eik',
+             'price': 59.75, 'thumbnail': 'thumbnails/vloer6.jpg'},
+            {'name': 'Egger Kingsize V4 - Wit Eiken',
+             'price': 45.80, 'thumbnail': 'thumbnails/vloer7.jpg'},
+            {'name': 'Balterio Grande Wide - Vintage Eik',
+             'price': 65.25, 'thumbnail': 'thumbnails/vloer8.jpg'},
+
         ]
         for data in products_data:
             Product.objects.create(**data)
@@ -31,11 +45,60 @@ class ProductAttributeSeeder:
             {'product_id': 1, 'attribute_type_id': 2, 'value': '2.22'},
             {'product_id': 1, 'attribute_type_id': 4, 'value': 'Classen Skyline'},
             {'product_id': 1, 'attribute_type_id': 3, 'value': 'Laminaat'},
+            {'product_id': 1, 'attribute_type_id': 5,
+                'value': 'Grey'}, 
 
             {'product_id': 2, 'attribute_type_id': 1, 'value': '8439'},
             {'product_id': 2, 'attribute_type_id': 2, 'value': '2.46'},
             {'product_id': 2, 'attribute_type_id': 4, 'value': 'Meister Lindura'},
             {'product_id': 2, 'attribute_type_id': 3, 'value': 'PVC'},
+            {'product_id': 2, 'attribute_type_id': 5,
+                'value': 'White'}, 
+
+            {'product_id': 3, 'attribute_type_id': 1, 'value': '9251'},
+            {'product_id': 3, 'attribute_type_id': 2, 'value': '3.10'},
+            {'product_id': 3, 'attribute_type_id': 4,
+                'value': 'Quick-Step Impressive Ultra'},
+            {'product_id': 3, 'attribute_type_id': 3, 'value': 'Laminaat'},
+            {'product_id': 3, 'attribute_type_id': 5,
+                'value': 'White'},  
+
+            {'product_id': 4, 'attribute_type_id': 1, 'value': '7392'},
+            {'product_id': 4, 'attribute_type_id': 2, 'value': '2.85'},
+            {'product_id': 4, 'attribute_type_id': 4, 'value': 'Pergo Sensation'},
+            {'product_id': 4, 'attribute_type_id': 3, 'value': 'Laminaat'},
+            {'product_id': 4, 'attribute_type_id': 5,
+                'value': 'Brown'}, 
+
+            {'product_id': 5, 'attribute_type_id': 1, 'value': '6318'},
+            {'product_id': 5, 'attribute_type_id': 2, 'value': '2.30'},
+            {'product_id': 5, 'attribute_type_id': 4, 'value': 'BerryAlloc Spirit'},
+            {'product_id': 5, 'attribute_type_id': 3, 'value': 'Laminaat'},
+            {'product_id': 5, 'attribute_type_id': 5,
+                'value': 'Brown'},  
+
+            {'product_id': 6, 'attribute_type_id': 1, 'value': '8472'},
+            {'product_id': 6, 'attribute_type_id': 2, 'value': '2.65'},
+            {'product_id': 6, 'attribute_type_id': 4,
+                'value': 'Kronotex Mammut Plus'},
+            {'product_id': 6, 'attribute_type_id': 3, 'value': 'Laminaat'},
+            {'product_id': 6, 'attribute_type_id': 5,
+                'value': 'White'}, 
+
+            {'product_id': 7, 'attribute_type_id': 1, 'value': '2135'},
+            {'product_id': 7, 'attribute_type_id': 2, 'value': '3.40'},
+            {'product_id': 7, 'attribute_type_id': 4, 'value': 'Egger Kingsize V4'},
+            {'product_id': 7, 'attribute_type_id': 3, 'value': 'Laminaat'},
+            {'product_id': 7, 'attribute_type_id': 5,
+                'value': 'Grey'},  
+
+            {'product_id': 8, 'attribute_type_id': 1, 'value': '4991'},
+            {'product_id': 8, 'attribute_type_id': 2, 'value': '3.15'},
+            {'product_id': 8, 'attribute_type_id': 4,
+                'value': 'Balterio Grande Wide'},
+            {'product_id': 8, 'attribute_type_id': 3, 'value': 'Laminaat'},
+            {'product_id': 8, 'attribute_type_id': 5,
+                'value': 'Brown'},  
 
         ]
         for data in product_attributes_data:
@@ -57,37 +120,49 @@ class ProductCategorySeeder:
         category_data = [
             {
                 'name': 'PVC',
+                'active': True,
+                'description': "PVC vloeren",
                 'subcategories': [
                     {
-                        'name': 'Subcategory1',
-                        'subcategories': ['Subsubcategory1', 'Subsubcategory2']
+                        'name': 'Kleur',
+                        'subcategories': ['White', 'Grey', 'Brown']
                     },
                     {
-                        'name': 'Subcategory2',
-                        'subcategories': ['Subsubcategory3', 'Subsubcategory4']
+                        'name': 'Merk',
+                        'subcategories': ['Classen Skyline', 'Meister Lindura', 'Pergo Sensation']
                     }
                 ]
             },
             {
                 'name': 'Laminaat',
+                'active': True,
+                'description': "Laminaat vloeren",
                 'subcategories': [
                     {
-                        'name': 'Subcategory3',
-                        'subcategories': ['Subsubcategory5', 'Subsubcategory6']
+                        'name': 'Kleur',
+                        'subcategories': ['White', 'Grey', 'Brown']
                     },
                     {
-                        'name': 'Subcategory4',
-                        'subcategories': ['Subsubcategory7', 'Subsubcategory8']
+                        'name': 'Merk',
+                        'subcategories': ['Classen Skyline', 'Meister Lindura', 'Pergo Sensation']
                     }
                 ]
             },
-            # Add other main categories and their subcategories here
+            {
+                'name': 'Zoeken',
+                'active': False,
+                'description': "Vind de mooiste vloeren bij ons voor de goedkoopste prijs!",
+                'subcategories': []
+            }
         ]
 
         for category_entry in category_data:
             main_category_name = category_entry['name']
+            active = category_entry['active']
+            description = category_entry['description']
+
             main_category = ProductCategory.objects.create(
-                name=main_category_name, active=True)
+                name=main_category_name, active=active, description=description)
 
             for subcategory_entry in category_entry['subcategories']:
                 subcategory_name = subcategory_entry['name']
@@ -106,7 +181,6 @@ class ProductFilterSeeder:
         categories = ProductCategory.objects.all()
         product_attributes = ProductAttribute.objects.all()
         product_attribute_types = ProductAttributeType.objects.all()
-
         for category in categories:
 
             for attribute_type in product_attribute_types:
@@ -116,9 +190,19 @@ class ProductFilterSeeder:
                         name=attribute_type.name,
                         parent_category=category
                     )
+
                     for product_attribute in product_attributes:
                         if attribute_type.id == product_attribute.attribute_type.id:
-                            product_filter.product_attributes.add(product_attribute)
+                            if not product_filter.product_attributes.filter(value=product_attribute.value).exists():
+                                product_filter.product_attributes.add(product_attribute)
+
+
+
+
+
+
+
+
 
 
         

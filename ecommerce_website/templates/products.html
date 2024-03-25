@@ -23,10 +23,43 @@
 
 <div class="bg-white">
   <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-    <div class="border-b border-gray-200 pb-10 pt-24">
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900">{{categoryData.name}}</h1>
-      <p class="mt-4 text-base text-gray-500">{{categoryData.description}}</p>
+<div class="border-b border-gray-200 pt-24 relative">
+  <h1 class="text-4xl font-bold tracking-tight text-gray-900">{{categoryData.name}}</h1>
+  <p class="mt-4 text-base text-gray-500">{{categoryData.description}}</p>
+  <div class="pb-4 pt-10 flex justify-between items-start">
+    <div></div>
+    <div id="selected-sort" class="text-sm text-gray-700 ">Sort by: </div>
+    <div class="relative flex items-center">
+      <button type="button"
+        class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900" id="menu-button"
+        aria-expanded="false" aria-haspopup="true" onclick="toggleSortMenu()">
+        Sort
+        <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20"
+          fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+      <div id="sort-menu"
+        class="absolute z-10 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 hidden">
+        <div class="py-1">
+          <button class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+            onclick="sortBy('price-highest')">
+            Price Highest
+          </button>
+          <button class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+            onclick="sortBy('price-lowest')">
+            Price Lowest
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+
+
 
     <div class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
     <aside>
@@ -94,8 +127,20 @@
 <script>
 
   window.addEventListener('DOMContentLoaded', () => {
+    initializeSortTypeDisplay();
+
+    const currentUrl = window.location.href;
     const filters = JSON.parse(localStorage.getItem('filters'));
     const filterStates = JSON.parse(localStorage.getItem('filterStates'));
+
+    const hasQueryParams = currentUrl.includes('?');
+
+    if (!hasQueryParams) {
+      localStorage.removeItem('filters');
+      localStorage.removeItem('filterStates');
+      return; 
+    }
+
     console.log(filterStates)
     if (filters && filterStates) {
       Object.keys(filters).forEach(filterName => {
@@ -127,7 +172,7 @@
     const filterStates = getFilterStates();
     filterStates[filterName] = !isOpen;
     localStorage.setItem('filterStates', JSON.stringify(filterStates));
-    
+
     if (!isOpen) {
       arrowIcon.classList.remove('fa-chevron-down');
       arrowIcon.classList.add('fa-chevron-up');
@@ -175,6 +220,74 @@
     });
     return filters;
   }
+
+    function toggleSortMenu() {
+      const sortMenu = document.getElementById('sort-menu');
+      sortMenu.classList.toggle('hidden');
+    }
+
+  function sortBy(sortType) {
+    const selectedSort = document.getElementById('selected-sort');
+    const sortMenu = document.getElementById('sort-menu');
+    const menuButton = document.getElementById('menu-button');
+
+    let queryString = '';
+    switch (sortType) {
+      case 'price-highest':
+        queryString = 'tn_sort=Prijs%20aflopend';
+        break;
+      case 'price-lowest':
+        queryString = 'tn_sort=Prijs%20oplopend';
+        break;
+      default:
+        break;
+    }
+
+    const existingQueryString = window.location.search;
+
+    const sortingParamIndex = existingQueryString.indexOf('tn_sort=');
+
+    if (sortingParamIndex !== -1) {
+      const ampersandIndex = existingQueryString.indexOf('&', sortingParamIndex);
+      if (ampersandIndex !== -1) {
+        queryString = existingQueryString.substring(0, sortingParamIndex) + queryString + existingQueryString.substring(ampersandIndex);
+      } else {
+        queryString = existingQueryString.substring(0, sortingParamIndex) + queryString;
+      }
+    } else {
+      queryString = existingQueryString === '' ? '?' + queryString : existingQueryString + '&' + queryString;
+    }
+
+    const newUrl = window.location.pathname + queryString;
+
+    window.location.href = newUrl;
+  }
+
+  function isSortTypeActive(sortType) {
+    const currentUrl = window.location.href;
+    const searchString = 'tn_sort=' + encodeURIComponent(sortType)
+        console.log(searchString)
+
+    return currentUrl.includes(searchString);
+  }
+
+  function initializeSortTypeDisplay() {
+    const sortTypes = ['Prijs aflopend', 'Prijs oplopend']; 
+    let isActive = false;
+    sortTypes.forEach(sortType => {
+      if (isSortTypeActive(sortType)) {
+        isActive = true;
+        document.getElementById('selected-sort').textContent = `Sort by: ${sortType}`;
+      }
+    });
+    const sortTypeSpan = document.getElementById('selected-sort');
+    if (isActive) {
+      sortTypeSpan.classList.remove('hidden');
+    } else {
+      sortTypeSpan.classList.add('hidden');
+    }
+  }
+
 
 </script>
 

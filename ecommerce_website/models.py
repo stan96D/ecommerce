@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 class Product(models.Model):
@@ -7,6 +8,7 @@ class Product(models.Model):
     thumbnail = models.ImageField(
         upload_to='product_thumbnails/', null=True, blank=True)
     images = models.ManyToManyField('ProductImage', related_name='products')
+
 
     def __str__(self):
         return self.name
