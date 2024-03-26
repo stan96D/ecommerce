@@ -13,7 +13,8 @@ class ProductSorter:
         if sort_data:
             attribute = sort_data['attribute']
             order = sort_data['order']
-            sorted_queryset = sorted(queryset, key=lambda x: getattr(x, attribute))
+            sorted_queryset = sorted(
+                queryset, key=lambda x: getattr(x, attribute))
             if order == 'descending':
                 sorted_queryset.reverse()
             return sorted_queryset

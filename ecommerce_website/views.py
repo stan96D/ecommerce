@@ -126,12 +126,26 @@ def products_by_subcategory(request, category, subcategory):
 
 def products_by_attribute(request, category, subcategory, attribute):
 
-    attributes = request.GET
+    attributes = request.GET.copy()
 
-    if len(attributes) > 0:
-        products = ProductService.get_products_by_attributes_and_values(attributes, attribute)
+    isSort = 'tn_sort' in attributes
+    isFilter = 'tn_sort' not in attributes and len(
+        attributes) > 0 or 'tn_sort' in attributes and len(
+        attributes) > 1
+
+    if isSort:
+        sort_value = attributes.pop('tn_sort', None)[0]
+
+    if isFilter:
+        products = ProductService.get_products_by_attributes_and_values(
+            attributes, attribute)
+        if isSort:
+            products = ProductSorter().sort_products_by(products, sort_value)
     else:
         products = ProductService.get_products_by_attribute_from_category(attribute, category)
+        
+        if isSort:
+            products = ProductSorter().sort_products_by(products, sort_value)
     
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)
