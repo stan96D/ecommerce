@@ -224,6 +224,11 @@
       filters['tn_sort'] = [sortType];
     }
 
+    const currentUrlParams = new URLSearchParams(window.location.search);
+    if (currentUrlParams.has('q')) {
+      filters['q'] = currentUrlParams.get('q');
+    }
+
     return filters;
   }
 

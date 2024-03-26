@@ -32,14 +32,32 @@ def cart(request):
     return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData})
 
 def search_products(request):
-    print(request.GET)
-    search = request.GET.get('q')
 
-    products = ProductService.get_products_by_search(search)
+    attributes = request.GET.copy()
+
+    isSort = 'tn_sort' in attributes
+    isFilter = ('tn_sort' not in attributes and 'q' not in attributes and len(attributes) > 0) or ('tn_sort' in attributes and 'q' not in attributes and len(attributes) > 1) or ('tn_sort' not in attributes and 'q' in attributes and len(attributes) > 1) or ('tn_sort' in attributes and 'q' in attributes and len(attributes) > 2)
+
+    if isSort:
+        sort_value = attributes.pop('tn_sort', None)[0]
+
+    search = request.GET.get('q')
+    print('filter:', isFilter, 'sort:', isSort, 'search:', search)
+
+    if isFilter:
+        products = ProductService.get_products_by_attributes_and_values(
+            attributes, search)
+        if isSort:
+            products = ProductSorter().sort_products_by(products, sort_value)
+    else:
+        products = ProductService.get_products_by_search(search)
+
+        # if isSort:
+        #     products = ProductSorter().sort_products_by(products, sort_value)
 
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)
-    print(products)
+
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     category = "Zoeken"
@@ -143,7 +161,7 @@ def products_by_attribute(request, category, subcategory, attribute):
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
         products = ProductService.get_products_by_attribute_from_category(attribute, category)
-        
+
         if isSort:
             products = ProductSorter().sort_products_by(products, sort_value)
     

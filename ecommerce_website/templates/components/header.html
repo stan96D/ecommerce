@@ -223,6 +223,13 @@
         updateCartCount();
     });
 
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = localStorage.getItem('searchInput');
+        if (searchInput) {
+            document.getElementById('search').value = searchInput;
+        }
+    });
+
     function updateCartCount() {
         $.ajax({
             url: '/get-cart-count/',
@@ -260,9 +267,9 @@
     }
 
     function submitSearch(event) {
-        event.preventDefault(); 
+        event.preventDefault();
         const searchInput = document.getElementById('search').value;
-          
+        localStorage.setItem('searchInput', searchInput); 
         window.location.href = '/search/?q=' + encodeURIComponent(searchInput);
     }
 
