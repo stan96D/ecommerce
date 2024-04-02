@@ -1,5 +1,5 @@
-from ecommerce_website.services.product_service.base_view_service import ViewServiceInterface
-from ecommerce_website.classes.cart_item_view import CartItemView
+from ecommerce_website.services.view_service.base_view_service import ViewServiceInterface
+from ecommerce_website.classes.model_encapsulator.cart_item_view import CartItemView
 from ecommerce_website.services.product_service.product_service import ProductService
 
 class CartItemViewService(ViewServiceInterface):

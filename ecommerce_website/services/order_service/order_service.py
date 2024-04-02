@@ -10,7 +10,6 @@ class OrderService(OrderServiceInterface):
         except Order.DoesNotExist:
             return None
 
-
     @staticmethod
     def get_all_orders():
         try:

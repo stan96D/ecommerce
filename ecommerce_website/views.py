@@ -2,18 +2,23 @@ from ecommerce_website.services.product_service.product_service import ProductSe
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from ecommerce_website.models import Product
-from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
-from ecommerce_website.services.product_service.product_view_service import ProductViewService
-from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
-from ecommerce_website.services.shopping_cart_services.cart_item_view_service import CartItemViewService
+from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
+from ecommerce_website.services.view_service.product_view_service import ProductViewService
+from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
+from ecommerce_website.services.view_service.cart_item_view_service import CartItemViewService
 from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
-from ecommerce_website.services.product_category_service.product_filter_service import ProductFilterService
-from ecommerce_website.classes.product_sorter import ProductSorter
-from ecommerce_website.classes.cart_item_view import CartView
-from ecommerce_website.classes.order import ContactInfo, Address, PaymentInfo, DeliveryInfo, OrderInfoService
+from ecommerce_website.services.product_filter_service.product_filter_service import ProductFilterService
+from ecommerce_website.classes.helpers.product_sorter import ProductSorter
+from ecommerce_website.classes.model_encapsulator.cart_item_view import CartView
+from ecommerce_website.classes.model.address_info import AddressInfo
+from ecommerce_website.classes.model.contact_info import ContactInfo
+from ecommerce_website.classes.model.payment_info import PaymentInfo
+from ecommerce_website.classes.model.delivery_info import DeliveryInfo
+from ecommerce_website.services.order_info_service.order_info_service import OrderInfoService
 from ecommerce_website.services.checkout_service.checkout_service import CheckoutService
-from ecommerce_website.classes.session_manager import SessionManager
+from ecommerce_website.classes.helpers.session_manager import SessionManager
 from ecommerce_website.services.order_service.order_service import OrderService
+from ecommerce_website.services.view_service.cart_view_service import CartViewService
 
 from django.http import JsonResponse, HttpResponseBadRequest
 import json
@@ -26,19 +31,16 @@ def home(request):
 
 def cart(request):
 
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
     cart_service = ShoppingCartService(request)
     items = cart_service.cart_items
 
-    cart_view = CartView(cart_service.total_price,
-                         cart_service.sub_price,
-                         cart_service.tax_price_high,
-                         cart_service.tax_price_low)
-    
+    cart_view = CartViewService().get(cart_service)
+
     cart_item_view_service = CartItemViewService()
     cart_item_views = cart_item_view_service.generate(items)
 
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
-    print(cart_view.sub_price)
     return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData, 'cart': cart_view})
 
 
@@ -46,13 +48,10 @@ def checkout(request):
     
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-    order_service = OrderInfoService(request)
+    order_info_service = OrderInfoService(request)
     cart_service = ShoppingCartService(request)
-
-    cart_view = CartView(cart_service.total_price,
-                            cart_service.sub_price,
-                            cart_service.tax_price_high,
-                            cart_service.tax_price_low)
+    
+    cart_view = CartViewService().get(cart_service)
 
     if request.method == 'POST':
         attributes = request.POST.copy()
@@ -68,16 +67,17 @@ def checkout(request):
         phone = attributes.get('phone')
 
         contact_info = ContactInfo(first_name, last_name, email_address, phone)
-        billing_address_info = Address(address, house_number, city, postal_code, country)
-        shipping_address_info = Address(
+        billing_address_info = AddressInfo(address, house_number, city, postal_code, country)
+        shipping_address_info = AddressInfo(
             address, house_number, city, postal_code, country)
 
-        order = order_service.create_order(contact_info, billing_address_info, shipping_address_info)
+        order_info_service.create_order(
+            contact_info, billing_address_info, shipping_address_info)
 
-        return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order})
+        return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view})
     else:
 
-        order = order_service.get_order(request)
+        order = order_info_service.get_order(request)
 
         if order and order.is_valid():
 
@@ -85,16 +85,8 @@ def checkout(request):
 
         else:
 
-            headerData = ProductCategoryService().get_all_active_head_product_categories()
-
-            cart_service = ShoppingCartService(request)
-
-            cart_view = CartView(cart_service.total_price,
-                                cart_service.sub_price,
-                                cart_service.tax_price_high,
-                                cart_service.tax_price_low)
-            
             return render(request, "checkout.html", {'headerData': headerData, 'cart': cart_view})
+
 
 def order_confirmation(request):
     
@@ -120,7 +112,6 @@ def confirm_order(request):
         if not order_info:
             return HttpResponseBadRequest("Order information not found")
 
-
         checkout_service = CheckoutService()
         payment_info = PaymentInfo("iDeal", "Rabobank")
         delivery_info = DeliveryInfo("Bezorging", "2024-3-30", 5.00)
@@ -130,6 +121,7 @@ def confirm_order(request):
         SessionManager.clear_session(request)
 
         return redirect(reverse('order_confirmation') + f'?order_id={order.id}')
+    
 
 def search_products(request):
 
@@ -142,7 +134,6 @@ def search_products(request):
         sort_value = attributes.pop('tn_sort', None)[0]
 
     search = request.GET.get('q')
-    print('filter:', isFilter, 'sort:', isSort, 'search:', search)
 
     if isFilter:
         products = ProductService.get_products_by_attributes_and_values(
@@ -242,6 +233,7 @@ def products_by_subcategory(request, category, subcategory):
 
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
 
+
 def products_by_attribute(request, category, subcategory, attribute):
 
     attributes = request.GET.copy()
@@ -282,11 +274,11 @@ def products_by_attribute(request, category, subcategory, attribute):
 
 def product_detail(request, id=None):
 
-    product = ProductService.get_product_by_id(id)
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+    product = ProductService().get_product_by_id(id)
     productViewService = ProductViewService()
     productView = productViewService.get(product)
-
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     return render(request, 'product_detail.html', {'product': productView, 'headerData': headerData})
 
@@ -301,7 +293,7 @@ def add_to_cart(request):
         except (TypeError, ValueError):
             quantity = 1  
 
-        product = Product.objects.get(id=product_id)
+        product = ProductService().get_product_by_id(product_id)
 
         cartService = ShoppingCartService(request)
         cartService.add_item(product.id, quantity)
@@ -316,7 +308,7 @@ def change_quantity_in_cart(request):
         product_id = data.get('product_id')
         quantity = data.get('quantity')
 
-        product = Product.objects.get(id=product_id)
+        product = ProductService().get_product_by_id(product_id)
 
         cartService = ShoppingCartService(request)
         cartService.update_quantity(product.id, quantity)

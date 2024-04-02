@@ -1,5 +1,5 @@
 from ecommerce_website.models import ProductFilter
-from ecommerce_website.services.product_category_service.base_product_filter_service import ProductFilterServiceInterface
+from ecommerce_website.services.product_filter_service.base_product_filter_service import ProductFilterServiceInterface
 
 
 class ProductFilterService(ProductFilterServiceInterface):

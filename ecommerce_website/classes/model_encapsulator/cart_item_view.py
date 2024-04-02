@@ -15,9 +15,10 @@ class CartItemView:
 
 
 class CartView:
-    def __init__(self, total_price, sub_price, tax_price_high, tax_price_low):
+    def __init__(self, total_price, sub_price, tax_price_high, tax_price_low, shipping_price):
 
         self.total_price = total_price
         self.sub_price = sub_price
         self.tax_price_high = tax_price_high
         self.tax_price_low = tax_price_low
+        self.shipping_price = shipping_price

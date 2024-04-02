@@ -1,5 +1,5 @@
-from ecommerce_website.services.product_service.base_view_service import ViewServiceInterface
-from ecommerce_website.classes.product_category_view import ProductCategoryView
+from ecommerce_website.services.view_service.base_view_service import ViewServiceInterface
+from ecommerce_website.classes.model_encapsulator.product_category_view import ProductCategoryView
 
 
 

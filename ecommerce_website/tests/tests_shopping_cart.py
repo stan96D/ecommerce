@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.test.client import RequestFactory
-from ecommerce_website.classes.shopping_cart import ShoppingCart
+from ecommerce_website.classes.model.shopping_cart import ShoppingCart
 from ecommerce_website.models import Product
 
 

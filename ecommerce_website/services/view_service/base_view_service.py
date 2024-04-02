@@ -10,3 +10,9 @@ class ViewServiceInterface(ABC):
     def get(self, item):
         pass
 
+
+class SingleViewServiceInterface(ABC):
+
+    @abstractmethod
+    def get(self, item):
+        pass

@@ -1,5 +1,5 @@
-from ecommerce_website.classes.shopping_cart import ShoppingCart
-from ecommerce_website.services.shopping_cart_services.base_shopping_cart_service import AbstractShoppingCartService
+from ecommerce_website.classes.model.shopping_cart import ShoppingCart
+from ecommerce_website.services.shopping_cart_service.base_shopping_cart_service import AbstractShoppingCartService
 
 
 class ShoppingCartService(AbstractShoppingCartService):
@@ -37,6 +37,10 @@ class ShoppingCartService(AbstractShoppingCartService):
     @property
     def tax_price_low(self):
         return self.shopping_cart.total_tax(9)
+    
+    @property
+    def shipping_price(self):
+        return self.shopping_cart.shipping_price
 
     @property
     def count(self):

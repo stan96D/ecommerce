@@ -1,6 +1,8 @@
 from ecommerce_website.models import Order, OrderLine, Product
-from ecommerce_website.classes.order import OrderInfo, PaymentInfo, DeliveryInfo
-from ecommerce_website.classes.shopping_cart import ShoppingCart
+from ecommerce_website.classes.model.order_info import OrderInfo
+from ecommerce_website.classes.model.payment_info import PaymentInfo
+from ecommerce_website.classes.model.delivery_info import DeliveryInfo
+from ecommerce_website.classes.model.shopping_cart import ShoppingCart
 
 
 class CheckoutService:
@@ -11,7 +13,6 @@ class CheckoutService:
         return order
 
     def _create_order(self, order_info, payment_info, delivery_info, shopping_cart):
-
 
         total_price = shopping_cart.total_price 
         sub_price = shopping_cart.sub_total 
