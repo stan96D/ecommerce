@@ -15,7 +15,7 @@ class Product(models.Model):
 
     @property
     def total_price_with_tax(self):
-        total_price = self.price + (self.price * self.tax_percentage / 100)
+        total_price = self.price + (self.price * self.tax / 100)
         return total_price
     
 class ProductAttributeType(models.Model):
@@ -77,7 +77,9 @@ class OrderLine(models.Model):
     quantity = models.IntegerField(default=1)
     order = models.ForeignKey(
         'Order', related_name='order_lines', on_delete=models.CASCADE, default=None)
-
+    unit_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    total_price = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
 
 class Order(models.Model):
     first_name = models.CharField(max_length=100)
@@ -91,6 +93,15 @@ class Order(models.Model):
     shipping_address = models.TextField()
     billing_address = models.TextField()
 
+    total_price = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+    sub_price = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+    tax_price_low = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+    tax_price_high = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+    shipping_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
 
 

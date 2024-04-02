@@ -41,20 +41,32 @@ class ShoppingCart:
             {'product_id': product_id, 'quantity': item['quantity']}
             for product_id, item in self.cart.items()
         ]
+    
+    @property
+    def shipping_price(self):
+        return Decimal('5.00')
+
+    @property
+    def discount_amount(self):
+        return Decimal('0.00')
+
 
     @property
     def total_price(self):
-
         total = 0
         for product_id, item in self.cart.items():
-
             product = ProductService.get_product_by_id(product_id)
-
             if product is not None:
                 product_price = product.price
                 subtotal = item['quantity'] * product_price
                 total += subtotal
-                
+
+        shipping_price = self.shipping_price
+        discount_amount = self.discount_amount
+
+        total += shipping_price  
+        total -= discount_amount 
+
         return total
     
     @property
@@ -66,8 +78,8 @@ class ShoppingCart:
                 product_price = product.price
                 subtotal_amount += item['quantity'] * product_price
         
-        total_tax_low = self.total_tax(9)  # Calculate the total tax
-        total_tax_high = self.total_tax(21)  # Calculate the total tax
+        total_tax_low = self.total_tax(9) 
+        total_tax_high = self.total_tax(21)  
 
         total_tax = total_tax_low + total_tax_high
 

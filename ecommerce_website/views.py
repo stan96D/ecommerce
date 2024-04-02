@@ -1,6 +1,6 @@
-from django.shortcuts import render
 from ecommerce_website.services.product_service.product_service import ProductService
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+from django.urls import reverse
 from ecommerce_website.models import Product
 from ecommerce_website.services.shopping_cart_services.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.product_service.product_view_service import ProductViewService
@@ -13,8 +13,9 @@ from ecommerce_website.classes.cart_item_view import CartView
 from ecommerce_website.classes.order import ContactInfo, Address, PaymentInfo, DeliveryInfo, OrderInfoService
 from ecommerce_website.services.checkout_service.checkout_service import CheckoutService
 from ecommerce_website.classes.session_manager import SessionManager
+from ecommerce_website.services.order_service.order_service import OrderService
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 import json
 
 def home(request):
@@ -78,8 +79,6 @@ def checkout(request):
 
         order = order_service.get_order(request)
 
-        print("Order: ", order)
-
         if order and order.is_valid():
 
             return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order})
@@ -97,33 +96,40 @@ def checkout(request):
             
             return render(request, "checkout.html", {'headerData': headerData, 'cart': cart_view})
 
+def order_confirmation(request):
+    
+    order_id = request.GET.get('order_id')
+
+    order_service = OrderService()
+    order = order_service.get_order_by_id(order_id)
+    
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+    return render(request, "order_confirmation.html", {'headerData': headerData, 'order': order})
+
 
 def confirm_order(request):
 
     if request.method == 'POST':
-        attributes = request.POST.copy()
-        print(attributes)
-        headerData = ProductCategoryService().get_all_active_head_product_categories()
 
         cart_service = ShoppingCartService(request)
 
-        cart_view = CartView(cart_service.total_price,
-                            cart_service.sub_price,
-                            cart_service.tax_price_high,
-                            cart_service.tax_price_low)
-        
         order_service = OrderInfoService(request)
         order_info = order_service.get_order(request)
 
+        if not order_info:
+            return HttpResponseBadRequest("Order information not found")
+
+
         checkout_service = CheckoutService()
         payment_info = PaymentInfo("iDeal", "Rabobank")
-        delivery_info = DeliveryInfo("Bezorging", "2024-3-30")
+        delivery_info = DeliveryInfo("Bezorging", "2024-3-30", 5.00)
 
         order = checkout_service.create_order(order_info, payment_info, delivery_info, cart_service.shopping_cart)
-
+        
         SessionManager.clear_session(request)
 
-        return render(request, "order_confirmation.html", {'headerData': headerData, 'cart': cart_view, 'order': order})
+        return redirect(reverse('order_confirmation') + f'?order_id={order.id}')
 
 def search_products(request):
 

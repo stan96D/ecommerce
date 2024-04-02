@@ -35,19 +35,20 @@
 
                 <ul role="list"
                     class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500">
-                    <li class="flex space-x-6 py-6">
-                        <img src="https://tailwindui.com/img/ecommerce-images/confirmation-page-06-product-01.jpg"
-                            alt="Model wearing men&#039;s charcoal basic tee in large."
-                            class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center">
-                        <div class="flex-auto space-y-1">
-                            <h3 class="text-gray-900">
-                                <a href="#">Basic Tee</a>
-                            </h3>
-                            <p>Charcoal</p>
-                            <p>L</p>
-                        </div>
-                        <p class="flex-none font-medium text-gray-900">$36.00</p>
-                    </li>
+                        {% for order_line in order.order_lines.all %}
+                                <li class="flex space-x-6 py-6">
+                                    <img src="{{ order_line.product.thumbnail.url }}" alt="{{ order_line.product.name }}"
+                                        alt="Model wearing men&#039;s charcoal basic tee in large."
+                                        class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center">
+                                    <div class="flex-auto space-y-1">
+                                        <h3 class="text-gray-900">
+                                            <a href="{% url 'product_detail' order_line.product.id %}">{{order_line.product.name}}</a>
+                                        </h3>
+                                    </div>
+                                    <p class="flex-none font-medium text-gray-900">€{{order_line.product.price}}</p>
+                                </li>
+                        {% endfor %}
+                    
 
                     <!-- More products... -->
                 </ul>
@@ -55,22 +56,27 @@
                 <dl class="space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500">
                     <div class="flex justify-between">
                         <dt>Subtotaal</dt>
-                        <dd class="text-gray-900">$72.00</dd>
+                        <dd class="text-gray-900">${{order.sub_price}}</dd>
                     </div>
 
                     <div class="flex justify-between">
                         <dt>Verzendkosten</dt>
-                        <dd class="text-gray-900">$8.00</dd>
+                        <dd class="text-gray-900">${{order.shipping_price}}</dd>
                     </div>
 
                     <div class="flex justify-between">
-                        <dt>BTW</dt>
-                        <dd class="text-gray-900">$6.40</dd>
+                        <dt>BTW 9%</dt>
+                        <dd class="text-gray-900">${{order.tax_price_low}}</dd>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <dt>BTW 21%</dt>
+                        <dd class="text-gray-900">${{order.tax_price_high}}</dd>
                     </div>
 
                     <div class="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900">
                         <dt class="text-base">Totaal</dt>
-                        <dd class="text-base">$86.40</dd>
+                        <dd class="text-base">${{order.total_price}}</dd>
                     </div>
                 </dl>
 
@@ -79,8 +85,8 @@
                         <dt class="font-medium text-gray-900">Factuur adres</dt>
                         <dd class="mt-2">
                             <address class="not-italic">
-                                <span class="block">Kristin Watson</span>
-                                <span class="block">7363 Cynthia Pass</span>
+                                <span class="block">{{order.first_name}} {{order.last_name}}</span>
+                                <span class="block">{{order.billing_address}}</span>
                                 <span class="block">Toronto, ON N3Y 4H8</span>
                             </address>
                         </dd>
@@ -98,7 +104,7 @@
                                 <p class="sr-only">Visa</p>
                             </div>
                             <div class="flex-auto">
-                                <p class="text-gray-900">Ending with 4242</p>
+                                <p class="text-gray-900">{{order.payment_information}}</p>
                                 <p>Expires 12 / 21</p>
                             </div>
                         </dd>
