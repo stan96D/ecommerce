@@ -1,0 +1,224 @@
+{% extends 'components/main.html' %}
+{% load static tailwind_tags %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<!--
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<div class="bg-white">
+    {% include 'components/steps.html' %}
+
+    <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Verzending & betaling</h1>
+
+        <form method="POST" action="{% url 'confirm_order' %}" class="mt-8 space-y-6">
+            {% csrf_token %}
+            <div class="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+                <section aria-labelledby="cart-heading" class="lg:col-span-7">
+                
+                    <div>
+                        <div>
+                        <fieldset>
+                            <legend class="text-lg font-medium text-gray-900">Bezorgingsmethode</legend>
+                    
+                            <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                                <!--
+                                    Checked: "border-transparent", Not Checked: "border-gray-300"
+                                    Active: "ring-2 ring-indigo-500"
+                                  -->
+                                <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none">
+                                    <input type="radio" name="delivery-method" value="Standard" class="sr-only"
+                                        aria-labelledby="delivery-method-0-label"
+                                        aria-describedby="delivery-method-0-description-0 delivery-method-0-description-1">
+                                    <span class="flex flex-1">
+                                        <span class="flex flex-col">
+                                            <span id="delivery-method-0-label"
+                                                class="block text-sm font-medium text-gray-900">Standard</span>
+                                            <span id="delivery-method-0-description-0"
+                                                class="mt-1 flex items-center text-sm text-gray-500">4–10 business days</span>
+                                            <span id="delivery-method-0-description-1"
+                                                class="mt-6 text-sm font-medium text-gray-900">$5.00</span>
+                                        </span>
+                                    </span>
+                                    <!-- Not Checked: "hidden" -->
+                                    <svg class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    <!--
+                                      Active: "border", Not Active: "border-2"
+                                      Checked: "border-indigo-500", Not Checked: "border-transparent"
+                                    -->
+                                    <span class="pointer-events-none absolute -inset-px rounded-lg border-2" aria-hidden="true"></span>
+                                </label>
+                                <!--
+                                    Checked: "border-transparent", Not Checked: "border-gray-300"
+                                    Active: "ring-2 ring-indigo-500"
+                                  -->
+                                <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none">
+                                    <input type="radio" name="delivery-method" value="Express" class="sr-only"
+                                        aria-labelledby="delivery-method-1-label"
+                                        aria-describedby="delivery-method-1-description-0 delivery-method-1-description-1">
+                                    <span class="flex flex-1">
+                                        <span class="flex flex-col">
+                                            <span id="delivery-method-1-label"
+                                                class="block text-sm font-medium text-gray-900">Express</span>
+                                            <span id="delivery-method-1-description-0"
+                                                class="mt-1 flex items-center text-sm text-gray-500">2–5 business days</span>
+                                            <span id="delivery-method-1-description-1"
+                                                class="mt-6 text-sm font-medium text-gray-900">$16.00</span>
+                                        </span>
+                                    </span>
+                                    <!-- Not Checked: "hidden" -->
+                                    <svg class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    <!--
+                                      Active: "border", Not Active: "border-2"
+                                      Checked: "border-indigo-500", Not Checked: "border-transparent"
+                                    -->
+                                    <span class="pointer-events-none absolute -inset-px rounded-lg border-2" aria-hidden="true"></span>
+                                </label>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="mt-10 border-t border-gray-200 pt-10">
+                        <h2 class="text-lg font-medium text-gray-900">Afhaal/bezorgdatum</h2>
+
+                    
+                        <div class="mt-6 grid grid-cols-4 gap-x-4 gap-y-6">
+                            <div class="col-span-4">
+                                <label for="card-number" class="block text-sm font-medium text-gray-700">Kies een datum</label>
+                                <div class="mt-1">
+                                    <input type="text" id="card-number" name="card-number" autocomplete="cc-number"
+                                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                </div>
+                            </div>
+                    
+
+                        </div>
+                    </div>
+                    <div class="mt-10 border-t border-gray-200 pt-10">
+                    
+                        <fieldset>
+                            <legend class="text-lg font-medium text-gray-900">Betaalwijze</legend>
+                            <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                                <!-- Standard Delivery -->
+                                <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none">
+                                    <input type="radio" name="delivery-method" value="Standard" class="sr-only"
+                                        aria-labelledby="delivery-method-0-label"
+                                        aria-describedby="delivery-method-0-description-0 delivery-method-0-description-1">
+                                    <span class="flex flex-1">
+                                        <span class="flex flex-col">
+                                            <span id="delivery-method-0-label" class="block text-sm font-medium text-gray-900">iDeal</span>
+                                            <!-- Replace text with image -->
+
+                                            <img class="max-h-12 max-w-12 mt-1" src="{% static 'images/bank_ideal.png' %}" alt="Delivery Image">
+                                            <div class="mt-4 w-full rounded-md bg-white">
+                                                <select
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
+                                                    <option>Selecteer uw bank</option>
+                                                    <option>Bank A</option>
+                                                    <option>Bank B</option>
+                                                    <option>Bank C</option>
+                                                    <!-- Add more bank options here -->
+                                                </select>
+                                            </div>
+                                        </span>
+                                    </span>
+                                    <!-- Not Checked: "hidden" -->
+                                    <svg class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                    <!-- Active: "border", Not Active: "border-2" Checked: "border-indigo-500", Not Checked: "border-transparent" -->
+                                    <span class="pointer-events-none absolute -inset-px rounded-lg border-2" aria-hidden="true"></span>
+                                    <!-- Dropdown Menu -->
+                                </label>
+                            </div>
+                        </fieldset>
+
+                    </div>
+                    </div>
+                
+                </section>
+
+                <!-- Order summary -->
+
+                <section aria-labelledby="summary-heading"
+                    class="mt-16 rounded-lg border border-gray-300 bg-gray-100 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
+                    <h2 id="summary-heading" class="text-lg font-medium text-gray-900">Order overzicht</h2>
+
+                    <dl class="mt-6 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <dt class="text-sm text-gray-600">Subtotaal</dt>
+                            <dd class="text-sm font-medium text-gray-900">€{{cart.sub_price}}</dd>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+                                                    <dt class="text-sm text-gray-600">Verzendkosten</dt>
+                                                    <dd class="text-sm font-medium text-gray-900">€0.00</dd>
+                                                </div>
+                        <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+                            <dt class="flex text-sm text-gray-600">
+                                <span>BTW 9%</span>
+                                <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Learn more about how tax is calculated</span>
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </dt>
+                            <dd class="text-sm font-medium text-gray-900">€{{cart.tax_price_low}}</dd>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+                            <dt class="flex text-sm text-gray-600">
+                                <span>BTW 21%</span>
+                                <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
+                                    <span class="sr-only">Learn more about how tax is calculated</span>
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path fill-rule="evenodd"
+                                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </a>
+                            </dt>
+                            <dd class="text-sm font-medium text-gray-900">€{{cart.tax_price_high}}</dd>
+                        </div>
+
+                        <div class="flex items-center justify-between border-t border-gray-200 pt-4">
+                            <dt class="text-base font-medium text-gray-900">Order totaal</dt>
+                            <dd class="text-base font-medium text-gray-900">€{{cart.total_price}}</dd>
+                        </div>
+                    </dl>
+                        <div class="mt-6">
+                            <a href="{% url 'checkout' %}">
+                                <button type="submit"
+                                    class="w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50">Betalen</button>
+                            </a>
+                        </div>
+                </section>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -54,12 +54,11 @@
     <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-700">
         <div class="relative flex h-16 justify-between">
             <div class="relative z-10 flex px-2 lg:px-0">
-                <div class="flex flex-shrink-0 items-center">
-                    <!-- <img class="max-h-14 w-auto" src="{% static 'images/logo.png' %}"
-                        alt="Your Company"> -->
-
-                </div>
+                <a href="{% url 'home' %}" class="flex flex-shrink-0 items-center">
+                    <img class="max-h-14 w-auto" src="{% static 'images/logo.png' %}" alt="Your Company">
+                </a>
             </div>
+
             <div class="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
                 <div class="w-full sm:max-w-xs">
                     <form id="searchForm" onsubmit="submitSearch(event)">
@@ -124,16 +123,13 @@
 
                 <!-- Store cart icon -->
                 <!-- Store cart icon -->
-                <button type="button" 
-                    class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 w-10 h-10">
-                <a href="/cart/"
+                <button type="button" onclick="openFlyoutPanel()"
                     class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 w-10 h-10">
                     <span class="sr-only">Store Cart</span>
                     <i class="fas fa-shopping-cart fa-lg"></i>
                     <!-- Circle indicator -->
                     <span id="cart-count"
                         class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold"></span>
-                </a>
                 </button>
 
 
@@ -215,10 +211,72 @@
 
 {% endif %}
 
+<!-- Flyout panel -->
+<div class="relative z-10 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="flyout-panel">
+    <!-- Background backdrop, show/hide based on slide-over state. -->
+    <div class="fixed inset-0"></div>
+
+    <div class="fixed inset-0 overflow-hidden">
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                <div class="pointer-events-auto w-screen max-w-md">
+                    <div class="flex h-full flex-col bg-white py-6 shadow-xl">
+                        <div class="px-4 sm:px-6">
+                            <div class="flex items-start justify-between">
+                                <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Overzicht bestelling</h2>
+                                <div class="ml-3 flex h-7 items-center">
+                                    <button type="button"
+                                        class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                        onclick="closeFlyoutPanel()">
+                                        <span class="absolute -inset-2.5"></span>
+                                        <span class="sr-only">Close panel</span>
+                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative mt-6 flex-1 px-4 sm:px-6">
+                            <div class="mt-6">
+                                <a href="{% url 'cart' %}">
+                                    <button type="submit"
+                                        class="w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50">Winkelmandje</button>
+                                </a>
+                            </div>
+
+                            <div class="mt-2">
+                                                                <a href="{% url 'checkout' %}">
+
+                                <button type="button"
+                                    class="w-full rounded-md border border-customColor bg-white px-4 py-3 text-base font-medium text-customColor shadow-sm hover:text-white focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50">Naar kassa</button>
+                                                                </a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 
 <script>
+        // Function to open the flyout panel
+    function openFlyoutPanel() {
+        console.log('clicked')
+        document.getElementById('flyout-panel').style.display = 'block';
+    }
+
+        // Function to close the flyout panel
+    function closeFlyoutPanel() {
+        document.getElementById('flyout-panel').style.display = 'none';
+    }
+
     $(document).ready(function () {
         updateCartCount();
     });

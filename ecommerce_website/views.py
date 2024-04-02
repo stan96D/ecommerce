@@ -9,6 +9,10 @@ from ecommerce_website.services.shopping_cart_services.cart_item_view_service im
 from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
 from ecommerce_website.services.product_category_service.product_filter_service import ProductFilterService
 from ecommerce_website.classes.product_sorter import ProductSorter
+from ecommerce_website.classes.cart_item_view import CartView
+from ecommerce_website.classes.order import ContactInfo, Address, PaymentInfo, DeliveryInfo, OrderInfoService
+from ecommerce_website.services.checkout_service.checkout_service import CheckoutService
+from ecommerce_website.classes.session_manager import SessionManager
 
 from django.http import JsonResponse
 import json
@@ -24,12 +28,102 @@ def cart(request):
     cart_service = ShoppingCartService(request)
     items = cart_service.cart_items
 
+    cart_view = CartView(cart_service.total_price,
+                         cart_service.sub_price,
+                         cart_service.tax_price_high,
+                         cart_service.tax_price_low)
+    
     cart_item_view_service = CartItemViewService()
     cart_item_views = cart_item_view_service.generate(items)
 
     headerData = ProductCategoryService().get_all_active_head_product_categories()
+    print(cart_view.sub_price)
+    return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData, 'cart': cart_view})
 
-    return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData})
+
+def checkout(request):
+    
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+    order_service = OrderInfoService(request)
+    cart_service = ShoppingCartService(request)
+
+    cart_view = CartView(cart_service.total_price,
+                            cart_service.sub_price,
+                            cart_service.tax_price_high,
+                            cart_service.tax_price_low)
+
+    if request.method == 'POST':
+        attributes = request.POST.copy()
+    
+        first_name = attributes.get('first-name')
+        last_name = attributes.get('last-name')
+        email_address = attributes.get('email-address')
+        address = attributes.get('address')
+        house_number = attributes.get('house-number')
+        city = attributes.get('city')
+        postal_code = attributes.get('postal-code')
+        country = attributes.get('country')
+        phone = attributes.get('phone')
+
+        contact_info = ContactInfo(first_name, last_name, email_address, phone)
+        billing_address_info = Address(address, house_number, city, postal_code, country)
+        shipping_address_info = Address(
+            address, house_number, city, postal_code, country)
+
+        order = order_service.create_order(contact_info, billing_address_info, shipping_address_info)
+
+        return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order})
+    else:
+
+        order = order_service.get_order(request)
+
+        print("Order: ", order)
+
+        if order and order.is_valid():
+
+            return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order})
+
+        else:
+
+            headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+            cart_service = ShoppingCartService(request)
+
+            cart_view = CartView(cart_service.total_price,
+                                cart_service.sub_price,
+                                cart_service.tax_price_high,
+                                cart_service.tax_price_low)
+            
+            return render(request, "checkout.html", {'headerData': headerData, 'cart': cart_view})
+
+
+def confirm_order(request):
+
+    if request.method == 'POST':
+        attributes = request.POST.copy()
+        print(attributes)
+        headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+        cart_service = ShoppingCartService(request)
+
+        cart_view = CartView(cart_service.total_price,
+                            cart_service.sub_price,
+                            cart_service.tax_price_high,
+                            cart_service.tax_price_low)
+        
+        order_service = OrderInfoService(request)
+        order_info = order_service.get_order(request)
+
+        checkout_service = CheckoutService()
+        payment_info = PaymentInfo("iDeal", "Rabobank")
+        delivery_info = DeliveryInfo("Bezorging", "2024-3-30")
+
+        order = checkout_service.create_order(order_info, payment_info, delivery_info, cart_service.shopping_cart)
+
+        SessionManager.clear_session(request)
+
+        return render(request, "order_confirmation.html", {'headerData': headerData, 'cart': cart_view, 'order': order})
 
 def search_products(request):
 
@@ -52,8 +146,8 @@ def search_products(request):
     else:
         products = ProductService.get_products_by_search(search)
 
-        # if isSort:
-        #     products = ProductSorter().sort_products_by(products, sort_value)
+        if isSort:
+            products = ProductSorter().sort_products_by(products, sort_value)
 
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)

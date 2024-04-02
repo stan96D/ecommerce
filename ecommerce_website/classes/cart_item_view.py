@@ -12,3 +12,12 @@ class CartItemView:
         self.quantity = quantity
         self.stock = product.stock.quantity
         self.totalPrice = quantity * product.price
+
+
+class CartView:
+    def __init__(self, total_price, sub_price, tax_price_high, tax_price_low):
+
+        self.total_price = total_price
+        self.sub_price = sub_price
+        self.tax_price_high = tax_price_high
+        self.tax_price_low = tax_price_low

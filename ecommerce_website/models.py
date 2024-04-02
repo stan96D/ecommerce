@@ -8,12 +8,16 @@ class Product(models.Model):
     thumbnail = models.ImageField(
         upload_to='product_thumbnails/', null=True, blank=True)
     images = models.ManyToManyField('ProductImage', related_name='products')
-
+    tax = models.DecimalField(max_digits=5, decimal_places=2, default=9.00) 
 
     def __str__(self):
         return self.name
 
-
+    @property
+    def total_price_with_tax(self):
+        total_price = self.price + (self.price * self.tax_percentage / 100)
+        return total_price
+    
 class ProductAttributeType(models.Model):
     name = models.CharField(max_length=100)
 
@@ -66,11 +70,26 @@ class ProductFilter(models.Model):
 
     def __str__(self):
         return f"{self.name} (Category: {self.parent_category.name})"
+    
+
+class OrderLine(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    order = models.ForeignKey(
+        'Order', related_name='order_lines', on_delete=models.CASCADE, default=None)
 
 
-
-
-
+class Order(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    phone = models.CharField(max_length=20)
+    payment_information = models.TextField()
+    deliver_date = models.DateField()
+    deliver_method = models.CharField(max_length=100)
+    paid = models.BooleanField(default=False)
+    shipping_address = models.TextField()
+    billing_address = models.TextField()
 
 
 

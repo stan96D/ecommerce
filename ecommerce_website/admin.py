@@ -10,6 +10,7 @@ admin.site.register(ProductStock)
 admin.site.register(ProductImage)
 admin.site.register(ProductCategory)
 admin.site.register(ProductFilter)
-
+admin.site.register(Order)
+admin.site.register(OrderLine)
 
 

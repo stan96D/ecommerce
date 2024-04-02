@@ -27,5 +27,21 @@ class ShoppingCartService(AbstractShoppingCartService):
         return self.shopping_cart.total_price
     
     @property
+    def sub_price(self):
+        return self.shopping_cart.sub_total
+    
+    @property
+    def tax_price_high(self):
+        return self.shopping_cart.total_tax(21)
+    
+    @property
+    def tax_price_low(self):
+        return self.shopping_cart.total_tax(9)
+
+    @property
+    def count(self):
+        return len(self.shopping_cart.cart_items)
+    
+    @property
     def count(self):
         return len(self.shopping_cart.cart_items)
