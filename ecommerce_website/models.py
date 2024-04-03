@@ -52,7 +52,7 @@ class ProductSale(models.Model):
                 raise ValidationError(
                     "Another active sale already exists for this product")
             
-            
+
 class ProductAttributeType(models.Model):
     name = models.CharField(max_length=100)
 
@@ -65,6 +65,8 @@ class ProductCategory(models.Model):
     parent_category = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='subcategories')
     active = models.BooleanField(default=True)
+    thumbnail = models.ImageField(
+        upload_to='category_thumbnails/', null=True, blank=True)
 
     def __str__(self):
         if self.parent_category:

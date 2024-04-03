@@ -28,6 +28,55 @@ class ProductService(ProductServiceInterface):
             return None
         
     @staticmethod
+    def get_runner_products():
+        try:
+            products = Product.objects.filter(runner=True)
+            return list(products)
+        except Product.DoesNotExist:
+            return None
+        
+
+    @staticmethod
+    def get_runner_products_by_attributes(attributes):
+        try:
+
+            filters = defaultdict(set)
+
+            for key, value in attributes.items():
+                if ',' in value:
+                    values = value.split(',')
+                    filters[key].update(values)
+                else:
+                    filters[key].add(value)
+
+            print(filters)
+
+            products = Product.objects.filter(runner=True)
+
+            filtered_products = []
+            for product in products:
+                matches_any_attribute = False
+
+                for attr_name, attr_values in filters.items():
+
+                    for attr_value in attr_values:
+                        if product.attributes.filter(attribute_type__name__iexact=attr_name, value__iexact=attr_value).exists():
+                            matches_any_attribute = True
+                            break
+                    if matches_any_attribute:
+                        break
+                if matches_any_attribute:
+                    filtered_products.append(product)
+
+
+            print(filtered_products)
+            return filtered_products
+        except Product.DoesNotExist:
+            return None
+
+
+        
+    @staticmethod
     def get_products_by_attribute_from_category(attribute, category):
         try:
             product_attributes = ProductAttribute.objects.filter(

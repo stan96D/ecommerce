@@ -139,13 +139,21 @@
 
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             {% for category in headerData %}
-            
-            <a href="/products/{{category.name}}" id="dropdown-btn-{{ category.id }}"
+            {% if category.name == 'Hardlopers' %}
+            <a href="/runners" id="dropdown-btn-{{ category.id }}"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-3 px-4 text-sm font-medium"
+                >
+                {{ category.name }}
+            </a>
+            {% else %}
+            <a href="/products/{{ category.name }}" id="dropdown-btn-{{ category.id }}"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-3 px-4 text-sm font-medium"
                 onmouseover="showDropdown('{{ category.id }}')" onmouseout="hideDropdown('{{ category.id }}')">
                 {{ category.name }}
             </a>
+            {% endif %}
             {% endfor %}
+
         </nav>
 
             {% for header in headerData %}

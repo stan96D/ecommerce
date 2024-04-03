@@ -26,10 +26,11 @@ def home(request):
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     products = ProductService().get_all_runner_products()
-
+    active_categories = ProductCategoryService().get_all_active_head_product_categories()
+    
     view_products = ProductViewService().generate(products)
 
-    return render(request, "home.html", {'headerData': headerData, 'products': view_products})
+    return render(request, "home.html", {'headerData': headerData, 'runner_products_data': view_products, 'category_data': active_categories})
 
 def cart(request):
 
@@ -162,6 +163,43 @@ def search_products(request):
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData})
 
 
+def runner_products(request):
+    category = 'Hardlopers'
+    attributes = request.GET.copy()
+
+    isSort = 'tn_sort' in attributes
+    isFilter = 'tn_sort' not in attributes and len(
+        attributes) > 0 or 'tn_sort' in attributes and len(
+        attributes) > 1
+
+    if isSort:
+        sort_value = attributes.pop('tn_sort', None)[0]
+
+    if isFilter:
+        products = ProductService().get_runner_products_by_attributes(attributes)
+
+        if isSort:
+            products = ProductSorter().sort_products_by(products, sort_value)
+    else:
+        products = ProductService().get_runner_products()
+
+        if isSort:
+            products = ProductSorter().sort_products_by(products, sort_value)
+
+    productViewService = ProductViewService()
+    productViews = productViewService.generate(products)
+
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+    breadcrumb = [category]
+
+    categoryData = ProductCategoryService().get_product_category_by_name(category)
+
+    filterData = ProductFilterService().get_product_filters_by_category_name(category)
+
+    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
+
+
 def products_by_category(request, category):
 
     attributes = request.GET.copy()
@@ -183,7 +221,6 @@ def products_by_category(request, category):
 
         if isSort:
             products = ProductSorter().sort_products_by(products, sort_value)
-
 
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)

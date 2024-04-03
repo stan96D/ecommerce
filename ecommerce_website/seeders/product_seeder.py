@@ -8,21 +8,21 @@ class ProductSeeder:
     def seed():
         products_data = [
             {'name': 'Classen Skyline Sonolta Eiken Laminaat 56179',
-             'price': 16.95, 'thumbnail': 'thumbnails/vloer1.jpg'},
+             'price': 16.95, 'thumbnail': 'product_thumbnails/vloer1.jpg'},
             {'name': 'Meister Lindura HD 400-270 8923 Eik Authentic Greige',
-             'price': 79.15, 'thumbnail': 'thumbnails/vloer2.jpg'},
+             'price': 79.15, 'thumbnail': 'product_thumbnails/vloer2.jpg'},
             {'name': 'Quick-Step Impressive Ultra IMU1859',
-             'price': 49.99, 'thumbnail': 'thumbnails/vloer3.jpg'},
+             'price': 49.99, 'thumbnail': 'product_thumbnails/vloer3.jpg'},
             {'name': 'Pergo Sensation Authentiek Laminaat - Donker Eiken',
-             'price': 69.99, 'thumbnail': 'thumbnails/vloer4.jpg'},
+             'price': 69.99, 'thumbnail': 'product_thumbnails/vloer4.jpg'},
             {'name': 'BerryAlloc Spirit - Eik Blond',
-             'price': 54.50, 'thumbnail': 'thumbnails/vloer5.jpg', 'runner': True},
+             'price': 54.50, 'thumbnail': 'product_thumbnails/vloer5.jpg', 'runner': True},
             {'name': 'Kronotex Mammut Plus - Zilver Eik',
-             'price': 59.75, 'thumbnail': 'thumbnails/vloer6.jpg', 'runner': True},
+             'price': 59.75, 'thumbnail': 'product_thumbnails/vloer6.jpg', 'runner': True},
             {'name': 'Egger Kingsize V4 - Wit Eiken',
-             'price': 45.80, 'thumbnail': 'thumbnails/vloer7.jpg', 'runner': True},
+             'price': 45.80, 'thumbnail': 'product_thumbnails/vloer7.jpg', 'runner': True},
             {'name': 'Balterio Grande Wide - Vintage Eik',
-             'price': 65.25, 'thumbnail': 'thumbnails/vloer8.jpg', 'runner': True},
+             'price': 65.25, 'thumbnail': 'product_thumbnails/vloer8.jpg', 'runner': True},
         ]
 
         for data in products_data:
@@ -32,7 +32,7 @@ class ProductSeeder:
 class ProductSaleSeeder:
     @staticmethod
     def seed():
-        products = Product.objects.filter(runner=True)
+        products = Product.objects.filter()
         for product in products:
             if not ProductSale.objects.filter(product=product).exists():
                 if randint(1, 10) <= 3:
@@ -145,6 +145,7 @@ class ProductCategorySeeder:
                 'name': 'PVC',
                 'active': True,
                 'description': "PVC vloeren",
+                'thumbnail': 'category_thumbnails/pvc_category.webp',
                 'subcategories': [
                     {
                         'name': 'Kleur',
@@ -160,6 +161,7 @@ class ProductCategorySeeder:
                 'name': 'Laminaat',
                 'active': True,
                 'description': "Laminaat vloeren",
+                'thumbnail': 'category_thumbnails/laminaat_category.jpg',
                 'subcategories': [
                     {
                         'name': 'Kleur',
@@ -172,9 +174,18 @@ class ProductCategorySeeder:
                 ]
             },
             {
+                'name': 'Hardlopers',
+                'active': True,
+                'description': "De beste vloeren volgens klanten.",
+                'thumbnail': 'category_thumbnails/hardlopers_category.jpg',
+                'subcategories': [
+                ]
+            },
+            {
                 'name': 'Zoeken',
                 'active': False,
                 'description': "Vind de mooiste vloeren bij ons voor de goedkoopste prijs!",
+                'thumbnail': None,
                 'subcategories': []
             }
         ]
@@ -183,9 +194,10 @@ class ProductCategorySeeder:
             main_category_name = category_entry['name']
             active = category_entry['active']
             description = category_entry['description']
+            thumbnail = category_entry['thumbnail']
 
             main_category = ProductCategory.objects.create(
-                name=main_category_name, active=active, description=description)
+                name=main_category_name, active=active, description=description, thumbnail=thumbnail)
 
             for subcategory_entry in category_entry['subcategories']:
                 subcategory_name = subcategory_entry['name']
