@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
+from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 
 class Product(models.Model):
@@ -7,8 +9,10 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     thumbnail = models.ImageField(
         upload_to='product_thumbnails/', null=True, blank=True)
-    images = models.ManyToManyField('ProductImage', related_name='products')
+    images = models.ManyToManyField(
+        'ProductImage', related_name='products', blank=True)
     tax = models.DecimalField(max_digits=5, decimal_places=2, default=9.00) 
+    runner = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -18,6 +22,37 @@ class Product(models.Model):
         total_price = self.price + (self.price * self.tax / 100)
         return total_price
     
+
+class ProductSale(models.Model):
+    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    active = models.BooleanField(default=False)
+    percentage = models.DecimalField(
+        max_digits=5, decimal_places=2, default=0.00)
+    dealname = models.CharField(max_length=100)
+    begin_date = models.DateField(default=timezone.now)
+    end_date = models.DateField()
+
+    def __str__(self):
+        return f"Sale for {self.product.name}: {self.dealname}"
+
+    def save(self, *args, **kwargs):
+        if not self.pk:  
+            ProductSale.objects.filter(
+                product=self.product, active=True).update(active=False)
+        super().save(*args, **kwargs)
+
+    def clean(self):
+        if self.begin_date >= self.end_date:
+            raise ValidationError("Begin date must be before end date")
+
+        if self.active:
+            existing_active_sale = ProductSale.objects.filter(
+                product=self.product, active=True).first()
+            if existing_active_sale and existing_active_sale != self:
+                raise ValidationError(
+                    "Another active sale already exists for this product")
+            
+            
 class ProductAttributeType(models.Model):
     name = models.CharField(max_length=100)
 
@@ -30,7 +65,6 @@ class ProductCategory(models.Model):
     parent_category = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='subcategories')
     active = models.BooleanField(default=True)
-
 
     def __str__(self):
         if self.parent_category:

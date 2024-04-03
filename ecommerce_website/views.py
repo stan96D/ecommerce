@@ -1,7 +1,6 @@
 from ecommerce_website.services.product_service.product_service import ProductService
 from django.shortcuts import redirect, render
 from django.urls import reverse
-from ecommerce_website.models import Product
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.view_service.product_view_service import ProductViewService
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
@@ -9,7 +8,6 @@ from ecommerce_website.services.view_service.cart_item_view_service import CartI
 from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
 from ecommerce_website.services.product_filter_service.product_filter_service import ProductFilterService
 from ecommerce_website.classes.helpers.product_sorter import ProductSorter
-from ecommerce_website.classes.model_encapsulator.cart_item_view import CartView
 from ecommerce_website.classes.model.address_info import AddressInfo
 from ecommerce_website.classes.model.contact_info import ContactInfo
 from ecommerce_website.classes.model.payment_info import PaymentInfo
@@ -27,7 +25,11 @@ def home(request):
 
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-    return render(request, "home.html", {'headerData': headerData})
+    products = ProductService().get_all_runner_products()
+
+    view_products = ProductViewService().generate(products)
+
+    return render(request, "home.html", {'headerData': headerData, 'products': view_products})
 
 def cart(request):
 

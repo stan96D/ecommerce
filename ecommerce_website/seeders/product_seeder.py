@@ -1,7 +1,7 @@
-from ecommerce_website.models import ProductAttribute, ProductAttributeType, Product, ProductStock, ProductCategory, ProductFilter
-from random import randint, sample
+from ecommerce_website.models import ProductAttribute, ProductSale, ProductAttributeType, Product, ProductStock, ProductCategory, ProductFilter
+from random import randint, sample, choice
 from django.db import transaction
-
+from django.utils import timezone
 
 class ProductSeeder:
     @staticmethod
@@ -16,17 +16,40 @@ class ProductSeeder:
             {'name': 'Pergo Sensation Authentiek Laminaat - Donker Eiken',
              'price': 69.99, 'thumbnail': 'thumbnails/vloer4.jpg'},
             {'name': 'BerryAlloc Spirit - Eik Blond',
-             'price': 54.50, 'thumbnail': 'thumbnails/vloer5.jpg'},
+             'price': 54.50, 'thumbnail': 'thumbnails/vloer5.jpg', 'runner': True},
             {'name': 'Kronotex Mammut Plus - Zilver Eik',
-             'price': 59.75, 'thumbnail': 'thumbnails/vloer6.jpg'},
+             'price': 59.75, 'thumbnail': 'thumbnails/vloer6.jpg', 'runner': True},
             {'name': 'Egger Kingsize V4 - Wit Eiken',
-             'price': 45.80, 'thumbnail': 'thumbnails/vloer7.jpg'},
+             'price': 45.80, 'thumbnail': 'thumbnails/vloer7.jpg', 'runner': True},
             {'name': 'Balterio Grande Wide - Vintage Eik',
-             'price': 65.25, 'thumbnail': 'thumbnails/vloer8.jpg'},
-
+             'price': 65.25, 'thumbnail': 'thumbnails/vloer8.jpg', 'runner': True},
         ]
+
         for data in products_data:
             Product.objects.create(**data)
+
+
+class ProductSaleSeeder:
+    @staticmethod
+    def seed():
+        products = Product.objects.filter(runner=True)
+        for product in products:
+            if not ProductSale.objects.filter(product=product).exists():
+                if randint(1, 10) <= 3:
+                    active = choice([True, False])
+                    percentage = randint(5, 50)
+                    dealname = f"Spring Sale - {percentage}% Off"
+                    begin_date = timezone.now()
+                    end_date = begin_date + timezone.timedelta(days=30)
+
+                    ProductSale.objects.create(
+                        product=product,
+                        active=active,
+                        percentage=percentage,
+                        dealname=dealname,
+                        begin_date=begin_date,
+                        end_date=end_date
+                    )
 
 
 class ProductAttributeTypeSeeder:

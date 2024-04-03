@@ -110,3 +110,11 @@ class ProductService(ProductServiceInterface):
         except Product.DoesNotExist:
             return None
         
+    @staticmethod
+    def get_all_runner_products():
+        try:
+            products = Product.objects.filter(runner=True)
+            return list(products)
+        except Product.DoesNotExist:
+            return None
+        
