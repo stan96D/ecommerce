@@ -19,10 +19,14 @@ class ProductService(ProductServiceInterface):
         except Product.DoesNotExist:
             return None
         
+
     @staticmethod
     def get_products_by_attribute(attribute):
         try:
-            products = Product.objects.filter(attributes__value__iexact=attribute)
+            products = Product.objects.filter(
+                Q(attributes__value__iexact=attribute) |
+                Q(name__icontains=attribute)
+            ).distinct()  
             return list(products)
         except Product.DoesNotExist:
             return None

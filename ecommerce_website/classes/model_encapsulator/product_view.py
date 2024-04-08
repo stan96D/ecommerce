@@ -9,6 +9,7 @@ class ProductView:
         self.name = product.name
         self.price = product.price
         self.attributes = attributes_dict
+        print(product.thumbnail)
         self.thumbnail = product.thumbnail
         self.images = product.images
         self.quantity = product.stock.quantity

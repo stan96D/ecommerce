@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <form action="{% url 'add_to_cart' %}" method="post" onsubmit="return validateForm()">
+                <form action="{% url 'add_to_cart' %}" id="add-to-cart-form" method="post" onsubmit="return validateForm()">
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                 
@@ -122,7 +122,8 @@
                         </div>
                     </div>
 
-                
+                    <p id="quantity-error" class="hidden text-red-500 text-sm mt-1">Vul alsjeblieft een waarde in.</p>
+
                     <!-- Submit button -->
                     <div class="mt-10 flex">
                         <button type="submit"
@@ -187,6 +188,14 @@
         </div>
     </div>
 </div>
-
+<script>
+    document.getElementById('add-to-cart-form').addEventListener('submit', function (event) {
+        console.log("ksandaskd")
+            if (!document.getElementById('quantity').value) {
+                event.preventDefault();
+                document.getElementById('quantity-error').classList.remove('hidden');
+            }
+        });
+</script>
 {% endblock %}
 
