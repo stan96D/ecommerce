@@ -32,6 +32,7 @@ def home(request):
 
     return render(request, "home.html", {'headerData': headerData, 'runner_products_data': view_products, 'category_data': active_categories})
 
+
 def cart(request):
 
     headerData = ProductCategoryService().get_all_active_head_product_categories()
@@ -125,7 +126,6 @@ def confirm_order(request):
 
         return redirect(reverse('order_confirmation') + f'?order_id={order.id}')
     
-
 def search_products(request):
 
     attributes = request.GET.copy()
@@ -138,8 +138,10 @@ def search_products(request):
 
     search = request.GET.get('q')
 
+    products_for_filters = ProductService.get_products_by_search(search)
+
     if isFilter:
-        products = ProductService.get_products_by_attributes_and_values(
+        products = ProductService.get_products_by_attributes_and_search(
             attributes, search)
         if isSort:
             products = ProductSorter().sort_products_by(products, sort_value)
@@ -158,7 +160,7 @@ def search_products(request):
 
     categoryData = ProductCategoryService().get_product_category_by_name(category)
 
-    filterData = ProductFilterService().get_product_filters_by_category_name(category)
+    filterData = ProductFilterService().get_products_filters_for_search(products_for_filters)
 
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData})
 
@@ -268,8 +270,8 @@ def products_by_subcategory(request, category, subcategory):
 
     categoryData = ProductCategoryService().get_product_category_by_name(subcategory)
 
-    filterData = ProductFilterService().get_product_filters_by_category_name(category)
-
+    filterData = ProductFilterService().get_nested_product_filters_by_category_name(
+        category, subcategory)
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
 
 
@@ -305,10 +307,10 @@ def products_by_attribute(request, category, subcategory, attribute):
 
     categoryData = ProductCategoryService().get_product_category_by_name(attribute)
 
-    filterData = ProductFilterService().get_product_filters_by_category_name(category)
+    filterData = ProductFilterService().get_double_nested_product_filters_by_category_name(
+        category, subcategory, attribute)
 
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
-
 
 
 def product_detail(request, id=None):

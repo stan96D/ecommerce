@@ -1,12 +1,11 @@
 from django.core.management.base import BaseCommand
 from django.db import connection
-from ecommerce_website.models import Product, ProductSale, ProductAttributeType, ProductAttribute, Order, OrderLine, ProductStock, ProductCategory, ProductFilter
-import os
-from django.conf import settings
+from ecommerce_website.seeders.test_seeder import *
+from ecommerce_website.models import *
 
 
 class Command(BaseCommand):
-    help = 'Delete all data from the database'
+    help = 'Seed initial data into the database'
 
     def handle(self, *args, **options):
 
@@ -42,13 +41,13 @@ class Command(BaseCommand):
             cursor.execute(
                 "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productsale';")
 
-            media_directory = os.path.join(settings.MEDIA_ROOT, 'product_thumbnails')
-            for filename in os.listdir(media_directory):
-                file_path = os.path.join(media_directory, filename)
-                try:
-                    if os.path.isfile(file_path):
-                        os.unlink(file_path)
-                except Exception as e:
-                        print(f"Failed to delete {file_path}. Reason: {e}")
+        # Seed initial data
+        TestProductSeeder.seed()
+        TestProductSaleSeeder.seed()
+        TestProductAttributeTypeSeeder.seed()
+        TestProductAttributeSeeder.seed()
+        TestProductStockSeeder.seed()
+        TestProductCategorySeeder.seed()
+        TestProductFilterSeeder.seed()
 
-            self.stdout.write(self.style.SUCCESS('Seed data and product thumbnails successfully deleted'))
+        self.stdout.write(self.style.SUCCESS('Seed data successfully added'))

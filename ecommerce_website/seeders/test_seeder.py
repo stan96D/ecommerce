@@ -2,8 +2,16 @@ from ecommerce_website.models import ProductAttribute, ProductSale, ProductAttri
 from random import randint, sample, choice
 from django.db import transaction
 from django.utils import timezone
+from abc import ABC, abstractmethod
 
-class ProductSeeder:
+
+class TestSeederInterface(ABC):
+    @abstractmethod
+    def seed():
+        pass
+
+
+class TestProductSeeder(TestSeederInterface):
     @staticmethod
     def seed():
         products_data = [
@@ -29,7 +37,7 @@ class ProductSeeder:
             Product.objects.create(**data)
 
 
-class ProductSaleSeeder:
+class TestProductSaleSeeder(TestSeederInterface):
     @staticmethod
     def seed():
         products = Product.objects.filter()
@@ -52,7 +60,7 @@ class ProductSaleSeeder:
                     )
 
 
-class ProductAttributeTypeSeeder:
+class TestProductAttributeTypeSeeder(TestSeederInterface):
     @staticmethod
     def seed():
         attribute_types = ['Artikelnummer', 'Levereenheid', 'Type', 'Merk', 'Kleur']
@@ -60,7 +68,7 @@ class ProductAttributeTypeSeeder:
             ProductAttributeType.objects.create(name=name)
 
 
-class ProductAttributeSeeder:
+class TestProductAttributeSeeder(TestSeederInterface):
     @staticmethod
     def seed():
         product_attributes_data = [
@@ -128,7 +136,7 @@ class ProductAttributeSeeder:
             ProductAttribute.objects.create(**data)
 
 
-class ProductStockSeeder:
+class TestProductStockSeeder(TestSeederInterface):
     @staticmethod
     def seed():
         products = Product.objects.all()
@@ -137,7 +145,7 @@ class ProductStockSeeder:
             ProductStock.objects.create(product=product, quantity=quantity)
 
 
-class ProductCategorySeeder:
+class TestProductCategorySeeder(TestSeederInterface):
     @staticmethod
     def seed():
         category_data = [
@@ -209,27 +217,29 @@ class ProductCategorySeeder:
                         name=subsubcategory_name, parent_category=subcategory, active=True)
 
 
-
-class ProductFilterSeeder:
+class TestProductFilterSeeder(TestSeederInterface):
     @staticmethod
     def seed():
-        categories = ProductCategory.objects.all()
-        product_attributes = ProductAttribute.objects.all()
         product_attribute_types = ProductAttributeType.objects.all()
-        for category in categories:
 
+        for category in ProductCategory.objects.all():
             for attribute_type in product_attribute_types:
+                associated_attributes = ProductAttribute.objects.filter(
+                    attribute_type=attribute_type,
+                    product__category=category
+                )
 
-                with transaction.atomic():
-                    product_filter = ProductFilter.objects.create(
-                        name=attribute_type.name,
-                        parent_category=category
-                    )
+                if associated_attributes.exists():
+                    with transaction.atomic():
+                        product_filter = ProductFilter.objects.create(
+                            name=attribute_type.name,
+                            parent_category=category
+                        )
 
-                    for product_attribute in product_attributes:
-                        if attribute_type.id == product_attribute.attribute_type.id:
+                        for product_attribute in associated_attributes:
                             if not product_filter.product_attributes.filter(value=product_attribute.value).exists():
-                                product_filter.product_attributes.add(product_attribute)
+                                product_filter.product_attributes.add(
+                                    product_attribute)
 
 
 

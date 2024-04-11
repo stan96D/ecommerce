@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.db import connection
-from ecommerce_website.seeders.product_seeder import ProductSeeder, ProductSaleSeeder, ProductAttributeTypeSeeder, ProductAttributeSeeder, ProductFilterSeeder, ProductStockSeeder, ProductCategorySeeder
-from ecommerce_website.models import Product, ProductSale, ProductAttributeType, ProductAttribute, Order, OrderLine, ProductStock, ProductCategory, ProductFilter
+from ecommerce_website.seeders.real_seeder import *
+from ecommerce_website.models import *
 
 
 class Command(BaseCommand):
@@ -42,12 +42,9 @@ class Command(BaseCommand):
                 "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productsale';")
 
         # Seed initial data
-        ProductSeeder.seed()
-        ProductSaleSeeder.seed()
-        ProductAttributeTypeSeeder.seed()
-        ProductAttributeSeeder.seed()
-        ProductStockSeeder.seed()
-        ProductCategorySeeder.seed()
-        ProductFilterSeeder.seed()
+        RealProductDataSeeder.seed()
+        RealProductSaleSeeder.seed()
+        RealProductCategorySeeder.seed()
+        RealProductFilterSeeder.seed()
 
         self.stdout.write(self.style.SUCCESS('Seed data successfully added'))

@@ -22,6 +22,12 @@ class Product(models.Model):
         total_price = self.price + (self.price * self.tax / 100)
         return total_price
     
+    @property
+    def search_string(self):
+        attribute_values = self.attributes.values_list('value', flat=True)
+        attribute_string = ' '.join(attribute_values)
+        return f"{self.name} {attribute_string}"
+    
 
 class ProductSale(models.Model):
     product = models.OneToOneField(Product, on_delete=models.CASCADE)
@@ -102,10 +108,15 @@ class ProductFilter(models.Model):
     name = models.CharField(max_length=100)
     product_attributes = models.ManyToManyField(ProductAttribute)
     parent_category = models.ForeignKey(
-        ProductCategory, on_delete=models.CASCADE)
+        ProductCategory, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.name} (Category: {self.parent_category.name})"
+        if self.parent_category:
+            return f"{self.name} (Category: {self.parent_category.name})"
+
+        else:
+
+            return f"{self.name}"
     
 
 class OrderLine(models.Model):
