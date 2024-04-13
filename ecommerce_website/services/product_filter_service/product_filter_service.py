@@ -1,6 +1,11 @@
+from collections import defaultdict
+from django.db.models import Count
 from ecommerce_website.models import *
 from ecommerce_website.services.product_filter_service.base_product_filter_service import ProductFilterServiceInterface
 from django.db.models import Q
+from ecommerce_website.classes.model_encapsulator.product_filter_view import *
+from ecommerce_website.services.view_service.product_filter_service import *
+import time
 
 class ProductFilterService(ProductFilterServiceInterface):
     @staticmethod
@@ -20,51 +25,70 @@ class ProductFilterService(ProductFilterServiceInterface):
     @staticmethod
     def get_product_filters_by_category_name(product_category_name):
         try:
-            return ProductFilter.objects.filter(parent_category__name=product_category_name)
+            product_filters = ProductFilter.objects.filter(parent_category__name=product_category_name)
+
+            matched_filters_dict = {}
+            for filter_obj in product_filters:
+
+                for attribute in filter_obj.product_attributes.all():
+                    
+                    if filter_obj.name in matched_filters_dict:
+                        matched_filters_dict[filter_obj.name].append(
+                        attribute.value)
+
+                    else: 
+                        matched_filters_dict[filter_obj.name] = [
+                            attribute.value]
+
+            product_filter_view_service = ProductFilterViewService()
+            product_filter_views = product_filter_view_service.generate(
+                matched_filters_dict.items())
+            return product_filter_views
         except ProductFilter.DoesNotExist:
             return None
+
+
+
 
     @staticmethod
     def get_products_filters_for_search(products):
         try:
+
             product_attributes = ProductAttribute.objects.filter(
                 product__in=products)
 
             search_filters = ProductFilter.objects.filter(
                 parent_category__name="Zoeken")
 
-            matched_filters = []
-            used_filter_names = []
-            id = 1
 
-            for filter in search_filters:
+            product_attributes_by_type = defaultdict(list)
+            for attribute in product_attributes:
+                if attribute.value not in product_attributes_by_type[attribute.attribute_type]:
+                    product_attributes_by_type[attribute.attribute_type].append(
+                        attribute.value)
 
-                for product_attribute in product_attributes:
-                    if len(filter.product_attributes.filter(value=product_attribute.value)) == 1:
-                        if product_attribute.attribute_type in used_filter_names:
+            matched_filters = defaultdict(list)
 
-                            existing_filter = matched_filters[product_attribute.attribute_type]
-                            used_filter_names.append(
-                                product_attribute.attribute_type)
-                        else:
-                            new_filter = ProductFilter(
-                                id=id,
-                                name=product_attribute.attribute_type
-                                )
-                            print(new_filter)
+            for search_filter in search_filters:
+                filter_attribute_values = {attr_type: values for attr_type,
+                                        values in product_attributes_by_type.items() if attr_type.name == search_filter.name}
 
-                            new_filter.product_attributes.add(product_attribute)
-                            used_filter_names.append(
-                                product_attribute.attribute_type)
-                            matched_filters.append(new_filter)
-                            id += 1
+                if filter_attribute_values:
+                    all_attribute_values = [
+                        value for values_list in filter_attribute_values.values() for value in values_list]
+                    matched_filters[search_filter.name] = all_attribute_values
 
 
-            return matched_filters
+            product_filter_view_service = ProductFilterViewService()
+            product_filter_views = product_filter_view_service.generate(
+                matched_filters.items())
+
+
+            return product_filter_views
+
         except ProductFilter.DoesNotExist:
             return None
 
-    # Create ProductFilterView
 
     @staticmethod
     def get_product_filters_by_product_search(products):
@@ -94,8 +118,7 @@ class ProductFilterService(ProductFilterServiceInterface):
         
     @staticmethod
     def get_nested_product_filters_by_category_name(category_name, product_category_name):
-        print(category_name
-              , product_category_name)
+
         try:
             filters = ProductFilter.objects.filter(
                 parent_category__name=product_category_name)
@@ -103,7 +126,24 @@ class ProductFilterService(ProductFilterServiceInterface):
                 filters = filters.filter(
                     parent_category__parent_category__name=category_name)
                 print(filters)
-            return filters
+
+            matched_filters_dict = {}
+            for filter_obj in filters:
+
+                for attribute in filter_obj.product_attributes.all():
+
+                    if filter_obj.name in matched_filters_dict:
+                        matched_filters_dict[filter_obj.name].append(
+                            attribute.value)
+
+                    else:
+                        matched_filters_dict[filter_obj.name] = [
+                            attribute.value]
+
+            product_filter_view_service = ProductFilterViewService()
+            product_filter_views = product_filter_view_service.generate(
+                matched_filters_dict.items())
+            return product_filter_views
         except ProductFilter.DoesNotExist:
             return None
         
@@ -118,7 +158,24 @@ class ProductFilterService(ProductFilterServiceInterface):
             if category_name:
                 filters = filters.filter(
                     parent_category__parent_category__parent_category__name=category_name)
-            return filters
+                
+            matched_filters_dict = {}
+            for filter_obj in filters:
+
+                for attribute in filter_obj.product_attributes.all():
+
+                    if filter_obj.name in matched_filters_dict:
+                        matched_filters_dict[filter_obj.name].append(
+                            attribute.value)
+
+                    else:
+                        matched_filters_dict[filter_obj.name] = [
+                            attribute.value]
+
+            product_filter_view_service = ProductFilterViewService()
+            product_filter_views = product_filter_view_service.generate(
+                matched_filters_dict.items())
+            return product_filter_views
         except ProductFilter.DoesNotExist:
             return None
 

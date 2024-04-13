@@ -75,6 +75,7 @@
       <div class="hidden lg:block">
         <form class="space-y-5 divide-y divide-gray-200">
           {% for product_filter in filterData %}
+          
           <div class="pt-5">
             <fieldset>
               <div>
@@ -89,13 +90,13 @@
               </div>
 
               <div id="{{ product_filter.name }}" class="filter-container space-y-3 pt-6 hidden">
-                {% for product_attribute in product_filter.product_attributes.all %}
+                {% for product_attribute in product_filter.product_attributes %}
                 <div class="flex items-center">
-                  <input id="attr-{{ product_attribute.id }}" name="{{ product_filter.name }}"
-                    value="{{ product_attribute.value }}" type="checkbox"
+                  <input id="attr-{{ product_attribute }}" name="{{ product_filter.name }}"
+                    value="{{ product_attribute }}" type="checkbox"
                     class="filter-checkbox h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-customColor"
                     onclick="executeSearch()">
-                  <label for="attr-{{ product_attribute.id }}" class="ml-3 text-sm text-gray-600">{{ product_attribute.value }}</label>
+                  <label for="attr-{{ product_attribute }}" class="ml-3 text-sm text-gray-600">{{ product_attribute }}</label>
                 </div>
                 {% endfor %}
               </div>

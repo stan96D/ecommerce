@@ -126,12 +126,15 @@ def confirm_order(request):
 
         return redirect(reverse('order_confirmation') + f'?order_id={order.id}')
     
+import time
 def search_products(request):
+    start_time = time.time()  # Record the start time
 
     attributes = request.GET.copy()
 
     isSort = 'tn_sort' in attributes
-    isFilter = ('tn_sort' not in attributes and 'q' not in attributes and len(attributes) > 0) or ('tn_sort' in attributes and 'q' not in attributes and len(attributes) > 1) or ('tn_sort' not in attributes and 'q' in attributes and len(attributes) > 1) or ('tn_sort' in attributes and 'q' in attributes and len(attributes) > 2)
+    isFilter = ('tn_sort' not in attributes and 'q' not in attributes and len(attributes) > 0) or ('tn_sort' in attributes and 'q' not in attributes and len(attributes) > 1) or (
+        'tn_sort' not in attributes and 'q' in attributes and len(attributes) > 1) or ('tn_sort' in attributes and 'q' in attributes and len(attributes) > 2)
 
     if isSort:
         sort_value = attributes.pop('tn_sort', None)[0]
@@ -161,6 +164,10 @@ def search_products(request):
     categoryData = ProductCategoryService().get_product_category_by_name(category)
 
     filterData = ProductFilterService().get_products_filters_for_search(products_for_filters)
+    end_time = time.time()  # Record the end time
+    execution_time = end_time - start_time  # Calculate the elapsed time
+    print("Search execution time:", execution_time, "seconds")
+
 
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData})
 
