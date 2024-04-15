@@ -334,8 +334,8 @@
 
     function submitSearch(event) {
         event.preventDefault();
-        const searchInput = document.getElementById('search').value.trim(); // Trim to remove leading/trailing whitespace
-        if (searchInput) { // Check if searchInput is not empty
+        const searchInput = document.getElementById('search').value.trim(); 
+        if (searchInput) {
             localStorage.setItem('searchInput', searchInput);
             window.location.href = '/search/?q=' + encodeURIComponent(searchInput);
         }

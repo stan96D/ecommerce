@@ -2,6 +2,7 @@ from ecommerce_website.models import Product, ProductAttribute
 from ecommerce_website.services.product_service.base_product_service import ProductServiceInterface
 from django.db.models import Q
 from collections import defaultdict
+from django.db.models import Exists, OuterRef
 
 class ProductService(ProductServiceInterface):
     @staticmethod
@@ -102,7 +103,7 @@ class ProductService(ProductServiceInterface):
         
 
     @staticmethod
-    def get_products_by_attributes_and_values(attributes, category):
+    def get_products_by_attributes_and_values(attributes, category_data):
         try:    
 
             filters = defaultdict(set)
@@ -114,36 +115,59 @@ class ProductService(ProductServiceInterface):
                 else:
                     filters[key].add(value)
 
-            query = Q()
-
+            filtered_products = Product.objects.filter(
+                        attr_filter).distinct()
+            
             for attr_name, attr_values in filters.items():
-                attr_filter = Q(
-                    attribute_type__name__iexact=attr_name, value__in=attr_values)
-                query |= attr_filter
 
-            product_attributes = ProductAttribute.objects.filter(query).distinct()
+                attr_filter = Q(attributes__value__in=attr_values,
+                                    attributes__attribute_type__name=attr_name)
+                filtered_products = filtered_products.filter(attr_filter).distinct()
+      
 
-            unique_product_ids = set()
+            categories = ProductService().return_nested_categories(category_data)
 
-            unique_products = []
-            for product_attribute in product_attributes:
-                product_id = product_attribute.product.id
-                if product_id not in unique_product_ids:
+            index = 1
 
-                    if product_attribute.product.attributes.filter(value__iexact=category).exists():
-                        unique_product_ids.add(product_id)
-                        unique_products.append(product_attribute.product)
+            for category in categories:
 
-            print(unique_products)
-            return unique_products
-        except ProductAttribute.DoesNotExist:
+                if index == 2:
+
+                    attr_filter = Q(attributes__attribute_type__name=category.name)
+                    filtered_products = filtered_products.filter(
+                        attr_filter).distinct()
+                else:
+                    attr_filter = Q(attributes__value__in=[category.name])
+                    filtered_products = filtered_products.filter(
+                                attr_filter).distinct()
+
+                index += 1 
+
+            return filtered_products
+        except Product.DoesNotExist:
             return None
         
 
     @staticmethod
-    def get_products_by_attributes_and_search(attributes, search):
+    def return_nested_categories(category, returned_categories=None):
+        if returned_categories is None:
+            returned_categories = []
+
+        returned_categories.append(category)
+
+        if category.parent_category:
+            ProductService.return_nested_categories(
+                category.parent_category, returned_categories)
+
+        return returned_categories[::-1]
+    
+
+    @staticmethod
+    def get_products_by_attributes_and_search(attributes, search_string):
         try:
+            print("SEARCH_STRING", search_string)
             filters = defaultdict(set)
+
             for key, value in attributes.items():
                 if ',' in value:
                     values = value.split(',')
@@ -151,48 +175,43 @@ class ProductService(ProductServiceInterface):
                 else:
                     filters[key].add(value)
 
-            attribute_query = Q()
+            filtered_products = Product.objects.all()
+            
             for attr_name, attr_values in filters.items():
-                attr_filter = Q(
-                    attribute_type__name__iexact=attr_name, value__in=attr_values)
-                attribute_query |= attr_filter
 
-            product_attributes = ProductAttribute.objects.filter(
-                attribute_query).distinct()
+                attr_filter = Q(attributes__value__in=attr_values,
+                                    attributes__attribute_type__name=attr_name)
+                filtered_products = filtered_products.filter(
+                        attr_filter).distinct()
 
-            unique_product_ids = set()
-
-            unique_products = []
-
-            for product_attribute in product_attributes:
-                product_id = product_attribute.product.id
-                if product_id not in unique_product_ids:
-
-                    product_search_string = product_attribute.product.search_string.lower()
-                    search_terms = search.split()
-                    if all(term.lower() in product_search_string for term in search_terms):
-
-                        unique_product_ids.add(product_id)
-                        unique_products.append(product_attribute.product)
-
-            return unique_products
-        except ProductAttribute.DoesNotExist:
+            filtered_products = ProductService().__filter_products_on_search__(
+                filtered_products, search_string)
+            
+            return filtered_products
+        except Product.DoesNotExist:
             return None
 
+    @staticmethod
+    def __filter_products_on_search__(products, search_string):
+
+        search_words = search_string.split()
+
+        filtered_products = []
+        for product in products:
+            product_search_string = product.search_string.lower()
+            if all(term.lower() in product_search_string for term in search_words):
+                filtered_products.append(product)
+
+        return filtered_products
 
     @staticmethod
     def get_products_by_search(search_string):
         try:
 
-            search_words = search_string.split()
-
             products = Product.objects.all()
 
-            filtered_products = []
-            for product in products:
-                product_search_string = product.search_string.lower()
-                if all(term.lower() in product_search_string for term in search_words):
-                    filtered_products.append(product)
+            filtered_products = ProductService().__filter_products_on_search__(
+                products, search_string)
 
             return filtered_products
         except Product.DoesNotExist:

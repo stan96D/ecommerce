@@ -126,9 +126,8 @@ def confirm_order(request):
 
         return redirect(reverse('order_confirmation') + f'?order_id={order.id}')
     
-import time
+
 def search_products(request):
-    start_time = time.time()  # Record the start time
 
     attributes = request.GET.copy()
 
@@ -144,6 +143,7 @@ def search_products(request):
     products_for_filters = ProductService.get_products_by_search(search)
 
     if isFilter:
+        attributes.pop('q', None)
         products = ProductService.get_products_by_attributes_and_search(
             attributes, search)
         if isSort:
@@ -164,10 +164,6 @@ def search_products(request):
     categoryData = ProductCategoryService().get_product_category_by_name(category)
 
     filterData = ProductFilterService().get_products_filters_for_search(products_for_filters)
-    end_time = time.time()  # Record the end time
-    execution_time = end_time - start_time  # Calculate the elapsed time
-    print("Search execution time:", execution_time, "seconds")
-
 
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData})
 
@@ -221,8 +217,11 @@ def products_by_category(request, category):
     if isSort:
         sort_value = attributes.pop('tn_sort', None)[0]
 
+    categoryData = ProductCategoryService().get_product_category_by_name(category)
+
     if isFilter:
-        products = ProductService.get_products_by_attributes_and_values(attributes, category)
+        products = ProductService.get_products_by_attributes_and_values(
+            attributes, categoryData)
         if isSort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
@@ -238,8 +237,6 @@ def products_by_category(request, category):
     
     breadcrumb = [category]
     
-    categoryData = ProductCategoryService().get_product_category_by_name(category)
-
     filterData = ProductFilterService().get_product_filters_by_category_name(category)
 
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
@@ -257,9 +254,11 @@ def products_by_subcategory(request, category, subcategory):
     if isSort:
         sort_value = attributes.pop('tn_sort', None)[0]
 
+    categoryData = ProductCategoryService().get_product_category_by_name(subcategory)
+
     if isFilter:
         products = ProductService.get_products_by_attributes_and_values(
-            attributes, category)
+            attributes, categoryData)
         if isSort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
@@ -274,8 +273,6 @@ def products_by_subcategory(request, category, subcategory):
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     breadcrumb = [category, subcategory]
-
-    categoryData = ProductCategoryService().get_product_category_by_name(subcategory)
 
     filterData = ProductFilterService().get_nested_product_filters_by_category_name(
         category, subcategory)
@@ -293,10 +290,12 @@ def products_by_attribute(request, category, subcategory, attribute):
 
     if isSort:
         sort_value = attributes.pop('tn_sort', None)[0]
+    print(attribute)
+    categoryData = ProductCategoryService().get_product_category_by_name(attribute)
 
     if isFilter:
         products = ProductService.get_products_by_attributes_and_values(
-            attributes, attribute)
+            attributes, categoryData)
         if isSort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
@@ -311,8 +310,6 @@ def products_by_attribute(request, category, subcategory, attribute):
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     breadcrumb = [category, subcategory, attribute]
-
-    categoryData = ProductCategoryService().get_product_category_by_name(attribute)
 
     filterData = ProductFilterService().get_double_nested_product_filters_by_category_name(
         category, subcategory, attribute)
