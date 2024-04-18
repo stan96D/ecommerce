@@ -105,7 +105,7 @@ class ProductService(ProductServiceInterface):
     @staticmethod
     def get_products_by_attributes_and_values(attributes, category_data):
         try:    
-
+            print(attributes, category_data)
             filters = defaultdict(set)
 
             for key, value in attributes.items():
@@ -114,10 +114,9 @@ class ProductService(ProductServiceInterface):
                     filters[key].update(values)
                 else:
                     filters[key].add(value)
+                    
+            filtered_products = Product.objects.all()
 
-            filtered_products = Product.objects.filter(
-                        attr_filter).distinct()
-            
             for attr_name, attr_values in filters.items():
 
                 attr_filter = Q(attributes__value__in=attr_values,

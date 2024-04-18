@@ -14,11 +14,11 @@ class RealSeederInterface(ABC):
 class RealProductDataSeeder(RealSeederInterface):
 
     def seed():
-        with open('ecommerce_website/db_mapper/data/beautifloor.json', 'r') as file:
+        with open('ecommerce_website/db_mapper/data/finalized.json', 'r') as file:
             json_data = json.load(file)
-
+        print(json_data)
         database_service = SQLImportService()
-        database_service.import_product_data(json_data['products'])
+        database_service.import_product_data(json_data)
 
 
 class RealProductSaleSeeder(RealSeederInterface):
@@ -49,14 +49,14 @@ class RealProductCategorySeeder(RealSeederInterface):
     def seed():
         category_data = [
             {
-                'name': 'PVC Design',
+                'name': 'PVC',
                 'active': True,
                 'description': "PVC vloeren",
                 'thumbnail': 'category_thumbnails/pvc_category.webp',
                 'subcategories': [
                     {
                         'name': 'Merk',
-                        'subcategories': ['Beautifloor']
+                        'subcategories': ['Beautifloor', 'Mflor']
                     },
                     {
                         'name': 'Collectie',
@@ -65,6 +65,10 @@ class RealProductCategorySeeder(RealSeederInterface):
                     {
                         'name': 'Groef',
                         'subcategories': ['V4 micro', 'V4', 'Geen']
+                    },
+                    {
+                        'name': 'Vloertype',
+                        'subcategories': ['Click', 'Dryback']
                     }
                 ]
             },
@@ -76,7 +80,7 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'subcategories': [
                     {
                         'name': 'Merk',
-                        'subcategories': ['Beautifloor']
+                        'subcategories': ['Beautifloor', 'Mflor']
                     },
                     {
                         'name': 'Collectie',
@@ -96,7 +100,7 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'subcategories': [
                     {
                         'name': 'Merk',
-                        'subcategories': ['Beautifloor']
+                        'subcategories': ['Beautifloor', 'Mflor']
                     },
                     {
                         'name': 'Collectie',
@@ -109,34 +113,14 @@ class RealProductCategorySeeder(RealSeederInterface):
                 ]
             },
             {
-                'name': 'Rigid PVC',
-                'active': True,
-                'description': "Rigid PVC vloeren",
-                'thumbnail': 'category_thumbnails/rigid-pvc-category.webp',
-                'subcategories': [
-                    {
-                        'name': 'Merk',
-                        'subcategories': ['Beautifloor']
-                    },
-                    {
-                        'name': 'Collectie',
-                        'subcategories': ['Pescado', 'Rios']
-                    },
-                    {
-                        'name': 'Groef',
-                        'subcategories': ['V4 micro', 'V4', 'Geen']
-                    }
-                ]
-            },
-            {
-                'name': 'Klik Vinyl',
+                'name': 'Vinyl',
                 'active': True,
                 'description': "Klik Vinyl vloeren",
                 'thumbnail': 'category_thumbnails/klik-vinyl-category.jpg',
                 'subcategories': [
                     {
                         'name': 'Merk',
-                        'subcategories': ['Beautifloor']
+                        'subcategories': ['Beautifloor', 'Mflor']
                     },
                     {
                         'name': 'Collectie',
