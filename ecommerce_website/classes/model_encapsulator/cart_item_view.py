@@ -6,12 +6,12 @@ class CartItemView:
             
         self.id = product.id
         self.name = product.name
-        self.price = product.price
+        self.price = product.selling_price
         self.attributes = attributes_dict
         self.thumbnail = product.thumbnail
         self.quantity = quantity
         self.stock = product.stock.quantity
-        self.totalPrice = quantity * product.price
+        self.totalPrice = quantity * product.selling_price
 
 
 class CartView:

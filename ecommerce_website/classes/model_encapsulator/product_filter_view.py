@@ -5,6 +5,4 @@ class ProductFilterView:
         self.name = product_filter_name
         self.product_attributes = product_attributes
 
-        print(self.product_attributes)
-
 

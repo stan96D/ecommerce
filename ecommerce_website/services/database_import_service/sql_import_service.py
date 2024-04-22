@@ -9,7 +9,7 @@ from io import BytesIO
 import requests
 from io import BytesIO
 from django.core.files import File
-
+from ecommerce_website.settings.webshop_config import *
 
 class SQLImportService(DatabaseImportServiceInterface):
     def import_product_data(self, json):
@@ -46,7 +46,11 @@ class SQLImportService(DatabaseImportServiceInterface):
         image_url = product_data['thumbnail']
         response = requests.get(image_url)
 
-        product = Product.objects.create(name=product_data["name"])
+        config = WebShopConfig()
+        selling_percentage = config.selling_percentage
+
+        product = Product.objects.create(
+            name=product_data["name"], price=product_data["price"], selling_percentage=selling_percentage)
 
         if response.status_code == 200:
             image_name = image_url.split('/')[-1]

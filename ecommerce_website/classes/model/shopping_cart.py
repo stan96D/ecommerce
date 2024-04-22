@@ -1,9 +1,12 @@
 from ecommerce_website.services.product_service.product_service import ProductService
 from decimal import Decimal
+from ecommerce_website.classes.model.base_shopping_cart_service import *
 
-class ShoppingCart:
+class ShoppingCart(ShoppingCartInterface):
     def __init__(self, request):
         self.session = request.session
+        self.user = request.user
+        print(request.user)
         cart = self.session.get('cart')
         if not cart:
             cart = self.session['cart'] = {}
@@ -57,7 +60,7 @@ class ShoppingCart:
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.price
+                product_price = product.selling_price
                 subtotal = item['quantity'] * product_price
                 total += subtotal
 
@@ -75,7 +78,7 @@ class ShoppingCart:
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.price
+                product_price = product.selling_price
                 subtotal_amount += item['quantity'] * product_price
         
         total_tax_low = self.total_tax(9) 
@@ -91,7 +94,7 @@ class ShoppingCart:
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None and product.tax == tax_percentage:
-                product_price = product.price
+                product_price = product.selling_price
                 subtotal = item['quantity'] * product_price
                 tax_amount = subtotal * (Decimal(tax_percentage) / 100)
                 total_tax_amount += tax_amount

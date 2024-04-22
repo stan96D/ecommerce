@@ -2,24 +2,33 @@ from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from django.db import models
+
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    name = models.CharField(max_length=100, db_index=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, db_index=True)
     thumbnail = models.ImageField(
         upload_to='product_thumbnails/', null=True, blank=True)
     images = models.ManyToManyField(
         'ProductImage', related_name='products', blank=True)
-    tax = models.DecimalField(max_digits=5, decimal_places=2, default=9.00) 
+    tax = models.DecimalField(max_digits=5, decimal_places=2, default=9.00, db_index=True)
     runner = models.BooleanField(default=False)
+    selling_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
+
+
+    @property
+    def selling_price(self):
+        selling_price = round(self.price * (1 - self.selling_percentage / 100), 2)
+        return selling_price
 
     def __str__(self):
         return self.name
 
     @property
     def total_price_with_tax(self):
-        total_price = self.price + (self.price * self.tax / 100)
+        total_price = self.selling_price + (self.selling_price * self.tax / 100)
         return total_price
     
     @property
@@ -83,10 +92,10 @@ class ProductCategory(models.Model):
     
 class ProductAttribute(models.Model):
     product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name='attributes')
+        Product, on_delete=models.CASCADE, related_name='attributes', db_index=True)
     attribute_type = models.ForeignKey(
-        ProductAttributeType, on_delete=models.CASCADE)
-    value = models.CharField(max_length=100)
+        ProductAttributeType, on_delete=models.CASCADE, db_index=True)
+    value = models.CharField(max_length=100, db_index=True)
 
     def __str__(self):
         return f"{self.product.name} - {self.attribute_type.name} - {self.value}"

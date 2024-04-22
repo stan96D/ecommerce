@@ -1,7 +1,9 @@
+import time
 from ecommerce_website.services.product_service.product_service import ProductService
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
+from ecommerce_website.services.view_service.product_detail_view_service import ProductDetailViewService
 from ecommerce_website.services.view_service.product_view_service import ProductViewService
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.view_service.cart_item_view_service import CartItemViewService
@@ -17,10 +19,31 @@ from ecommerce_website.services.checkout_service.checkout_service import Checkou
 from ecommerce_website.classes.helpers.session_manager import SessionManager
 from ecommerce_website.services.order_service.order_service import OrderService
 from ecommerce_website.services.view_service.cart_view_service import CartViewService
-
+from django.http import HttpResponse
+from django.contrib.auth import logout
+from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse, HttpResponseBadRequest
 import json
+from django.contrib.auth import authenticate, login
 
+
+
+def sign_in(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = authenticate(request, username=email, password=password)
+
+        if user is not None:
+            login(request, user)
+
+            return redirect('home')
+        else:
+            return render(request, 'login.html', {'error_message': 'Invalid email or password'})
+    else:
+        return render(request, 'login.html')
+    
 def home(request):
 
     headerData = ProductCategoryService().get_all_active_head_product_categories()
@@ -31,6 +54,52 @@ def home(request):
     view_products = ProductViewService().generate(products)
 
     return render(request, "home.html", {'headerData': headerData, 'runner_products_data': view_products, 'category_data': active_categories})
+
+
+
+
+def logout_user(request):
+
+    logout(request)
+
+    return redirect('home')
+
+def login_view(request):
+
+    return render(request, "login.html")
+
+
+def registration_view(request):
+
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+    return render(request, "sign_up.html", {'headerData': headerData})
+
+def account_view(request):
+        
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+    return render(request, "account.html", {'headerData': headerData})
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            user = form.save()
+            login(request, user)
+
+            return redirect('home')
+        else:
+            print(form.errors)  # Print out the form errors to the console
+    else:
+        form = UserCreationForm()
+
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+    return render(request, 'sign_up.html', {'form': form, 'headerData': headerData})
 
 
 def cart(request):
@@ -232,11 +301,11 @@ def products_by_category(request, category):
 
     productViewService = ProductViewService()
     productViews = productViewService.generate(products)
-    
+
     headerData = ProductCategoryService().get_all_active_head_product_categories()
-    
+
     breadcrumb = [category]
-    
+
     filterData = ProductFilterService().get_product_filters_by_category_name(category)
 
     return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
@@ -322,7 +391,7 @@ def product_detail(request, id=None):
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     product = ProductService().get_product_by_id(id)
-    productViewService = ProductViewService()
+    productViewService = ProductDetailViewService()
     productView = productViewService.get(product)
 
     return render(request, 'product_detail.html', {'product': productView, 'headerData': headerData})
