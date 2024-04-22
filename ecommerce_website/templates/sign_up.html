@@ -1,0 +1,208 @@
+{% extends 'components/main.html' %}
+{% load static tailwind_tags %}
+
+{% block title %}Registration{% endblock %}
+
+{% block content %}
+
+<!--
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+
+<main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+    <form id="signup-form" method="post" action="{% url 'sign_up' %}">
+        {% csrf_token %}
+
+    <div class="border-b pb-12 border-gray-200 pt-24 relative">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900">Registratie</h1>
+        <p class="mt-4 text-base text-gray-500">Meld je aan voor de goedkoopste vloeren van Nederland!</p>
+
+        <!-- Move buttons inside the header -->
+        <div class="mb-6 flex items-center justify-end gap-x-6 absolute bottom-0 right-0">
+            <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Annuleer</button>
+            <button type="submit"
+                class="rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">Opslaan</button>
+        </div>
+    </div>
+
+
+        <div class="space-y-12">
+
+
+            <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 pt-12 md:grid-cols-3">
+                <div>
+                    <h2 class="text-base font-semibold leading-7 text-gray-900">Persoonlijke informatie</h2>
+                    <p class="mt-1 text-sm leading-6 text-gray-600">Zodat we weten naar wie we moeten verzenden.
+                    </p>
+                </div>
+
+                <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+
+                    <div class="sm:col-span-4">
+                        <label class="block text-sm font-medium leading-6 text-gray-900">Aanhef</label>
+                        <p class="text-sm text-gray-500">Hoe zou je graag aangesproken willen worden?</p>
+                        <fieldset class="mt-4">
+                            <legend class="sr-only">Aanhef</legend>
+                            <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
+                                <div class="flex items-center">
+                                    <input id="sir" name="sulatation-method" type="radio" checked
+                                        class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor">
+                                    <label for="sir"
+                                        class="ml-3 block text-sm font-medium leading-6 text-gray-900">Meneer</label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="madam" name="sulatation-method" type="radio"
+                                        class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor">
+                                    <label for="madam"
+                                        class="ml-3 block text-sm font-medium leading-6 text-gray-900">Mevrouw
+                                    </label>
+                                </div>
+                                <div class="flex items-center">
+                                    <input id="no-salutation" name="sulatation-method" type="radio"
+                                        class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor">
+                                    <label for="no-salutation"
+                                        class="ml-3 block text-sm font-medium leading-6 text-gray-900">Geen van beiden
+                                    </label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Voornaam
+                        </label>
+                        <div class="mt-2">
+                            <input type="text" name="first-name" id="first-name" autocomplete="given-name"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Achternaam
+                        </label>
+                        <div class="mt-2">
+                            <input type="text" name="last-name" id="last-name" autocomplete="family-name"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-4 sm:col-start-1">
+                        <label for="street-address"
+                            class="block text-sm font-medium leading-6 text-gray-900">Adres</label>
+                        <div class="mt-2">
+                            <input type="text" name="street-address" id="street-address" autocomplete="street-address"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label for="street-number"
+                            class="block text-sm font-medium leading-6 text-gray-900">Nummer</label>
+                        <div class="mt-2">
+                            <input type="text" name="street-number" id="street-number" autocomplete="street-number"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+
+                    <div class="sm:col-span-2 sm:col-start-1">
+                        <label for="postal-code"
+                            class="block text-sm font-medium leading-6 text-gray-900">Postcode</label>
+                        <div class="mt-2">
+                            <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label for="city" class="block text-sm font-medium leading-6 text-gray-900">Stad</label>
+                        <div class="mt-2">
+                            <input type="text" name="city" id="city" autocomplete="address-level2"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Land</label>
+                        <div class="mt-2">
+                            <select id="country" name="country" autocomplete="country-name"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                <option>United States</option>
+                                <option>Canada</option>
+                                <option>Mexico</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-3 sm:col-start-1">
+                        <label for="phone-number"
+                            class="block text-sm font-medium leading-6 text-gray-900">Telefoonnummer
+                        </label>
+                        <div class="mt-2">
+                            <input type="text" name="phone-number" id="phone-number" autocomplete="phone-number"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 gap-x-8 gap-y-10 border-b border-gray-900/10 pb-12 md:grid-cols-3">
+                <div>
+                    <h2 class="text-base font-semibold leading-7 text-gray-900">Accountgegevens</h2>
+                    <p class="mt-1 text-sm leading-6 text-gray-600">Bepaal zelf hoe je zou willen inloggen.</p>
+                </div>
+
+                <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 md:col-span-2">
+                    <div class="sm:col-span-4">
+                        <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Email
+                            adres</label>
+                        <div class="mt-2">
+                            <input id="username" name="username" type="email" autocomplete="email"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-4">
+                        <label for="password1"
+                            class="block text-sm font-medium leading-6 text-gray-900">Wachtwoord</label>
+                        <div class="mt-2">
+                            <input id="password1" name="password1" type="password" autocomplete="password"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                    <div class="sm:col-span-4">
+                        <label for="password2"
+                            class="block text-sm font-medium leading-6 text-gray-900">Herhaal wachtwoord</label>
+                        <div class="mt-2">
+                            <input id="password2" name="password2" type="password" autocomplete="password"
+                                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-6 flex items-center justify-end gap-x-2 pb-6">
+            <button type="submit"
+                class="flex items-center rounded-md bg-transparent px-3 py-2 text-sm font-semibold text-amber-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 hover:text-customColor">
+                Verder
+                <span class="ml-1">&#10132;</span>
+            </button>
+        </div>
+
+
+    </form>
+
+</main>
+{% endblock %}
