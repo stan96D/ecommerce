@@ -13,5 +13,4 @@ admin.site.register(ProductFilter)
 admin.site.register(Order)
 admin.site.register(OrderLine)
 admin.site.register(ProductSale)
-
-
+admin.site.register(Account)

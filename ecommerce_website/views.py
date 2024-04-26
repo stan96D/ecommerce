@@ -25,7 +25,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse, HttpResponseBadRequest
 import json
 from django.contrib.auth import authenticate, login
-
+from ecommerce_website.classes.forms.user_creation_form import CustomUserCreationForm
 
 
 def sign_in(request):
@@ -57,7 +57,6 @@ def home(request):
 
 
 
-
 def logout_user(request):
 
     logout(request)
@@ -83,7 +82,7 @@ def account_view(request):
 
 def sign_up(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -92,10 +91,9 @@ def sign_up(request):
             login(request, user)
 
             return redirect('home')
-        else:
-            print(form.errors)  # Print out the form errors to the console
+   
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
 
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 

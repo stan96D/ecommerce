@@ -3,6 +3,7 @@ from ecommerce_website.services.product_service.base_product_service import Prod
 from django.db.models import Q
 from collections import defaultdict
 from django.db.models import Exists, OuterRef
+import re
 
 class ProductService(ProductServiceInterface):
     @staticmethod
@@ -202,6 +203,21 @@ class ProductService(ProductServiceInterface):
                 filtered_products.append(product)
 
         return filtered_products
+    
+    @staticmethod
+    def filter_products_on_search(products, search_string):
+        search_words = search_string.lower().split()
+        regex_pattern = re.compile(
+            r'\b(?:' + '|'.join(re.escape(word) for word in search_words) + r')\b')
+
+        filtered_products = [product for product in products if ProductService.matches_search(
+            product, regex_pattern)]
+        return filtered_products
+
+    @staticmethod
+    def matches_search(product, regex_pattern):
+        product_search_string = product.search_string.lower()
+        return bool(regex_pattern.search(product_search_string))
 
     @staticmethod
     def get_products_by_search(search_string):

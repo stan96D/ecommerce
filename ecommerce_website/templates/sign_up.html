@@ -21,16 +21,27 @@
 -->
 
 <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+
+    {% if form.errors %}
+    {% include 'components/messages/warning_message.html' with message="Er zijn fouten opgetreden bij de registratie:" error_messages=form.errors %}
+
+    {% endif %}
+
+    
     <form id="signup-form" method="post" action="{% url 'sign_up' %}">
         {% csrf_token %}
 
     <div class="border-b pb-12 border-gray-200 pt-24 relative">
+
+        
         <h1 class="text-4xl font-bold tracking-tight text-gray-900">Registratie</h1>
         <p class="mt-4 text-base text-gray-500">Meld je aan voor de goedkoopste vloeren van Nederland!</p>
 
         <!-- Move buttons inside the header -->
         <div class="mb-6 flex items-center justify-end gap-x-6 absolute bottom-0 right-0">
-            <button type="button" class="text-sm font-semibold leading-6 text-gray-900">Annuleer</button>
+        <button type="button" id="cancel-button" class="text-sm font-semibold leading-6 text-gray-900">
+            <a href="/sign_up" class="text-gray-900">Annuleer</a>
+        </button>
             <button type="submit"
                 class="rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">Opslaan</button>
         </div>
@@ -56,103 +67,125 @@
                             <legend class="sr-only">Aanhef</legend>
                             <div class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
                                 <div class="flex items-center">
-                                    <input id="sir" name="sulatation-method" type="radio" checked
+                                    <input id="sulatation-meneer" name="salutation" type="radio" value="Meneer" checked
                                         class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor">
-                                    <label for="sir"
+                                    <label for="sulatation-meneer"
                                         class="ml-3 block text-sm font-medium leading-6 text-gray-900">Meneer</label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input id="madam" name="sulatation-method" type="radio"
+                                    <input id="sulatation-mevrouw" name="salutation" type="radio" value="Mevrouw"
                                         class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor">
-                                    <label for="madam"
-                                        class="ml-3 block text-sm font-medium leading-6 text-gray-900">Mevrouw
+                                    <label for="sulatation-mevrouw" class="ml-3 block text-sm font-medium leading-6 text-gray-900">Mevrouw
                                     </label>
                                 </div>
                                 <div class="flex items-center">
-                                    <input id="no-salutation" name="sulatation-method" type="radio"
+                                    <input id="no-salutation" name="salutation" type="radio" value="Geen van beiden"
                                         class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor">
-                                    <label for="no-salutation"
-                                        class="ml-3 block text-sm font-medium leading-6 text-gray-900">Geen van beiden
+                                    <label for="no-salutation" class="ml-3 block text-sm font-medium leading-6 text-gray-900">Geen van
+                                        beiden
                                     </label>
                                 </div>
                             </div>
                         </fieldset>
                     </div>
 
+
                     <div class="sm:col-span-3">
-                        <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Voornaam
+                        <label for="first_name" class="block text-sm font-medium leading-6 text-gray-900">Voornaam
                         </label>
                         <div class="mt-2">
-                            <input type="text" name="first-name" id="first-name" autocomplete="given-name"
+                            <input type="text" name="first_name" id="first_name" autocomplete="given-name" value="{{ form.first_name.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        </div>
+                                                        {% if form.first_name.errors %}
+                                                        <p id="first_name-error" class="text-red-500 text-sm mt-1">{{ form.first_name.errors|striptags }}</p>
+                                                        {% endif %}
+                            </div>
                     </div>
 
                     <div class="sm:col-span-3">
-                        <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Achternaam
+                        <label for="last_name" class="block text-sm font-medium leading-6 text-gray-900">Achternaam
                         </label>
                         <div class="mt-2">
-                            <input type="text" name="last-name" id="last-name" autocomplete="family-name"
+                            <input type="text" name="last_name" id="id_last_name" autocomplete="family-name" value="{{ form.last_name.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                {% if form.last_name.errors %}
+                                <p id="last_name-error" class="text-red-500 text-sm mt-1">{{ form.last_name.errors|striptags }}</p>
+                                {% endif %}
                         </div>
                     </div>
 
                     <div class="sm:col-span-4 sm:col-start-1">
-                        <label for="street-address"
+                        <label for="address"
                             class="block text-sm font-medium leading-6 text-gray-900">Adres</label>
                         <div class="mt-2">
-                            <input type="text" name="street-address" id="street-address" autocomplete="street-address"
+                            <input type="text" name="address" id="address" autocomplete="address" value="{{ form.address.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        </div>
+                                                        {% if form.address.errors %}
+                                                        <p id="address-error" class="text-red-500 text-sm mt-1">{{ form.address.errors|striptags }}</p>
+                                                        {% endif %}
+                            </div>
                     </div>
 
                     <div class="sm:col-span-2">
-                        <label for="street-number"
+                        <label for="house_number"
                             class="block text-sm font-medium leading-6 text-gray-900">Nummer</label>
                         <div class="mt-2">
-                            <input type="text" name="street-number" id="street-number" autocomplete="street-number"
+                            <input type="text" name="house_number" id="house-number" autocomplete="house_number" value="{{ form.house_number.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                {% if form.house_number.errors %}
+                                <p id="house_number-error" class="text-red-500 text-sm mt-1">{{ form.house_number.errors|striptags }}</p>
+                                {% endif %}
                         </div>
                     </div>
 
 
                     <div class="sm:col-span-2 sm:col-start-1">
-                        <label for="postal-code"
+                        <label for="postal_code"
                             class="block text-sm font-medium leading-6 text-gray-900">Postcode</label>
                         <div class="mt-2">
-                            <input type="text" name="postal-code" id="postal-code" autocomplete="postal-code"
+                            <input type="text" name="postal_code" id="postal_code" autocomplete="postal-code" value="{{ form.postal_code.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                {% if form.postal_code.errors %}
+                                <p id="postal_code-error" class="text-red-500 text-sm mt-1">{{ form.postal_code.errors|striptags }}</p>
+                                {% endif %}
                         </div>
                     </div>
 
                     <div class="sm:col-span-2">
                         <label for="city" class="block text-sm font-medium leading-6 text-gray-900">Stad</label>
                         <div class="mt-2">
-                            <input type="text" name="city" id="city" autocomplete="address-level2"
+                            <input type="text" name="city" id="city" autocomplete="city" value="{{ form.city.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                {% if form.city.errors %}
+                                <p id="city-error" class="text-red-500 text-sm mt-1">{{ form.city.errors|striptags }}</p>
+                                {% endif %}
                         </div>
                     </div>
 
                     <div class="sm:col-span-3">
                         <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Land</label>
                         <div class="mt-2">
-                            <select id="country" name="country" autocomplete="country-name"
+                            <select id="country" name="country" autocomplete="country" value="{{ form.country.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
                                 <option>United States</option>
                                 <option>Canada</option>
                                 <option>Mexico</option>
                             </select>
+                                                            {% if form.country.errors %}
+                                                            <p id="country-error" class="text-red-500 text-sm mt-1">{{ form.country.errors|striptags }}</p>
+                                                            {% endif %}
                         </div>
                     </div>
 
                     <div class="sm:col-span-3 sm:col-start-1">
-                        <label for="phone-number"
+                        <label for="phone_number"
                             class="block text-sm font-medium leading-6 text-gray-900">Telefoonnummer
                         </label>
                         <div class="mt-2">
-                            <input type="text" name="phone-number" id="phone-number" autocomplete="phone-number"
+                            <input type="text" name="phone_number" id="phone_number" autocomplete="phone-number" value="{{ form.phone_number.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        </div>
+                        
+                            </div>
                     </div>
 
                 </div>
@@ -169,25 +202,35 @@
                         <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Email
                             adres</label>
                         <div class="mt-2">
-                            <input id="username" name="username" type="email" autocomplete="email"
+                            <input id="username" name="email" type="email" autocomplete="email" value="{{ form.email.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                                            {% if form.email.errors %}
+                                                            <p id="email-error" class="text-red-500 text-sm mt-1">{{ form.email.errors|striptags }}</p>
+                                                            {% endif %}
                         </div>
                     </div>
                     <div class="sm:col-span-4">
-                        <label for="password1"
-                            class="block text-sm font-medium leading-6 text-gray-900">Wachtwoord</label>
+                        <label for="password1" class="block text-sm font-medium leading-6 text-gray-900">Wachtwoord</label>
                         <div class="mt-2">
-                            <input id="password1" name="password1" type="password" autocomplete="password"
+                            <input id="password1" name="password1" type="password" autocomplete="password" value="{{ form.password1.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        </div>
+                                                                                {% if form.password1.errors %}
+                                                                                <p id="password1-error" class="text-red-500 text-sm mt-1">{{ form.password1.errors|striptags }}</p>
+                                                                                {% endif %}
+                            </div>
                     </div>
+
                     <div class="sm:col-span-4">
                         <label for="password2"
                             class="block text-sm font-medium leading-6 text-gray-900">Herhaal wachtwoord</label>
                         <div class="mt-2">
-                            <input id="password2" name="password2" type="password" autocomplete="password"
+                            <input id="password2" name="password2" type="password" autocomplete="password" value="{{ form.password2.value }}"
                                 class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        </div>
+                                {% if form.password2.errors %}
+                                <p id="password2-error" class="text-red-500 text-sm mt-1">{{ form.password2.errors|striptags }}</p>
+                                {% endif %}
+
+                            </div>
                     </div>
                 </div>
             </div>
@@ -205,4 +248,18 @@
     </form>
 
 </main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var salutationValue = "{{ form.salutation.value }}";
+
+        var salutationRadios = document.querySelectorAll('input[name="salutation"]');
+
+        salutationRadios.forEach(function (radio) {
+            if (radio.value === salutationValue) {
+                radio.checked = true;
+            }
+        });
+    });
+</script>
+
 {% endblock %}
