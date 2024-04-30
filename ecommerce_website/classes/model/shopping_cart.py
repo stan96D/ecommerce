@@ -8,8 +8,7 @@ from ecommerce_website.classes.model.base_shopping_cart_service import *
 class SessionShoppingCart(ShoppingCartInterface):
     def __init__(self, request):
         self.session = request.session
-        self.user = request.user
-        print(request.user)
+
         cart = self.session.get('cart')
         if not cart:
             cart = self.session['cart'] = {}
@@ -37,7 +36,7 @@ class SessionShoppingCart(ShoppingCartInterface):
             self.save()
 
     def clear_cart(self):
-        self.cart = {}
+        cart = self.session['cart'] = {}
         self.save()
 
     def save(self):
