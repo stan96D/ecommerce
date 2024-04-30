@@ -4,6 +4,11 @@
 {% block title %}Registration{% endblock %}
 
 {% block content %}
+{% if user.is_authenticated %}
+    <script>
+        window.location.href = "{% url 'home' %}";
+    </script>
+{% else %}
 
 <!--
   This example requires some changes to your config:
@@ -261,5 +266,6 @@
         });
     });
 </script>
+{% endif %}
 
 {% endblock %}
