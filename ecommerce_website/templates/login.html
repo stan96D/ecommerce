@@ -1,4 +1,9 @@
 {% load static tailwind_tags %}
+{% if user.is_authenticated %}
+<script>
+    window.location.href = "{% url 'account' %}";
+</script>
+{% else %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,3 +97,4 @@
 </body>
 
 </html>
+{%endif%}
