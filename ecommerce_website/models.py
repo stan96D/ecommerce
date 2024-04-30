@@ -213,8 +213,6 @@ class Order(models.Model):
     Account, related_name='orders', on_delete=models.CASCADE, default=None, null=True)
 
 
-
-
     total_price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
     sub_price = models.DecimalField(

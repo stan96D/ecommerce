@@ -2,11 +2,11 @@ from ecommerce_website.models import Order, OrderLine, Product
 from ecommerce_website.classes.model.order_info import OrderInfo
 from ecommerce_website.classes.model.payment_info import PaymentInfo
 from ecommerce_website.classes.model.delivery_info import DeliveryInfo
-from ecommerce_website.classes.model.shopping_cart import ShoppingCart
+from ecommerce_website.classes.model.shopping_cart import SessionShoppingCart
 
 
 class CheckoutService:
-    def create_order(self, order_info: OrderInfo, payment_info: PaymentInfo, delivery_info: DeliveryInfo, shopping_cart: ShoppingCart):
+    def create_order(self, order_info: OrderInfo, payment_info: PaymentInfo, delivery_info: DeliveryInfo, shopping_cart: SessionShoppingCart):
         order = self._create_order(
             order_info, payment_info, delivery_info, shopping_cart)
         self._create_order_lines(order, shopping_cart)

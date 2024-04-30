@@ -1,10 +1,23 @@
-from ecommerce_website.classes.model.shopping_cart import ShoppingCart
+from ecommerce_website.classes.model.shopping_cart import AccountShoppingCart, SessionShoppingCart, ShoppingCartInterface
 from ecommerce_website.services.shopping_cart_service.base_shopping_cart_service import AbstractShoppingCartService
 
 
 class ShoppingCartService(AbstractShoppingCartService):
     def __init__(self, request):
-        self.shopping_cart = ShoppingCart(request)
+
+        self.request = request
+
+
+    @property
+    def shopping_cart(self) -> ShoppingCartInterface:
+
+        user = self.request.user
+
+        if user.is_authenticated:
+            return AccountShoppingCart()
+        else:
+            return SessionShoppingCart(self.request)
+
 
     def add_item(self, product_id, quantity):
         self.shopping_cart.add_item(product_id, quantity)

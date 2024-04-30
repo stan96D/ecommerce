@@ -1,7 +1,13 @@
 from abc import ABC, abstractmethod
-
+from ecommerce_website.classes.model.base_shopping_cart_service import ShoppingCartInterface
 
 class AbstractShoppingCartService(ABC):
+
+    @property
+    @abstractmethod
+    def shopping_cart(self) -> ShoppingCartInterface:
+        pass
+
     @abstractmethod
     def add_item(self, product_id, quantity=1):
         pass

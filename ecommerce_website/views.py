@@ -26,7 +26,7 @@ from django.http import JsonResponse, HttpResponseBadRequest
 import json
 from django.contrib.auth import authenticate, login
 from ecommerce_website.classes.forms.user_creation_form import CustomUserCreationForm
-
+from ecommerce_website.classes.helpers.shopping_cart_merger import *
 
 def sign_in(request):
     if request.method == 'POST':
@@ -36,7 +36,16 @@ def sign_in(request):
         user = authenticate(request, username=email, password=password)
 
         if user is not None:
+
+            merger = ShoppingCartMerger()
+            to_cart = AccountShoppingCart()
+
+            from_cart = SessionShoppingCart(request)
+
+            merger.merge_from_to(from_cart, to_cart)
+
             login(request, user)
+
 
             return redirect('home')
         else:
@@ -106,7 +115,7 @@ def cart(request):
 
     cart_service = ShoppingCartService(request)
     items = cart_service.cart_items
-
+    print(items)
     cart_view = CartViewService().get(cart_service)
 
     cart_item_view_service = CartItemViewService()
