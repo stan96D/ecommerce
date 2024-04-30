@@ -195,8 +195,8 @@ def confirm_order(request):
         checkout_service = CheckoutService()
         payment_info = PaymentInfo("iDeal", "Rabobank")
         delivery_info = DeliveryInfo("Bezorging", "2024-3-30", 5.00)
-
-        order = checkout_service.create_order(order_info, payment_info, delivery_info, cart_service.shopping_cart)
+        account = request.user
+        order = checkout_service.create_order(account, order_info, payment_info, delivery_info, cart_service.shopping_cart)
         
         SessionManager.clear_session(request)
 

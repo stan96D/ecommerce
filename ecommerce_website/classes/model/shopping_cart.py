@@ -3,14 +3,7 @@ from ecommerce_website.services.product_service.product_service import ProductSe
 from decimal import Decimal
 from ecommerce_website.classes.model.base_shopping_cart_service import *
 
-class ShoppingCartMerger():
 
-    def merge_from_to(self, from_cart: ShoppingCartInterface, to_cart: ShoppingCartInterface):
-
-        for product_id, item in from_cart.cart.items():
-            to_cart.add_item(product_id, item['quantity'])
-
-        from_cart.clear_cart()
 
 class SessionShoppingCart(ShoppingCartInterface):
     def __init__(self, request):

@@ -1,18 +1,18 @@
-from ecommerce_website.models import Order, OrderLine, Product
+from ecommerce_website.models import *
 from ecommerce_website.classes.model.order_info import OrderInfo
 from ecommerce_website.classes.model.payment_info import PaymentInfo
 from ecommerce_website.classes.model.delivery_info import DeliveryInfo
-from ecommerce_website.classes.model.shopping_cart import SessionShoppingCart
+from ecommerce_website.classes.model.base_shopping_cart_service import ShoppingCartInterface
 
 
 class CheckoutService:
-    def create_order(self, order_info: OrderInfo, payment_info: PaymentInfo, delivery_info: DeliveryInfo, shopping_cart: SessionShoppingCart):
-        order = self._create_order(
+    def create_order(self, account: Account, order_info: OrderInfo, payment_info: PaymentInfo, delivery_info: DeliveryInfo, shopping_cart: ShoppingCartInterface):
+        order = self._create_order(account, 
             order_info, payment_info, delivery_info, shopping_cart)
         self._create_order_lines(order, shopping_cart)
         return order
 
-    def _create_order(self, order_info, payment_info, delivery_info, shopping_cart):
+    def _create_order(self, account, order_info, payment_info, delivery_info, shopping_cart):
 
         total_price = shopping_cart.total_price 
         sub_price = shopping_cart.sub_total 
@@ -21,6 +21,9 @@ class CheckoutService:
         shipping_cost = shopping_cart.shipping_price
 
         return Order.objects.create(
+
+            account=account,
+
             first_name=order_info.contact_info.first_name,
             last_name=order_info.contact_info.last_name,
             email=order_info.contact_info.email,
