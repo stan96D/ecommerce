@@ -17,6 +17,7 @@ class OrderInfoService:
 
     def get_order(self, request):
         order_data = request.session.get('order')
+        print(order_data)
         if order_data:
             order = OrderInfo(request)
 
@@ -37,13 +38,19 @@ class OrderInfoService:
             return None
 
     def update_order(self, request, contact_info, billing_address_info, delivery_address_info):
-        existing_order = OrderInfo.load_from_session(request)
-
+        existing_order = self.get_order(request)
+        print(existing_order, (existing_order == None))
         if existing_order:
+
             existing_order.contact_info = contact_info
             existing_order.billing_address_info = billing_address_info
             existing_order.delivery_address_info = delivery_address_info
             existing_order.save()
             return existing_order
         else:
-            return self.create_order(request, contact_info, billing_address_info, delivery_address_info)
+            return self.create_order(contact_info, billing_address_info, delivery_address_info)
+        
+    def delete_order(self, request):
+        if 'order' in request.session:
+            del request.session['order']
+            request.session.modified = True

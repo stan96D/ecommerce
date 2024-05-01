@@ -24,7 +24,7 @@
     <div class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Uw gegevens</h1>
 
-        <form method="POST" action="{% url 'checkout' %}" class="mt-8 space-y-6">
+        <form method="POST" action="{% url 'order_info' %}" class="mt-8 space-y-6">
             {% csrf_token %}
             <div class="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
                 <section aria-labelledby="cart-heading" class="lg:col-span-7">
@@ -37,7 +37,7 @@
                                     <label for="first-name"
                                         class="block text-sm font-medium text-gray-700">Voornaam</label>
                                     <div class="mt-1">
-                                        <input type="text" id="first-name" name="first-name" autocomplete="given-name"
+                                        <input type="text" id="first-name" name="first-name" value="{{order_info.first_name}}" autocomplete="first-name"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             required>
                                     </div>
@@ -47,7 +47,7 @@
                                     <label for="last-name"
                                         class="block text-sm font-medium text-gray-700">Achternaam</label>
                                     <div class="mt-1">
-                                        <input type="text" id="last-name" name="last-name" autocomplete="family-name"
+                                        <input type="text" id="last-name" name="last-name" value="{{order_info.last_name}}" autocomplete="last-name"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             required>
                                     </div>
@@ -57,7 +57,7 @@
                                 <label for="email-address"
                                     class="block text-sm font-medium text-gray-700">E-mailadres</label>
                                 <div class="mt-1">
-                                    <input type="email" id="email-address" name="email-address" autocomplete="email"
+                                    <input type="email" id="email-address" name="email-address" value="{{order_info.email}}" autocomplete="email"
                                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                         required>
                                 </div>
@@ -72,17 +72,17 @@
                                 <div>
                                     <label for="address" class="block text-sm font-medium text-gray-700">Adres</label>
                                     <div class="mt-1">
-                                        <input type="text" name="address" id="address" autocomplete="street-address"
+                                        <input type="text" name="address" id="address" value="{{order_info.address}}" autocomplete="street-address"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             required>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label for="apartment"
+                                    <label for="house-number"
                                         class="block text-sm font-medium text-gray-700">Huisnummer</label>
                                     <div class="mt-1">
-                                        <input type="text" name="apartment" id="apartment"
+                                        <input type="text" name="house-number" id="house-number" value="{{order_info.house_number}}" autocomplete="house-number"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             required>
                                     </div>
@@ -91,7 +91,7 @@
                                 <div>
                                     <label for="city" class="block text-sm font-medium text-gray-700">Plaats</label>
                                     <div class="mt-1">
-                                        <input type="text" name="city" id="city" autocomplete="address-level2"
+                                        <input type="text" name="city" id="city" value="{{order_info.city}}" autocomplete="city"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             required>
                                     </div>
@@ -100,7 +100,7 @@
                                     <label for="postal-code" class="block text-sm font-medium text-gray-700">Postal
                                         code</label>
                                     <div class="mt-1">
-                                        <input type="text" name="postal-code" id="postal-code"
+                                        <input type="text" name="postal-code" id="postal-code" value="{{order_info.postal_code}}"
                                             autocomplete="postal-code"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             required>
@@ -109,7 +109,7 @@
                                 <div>
                                     <label for="country" class="block text-sm font-medium text-gray-700">Land</label>
                                     <div class="mt-1">
-                                        <select id="country" name="country" autocomplete="country-name"
+                                        <select id="country" name="country" value="{{order_info.country}}" autocomplete="country"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                             required>
                                             <option>United States</option>
@@ -125,9 +125,9 @@
                                     <label for="phone"
                                         class="block text-sm font-medium text-gray-700">Telefoonnummer</label>
                                     <div class="mt-1">
-                                        <input type="text" name="phone" id="phone" autocomplete="tel"
+        <input type="text" name="phone" id="phone" value="{% if user.phone_number %}{{ order_info.phone_number }}{% endif %}"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                            required>
+                                            >
                                     </div>
                                 </div>
                             </div>

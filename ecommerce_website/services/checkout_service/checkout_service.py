@@ -6,7 +6,7 @@ from ecommerce_website.classes.model.base_shopping_cart_service import ShoppingC
 
 
 class CheckoutService:
-    def create_order(self, account: Account, order_info: OrderInfo, payment_info: PaymentInfo, delivery_info: DeliveryInfo, shopping_cart: ShoppingCartInterface):
+    def create_order(self, account: AbstractBaseUser, order_info: OrderInfo, payment_info: PaymentInfo, delivery_info: DeliveryInfo, shopping_cart: ShoppingCartInterface):
         order = self._create_order(account, 
             order_info, payment_info, delivery_info, shopping_cart)
         self._create_order_lines(order, shopping_cart)
@@ -19,6 +19,10 @@ class CheckoutService:
         tax_price_low = shopping_cart.total_tax(9)
         tax_price_high = shopping_cart.total_tax(21)
         shipping_cost = shopping_cart.shipping_price
+
+        if not account.is_authenticated:
+            account = None
+
 
         return Order.objects.create(
 

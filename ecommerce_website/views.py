@@ -1,4 +1,4 @@
-import time
+from ecommerce_website.services.view_service.order_info_view_service import OrderInfoViewService
 from ecommerce_website.services.product_service.product_service import ProductService
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -37,12 +37,14 @@ def sign_in(request):
 
         if user is not None:
 
+            info_service = OrderInfoService(request)
             merger = ShoppingCartMerger()
             to_cart = AccountShoppingCart()
 
             from_cart = SessionShoppingCart(request)
 
             merger.merge_from_to(from_cart, to_cart)
+            info_service.delete_order(request)
 
             login(request, user)
 
@@ -108,6 +110,26 @@ def sign_up(request):
 
     return render(request, 'sign_up.html', {'form': form, 'headerData': headerData})
 
+def navigate_checkout(request):
+    if request.method == "GET":
+
+        cart_service = ShoppingCartService(request)
+
+        if not cart_service.is_valid:
+            return redirect('cart')
+
+        order_info_service = OrderInfoService(request)
+
+        order = order_info_service.get_order(request)
+
+        if order and order.is_valid():
+
+            return redirect('checkout')
+
+        else:
+
+            return redirect('order_info')
+
 
 def cart(request):
 
@@ -115,7 +137,7 @@ def cart(request):
 
     cart_service = ShoppingCartService(request)
     items = cart_service.cart_items
-    print(items)
+
     cart_view = CartViewService().get(cart_service)
 
     cart_item_view_service = CartItemViewService()
@@ -123,19 +145,68 @@ def cart(request):
 
     return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData, 'cart': cart_view})
 
+def order_info(request):
 
-def checkout(request):
-    
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-    order_info_service = OrderInfoService(request)
     cart_service = ShoppingCartService(request)
-    
+    order_info_service = OrderInfoService(request)
+
     cart_view = CartViewService().get(cart_service)
 
-    if request.method == 'POST':
+    if request.method == 'GET':
+
+        if not cart_service.is_valid:
+            return redirect('cart')
+
+        info_view = order_info_service.get_order(request)
+        info_view_service = OrderInfoViewService()
+
+        user = request.user
+
+        if info_view:
+
+            json_data = info_view.to_json()
+
+            info_data = {
+                "first_name": json_data['contact_info']['first_name'],
+                "last_name": json_data['contact_info']['last_name'],
+                "email": json_data['contact_info']['email'],
+                "phone": json_data['contact_info']['phonenumber'],
+                "address": json_data['billing_address_info']['address'],
+                "house_number": json_data['billing_address_info']['house_number'],
+                "city": json_data['billing_address_info']['city'],
+                "postal_code": json_data['billing_address_info']['postal_code'],
+                "country": json_data['billing_address_info']['country']
+            }
+
+            order_info_view = info_view_service.get(info_data)
+
+        elif user.is_authenticated:
+
+            info_data = {
+                "first_name": user.first_name, 
+                "last_name": user.last_name,
+                "email": user.email, 
+                "phone": user.phone_number,
+                "address": user.address, 
+                "house_number": user.house_number, 
+                "city": user.city, 
+                "postal_code": user.postal_code, 
+                "country": user.country, 
+            }
+
+            order_info_view = info_view_service.get(info_data)
+
+        else:
+            order_info_view = info_view_service.get_single()
+
+
+        return render(request, "checkout.html", {'headerData': headerData, 'cart': cart_view, 'order_info': order_info_view})
+    elif request.method == "POST":
+
         attributes = request.POST.copy()
-    
+
         first_name = attributes.get('first-name')
         last_name = attributes.get('last-name')
         email_address = attributes.get('email-address')
@@ -147,25 +218,61 @@ def checkout(request):
         phone = attributes.get('phone')
 
         contact_info = ContactInfo(first_name, last_name, email_address, phone)
-        billing_address_info = AddressInfo(address, house_number, city, postal_code, country)
+        billing_address_info = AddressInfo(
+            address, house_number, city, postal_code, country)
         shipping_address_info = AddressInfo(
             address, house_number, city, postal_code, country)
 
         order_info_service.create_order(
-            contact_info, billing_address_info, shipping_address_info)
+                                        contact_info, billing_address_info, shipping_address_info)
 
         return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view})
-    else:
+
+def checkout(request):
+    
+    headerData = ProductCategoryService().get_all_active_head_product_categories()
+
+    order_info_service = OrderInfoService(request)
+    cart_service = ShoppingCartService(request)
+    
+    cart_view = CartViewService().get(cart_service)
+
+    if request.method == 'GET':
+    #     attributes = request.POST.copy()
+    
+    #     first_name = attributes.get('first-name')
+    #     last_name = attributes.get('last-name')
+    #     email_address = attributes.get('email-address')
+    #     address = attributes.get('address')
+    #     house_number = attributes.get('house-number')
+    #     city = attributes.get('city')
+    #     postal_code = attributes.get('postal-code')
+    #     country = attributes.get('country')
+    #     phone = attributes.get('phone')
+
+    #     contact_info = ContactInfo(first_name, last_name, email_address, phone)
+    #     billing_address_info = AddressInfo(address, house_number, city, postal_code, country)
+    #     shipping_address_info = AddressInfo(
+    #         address, house_number, city, postal_code, country)
+
+    #     order_info_service.update_order(request,
+    #         contact_info, billing_address_info, shipping_address_info)
+
+    #     return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view})
+    # else:
+
+        if not cart_service.is_valid:
+            return redirect('cart')
 
         order = order_info_service.get_order(request)
-
+        print(order)
         if order and order.is_valid():
 
             return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order})
 
         else:
 
-            return render(request, "checkout.html", {'headerData': headerData, 'cart': cart_view})
+            return redirect('order_info')
 
 
 def order_confirmation(request):
@@ -195,10 +302,12 @@ def confirm_order(request):
         checkout_service = CheckoutService()
         payment_info = PaymentInfo("iDeal", "Rabobank")
         delivery_info = DeliveryInfo("Bezorging", "2024-3-30", 5.00)
+
         account = request.user
         order = checkout_service.create_order(account, order_info, payment_info, delivery_info, cart_service.shopping_cart)
         
-        SessionManager.clear_session(request)
+        cart_service.clear_cart()
+        order_service.delete_order(request)
 
         return redirect(reverse('order_confirmation') + f'?order_id={order.id}')
     

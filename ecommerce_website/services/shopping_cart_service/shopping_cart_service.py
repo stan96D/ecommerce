@@ -60,5 +60,5 @@ class ShoppingCartService(AbstractShoppingCartService):
         return len(self.shopping_cart.cart_items)
     
     @property
-    def count(self):
-        return len(self.shopping_cart.cart_items)
+    def is_valid(self):
+        return len(self.shopping_cart.cart_items) > 0
