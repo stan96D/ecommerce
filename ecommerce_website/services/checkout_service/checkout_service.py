@@ -3,7 +3,7 @@ from ecommerce_website.classes.model.order_info import OrderInfo
 from ecommerce_website.classes.model.payment_info import PaymentInfo
 from ecommerce_website.classes.model.delivery_info import DeliveryInfo
 from ecommerce_website.classes.model.base_shopping_cart_service import ShoppingCartInterface
-
+from ecommerce_website.classes.managers.order_number_manager import *
 
 class CheckoutService:
     def create_order(self, account: AbstractBaseUser, order_info: OrderInfo, payment_info: PaymentInfo, delivery_info: DeliveryInfo, shopping_cart: ShoppingCartInterface):
@@ -23,11 +23,14 @@ class CheckoutService:
         if not account.is_authenticated:
             account = None
 
+        order_number_manager = OrderNumberManager()
+        order_number = order_number_manager.generate_order_number()
 
         return Order.objects.create(
 
             account=account,
-
+            order_number=order_number,
+            
             first_name=order_info.contact_info.first_name,
             last_name=order_info.contact_info.last_name,
             email=order_info.contact_info.email,

@@ -16,17 +16,15 @@ from ecommerce_website.classes.model.payment_info import PaymentInfo
 from ecommerce_website.classes.model.delivery_info import DeliveryInfo
 from ecommerce_website.services.order_info_service.order_info_service import OrderInfoService
 from ecommerce_website.services.checkout_service.checkout_service import CheckoutService
-from ecommerce_website.classes.helpers.session_manager import SessionManager
 from ecommerce_website.services.order_service.order_service import OrderService
 from ecommerce_website.services.view_service.cart_view_service import CartViewService
-from django.http import HttpResponse
 from django.contrib.auth import logout
-from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse, HttpResponseBadRequest
 import json
 from django.contrib.auth import authenticate, login
 from ecommerce_website.classes.forms.user_creation_form import CustomUserCreationForm
 from ecommerce_website.classes.helpers.shopping_cart_merger import *
+from ecommerce_website.services.view_service.order_item_view_service import *
 
 def sign_in(request):
     if request.method == 'POST':
@@ -89,7 +87,15 @@ def account_view(request):
         
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-    return render(request, "account.html", {'headerData': headerData})
+    user = request.user
+
+    order_service = OrderService()
+    orders = order_service.get_orders_by_account(user)
+    
+    order_view_service = OrderItemViewService()
+    order_views = order_view_service.generate(orders)
+
+    return render(request, "account.html", {'headerData': headerData, 'orders': order_views})
 
 def sign_up(request):
     if request.method == 'POST':

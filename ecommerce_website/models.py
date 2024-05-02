@@ -207,7 +207,7 @@ class Order(models.Model):
     paid = models.BooleanField(default=False)
     shipping_address = models.TextField()
     billing_address = models.TextField()
-
+    order_number = models.CharField(max_length=20, unique=True)
 
     account = models.ForeignKey(
     Account, related_name='orders', on_delete=models.CASCADE, default=None, null=True)
@@ -222,6 +222,7 @@ class Order(models.Model):
     tax_price_high = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
     shipping_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    created_date = models.DateTimeField(default=timezone.now)
 
 
 

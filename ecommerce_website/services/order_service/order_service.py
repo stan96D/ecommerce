@@ -16,5 +16,12 @@ class OrderService(OrderServiceInterface):
             return Order.objects.all()
         except Order.DoesNotExist:
             return None
+        
+    @staticmethod
+    def get_orders_by_account(account):
+        try:
+            return Order.objects.filter(account=account)
+        except Order.DoesNotExist:
+            return None
 
 
