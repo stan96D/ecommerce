@@ -2,6 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    
+    path('mollie_webhook/', views.mollie_webhook, name="mollie_webhook"),
+
     path('', views.home, name="home"),
     path('login/', views.login_view, name="login"),
     path('logout/', views.logout_user, name="logout"),
@@ -16,8 +19,8 @@ urlpatterns = [
     path('navigate_checkout/', views.navigate_checkout, name="navigate_checkout"),
 
     path('confirm_order/', views.confirm_order, name="confirm_order"),
-    path('order_confirmation/', views.order_confirmation,
-         name="order_confirmation"),
+    path('order_detail/', views.order_detail,
+         name="order_detail"),
     path('search/', views.search_products,
          name='search_products'),
     path('products/<str:category>/', views.products_by_category, name='products_by_category'),

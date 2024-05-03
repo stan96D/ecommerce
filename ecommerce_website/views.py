@@ -1,3 +1,5 @@
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 from ecommerce_website.services.view_service.order_info_view_service import OrderInfoViewService
 from ecommerce_website.services.product_service.product_service import ProductService
 from django.shortcuts import redirect, render
@@ -25,6 +27,7 @@ from django.contrib.auth import authenticate, login
 from ecommerce_website.classes.forms.user_creation_form import CustomUserCreationForm
 from ecommerce_website.classes.helpers.shopping_cart_merger import *
 from ecommerce_website.services.view_service.order_item_view_service import *
+from ecommerce_website.classes.managers.payment_manager.mollie_client import *
 
 def sign_in(request):
     if request.method == 'POST':
@@ -117,7 +120,6 @@ def sign_up(request):
     return render(request, 'sign_up.html', {'form': form, 'headerData': headerData})
 
 def navigate_checkout(request):
-    if request.method == "GET":
 
         cart_service = ShoppingCartService(request)
 
@@ -232,7 +234,7 @@ def order_info(request):
         order_info_service.create_order(
                                         contact_info, billing_address_info, shipping_address_info)
 
-        return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view})
+        return redirect("navigate_checkout")
 
 def checkout(request):
     
@@ -244,44 +246,26 @@ def checkout(request):
     cart_view = CartViewService().get(cart_service)
 
     if request.method == 'GET':
-    #     attributes = request.POST.copy()
-    
-    #     first_name = attributes.get('first-name')
-    #     last_name = attributes.get('last-name')
-    #     email_address = attributes.get('email-address')
-    #     address = attributes.get('address')
-    #     house_number = attributes.get('house-number')
-    #     city = attributes.get('city')
-    #     postal_code = attributes.get('postal-code')
-    #     country = attributes.get('country')
-    #     phone = attributes.get('phone')
-
-    #     contact_info = ContactInfo(first_name, last_name, email_address, phone)
-    #     billing_address_info = AddressInfo(address, house_number, city, postal_code, country)
-    #     shipping_address_info = AddressInfo(
-    #         address, house_number, city, postal_code, country)
-
-    #     order_info_service.update_order(request,
-    #         contact_info, billing_address_info, shipping_address_info)
-
-    #     return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view})
-    # else:
 
         if not cart_service.is_valid:
             return redirect('cart')
 
         order = order_info_service.get_order(request)
-        print(order)
+
         if order and order.is_valid():
 
-            return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order})
+            client = MollieClient()
+
+            issuers = client.get_issuers()
+
+            return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order, 'payment_issuers': issuers})
 
         else:
 
             return redirect('order_info')
 
 
-def order_confirmation(request):
+def order_detail(request):
     
     order_id = request.GET.get('order_id')
 
@@ -290,7 +274,7 @@ def order_confirmation(request):
     
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-    return render(request, "order_confirmation.html", {'headerData': headerData, 'order': order})
+    return render(request, "order_detail.html", {'headerData': headerData, 'order': order})
 
 
 def confirm_order(request):
@@ -298,6 +282,15 @@ def confirm_order(request):
     if request.method == 'POST':
 
         cart_service = ShoppingCartService(request)
+        print("REQUESSTSTSTSTSTS", request.POST)
+        if not cart_service.is_valid:
+            return redirect('cart')
+
+        issuer_id = request.POST.get('issuer_id')
+        issuer_name = request.POST.get('issuer_name')
+        payment_method = request.POST.get('payment_method')
+        payment_name = request.POST.get('payment_name')
+        payment_img = request.POST.get('payment_name')
 
         order_service = OrderInfoService(request)
         order_info = order_service.get_order(request)
@@ -306,7 +299,7 @@ def confirm_order(request):
             return HttpResponseBadRequest("Order information not found")
 
         checkout_service = CheckoutService()
-        payment_info = PaymentInfo("iDeal", "Rabobank")
+        payment_info = PaymentInfo(payment_name, issuer_name)
         delivery_info = DeliveryInfo("Bezorging", "2024-3-30", 5.00)
 
         account = request.user
@@ -315,7 +308,17 @@ def confirm_order(request):
         cart_service.clear_cart()
         order_service.delete_order(request)
 
-        return redirect(reverse('order_confirmation') + f'?order_id={order.id}')
+        redirect_url = 'https://e6d6-217-100-168-106.ngrok-free.app/order_detail' + \
+            f'?order_id={order.id}'
+        webhook_url = 'https://e6d6-217-100-168-106.ngrok-free.app/mollie_webhook/'
+
+        client = MollieClient()
+        payment = client.create_payment('EUR', str(
+            order.total_price), order.order_number, redirect_url, webhook_url, payment_method, issuer_id)
+
+        checkout_url = payment['_links']['checkout']['href']
+
+        return redirect(checkout_url)
     
 
 def search_products(request):
@@ -481,7 +484,7 @@ def products_by_attribute(request, category, subcategory, attribute):
 
     if isSort:
         sort_value = attributes.pop('tn_sort', None)[0]
-    print(attribute)
+
     categoryData = ProductCategoryService().get_product_category_by_name(attribute)
 
     if isFilter:
@@ -567,4 +570,27 @@ def delete_cart_item(request):
         cart_service = ShoppingCartService(request)
         cart_service.remove_item(product_id)
         return redirect('cart') 
+
+
+@csrf_exempt
+def mollie_webhook(request):
+    print("WebHook CALLED!!!!!")
+    if request.method == 'POST':
+        try:
+
+            client = MollieClient()
+            payment_id = request.POST.get('id')
+
+            print("Received Mollie webhook notification:")
+            print(payment_id)
+
+            client.handle_webhook(payment_id)
+
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            print("Error processing Mollie webhook notification:", str(e))
+            return JsonResponse({'status': 'error'}, status=500)
+    else:
+        return JsonResponse({'error': 'Method not allowed'}, status=405)
+
 
