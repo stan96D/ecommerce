@@ -11,9 +11,5 @@ class PaymentClient(ABC):
         pass
 
     @abstractmethod
-    def handle_webhook(self, request_data):
-        pass
-
-    @abstractmethod
     def get_issuers(self):
         pass
