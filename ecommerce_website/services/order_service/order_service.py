@@ -16,7 +16,7 @@ class OrderService(OrderServiceInterface):
             return Order.objects.all()
         except Order.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_orders_by_account(account):
         try:
@@ -24,4 +24,14 @@ class OrderService(OrderServiceInterface):
         except Order.DoesNotExist:
             return None
 
+    @staticmethod
+    def update_payment_status(payment_id, status):
+        try:
+            order = Order.objects.get(payment_id=payment_id)
 
+            order.payment_status = status
+
+            order.save()
+            return order
+        except Order.DoesNotExist:
+            return None
