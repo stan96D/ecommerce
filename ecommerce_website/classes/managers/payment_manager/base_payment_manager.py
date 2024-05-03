@@ -15,5 +15,5 @@ class PaymentClient(ABC):
         pass
 
     @abstractmethod
-    def get_clients(self):
+    def get_issuers(self):
         pass
