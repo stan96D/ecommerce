@@ -204,14 +204,13 @@ class Order(models.Model):
     payment_information = models.TextField()
     deliver_date = models.DateField()
     deliver_method = models.CharField(max_length=100)
-    paid = models.BooleanField(default=False)
+
     shipping_address = models.TextField()
     billing_address = models.TextField()
     order_number = models.CharField(max_length=20, unique=True)
 
     account = models.ForeignKey(
     Account, related_name='orders', on_delete=models.CASCADE, default=None, null=True)
-
 
     total_price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
@@ -224,6 +223,7 @@ class Order(models.Model):
     shipping_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     created_date = models.DateTimeField(default=timezone.now)
 
-
+    payment_id = models.CharField(max_length=100, unique=True, null=True)
+    payment_status = models.TextField(null=True)
 
 

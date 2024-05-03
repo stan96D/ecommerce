@@ -35,3 +35,17 @@ class OrderService(OrderServiceInterface):
             return order
         except Order.DoesNotExist:
             return None
+
+    @staticmethod
+    def add_payment(payment, order):
+        try:
+
+            order = Order.objects.get(id=order.id)
+
+            order.payment_id = payment.id
+            order.payment_status = payment.status
+
+            order.save()
+            return order
+        except Order.DoesNotExist:
+            return None

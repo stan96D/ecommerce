@@ -316,6 +316,8 @@ def confirm_order(request):
         payment = client.create_payment('EUR', str(
             order.total_price), order.order_number, redirect_url, webhook_url, payment_method, issuer_id)
 
+        OrderService.add_payment(payment, order)
+
         checkout_url = payment['_links']['checkout']['href']
 
         return redirect(checkout_url)
@@ -581,10 +583,15 @@ def mollie_webhook(request):
             client = MollieClient()
             payment_id = request.POST.get('id')
 
-            print("Received Mollie webhook notification:")
-            print(payment_id)
+            print("Received Mollie webhook notification: ", payment_id)
 
-            client.handle_webhook(payment_id)
+            payment = client.get_payment(payment_id)
+            payment_id = payment.id
+
+            new_order = OrderService.update_payment_status(
+                payment_id, payment.status)
+
+            print(new_order.payment_status)
 
             return JsonResponse({'status': 'success'})
         except Exception as e:
