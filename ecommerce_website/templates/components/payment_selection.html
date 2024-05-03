@@ -1,0 +1,62 @@
+{% load static %}
+
+<fieldset>
+    <legend class="text-lg font-medium text-gray-900">Betaalwijze</legend>
+    <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+        <!-- Standard Delivery -->
+        <label class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none">
+            <input type="radio" name="payment-method" value="iDeal" class="sr-only">
+            <span class="flex flex-1">
+                <span class="flex flex-col">
+                    <span class="block text-sm font-medium text-gray-900">iDeal</span>
+                    <!-- Replace text with image -->
+                    <img class="max-h-12 max-w-12 mt-1" src="{% static 'images/bank_ideal.png' %}" alt="iDeal Image">
+                    <div class="mt-4 w-full rounded-md bg-white">
+                        <select id="issuerSelect"
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+                            name="issuer_id">
+                            <option value="" disabled selected>--Selecteer uw bank--</option>
+                            <!-- Generate options dynamically -->
+                            {% for issuer in payment_issuers %}
+                            <option value="{{ issuer.id }}">{{ issuer.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <input type="hidden" name="issuer_name" id="issuerNameInput">
+                    <input type="hidden" name="payment_method" id="paymentMethod" value="ideal">
+                    <input type="hidden" name="payment_name" id="paymentName" value="iDeal">
+
+                    <p id="select-issuer-error" hidden class="text-red-500 text-sm mt-1">Dit veld is verplicht.</p>
+
+                </span>
+            </span>
+            <svg class="h-5 w-5 text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                    clip-rule="evenodd" />
+            </svg>
+            <span class="pointer-events-none absolute -inset-px rounded-lg border-2" aria-hidden="true"></span>
+        </label>
+    </div>
+</fieldset>
+
+<script>
+        const issuerSelect = document.getElementById('issuerSelect');
+        const errorMessage = document.getElementById('select-issuer-error');
+        const issuerNameInput = document.getElementById('issuerNameInput');
+
+        // Event listener to print the value when the select changes
+        issuerSelect.addEventListener('change', function () {
+            const selectedIssuer = issuerSelect.value;
+
+            const selectedOption = issuerSelect.options[issuerSelect.selectedIndex];
+            issuerNameInput.value = selectedOption.textContent;
+            console.log(issuerNameInput.value)
+            if (!selectedIssuer || selectedIssuer === '') {
+                errorMessage.removeAttribute('hidden');
+            } else {
+                errorMessage.setAttribute('hidden', 'true');
+
+            }
+        });
+</script>
