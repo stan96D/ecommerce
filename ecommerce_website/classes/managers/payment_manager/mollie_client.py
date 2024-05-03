@@ -53,14 +53,4 @@ class MollieClient(PaymentClient):
         payment = self.client.payments.get(payment_id)
         return payment
 
-    def handle_webhook(self, payment_id):
-        try:
-            payment = self.get_payment(payment_id)
-            # Handle the payment status update here
-            # You can update the order status in your database based on the payment status
-            print(f"Webhook received for payment {
-                  payment_id}. Status: {payment.status}")
-            return True
-        except Exception as e:
-            print(f"Error handling webhook: {e}")
-            return False
+
