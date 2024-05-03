@@ -8,7 +8,7 @@ class OrderNumberManager:
         try:
             last_order = Order.objects.latest('created_date')
             last_order_number = last_order.order_number
-            print(last_order.order_number)
+
             numeric_part = int(last_order_number[-4:])
 
             incremented_numeric_part = numeric_part + 1
