@@ -6,7 +6,6 @@ class CartItemViewService(ViewServiceInterface):
 
     def generate(self, items):
         cartItemViews = []
-        print(items)
         for item in items:
             product_id = item['product_id']
             stock = item['quantity']
