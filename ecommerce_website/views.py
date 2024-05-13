@@ -28,6 +28,7 @@ from ecommerce_website.classes.forms.user_creation_form import CustomUserCreatio
 from ecommerce_website.classes.helpers.shopping_cart_merger import *
 from ecommerce_website.services.view_service.order_item_view_service import *
 from ecommerce_website.classes.managers.payment_manager.mollie_client import *
+from ecommerce_website.classes.managers.mail_manager.mail_manager import *
 
 def sign_in(request):
     if request.method == 'POST':
@@ -319,6 +320,20 @@ def confirm_order(request):
         OrderService.add_payment(payment, order)
 
         checkout_url = payment['_links']['checkout']['href']
+
+        client_mail_sender = ClientMailSender()
+        admin_mail_sender = AdminMailSender()
+
+        salutation = account.salutation
+        first_name = account.first_name
+        last_name = account.last_name
+        recipient_email = account.email
+        order_number = order.order_number
+        order_lines = order.order_lines
+
+        print(client_mail_sender.send_order_confirmation(salutation, last_name, recipient_email, order_number, redirect_url))
+        print(admin_mail_sender.send_order_confirmation(
+            first_name, last_name, order_number, order_lines))
 
         return redirect(checkout_url)
     
