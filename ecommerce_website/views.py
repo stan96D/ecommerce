@@ -308,9 +308,9 @@ def confirm_order(request):
         cart_service.clear_cart()
         order_service.delete_order(request)
 
-        redirect_url = 'https://e6d6-217-100-168-106.ngrok-free.app/order_detail' + \
+        redirect_url = 'https://cb2e-2001-1c05-2233-8d00-89d3-33fc-5ae9-6526.ngrok-free.app//order_detail' + \
             f'?order_id={order.id}'
-        webhook_url = 'https://e6d6-217-100-168-106.ngrok-free.app/mollie_webhook/'
+        webhook_url = 'https://cb2e-2001-1c05-2233-8d00-89d3-33fc-5ae9-6526.ngrok-free.app//mollie_webhook/'
 
         client = MollieClient()
         payment = client.create_payment('EUR', str(

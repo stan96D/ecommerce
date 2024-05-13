@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-@+7l*%+0#9n=_g0)&6dnolzv3g%+llw@!f4q@h$b84f!+rl&+b
 DEBUG = True
 
 ALLOWED_HOSTS = [ 'localhost',
-                 '127.0.0.1', 'e6d6-217-100-168-106.ngrok-free.app']
+                  '127.0.0.1', 'e6d6-217-100-168-106.ngrok-free.app',  'cb2e-2001-1c05-2233-8d00-89d3-33fc-5ae9-6526.ngrok-free.app']
 
 CACHES = {
     'default': {
