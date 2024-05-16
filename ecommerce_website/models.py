@@ -187,6 +187,11 @@ class ProductFilter(models.Model):
             return f"{self.name}"
     
 
+class StoreMotivation(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    active = models.BooleanField(default=False)
+
+
 class OrderLine(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
