@@ -247,8 +247,9 @@
             <p class="mt-4 text-xl text-white">Van PVC tot laminaat, deze zijn allemaal verkrijgbaar
                 in ons uitgebreide assortiment!</p>
             <a href="#"
-                class="mt-8 inline-block rounded-md border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100">Bekijk
+                class="mt-8 inline-block rounded-md border border-transparent bg-amber-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-50">Bekijk
                 assortiment</a>
+
         </div>
     </div>
 
@@ -256,7 +257,7 @@
         {% if runner_products_data %}
 
         <section aria-labelledby="trending-heading">
-            <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:pt-32">
+            <div class="mx-auto max-w-7xl px-4 py-24 lg:px-8 ">
                 <div class="md:flex md:items-center md:justify-between">
                     <h2 id="favorites-heading" class="text-2xl font-bold tracking-tight text-gray-900">Hardlopers!</h2>
                     <a href="#" class="hidden text-sm font-medium text-amber-500 hover:text-customColor md:block">
@@ -264,10 +265,10 @@
                         <span aria-hidden="true"> &rarr;</span>
                     </a>
                 </div>
-                
+
                 <div class="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
                     {% for product in runner_products_data %}
-                        {% include 'components/product_card.html' %}
+                    {% include 'components/product_card.html' %}
                     {% endfor %}
 
                 </div>
@@ -279,32 +280,36 @@
                 </div>
             </div>
         </section>
-                {% endif %}
+        {% endif %}
 
-<div class="relative overflow-hidden bg-white pt-32">
-    <!-- Decorative background image and gradient -->
-    <div aria-hidden="true" class="absolute inset-0">
-        <div class="absolute inset-0 mx-auto max-w-7xl overflow-hidden xl:px-8 pt-12">
-            <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-sale-full-width.jpg" alt=""
-                class="h-full w-full object-cover object-center">
+        <div class="relative overflow-hidden bg-gray-200 pt-32">
+            <!-- Decorative background image and gradient -->
+            <div aria-hidden="true" class="absolute inset-0">
+                <div class="absolute inset-0 mx-auto max-w-7xl overflow-hidden xl:px-8 pt-12">
+                    <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-sale-full-width.jpg" alt=""
+                        class="h-full w-full object-cover object-center">
+                </div>
+                <!-- Remove or adjust opacity for these elements -->
+                <div class="absolute inset-0 bg-white bg-opacity-75"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-white via-white"></div>
+            </div>
+        
+            <!-- Callout -->
+            <section aria-labelledby="sale-heading"
+                class="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-32 text-center sm:px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl lg:max-w-none">
+                    <h2 id="sale-heading" class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+                        Keihard de
+                        goedkoopste van Nederland!</h2>
+                    <p class="mx-auto mt-4 max-w-xl text-xl text-gray-600">Nu met extra kortingen op bepaalde vloeren!
+                    </p>
+                    <a href="#"
+                        class="mt-6 inline-block w-full rounded-md border border-transparent bg-amber-500 px-8 py-3 font-medium text-white hover:bg-customColor sm:w-auto">Zie
+                        kortingen</a>
+                </div>
+            </section>
         </div>
-        <div class="absolute inset-0 bg-white bg-opacity-75"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-white via-white"></div>
-    </div>
 
-    <!-- Callout -->
-    <section aria-labelledby="sale-heading"
-        class="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-32 text-center sm:px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl lg:max-w-none">
-            <h2 id="sale-heading" class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">Keihard de goedkoopste van Nederland!</h2>
-            <p class="mx-auto mt-4 max-w-xl text-xl text-gray-600">Nu met extra kortingen op bepaalde vloeren!</p>
-            <a href="#"
-                class="mt-6 inline-block w-full rounded-md border border-transparent bg-amber-500 px-8 py-3 font-medium text-white hover:bg-customColor sm:w-auto">Zie kortingen</a>
-        </div>
-    </section>
-
-    
-</div>
 
 
         <!-- Category section -->
@@ -319,28 +324,30 @@
                     <div class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible">
                         <div
                             class="absolute flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0">
-                            
-                {% for category in category_data|slice:":5" %}
-                {% if category.thumbnail %}
-                
-                {% if category.name == 'Hardlopers' %}
-                <a href="/runners" class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
-                    {% else %}
-                
-                    <a href="/products/{{ category.name }}"
-                        class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
-                        {% endif %}
-                        <span aria-hidden="true" class="absolute inset-0">
-                            <img src="{{ category.thumbnail.url }}" alt="{{ category.name }}"
-                                class="h-full w-full object-cover object-center">
-                        </span>
-                        <span aria-hidden="true"
-                            class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"></span>
-                        <span class="relative mt-auto text-center text-xl font-bold text-white">{{category.name}}</span>
-                    </a>
-                    {% endif %}
-                
-                    {% endfor %}
+
+                            {% for category in category_data|slice:":5" %}
+                            {% if category.thumbnail %}
+
+                            {% if category.name == 'Hardlopers' %}
+                            <a href="/runners"
+                                class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
+                                {% else %}
+
+                                <a href="/products/{{ category.name }}"
+                                    class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
+                                    {% endif %}
+                                    <span aria-hidden="true" class="absolute inset-0">
+                                        <img src="{{ category.thumbnail.url }}" alt="{{ category.name }}"
+                                            class="h-full w-full object-cover object-center">
+                                    </span>
+                                    <span aria-hidden="true"
+                                        class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"></span>
+                                    <span
+                                        class="relative mt-auto text-center text-xl font-bold text-white">{{category.name}}</span>
+                                </a>
+                                {% endif %}
+
+                                {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -358,21 +365,23 @@
             <div class="isolate bg-gray-100 px-6 py-6 sm:py-32 lg:px-8">
                 <div class="mx-auto max-w-2xl sm:text-center">
                     <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact sales</h2>
-                    <p class="mt-2 text-lg leading-8 text-gray-600">Aute magna irure deserunt veniam aliqua magna enim voluptate.
+                    <p class="mt-2 text-lg leading-8 text-gray-600">Aute magna irure deserunt veniam aliqua magna enim
+                        voluptate.
                     </p>
                 </div>
                 <div class="mx-auto mt-20 max-w-lg space-y-16">
                     <div class="flex gap-x-6">
                         <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-600">
-                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                aria-hidden="true">
+                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
                             </svg>
                         </div>
                         <div>
                             <h3 class="text-base font-semibold leading-7 text-gray-900">Sales support</h3>
-                            <p class="mt-2 leading-7 text-gray-600">Ut cursus est ut amet. Lobortis eget egestas leo vitae eget
+                            <p class="mt-2 leading-7 text-gray-600">Ut cursus est ut amet. Lobortis eget egestas leo
+                                vitae eget
                                 porttitor risus blandit. Nunc a in lorem vel iaculis porttitor.</p>
                             <p class="mt-4">
                                 <a href="#" class="text-sm font-semibold leading-6 text-indigo-600">Contact us <span
@@ -382,15 +391,16 @@
                     </div>
                     <div class="flex gap-x-6">
                         <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-600">
-                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                aria-hidden="true">
+                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M12 12.75c1.148 0 2.278.08 3.383.237 1.037.146 1.866.966 1.866 2.013 0 3.728-2.35 6.75-5.25 6.75S6.75 18.728 6.75 15c0-1.046.83-1.867 1.866-2.013A24.204 24.204 0 0112 12.75zm0 0c2.883 0 5.647.508 8.207 1.44a23.91 23.91 0 01-1.152 6.06M12 12.75c-2.883 0-5.647.508-8.208 1.44.125 2.104.52 4.136 1.153 6.06M12 12.75a2.25 2.25 0 002.248-2.354M12 12.75a2.25 2.25 0 01-2.248-2.354M12 8.25c.995 0 1.971-.08 2.922-.236.403-.066.74-.358.795-.762a3.778 3.778 0 00-.399-2.25M12 8.25c-.995 0-1.97-.08-2.922-.236-.402-.066-.74-.358-.795-.762a3.734 3.734 0 01.4-2.253M12 8.25a2.25 2.25 0 00-2.248 2.146M12 8.25a2.25 2.25 0 012.248 2.146M8.683 5a6.032 6.032 0 01-1.155-1.002c.07-.63.27-1.222.574-1.747m.581 2.749A3.75 3.75 0 0115.318 5m0 0c.427-.283.815-.62 1.155-.999a4.471 4.471 0 00-.575-1.752M4.921 6a24.048 24.048 0 00-.392 3.314c1.668.546 3.416.914 5.223 1.082M19.08 6c.205 1.08.337 2.187.392 3.314a23.882 23.882 0 01-5.223 1.082" />
                             </svg>
                         </div>
                         <div>
                             <h3 class="text-base font-semibold leading-7 text-gray-900">Bug reports</h3>
-                            <p class="mt-2 leading-7 text-gray-600">Expedita qui non ut quia ipsum voluptatum ipsam pariatur. Culpa
+                            <p class="mt-2 leading-7 text-gray-600">Expedita qui non ut quia ipsum voluptatum ipsam
+                                pariatur. Culpa
                                 vitae ipsum minus eius vero quo quibusdam.</p>
                             <p class="mt-4">
                                 <a href="#" class="text-sm font-semibold leading-6 text-indigo-600">Report a bug <span
@@ -400,19 +410,20 @@
                     </div>
                     <div class="flex gap-x-6">
                         <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-600">
-                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                aria-hidden="true">
+                            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" aria-hidden="true">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
                             </svg>
                         </div>
                         <div>
                             <h3 class="text-base font-semibold leading-7 text-gray-900">Technical support</h3>
-                            <p class="mt-2 leading-7 text-gray-600">Sint aut modi porro consequatur architecto commodi qui
+                            <p class="mt-2 leading-7 text-gray-600">Sint aut modi porro consequatur architecto commodi
+                                qui
                                 consequatur. Dignissimos adipisci minima.</p>
                             <p class="mt-4">
-                                <a href="#" class="text-sm font-semibold leading-6 text-indigo-600">Join our Discord <span
-                                        aria-hidden="true">&rarr;</span></a>
+                                <a href="#" class="text-sm font-semibold leading-6 text-indigo-600">Join our Discord
+                                    <span aria-hidden="true">&rarr;</span></a>
                             </p>
                         </div>
                     </div>
@@ -420,68 +431,82 @@
             </div>
 
         </section>
-            <section aria-labelledby="perks-heading" class="border-t border-gray-200 bg-gray-50">
-                <h2 id="perks-heading" class="sr-only">Our perks</h2>
-            
-                <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
-                    <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
-                        <div class="text-center md:flex md:items-start md:text-left lg:block lg:text-center">
-                            <div class="md:flex-shrink-0">
-                                <div class="flow-root">
-                                    <img class="-my-1 mx-auto h-24 w-auto"
-                                        src="https://tailwindui.com/img/ecommerce/icons/icon-returns-light.svg" alt="">
-                                </div>
-                            </div>
-                            <div class="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
-                                <h3 class="text-base font-medium text-gray-900">Free returns</h3>
-                                <p class="mt-3 text-sm text-gray-500">Not what you expected? Place it back in the parcel and attach
-                                    the pre-paid postage stamp.</p>
+        <section aria-labelledby="perks-heading" class="border-t border-gray-200 bg-gray-50">
+            <h2 id="perks-heading" class="sr-only">Our perks</h2>
+
+            <div class="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
+                <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
+                    <div class="text-center md:flex md:items-start md:text-left lg:block lg:text-center">
+                        <div class="md:flex-shrink-0">
+                            <div class="flow-root">
+                                <img class="-my-1 mx-auto h-24 w-auto"
+                                    src="https://tailwindui.com/img/ecommerce/icons/icon-returns-light.svg" alt="">
                             </div>
                         </div>
-                        <div class="text-center md:flex md:items-start md:text-left lg:block lg:text-center">
-                            <div class="md:flex-shrink-0">
-                                <div class="flow-root">
-                                    <img class="-my-1 mx-auto h-24 w-auto"
-                                        src="https://tailwindui.com/img/ecommerce/icons/icon-calendar-light.svg" alt="">
-                                </div>
-                            </div>
-                            <div class="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
-                                <h3 class="text-base font-medium text-gray-900">Same day delivery</h3>
-                                <p class="mt-3 text-sm text-gray-500">We offer a delivery service that has never been done before.
-                                    Checkout today and receive your products within hours.</p>
+                        <div class="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
+                            <h3 class="text-base font-medium text-gray-900">Free returns</h3>
+                            <p class="mt-3 text-sm text-gray-500">Not what you expected? Place it back in the parcel and
+                                attach
+                                the pre-paid postage stamp.</p>
+                        </div>
+                    </div>
+                    <div class="text-center md:flex md:items-start md:text-left lg:block lg:text-center">
+                        <div class="md:flex-shrink-0">
+                            <div class="flow-root">
+                                <img class="-my-1 mx-auto h-24 w-auto"
+                                    src="https://tailwindui.com/img/ecommerce/icons/icon-calendar-light.svg" alt="">
                             </div>
                         </div>
-                        <div class="text-center md:flex md:items-start md:text-left lg:block lg:text-center">
-                            <div class="md:flex-shrink-0">
-                                <div class="flow-root">
-                                    <img class="-my-1 mx-auto h-24 w-auto"
-                                        src="https://tailwindui.com/img/ecommerce/icons/icon-gift-card-light.svg" alt="">
-                                </div>
-                            </div>
-                            <div class="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
-                                <h3 class="text-base font-medium text-gray-900">All year discount</h3>
-                                <p class="mt-3 text-sm text-gray-500">Looking for a deal? You can use the code &quot;ALLYEAR&quot;
-                                    at checkout and get money off all year round.</p>
+                        <div class="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
+                            <h3 class="text-base font-medium text-gray-900">Same day delivery</h3>
+                            <p class="mt-3 text-sm text-gray-500">We offer a delivery service that has never been done
+                                before.
+                                Checkout today and receive your products within hours.</p>
+                        </div>
+                    </div>
+                    <div class="text-center md:flex md:items-start md:text-left lg:block lg:text-center">
+                        <div class="md:flex-shrink-0">
+                            <div class="flow-root">
+                                <img class="-my-1 mx-auto h-24 w-auto"
+                                    src="https://tailwindui.com/img/ecommerce/icons/icon-gift-card-light.svg" alt="">
                             </div>
                         </div>
-                        <div class="text-center md:flex md:items-start md:text-left lg:block lg:text-center">
-                            <div class="md:flex-shrink-0">
-                                <div class="flow-root">
-                                    <img class="-my-1 mx-auto h-24 w-auto"
-                                        src="https://tailwindui.com/img/ecommerce/icons/icon-planet-light.svg" alt="">
-                                </div>
+                        <div class="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
+                            <h3 class="text-base font-medium text-gray-900">All year discount</h3>
+                            <p class="mt-3 text-sm text-gray-500">Looking for a deal? You can use the code
+                                &quot;ALLYEAR&quot;
+                                at checkout and get money off all year round.</p>
+                        </div>
+                    </div>
+                    <div class="text-center md:flex md:items-start md:text-left lg:block lg:text-center">
+                        <div class="md:flex-shrink-0">
+                            <div class="flow-root">
+                                <img class="-my-1 mx-auto h-24 w-auto"
+                                    src="https://tailwindui.com/img/ecommerce/icons/icon-planet-light.svg" alt="">
                             </div>
-                            <div class="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
-                                <h3 class="text-base font-medium text-gray-900">For the planet</h3>
-                                <p class="mt-3 text-sm text-gray-500">We’ve pledged 1% of sales to the preservation and restoration
-                                    of the natural environment.</p>
-                            </div>
+                        </div>
+                        <div class="mt-6 md:ml-4 md:mt-0 lg:ml-0 lg:mt-6">
+                            <h3 class="text-base font-medium text-gray-900">For the planet</h3>
+                            <p class="mt-3 text-sm text-gray-500">We’ve pledged 1% of sales to the preservation and
+                                restoration
+                                of the natural environment.</p>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
     </main>
 
 </div>
-{% endblock %}
+<script>
 
+    function to(event) {
+        event.preventDefault();
+        const searchInput = document.getElementById('search').value.trim();
+        if (searchInput) {
+            localStorage.setItem('searchInput', searchInput);
+            window.location.href = '/search/?q=' + encodeURIComponent(searchInput);
+        }
+    }
+</script>
+{% endblock %}

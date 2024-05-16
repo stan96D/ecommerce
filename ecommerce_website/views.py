@@ -29,6 +29,8 @@ from ecommerce_website.classes.helpers.shopping_cart_merger import *
 from ecommerce_website.services.view_service.order_item_view_service import *
 from ecommerce_website.classes.managers.payment_manager.mollie_client import *
 from ecommerce_website.classes.managers.mail_manager.mail_manager import *
+from ecommerce_website.services.store_motivation_service.store_motivation_service import StoreMotivationService
+from ecommerce_website.services.view_service.store_motivation_view_service import StoreMotivationViewService
 
 def sign_in(request):
     if request.method == 'POST':
@@ -65,8 +67,10 @@ def home(request):
     active_categories = ProductCategoryService().get_all_active_head_product_categories()
     
     view_products = ProductViewService().generate(products)
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
 
-    return render(request, "home.html", {'headerData': headerData, 'runner_products_data': view_products, 'category_data': active_categories})
+    return render(request, "home.html", {'headerData': headerData, 'store_motivations': store_motivations, 'runner_products_data': view_products, 'category_data': active_categories})
 
 
 
@@ -85,7 +89,10 @@ def registration_view(request):
 
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-    return render(request, "sign_up.html", {'headerData': headerData})
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+    return render(request, "sign_up.html", {'headerData': headerData, 'store_motivations': store_motivations})
 
 def account_view(request):
         
@@ -99,7 +106,10 @@ def account_view(request):
     order_view_service = OrderItemViewService()
     order_views = order_view_service.generate(orders)
 
-    return render(request, "account.html", {'headerData': headerData, 'orders': order_views})
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+    return render(request, "account.html", {'headerData': headerData, 'orders': order_views, 'store_motivations': store_motivations})
 
 def sign_up(request):
     if request.method == 'POST':
@@ -118,7 +128,10 @@ def sign_up(request):
 
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-    return render(request, 'sign_up.html', {'form': form, 'headerData': headerData})
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+    return render(request, 'sign_up.html', {'form': form, 'headerData': headerData, 'store_motivations': store_motivations})
 
 def navigate_checkout(request):
 
@@ -152,7 +165,10 @@ def cart(request):
     cart_item_view_service = CartItemViewService()
     cart_item_views = cart_item_view_service.generate(items)
 
-    return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData, 'cart': cart_view})
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+    return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData, 'cart': cart_view, 'store_motivations': store_motivations})
 
 def order_info(request):
 
@@ -210,8 +226,10 @@ def order_info(request):
         else:
             order_info_view = info_view_service.get_single()
 
+        store_motivations_data = StoreMotivationService.get_all_active_motivations()
+        store_motivations = StoreMotivationViewService().generate(store_motivations_data)
 
-        return render(request, "checkout.html", {'headerData': headerData, 'cart': cart_view, 'order_info': order_info_view})
+        return render(request, "checkout.html", {'headerData': headerData, 'cart': cart_view, 'order_info': order_info_view, 'store_motivatins': store_motivations})
     elif request.method == "POST":
 
         attributes = request.POST.copy()
@@ -259,7 +277,10 @@ def checkout(request):
 
             issuers = client.get_issuers()
 
-            return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order, 'payment_issuers': issuers})
+            store_motivations_data = StoreMotivationService.get_all_active_motivations()
+            store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+            return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order, 'payment_issuers': issuers, 'store_motivations': store_motivations})
 
         else:
 
@@ -275,7 +296,10 @@ def order_detail(request):
     
     headerData = ProductCategoryService().get_all_active_head_product_categories()
 
-    return render(request, "order_detail.html", {'headerData': headerData, 'order': order})
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+    return render(request, "order_detail.html", {'headerData': headerData, 'order': order, 'store_motivations': store_motivations})
 
 
 def confirm_order(request):
@@ -283,7 +307,7 @@ def confirm_order(request):
     if request.method == 'POST':
 
         cart_service = ShoppingCartService(request)
-        print("REQUESSTSTSTSTSTS", request.POST)
+
         if not cart_service.is_valid:
             return redirect('cart')
 
@@ -376,7 +400,10 @@ def search_products(request):
 
     filterData = ProductFilterService().get_products_filters_for_search(products_for_filters)
 
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData})
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'store_motivations': store_motivations})
 
 
 def runner_products(request):
@@ -413,7 +440,10 @@ def runner_products(request):
 
     filterData = ProductFilterService().get_product_filters_by_category_name(category)
 
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb, 'store_motivations': store_motivations})
 
 
 def products_by_category(request, category):
@@ -450,7 +480,10 @@ def products_by_category(request, category):
 
     filterData = ProductFilterService().get_product_filters_by_category_name(category)
 
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb, 'store_motivations': store_motivations})
 
 
 def products_by_subcategory(request, category, subcategory):
@@ -487,7 +520,11 @@ def products_by_subcategory(request, category, subcategory):
 
     filterData = ProductFilterService().get_nested_product_filters_by_category_name(
         category, subcategory)
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
+    
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+
+    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb, 'store_motivations': store_motivations})
 
 
 def products_by_attribute(request, category, subcategory, attribute):
@@ -524,8 +561,11 @@ def products_by_attribute(request, category, subcategory, attribute):
 
     filterData = ProductFilterService().get_double_nested_product_filters_by_category_name(
         category, subcategory, attribute)
+    
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
 
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb})
+    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb, 'store_motivations': store_motivations})
 
 
 def product_detail(request, id=None):
@@ -536,7 +576,10 @@ def product_detail(request, id=None):
     productViewService = ProductDetailViewService()
     productView = productViewService.get(product)
 
-    return render(request, 'product_detail.html', {'product': productView, 'headerData': headerData})
+    store_motivations_data = StoreMotivationService.get_all_active_motivations()
+    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+    
+    return render(request, 'product_detail.html', {'product': productView, 'headerData': headerData, 'store_motivations': store_motivations})
 
 
 def add_to_cart(request):
