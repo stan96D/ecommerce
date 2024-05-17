@@ -1,4 +1,3 @@
-from django.db.models import QuerySet
 
 
 class ProductSorter:
@@ -20,3 +19,22 @@ class ProductSorter:
             return sorted_queryset
         else:
             return queryset
+
+
+class ProductSorterUtility:
+
+    @staticmethod
+    def is_sort(attributes):
+        return 'tn_sort' in attributes
+        
+    @staticmethod
+    def is_filter(attributes):
+        return 'tn_sort' not in attributes and len(
+            attributes) > 0 or 'tn_sort' in attributes and len(
+            attributes) > 1
+    
+    @staticmethod
+    def is_search_filter(attributes):
+        return ('tn_sort' not in attributes and 'q' not in attributes and len(attributes) > 0) or ('tn_sort' in attributes and 'q' not in attributes and len(attributes) > 1) or (
+            'tn_sort' not in attributes and 'q' in attributes and len(attributes) > 1) or ('tn_sort' in attributes and 'q' in attributes and len(attributes) > 2)
+    
