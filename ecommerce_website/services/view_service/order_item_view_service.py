@@ -6,7 +6,7 @@ class OrderItemViewService(ViewServiceInterface):
 
     def generate(self, items):
         cartItemViews = []
-        print(items)
+
         for item in items:
 
             cartItemView = OrderItemView(item)

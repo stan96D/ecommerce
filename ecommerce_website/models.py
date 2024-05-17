@@ -137,7 +137,6 @@ class ProductSale(models.Model):
         return f"Sale for {self.product.name} in {self.sale.name} with {self.percentage}% off"
 
     def save(self, *args, **kwargs):
-        # Deactivate other active sales for the same product in the same sale
         if self.sale.active:
             ProductSale.objects.filter(sale=self.sale, product=self.product).exclude(
                 pk=self.pk)
