@@ -2,14 +2,17 @@
 class ProductView:
     def __init__(self, product):
 
-        print("TEXTEXTEXTETX", product.search_string)
-
         self.id = product.id
         self.name = product.name
         self.price = product.selling_price
         self.thumbnail = product.thumbnail
         self.images = product.images
         self.quantity = product.stock.quantity
+        self.is_runner = product.runner
+
+        if product.has_product_sale:
+            self.sale_price = product.sale_price
+
 
 
 class ProductDetailView:

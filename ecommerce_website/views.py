@@ -315,7 +315,6 @@ def confirm_order(request):
         issuer_name = request.POST.get('issuer_name')
         payment_method = request.POST.get('payment_method')
         payment_name = request.POST.get('payment_name')
-        payment_img = request.POST.get('payment_name')
 
         order_service = OrderInfoService(request)
         order_info = order_service.get_order(request)
@@ -355,9 +354,9 @@ def confirm_order(request):
         order_number = order.order_number
         order_lines = order.order_lines
 
-        print(client_mail_sender.send_order_confirmation(salutation, last_name, recipient_email, order_number, redirect_url))
-        print(admin_mail_sender.send_order_confirmation(
-            first_name, last_name, order_number, order_lines))
+        client_mail_sender.send_order_confirmation(salutation, last_name, recipient_email, order_number, redirect_url)
+        admin_mail_sender.send_order_confirmation(
+            first_name, last_name, order_number, order_lines)
 
         return redirect(checkout_url)
     
@@ -578,7 +577,7 @@ def product_detail(request, id=None):
 
     store_motivations_data = StoreMotivationService.get_all_active_motivations()
     store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-    
+
     return render(request, 'product_detail.html', {'product': productView, 'headerData': headerData, 'store_motivations': store_motivations})
 
 
@@ -634,7 +633,6 @@ def delete_cart_item(request):
 
 @csrf_exempt
 def mollie_webhook(request):
-    print("WebHook CALLED!!!!!")
     if request.method == 'POST':
         try:
 
