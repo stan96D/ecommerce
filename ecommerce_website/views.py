@@ -3,15 +3,11 @@ from django.http import JsonResponse
 from ecommerce_website.services.view_service.order_info_view_service import OrderInfoViewService
 from ecommerce_website.services.product_service.product_service import ProductService
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
-from ecommerce_website.services.view_service.product_detail_view_service import ProductDetailViewService
-from ecommerce_website.services.view_service.product_view_service import ProductViewService
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
-from ecommerce_website.services.view_service.cart_item_view_service import CartItemViewService
 from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
 from ecommerce_website.services.product_filter_service.product_filter_service import ProductFilterService
-from ecommerce_website.classes.helpers.product_sorter import ProductSorter
+from ecommerce_website.classes.helpers.product_sorter import ProductSorter, ProductSorterUtility
 from ecommerce_website.classes.model.address_info import AddressInfo
 from ecommerce_website.classes.model.contact_info import ContactInfo
 from ecommerce_website.classes.model.payment_info import PaymentInfo
@@ -19,66 +15,47 @@ from ecommerce_website.classes.model.delivery_info import DeliveryInfo
 from ecommerce_website.services.order_info_service.order_info_service import OrderInfoService
 from ecommerce_website.services.checkout_service.checkout_service import CheckoutService
 from ecommerce_website.services.order_service.order_service import OrderService
-from ecommerce_website.services.view_service.cart_view_service import CartViewService
-from django.contrib.auth import logout
 from django.http import JsonResponse, HttpResponseBadRequest
 import json
-from django.contrib.auth import authenticate, login
 from ecommerce_website.classes.forms.user_creation_form import CustomUserCreationForm
 from ecommerce_website.classes.helpers.shopping_cart_merger import *
 from ecommerce_website.services.view_service.order_item_view_service import *
 from ecommerce_website.classes.managers.payment_manager.mollie_client import *
 from ecommerce_website.classes.managers.mail_manager.mail_manager import *
-from ecommerce_website.services.store_motivation_service.store_motivation_service import StoreMotivationService
-from ecommerce_website.services.view_service.store_motivation_view_service import StoreMotivationViewService
+from ecommerce_website.classes.managers.authentication_manager.authentication_manager import AuthenticationManager
+from ecommerce_website.classes.helpers.view_service_utility import *
+
 
 def sign_in(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
 
-        user = authenticate(request, username=email, password=password)
+        auth_manager = AuthenticationManager()
 
-        if user is not None:
-
-            info_service = OrderInfoService(request)
-            merger = ShoppingCartMerger()
-            to_cart = AccountShoppingCart()
-
-            from_cart = SessionShoppingCart(request)
-
-            merger.merge_from_to(from_cart, to_cart)
-            info_service.delete_order(request)
-
-            login(request, user)
-
-
+        if auth_manager.login(request, email, password):
             return redirect('home')
         else:
             return render(request, 'login.html', {'error_message': 'Invalid email or password'})
+
     else:
         return render(request, 'login.html')
     
 def home(request):
-
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
-
-    products = ProductService().get_all_runner_products()
-    active_categories = ProductCategoryService().get_all_active_head_product_categories()
     
-    view_products = ProductViewService().generate(products)
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, "home.html", {'headerData': headerData, 'store_motivations': store_motivations, 'runner_products_data': view_products, 'category_data': active_categories})
-
+    return render(request, "home.html", {'headerData': ViewServiceUtility.get_header_data(), 
+                                         'store_motivations': ViewServiceUtility.get_store_motivations(), 
+                                         'runner_products_data': ViewServiceUtility.get_runner_products(), 
+                                         'category_data': ViewServiceUtility.get_active_categories()})
 
 
 def logout_user(request):
 
-    logout(request)
+    auth_manager = AuthenticationManager()
+    auth_manager.logout(request)
 
     return redirect('home')
+
 
 def login_view(request):
 
@@ -87,104 +64,70 @@ def login_view(request):
 
 def registration_view(request):
 
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
+    return render(request, "sign_up.html", {'headerData': ViewServiceUtility.get_header_data(), 
+                                            'store_motivations': ViewServiceUtility.get_store_motivations()})
 
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
 
-    return render(request, "sign_up.html", {'headerData': headerData, 'store_motivations': store_motivations})
-
-def account_view(request):
-        
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
+def account_view(request): 
 
     user = request.user
 
-    order_service = OrderService()
-    orders = order_service.get_orders_by_account(user)
-    
-    order_view_service = OrderItemViewService()
-    order_views = order_view_service.generate(orders)
+    return render(request, "account.html", {'headerData': ViewServiceUtility.get_header_data(), 
+                                            'orders': ViewServiceUtility.get_orders_by_user(user), 
+                                            'store_motivations': ViewServiceUtility.get_store_motivations()})
 
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, "account.html", {'headerData': headerData, 'orders': order_views, 'store_motivations': store_motivations})
 
 def sign_up(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
-            form.save()
+            user_data = form.save()
 
-            user = form.save()
-            login(request, user)
+            auth_manager = AuthenticationManager()
+            auth_manager.login(request, user_data.email, user_data.password)
 
             return redirect('home')
    
     else:
         form = CustomUserCreationForm()
 
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
+    return render(request, 'sign_up.html', {'form': form, 
+                                            'headerData': ViewServiceUtility.get_header_data(), 
+                                            'store_motivations': ViewServiceUtility.get_store_motivations()})
 
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, 'sign_up.html', {'form': form, 'headerData': headerData, 'store_motivations': store_motivations})
 
 def navigate_checkout(request):
 
-        cart_service = ShoppingCartService(request)
+    if not ShoppingCartService(request).is_valid:
+        return redirect('cart')
 
-        if not cart_service.is_valid:
-            return redirect('cart')
+    order = OrderInfoService(request).get_order()
 
-        order_info_service = OrderInfoService(request)
-
-        order = order_info_service.get_order(request)
-
-        if order and order.is_valid():
-
-            return redirect('checkout')
-
-        else:
-
-            return redirect('order_info')
+    if order and order.is_valid():
+        return redirect('checkout')
+    else:
+        return redirect('order_info')
 
 
 def cart(request):
 
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
+    return render(request, "cart.html", {'items': ViewServiceUtility.get_cart_items_view(request), 
+                                         'headerData': ViewServiceUtility.get_header_data(), 
+                                         'cart': ViewServiceUtility.get_cart_view(request), 
+                                         'store_motivations': ViewServiceUtility.get_store_motivations()})
 
-    cart_service = ShoppingCartService(request)
-    items = cart_service.cart_items
-
-    cart_view = CartViewService().get(cart_service)
-
-    cart_item_view_service = CartItemViewService()
-    cart_item_views = cart_item_view_service.generate(items)
-
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, "cart.html", {'items': cart_item_views, 'headerData': headerData, 'cart': cart_view, 'store_motivations': store_motivations})
 
 def order_info(request):
 
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
-
-    cart_service = ShoppingCartService(request)
     order_info_service = OrderInfoService(request)
-
-    cart_view = CartViewService().get(cart_service)
 
     if request.method == 'GET':
 
-        if not cart_service.is_valid:
+        if not ShoppingCartService(request).is_valid:
             return redirect('cart')
 
-        info_view = order_info_service.get_order(request)
+        info_view = order_info_service.get_order()
         info_view_service = OrderInfoViewService()
 
         user = request.user
@@ -193,7 +136,7 @@ def order_info(request):
 
             json_data = info_view.to_json()
 
-            info_data = {
+            order_info_view = info_view_service.get({
                 "first_name": json_data['contact_info']['first_name'],
                 "last_name": json_data['contact_info']['last_name'],
                 "email": json_data['contact_info']['email'],
@@ -203,13 +146,11 @@ def order_info(request):
                 "city": json_data['billing_address_info']['city'],
                 "postal_code": json_data['billing_address_info']['postal_code'],
                 "country": json_data['billing_address_info']['country']
-            }
-
-            order_info_view = info_view_service.get(info_data)
+            })
 
         elif user.is_authenticated:
 
-            info_data = {
+            order_info_view = info_view_service.get({
                 "first_name": user.first_name, 
                 "last_name": user.last_name,
                 "email": user.email, 
@@ -219,17 +160,16 @@ def order_info(request):
                 "city": user.city, 
                 "postal_code": user.postal_code, 
                 "country": user.country, 
-            }
-
-            order_info_view = info_view_service.get(info_data)
+            })
 
         else:
             order_info_view = info_view_service.get_single()
 
-        store_motivations_data = StoreMotivationService.get_all_active_motivations()
-        store_motivations = StoreMotivationViewService().generate(store_motivations_data)
 
-        return render(request, "checkout.html", {'headerData': headerData, 'cart': cart_view, 'order_info': order_info_view, 'store_motivatins': store_motivations})
+        return render(request, "checkout.html", {'headerData': ViewServiceUtility.get_header_data(), 
+                                                 'cart': ViewServiceUtility.get_cart_view(request), 
+                                                 'order_info': order_info_view, 
+                                                 'store_motivatins': ViewServiceUtility.get_store_motivations()})
     elif request.method == "POST":
 
         attributes = request.POST.copy()
@@ -256,34 +196,25 @@ def order_info(request):
         return redirect("navigate_checkout")
 
 def checkout(request):
-    
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
-
-    order_info_service = OrderInfoService(request)
-    cart_service = ShoppingCartService(request)
-    
-    cart_view = CartViewService().get(cart_service)
-
+        
     if request.method == 'GET':
 
-        if not cart_service.is_valid:
+        if not ShoppingCartService(request).is_valid:
             return redirect('cart')
 
-        order = order_info_service.get_order(request)
+        order = ViewServiceUtility.get_order_info(request)
 
         if order and order.is_valid():
 
-            client = MollieClient()
+            issuers = MollieClient().get_issuers()
 
-            issuers = client.get_issuers()
-
-            store_motivations_data = StoreMotivationService.get_all_active_motivations()
-            store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-            return render(request, "payment.html", {'headerData': headerData, 'cart': cart_view, 'order': order, 'payment_issuers': issuers, 'store_motivations': store_motivations})
+            return render(request, "payment.html", {'headerData': ViewServiceUtility.get_header_data(), 
+                                                    'cart': ViewServiceUtility.get_cart_view(request), 
+                                                    'order': order, 
+                                                    'payment_issuers': issuers, 
+                                                    'store_motivations': ViewServiceUtility.get_store_motivations()})
 
         else:
-
             return redirect('order_info')
 
 
@@ -291,15 +222,9 @@ def order_detail(request):
     
     order_id = request.GET.get('order_id')
 
-    order_service = OrderService()
-    order = order_service.get_order_by_id(order_id)
-    
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
-
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, "order_detail.html", {'headerData': headerData, 'order': order, 'store_motivations': store_motivations})
+    return render(request, "order_detail.html", {'headerData': ViewServiceUtility.get_header_data(), 
+                                                 'order': ViewServiceUtility.get_order_by_id(order_id), 
+                                                 'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 
 def confirm_order(request):
@@ -317,268 +242,234 @@ def confirm_order(request):
         payment_name = request.POST.get('payment_name')
 
         order_service = OrderInfoService(request)
-        order_info = order_service.get_order(request)
+        order_info = order_service.get_order()
 
         if not order_info:
             return HttpResponseBadRequest("Order information not found")
 
-        checkout_service = CheckoutService()
         payment_info = PaymentInfo(payment_name, issuer_name)
         delivery_info = DeliveryInfo("Bezorging", "2024-3-30", 5.00)
 
         account = request.user
-        order = checkout_service.create_order(account, order_info, payment_info, delivery_info, cart_service.shopping_cart)
+        order = CheckoutService().create_order(account, order_info, payment_info, delivery_info, cart_service.shopping_cart)
         
         cart_service.clear_cart()
-        order_service.delete_order(request)
+        order_service.delete_order()
 
+        # For Mollie testing purposes
         redirect_url = 'https://cb2e-2001-1c05-2233-8d00-89d3-33fc-5ae9-6526.ngrok-free.app//order_detail' + \
             f'?order_id={order.id}'
         webhook_url = 'https://cb2e-2001-1c05-2233-8d00-89d3-33fc-5ae9-6526.ngrok-free.app//mollie_webhook/'
 
-        client = MollieClient()
-        payment = client.create_payment('EUR', str(
+        payment = MollieClient().create_payment('EUR', str(
             order.total_price), order.order_number, redirect_url, webhook_url, payment_method, issuer_id)
 
         OrderService.add_payment(payment, order)
 
         checkout_url = payment['_links']['checkout']['href']
 
-        client_mail_sender = ClientMailSender()
-        admin_mail_sender = AdminMailSender()
-
-        salutation = account.salutation
-        first_name = account.first_name
-        last_name = account.last_name
-        recipient_email = account.email
-        order_number = order.order_number
-        order_lines = order.order_lines
-
-        client_mail_sender.send_order_confirmation(salutation, last_name, recipient_email, order_number, redirect_url)
-        admin_mail_sender.send_order_confirmation(
-            first_name, last_name, order_number, order_lines)
+        ClientMailSender().send_order_confirmation(account.salutation,
+                                                   account.last_name, 
+                                                   account.email, 
+                                                   order.order_number, 
+                                                   redirect_url)
+        
+        AdminMailSender().send_order_confirmation(
+            account.first_name,
+            account.last_name, 
+            order.order_number, 
+            order.order_lines)
 
         return redirect(checkout_url)
     
 
-def search_products(request):
+def search_products(request, category = "Zoeken"):
 
     attributes = request.GET.copy()
 
-    isSort = 'tn_sort' in attributes
-    isFilter = ('tn_sort' not in attributes and 'q' not in attributes and len(attributes) > 0) or ('tn_sort' in attributes and 'q' not in attributes and len(attributes) > 1) or (
-        'tn_sort' not in attributes and 'q' in attributes and len(attributes) > 1) or ('tn_sort' in attributes and 'q' in attributes and len(attributes) > 2)
+    is_sort = ProductSorterUtility.is_sort(attributes)
+    is_filter = ProductSorterUtility.is_search_filter(attributes)
 
-    if isSort:
+    if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
 
     search = request.GET.get('q')
 
     products_for_filters = ProductService.get_products_by_search(search)
 
-    if isFilter:
+    if is_filter:
         attributes.pop('q', None)
         products = ProductService.get_products_by_attributes_and_search(
             attributes, search)
-        if isSort:
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
         products = ProductService.get_products_by_search(search)
 
-        if isSort:
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
 
-    productViewService = ProductViewService()
-    productViews = productViewService.generate(products)
+    category_data = ProductCategoryService().get_product_category_by_name(category)
 
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
+    filter_data = ProductFilterService().get_products_filters_for_search(products_for_filters)
 
-    category = "Zoeken"
+    return render(request, 'products.html', {
+        'products': ViewServiceUtility.get_product_views(products),
+        'filterData': filter_data,
+        'headerData': ViewServiceUtility.get_header_data(),
+        'categoryData': category_data,
+        'store_motivations': ViewServiceUtility.get_store_motivations()
+    })
 
-    categoryData = ProductCategoryService().get_product_category_by_name(category)
-
-    filterData = ProductFilterService().get_products_filters_for_search(products_for_filters)
-
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'store_motivations': store_motivations})
-
-
-def runner_products(request):
-    category = 'Hardlopers'
+def runner_products(request, category='Hardlopers'):
     attributes = request.GET.copy()
+    is_sort = ProductSorterUtility.is_sort(attributes)
+    is_filter = ProductSorterUtility.is_filter(attributes)
 
-    isSort = 'tn_sort' in attributes
-    isFilter = 'tn_sort' not in attributes and len(
-        attributes) > 0 or 'tn_sort' in attributes and len(
-        attributes) > 1
-
-    if isSort:
+    if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
 
-    if isFilter:
+    if is_filter:
         products = ProductService().get_runner_products_by_attributes(attributes)
-
-        if isSort:
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
         products = ProductService().get_runner_products()
-
-        if isSort:
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
 
-    productViewService = ProductViewService()
-    productViews = productViewService.generate(products)
-
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
-
     breadcrumb = [category]
+    category_data = ProductCategoryService().get_product_category_by_name(category)
+    filter_data = ProductFilterService().get_product_filters_by_category_name(category)
 
-    categoryData = ProductCategoryService().get_product_category_by_name(category)
-
-    filterData = ProductFilterService().get_product_filters_by_category_name(category)
-
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb, 'store_motivations': store_motivations})
+    return render(request, 'products.html', {
+        'products': ViewServiceUtility.get_product_views(products),
+        'filterData': filter_data,
+        'headerData': ViewServiceUtility.get_header_data(),
+        'categoryData': category_data,
+        'breadcrumbs': breadcrumb,
+        'store_motivations': ViewServiceUtility.get_store_motivations()
+    })
 
 
 def products_by_category(request, category):
 
     attributes = request.GET.copy()
 
-    isSort = 'tn_sort' in attributes
-    isFilter = 'tn_sort' not in attributes and len(
-        attributes) > 0 or 'tn_sort' in attributes and len(
-        attributes) > 1
+    is_sort = ProductSorterUtility.is_sort(attributes)
+    is_filter = ProductSorterUtility.is_filter(attributes)
 
-    if isSort:
+    if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
 
-    categoryData = ProductCategoryService().get_product_category_by_name(category)
+    category_data = ProductCategoryService().get_product_category_by_name(category)
 
-    if isFilter:
+    if is_filter:
         products = ProductService.get_products_by_attributes_and_values(
-            attributes, categoryData)
-        if isSort:
+            attributes, category_data)
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
         products = ProductService.get_products_by_attribute(category)
 
-        if isSort:
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
-
-    productViewService = ProductViewService()
-    productViews = productViewService.generate(products)
-
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     breadcrumb = [category]
 
-    filterData = ProductFilterService().get_product_filters_by_category_name(category)
+    filter_data = ProductFilterService().get_product_filters_by_category_name(category)
 
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb, 'store_motivations': store_motivations})
+    return render(request, 'products.html', {
+        'products': ViewServiceUtility.get_product_views(products),
+        'filterData': filter_data,
+        'headerData': ViewServiceUtility.get_header_data(),
+        'categoryData': category_data,
+        'breadcrumbs': breadcrumb,
+        'store_motivations': ViewServiceUtility.get_store_motivations()
+    })
 
 
 def products_by_subcategory(request, category, subcategory):
 
     attributes = request.GET.copy()
 
-    isSort = 'tn_sort' in attributes
-    isFilter = 'tn_sort' not in attributes and len(
-        attributes) > 0 or 'tn_sort' in attributes and len(
-        attributes) > 1
+    is_sort = ProductSorterUtility.is_sort(attributes)
+    is_filter = ProductSorterUtility.is_filter(attributes)
 
-    if isSort:
+    if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
 
-    categoryData = ProductCategoryService().get_product_category_by_name(subcategory)
+    category_data = ProductCategoryService().get_product_category_by_name(subcategory)
 
-    if isFilter:
+    if is_filter:
         products = ProductService.get_products_by_attributes_and_values(
-            attributes, categoryData)
-        if isSort:
+            attributes, category_data)
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
         products = ProductService.get_products_by_attribute(category)
 
-        if isSort:
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
-
-    productViewService = ProductViewService()
-    productViews = productViewService.generate(products)
-
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     breadcrumb = [category, subcategory]
 
-    filterData = ProductFilterService().get_nested_product_filters_by_category_name(
+    filter_data = ProductFilterService().get_nested_product_filters_by_category_name(
         category, subcategory)
     
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb, 'store_motivations': store_motivations})
+    return render(request, 'products.html', {
+        'products': ViewServiceUtility.get_product_views(products),
+        'filterData': filter_data,
+        'headerData': ViewServiceUtility.get_header_data(),
+        'categoryData': category_data,
+        'breadcrumbs': breadcrumb,
+        'store_motivations': ViewServiceUtility.get_store_motivations()
+    })
 
 
 def products_by_attribute(request, category, subcategory, attribute):
 
     attributes = request.GET.copy()
 
-    isSort = 'tn_sort' in attributes
-    isFilter = 'tn_sort' not in attributes and len(
-        attributes) > 0 or 'tn_sort' in attributes and len(
-        attributes) > 1
+    is_sort = ProductSorterUtility.is_sort(attributes)
+    is_filter = ProductSorterUtility.is_filter(attributes)
 
-    if isSort:
+    if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
 
-    categoryData = ProductCategoryService().get_product_category_by_name(attribute)
+    category_data = ProductCategoryService().get_product_category_by_name(attribute)
 
-    if isFilter:
+    if is_filter:
         products = ProductService.get_products_by_attributes_and_values(
-            attributes, categoryData)
-        if isSort:
+            attributes, category_data)
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
         products = ProductService.get_products_by_attribute_from_category(attribute, category)
 
-        if isSort:
+        if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
-    
-    productViewService = ProductViewService()
-    productViews = productViewService.generate(products)
-
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
 
     breadcrumb = [category, subcategory, attribute]
 
-    filterData = ProductFilterService().get_double_nested_product_filters_by_category_name(
+    filter_data = ProductFilterService().get_double_nested_product_filters_by_category_name(
         category, subcategory, attribute)
-    
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
 
-    return render(request, 'products.html', {'products': productViews, 'filterData': filterData, 'headerData': headerData, 'categoryData': categoryData, 'breadcrumbs': breadcrumb, 'store_motivations': store_motivations})
+    return render(request, 'products.html', {
+        'products': ViewServiceUtility.get_product_views(products),
+        'filterData': filter_data,
+        'headerData': ViewServiceUtility.get_header_data(),
+        'categoryData': category_data,
+        'breadcrumbs': breadcrumb,
+        'store_motivations': ViewServiceUtility.get_store_motivations()
+    })
 
 
 def product_detail(request, id=None):
 
-    headerData = ProductCategoryService().get_all_active_head_product_categories()
-
-    product = ProductService().get_product_by_id(id)
-    productViewService = ProductDetailViewService()
-    productView = productViewService.get(product)
-
-    store_motivations_data = StoreMotivationService.get_all_active_motivations()
-    store_motivations = StoreMotivationViewService().generate(store_motivations_data)
-
-    return render(request, 'product_detail.html', {'product': productView, 'headerData': headerData, 'store_motivations': store_motivations})
+    return render(request, 'product_detail.html', {'product': ViewServiceUtility.get_product_view_by_id(id), 
+                                                   'headerData': ViewServiceUtility.get_header_data(), 
+                                                   'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 
 def add_to_cart(request):
@@ -593,8 +484,7 @@ def add_to_cart(request):
 
         product = ProductService().get_product_by_id(product_id)
 
-        cartService = ShoppingCartService(request)
-        cartService.add_item(product.id, quantity)
+        ShoppingCartService(request).add_item(product.id, quantity)
 
     return redirect('cart')
 
@@ -606,10 +496,9 @@ def change_quantity_in_cart(request):
         product_id = data.get('product_id')
         quantity = data.get('quantity')
 
-        product = ProductService().get_product_by_id(product_id)
+        product = ProductService.get_product_by_id(product_id)
 
-        cartService = ShoppingCartService(request)
-        cartService.update_quantity(product.id, quantity)
+        ShoppingCartService(request).update_quantity(product.id, quantity)
         
         return JsonResponse({'message': 'Product added to cart successfully'}, status=200)
     else:
@@ -617,17 +506,14 @@ def change_quantity_in_cart(request):
 
 
 def get_cart_count(request):
-    cartService = ShoppingCartService(request)
-
-    cart_count = cartService.count
+    cart_count = ShoppingCartService(request).count
     return JsonResponse({'count': cart_count})
 
 
 def delete_cart_item(request):
       if request.method == 'POST':
         product_id = request.POST.get('id')
-        cart_service = ShoppingCartService(request)
-        cart_service.remove_item(product_id)
+        ShoppingCartService(request).remove_item(product_id)
         return redirect('cart') 
 
 
@@ -636,12 +522,11 @@ def mollie_webhook(request):
     if request.method == 'POST':
         try:
 
-            client = MollieClient()
             payment_id = request.POST.get('id')
 
             print("Received Mollie webhook notification: ", payment_id)
 
-            payment = client.get_payment(payment_id)
+            payment = MollieClient().get_payment(payment_id)
             payment_id = payment.id
 
             new_order = OrderService.update_payment_status(
