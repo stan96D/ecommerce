@@ -97,35 +97,57 @@ class Product(models.Model):
         return f"{self.name} {attribute_string}"
     
 
-class ProductSale(models.Model):
-    product = models.OneToOneField(Product, on_delete=models.CASCADE)
+    @property
+    def has_product_sale(self):
+        return self.productsale_set.filter(sale__active=True).exists()
+
+
+    @property
+    def sale_price(self):
+        active_product_sale = self.productsale_set.filter(
+            sale__active=True).first()
+        if active_product_sale:
+            selling_price = self.selling_price
+            discount_percentage = active_product_sale.percentage
+            sale_price = selling_price - \
+                (selling_price * discount_percentage / 100)
+            return round(sale_price, 2) 
+        return None
+
+    
+
+class Sale(models.Model):
+    name = models.CharField(max_length=100)
     active = models.BooleanField(default=False)
-    percentage = models.DecimalField(
-        max_digits=5, decimal_places=2, default=0.00)
-    dealname = models.CharField(max_length=100)
+
     begin_date = models.DateField(default=timezone.now)
     end_date = models.DateField()
 
     def __str__(self):
-        return f"Sale for {self.product.name}: {self.dealname}"
+        return self.name
+
+
+class ProductSale(models.Model):
+    sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    percentage = models.DecimalField(
+        max_digits=5, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f"Sale for {self.product.name} in {self.sale.name} with {self.percentage}% off"
 
     def save(self, *args, **kwargs):
-        if not self.pk:  
-            ProductSale.objects.filter(
-                product=self.product, active=True).update(active=False)
+        # Deactivate other active sales for the same product in the same sale
+        if self.sale.active:
+            ProductSale.objects.filter(sale=self.sale, product=self.product).exclude(
+                pk=self.pk)
         super().save(*args, **kwargs)
 
     def clean(self):
-        if self.begin_date >= self.end_date:
+        if self.sale.begin_date >= self.sale.end_date:
             raise ValidationError("Begin date must be before end date")
 
-        if self.active:
-            existing_active_sale = ProductSale.objects.filter(
-                product=self.product, active=True).first()
-            if existing_active_sale and existing_active_sale != self:
-                raise ValidationError(
-                    "Another active sale already exists for this product")
-            
+
 
 class ProductAttributeType(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -190,7 +212,10 @@ class ProductFilter(models.Model):
 class StoreMotivation(models.Model):
     name = models.CharField(max_length=100, unique=True)
     active = models.BooleanField(default=False)
-
+    text = models.CharField(max_length=200, null=True)
+    for_homepage = models.BooleanField(default=True)
+    image = models.ImageField(
+        upload_to='store_motivation_images/', null=True, blank=True)
 
 class OrderLine(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)

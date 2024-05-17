@@ -1,14 +1,49 @@
-<a href="{% url 'product_detail' product.id %}" class="group flex flex-col">
+<a href="{% url 'product_detail' product.id %}" class="group flex flex-col relative">
+    <!-- Absolute div for "Hardloper" label -->
+
+    {% if product.is_runner %}
+
+    <div
+        class="absolute top-4 left-4 px-2 py-1 bg-amber-500 text-gray-100 rounded-full z-10 flex justify-center items-center">
+        <span class="text-xs font-medium px-2 py-0.5">Beste keuze</span>
+    </div>
+    {%endif%}
+    <button
+        class="absolute top-4 right-4 w-8 h-8 bg-gray-600 bg-opacity-50 hover:bg-gray-600 text-gray-200 rounded-full z-10 flex justify-center items-center focus:outline-none">
+        <span class="text-base font-medium">
+            <i class="far fa-heart"></i>
+        </span>
+    </button>
+
+
     <div class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
         <img src="{{ product.thumbnail.url }}" alt="{{ product.name }}"
             class="h-full w-full object-cover object-center group-hover:opacity-75">
     </div>
 
+
+
     <div class="flex justify-between items-center mt-4">
         <div>
             <h3 class="text-sm text-gray-700">{{ product.name }}</h3>
             <div class="flex justify-between items-center">
-                <p class="mt-1 text-lg font-medium text-gray-900">€{{ product.price }}</p>
+                {% if product.sale_price %}
+                <div class="flex">
+                    <div class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
+                        <p class="text-lg font-semibold text-gray-100">€{{ product.sale_price }}</p>
+                    </div>
+                    <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400"><del>€{{ product.price }}</del></p>
+
+                </div>
+
+                {%else%}
+                <div class="flex">
+                    <p class="mt-1 text-lg font-medium text-gray-900">€{{ product.price }}</p>
+                </div>
+                {% endif %}
+
+            </div>
+            <div class="mt-1">
                 {% if product.quantity > 0 %}
                 <span class="text-gray-900 font-medium text-sm">
                     <i class="fas fa-check-circle text-green-500"></i> Direct leverbaar

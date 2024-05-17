@@ -322,13 +322,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 
 <script>
-    // Function to open the flyout panel
     function openFlyoutPanel() {
         console.log('clicked')
         document.getElementById('flyout-panel').style.display = 'block';
     }
 
-    // Function to close the flyout panel
     function closeFlyoutPanel() {
         document.getElementById('flyout-panel').style.display = 'none';
     }
@@ -419,11 +417,10 @@
         }
 
         const nextIndex = (currentIndex + 1) % storeMotivations.length;
-
+        console.log(storeMotivations)
         storeMotivationElement.innerHTML = `
         <i class="fas fa-check-circle text-green-500 mr-1"></i>
-        ${storeMotivations[nextIndex].name}
-    `;
+        ${storeMotivations[nextIndex].name}!`;
     }
 
     updateStoreMotivation();
@@ -437,7 +434,6 @@
             searchField.value = searchInput;
         }
 
-        // Toggle clear button visibility based on search input value
         toggleClearButtonVisibility(searchField.value);
 
         searchField.addEventListener('input', function () {
@@ -472,19 +468,13 @@
     }
 
         function updateSelectedFlag(selectElement) {
-            // Get the selected option
             var selectedOption = selectElement.options[selectElement.selectedIndex];
-            // Get the icon class from the data-icon attribute
             var iconClass = selectedOption.getAttribute('data-icon');
-            // Clear the contents of the selected-flag element
             document.getElementById('selected-flag').innerHTML = '';
-            // Create a new span element with the flag icon class
             var flagIcon = document.createElement('span');
             flagIcon.className = 'flag-icon ' + iconClass;
-            // Append the flag icon to the selected-flag element
             document.getElementById('selected-flag').appendChild(flagIcon);
         }
-        // Call the function initially to set the default flag
         updateSelectedFlag(document.getElementById('desktop-language'));
 
 </script>
