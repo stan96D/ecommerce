@@ -64,6 +64,14 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return self.is_admin
 
+
+class DeliveryMethod(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+    delivery_days = models.DecimalField(max_digits=2, decimal_places=0, default=9)
+
+
 class Product(models.Model):
     name = models.CharField(max_length=100, db_index=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, db_index=True)
