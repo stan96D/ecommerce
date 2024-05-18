@@ -29,7 +29,8 @@ from ecommerce_website.classes.managers.mail_manager.mail_manager import *
 from ecommerce_website.services.store_motivation_service.store_motivation_service import StoreMotivationService
 from ecommerce_website.services.view_service.store_motivation_view_service import StoreMotivationViewService
 from ecommerce_website.classes.managers.authentication_manager.authentication_manager import AuthenticationManager
-
+from ecommerce_website.services.delivery_method_service.delivery_method_service import *
+from ecommerce_website.services.view_service.delivery_method_view_service import *
 
 class ViewServiceUtility:
     @staticmethod
@@ -81,3 +82,8 @@ class ViewServiceUtility:
     @staticmethod
     def get_product_views(products):
         return ProductViewService().generate(products)
+
+    @staticmethod
+    def get_active_delivery_methods():
+        delivery_methods = DeliveryMethodService.get_all_active_delivery_methods()
+        return DeliveryMethodViewService().generate(delivery_methods)

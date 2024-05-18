@@ -26,6 +26,7 @@ from ecommerce_website.classes.managers.authentication_manager.authentication_ma
 from ecommerce_website.classes.helpers.view_service_utility import *
 
 
+
 def sign_in(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -212,6 +213,7 @@ def checkout(request):
                                                     'cart': ViewServiceUtility.get_cart_view(request), 
                                                     'order': order, 
                                                     'payment_issuers': issuers, 
+                                                    'delivery_methods': ViewServiceUtility.get_active_delivery_methods(),
                                                     'store_motivations': ViewServiceUtility.get_store_motivations()})
 
         else:
@@ -240,6 +242,8 @@ def confirm_order(request):
         issuer_name = request.POST.get('issuer_name')
         payment_method = request.POST.get('payment_method')
         payment_name = request.POST.get('payment_name')
+        delivery_method = request.POST.get('selected_delivery_method')
+        delivery_date = request.POST.get('selected_delivery_date')
 
         order_service = OrderInfoService(request)
         order_info = order_service.get_order()
@@ -248,7 +252,7 @@ def confirm_order(request):
             return HttpResponseBadRequest("Order information not found")
 
         payment_info = PaymentInfo(payment_name, issuer_name)
-        delivery_info = DeliveryInfo("Bezorging", "2024-3-30", 5.00)
+        delivery_info = DeliveryInfo(delivery_method, delivery_date)
 
         account = request.user
         order = CheckoutService().create_order(account, order_info, payment_info, delivery_info, cart_service.shopping_cart)
