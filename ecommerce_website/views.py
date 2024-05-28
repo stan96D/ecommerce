@@ -243,7 +243,7 @@ def confirm_order(request):
         payment_method = request.POST.get('payment_method')
         payment_name = request.POST.get('payment_name')
         delivery_method = request.POST.get('selected_delivery_method')
-        delivery_date = request.POST.get('selected_delivery_date')
+        delivery_date = request.POST.get('delivery_date')
 
         order_service = OrderInfoService(request)
         order_info = order_service.get_order()
@@ -473,6 +473,7 @@ def product_detail(request, id=None):
 
     return render(request, 'product_detail.html', {'product': ViewServiceUtility.get_product_view_by_id(id), 
                                                    'headerData': ViewServiceUtility.get_header_data(), 
+                                                   'related_products': ViewServiceUtility.get_related_products(id),
                                                    'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 
@@ -480,9 +481,10 @@ def add_to_cart(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
         quantity_str = request.POST.get('quantity')
-
+        pack_quantity = request.POST.get('packs')
+        
         try:
-            quantity = int(quantity_str)
+            quantity = int(pack_quantity)
         except (TypeError, ValueError):
             quantity = 1  
 
