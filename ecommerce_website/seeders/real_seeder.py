@@ -11,15 +11,50 @@ class RealSeederInterface(ABC):
     def seed():
         pass
 
+
+class RealStoreMotivationDataSeeder(RealSeederInterface):
+
+    def seed():
+
+        StoreMotivation.objects.create(name="Top retourservice",
+                                       active=True,
+                                       text="Is je nieuw gekochte vloer toch niet wat je zoekt? Stuur hem dan gerust kosteloos terug!",
+                                       for_homepage=True)
+        
+        StoreMotivation.objects.create(name="De beste kwaliteit vloeren",
+                                       active=True,
+                                       text="Ondanks de goedkope prijs van onze vloeren hebben wij het beste aanbod aan kwaliteitsvloeren. Waar wacht je nog op?",
+                                       for_homepage=True)
+        
+        StoreMotivation.objects.create(name="De goedkoopste van Nederland en België",
+                                       active=True,
+                                       text="Wij bieden de goedkoopste vloeren van Nederland en België. Nergens anders krijg je zulke topvloeren voor deze prijs!",
+                                       for_homepage=True)
+
+        StoreMotivation.objects.create(name="Binnen 48 uur in huis",
+                                       active=True,
+                                       text="Door onze geweldige bezorgdienst garanderen wij dat jij je vloer binnen maximaal twee dagen in huis hebt. Leggen maar!",
+                                       for_homepage=True)
+
+
 class RealProductDataSeeder(RealSeederInterface):
 
     def seed():
-        with open('ecommerce_website/db_mapper/data/finalized.json', 'r') as file:
+        with open('ecommerce_website/db_mapper/data/finalized_data2.json', 'r') as file:
             json_data = json.load(file)
         print(json_data)
         database_service = SQLImportService()
         database_service.import_product_data(json_data)
 
+
+class RealDeliveryMethodDataSeeder(RealSeederInterface):
+
+    def seed():
+        
+        DeliveryMethod.objects.create(name="Bezorging",
+                                      price=0.00,
+                                      delivery_days=3,
+                                      active=True)
 
 class RealProductSaleSeeder(RealSeederInterface):
     @staticmethod
