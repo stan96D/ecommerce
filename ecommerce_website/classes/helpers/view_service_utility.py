@@ -87,3 +87,9 @@ class ViewServiceUtility:
     def get_active_delivery_methods():
         delivery_methods = DeliveryMethodService.get_all_active_delivery_methods()
         return DeliveryMethodViewService().generate(delivery_methods)
+    
+    @staticmethod
+    def get_related_products(id):
+        products = ProductService.get_related_products(id)
+        return ProductDetailViewService().generate(products)
+

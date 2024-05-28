@@ -248,3 +248,22 @@ class ProductService(ProductServiceInterface):
         except Product.DoesNotExist:
             return None
         
+    @staticmethod
+    def get_related_products(id):
+        try:
+            product = ProductService.get_product_by_id(id)
+
+            product_attribute = product.attributes.filter(
+                attribute_type__name="Collectie").values_list('value', flat=True).first()
+
+            if not product_attribute:
+                return Product.objects.none()
+
+            attr_filter = Q(attributes__value=product_attribute,
+                            attributes__attribute_type__name="Collectie")
+            filtered_products = Product.objects.filter(attr_filter).distinct()
+
+            return filtered_products
+        except Product.DoesNotExist:
+            return None
+        
