@@ -2,9 +2,17 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
+from abc import ABC, abstractmethod
 
-class MailManager:
 
+class BaseMailManager(ABC):
+
+    @abstractmethod
+    def send():
+        pass
+
+
+class HTMLMailManager(BaseMailManager):
 
     def send(self, sender_email, sender_password, recipient_email, subject, message):
         try:
@@ -36,10 +44,10 @@ class ClientMailSender():
 
     text = "Geachte {salutation} {last_name},\n\n Hierbij de bevestiging van uw order met ordernummer {order_number}. De status van je order is <a href='{order_url}'>hier</a> in te zien. We hopen zo snel mogelijk je order te verzorgen.\n\nMet vriendelijke groet,\n\nHet goedkopevloeren.nl team!"
 
-    def __init__(self):
+    def __init__(self, mail_manager: BaseMailManager):
         self.sender_email = os.getenv('SENDER_EMAIL')
         self.sender_password = os.getenv('SENDER_PASSWORD')
-        self.mail_manager = MailManager()
+        self.mail_manager = mail_manager
 
     def send_order_confirmation(self, salutation, last_name, recipient_email, order_number, order_url):
 
@@ -54,7 +62,6 @@ class ClientMailSender():
 
 class AdminMailSender():
 
-
     text = """Hallo,
 
     Hierbij de orderbevestiging met ordernummer {order_number} voor persoon {first_name} {last_name}.
@@ -67,16 +74,16 @@ class AdminMailSender():
     Het goedkopevloeren.nl team!
     """
 
-    def __init__(self):
+    def __init__(self, mail_manager: BaseMailManager):
         self.sender_email = os.getenv('SENDER_EMAIL')
         self.sender_password = os.getenv('SENDER_PASSWORD')
         self.recipient_email = os.getenv('ADMIN_EMAIL')
-        self.mail_manager = MailManager()
+        self.mail_manager = mail_manager
+
 
     def send_order_confirmation(self, first_name, last_name, order_number, order_lines):
 
         subject = "Orderbevestiging " + order_number + " " + first_name + " " + last_name
-
 
         order_lines_text = ""
         for line in order_lines.all():

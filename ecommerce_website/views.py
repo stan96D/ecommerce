@@ -272,13 +272,13 @@ def confirm_order(request):
 
         checkout_url = payment['_links']['checkout']['href']
 
-        ClientMailSender().send_order_confirmation(account.salutation,
+        ClientMailSender(mail_manager=HTMLMailManager()).send_order_confirmation(account.salutation,
                                                    account.last_name, 
                                                    account.email, 
                                                    order.order_number, 
                                                    redirect_url)
         
-        AdminMailSender().send_order_confirmation(
+        AdminMailSender(mail_manager=HTMLMailManager()).send_order_confirmation(
             account.first_name,
             account.last_name, 
             order.order_number, 
