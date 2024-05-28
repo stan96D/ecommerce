@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, AnonymousUser
 from django.db import models
-
+from decimal import Decimal
 
 class AccountManager(BaseUserManager):
 
@@ -74,28 +74,33 @@ class DeliveryMethod(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100, db_index=True)
+    unit_price = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00, db_index=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, db_index=True)
     thumbnail = models.ImageField(
         upload_to='product_thumbnails/', null=True, blank=True)
-    images = models.ManyToManyField(
-        'ProductImage', related_name='products', blank=True)
     tax = models.DecimalField(max_digits=5, decimal_places=2, default=9.00, db_index=True)
     runner = models.BooleanField(default=False)
     selling_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
 
 
     @property
+    def unit_selling_price(self):
+        selling_price = round(self.unit_price * (1 - self.selling_percentage / 100), 2)
+        selling_price_with_shipping_costs = round(
+            selling_price * Decimal('1.05'), 2)
+        return selling_price_with_shipping_costs
+    
+    @property
     def selling_price(self):
-        selling_price = round(self.price * (1 - self.selling_percentage / 100), 2)
-        return selling_price
-
+        selling_price = round(
+            self.price * (1 - self.selling_percentage / 100), 2)
+        selling_price_with_shipping_costs = round(selling_price * Decimal('1.05'), 2)
+        return selling_price_with_shipping_costs
+    
     def __str__(self):
         return self.name
 
-    @property
-    def total_price_with_tax(self):
-        total_price = self.selling_price + (self.selling_price * self.tax / 100)
-        return total_price
     
     @property
     def search_string(self):
@@ -198,7 +203,13 @@ class ProductStock(models.Model):
 
 
 class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='images', default=False)
     image = models.ImageField(upload_to='product_images/')
+
+    def __str__(self):
+        return f"Image for {self.product.name}"
+
 
 
 class ProductFilter(models.Model):
