@@ -6,7 +6,7 @@ from ecommerce_website.classes.model.base_shopping_cart_service import *
 
 
 class SessionShoppingCart(ShoppingCartInterface):
-    def __init__(self, request):
+    def __init__(self, request, shipping_price = 0, discount_amount = 0):
         self.session = request.session
 
         cart = self.session.get('cart')
@@ -14,6 +14,8 @@ class SessionShoppingCart(ShoppingCartInterface):
             cart = self.session['cart'] = {}
         self.cart = cart
 
+        self.shipping_price = shipping_price
+        self.discount_amount = discount_amount
 
     def add_item(self, product_id, quantity):
         product_id = str(product_id)
@@ -36,7 +38,7 @@ class SessionShoppingCart(ShoppingCartInterface):
             self.save()
 
     def clear_cart(self):
-        cart = self.session['cart'] = {}
+        self.cart = self.session['cart'] = {}
         self.save()
 
     def save(self):
@@ -50,12 +52,12 @@ class SessionShoppingCart(ShoppingCartInterface):
         ]
     
     @property
-    def shipping_price(self):
-        return Decimal('5.00')
+    def get_shipping_price(self):
+        return self.shipping_price
 
     @property
-    def discount_amount(self):
-        return Decimal('0.00')
+    def get_discount_amount(self):
+        return self.discount_amount
 
 
     @property
@@ -64,15 +66,15 @@ class SessionShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.selling_price
+                product_price = product.unit_selling_price
                 subtotal = item['quantity'] * product_price
                 total += subtotal
 
         shipping_price = self.shipping_price
         discount_amount = self.discount_amount
 
-        total += shipping_price  
         total -= discount_amount 
+        total += shipping_price
 
         return total
     
@@ -82,7 +84,7 @@ class SessionShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.selling_price
+                product_price = product.unit_selling_price
                 subtotal_amount += item['quantity'] * product_price
         
         total_tax_low = self.total_tax(9) 
@@ -98,17 +100,22 @@ class SessionShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None and product.tax == tax_percentage:
-                product_price = product.selling_price
+                product_price = product.unit_selling_price
                 subtotal = item['quantity'] * product_price
                 tax_amount = subtotal * (Decimal(tax_percentage) / 100)
+                tax_amount = (subtotal * tax_percentage) /  (Decimal('100') + tax_percentage)
+
                 total_tax_amount += tax_amount
         return total_tax_amount.quantize(Decimal('0.00')) 
 
 
 class AccountShoppingCart(ShoppingCartInterface):
 
-    def __init__(self):
+    def __init__(self, shipping_price=0, discount_amount=0):
         self.cart = cache.get('cached_cart') or {}
+
+        self.shipping_price = shipping_price
+        self.discount_amount = discount_amount
 
     def add_item(self, product_id, quantity):
         product_id = str(product_id)
@@ -144,12 +151,12 @@ class AccountShoppingCart(ShoppingCartInterface):
         ]
 
     @property
-    def shipping_price(self):
-        return Decimal('5.00')
+    def get_shipping_price(self):
+        return self.shipping_price
 
     @property
-    def discount_amount(self):
-        return Decimal('0.00')
+    def get_discount_amount(self):
+        return self.discount_amount
 
     @property
     def total_price(self):
@@ -157,7 +164,7 @@ class AccountShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.selling_price
+                product_price = product.unit_selling_price
                 subtotal = item['quantity'] * product_price
                 total += subtotal
 
@@ -175,7 +182,7 @@ class AccountShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.selling_price
+                product_price = product.unit_selling_price
                 subtotal_amount += item['quantity'] * product_price
 
         total_tax_low = self.total_tax(9)
@@ -190,7 +197,7 @@ class AccountShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None and product.tax == tax_percentage:
-                product_price = product.selling_price
+                product_price = product.unit_selling_price
                 subtotal = item['quantity'] * product_price
                 tax_amount = subtotal * (Decimal(tax_percentage) / 100)
                 total_tax_amount += tax_amount
