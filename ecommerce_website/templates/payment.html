@@ -92,10 +92,6 @@
                             <dd class="text-sm font-medium text-gray-900">€{{cart.sub_price}}</dd>
                         </div>
                         <div class="flex items-center justify-between border-t border-gray-200 pt-4">
-                            <dt class="text-sm text-gray-600">Verzendkosten</dt>
-                            <dd class="text-sm font-medium text-gray-900">€{{cart.shipping_price}}</dd>
-                        </div>
-                        <div class="flex items-center justify-between border-t border-gray-200 pt-4">
                             <dt class="flex text-sm text-gray-600">
                                 <span>BTW 9%</span>
                                 <a href="#" class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500">
@@ -123,6 +119,18 @@
                             </dt>
                             <dd class="text-sm font-medium text-gray-900">€{{cart.tax_price_high}}</dd>
                         </div>
+
+<div class="flex items-center justify-between border-t border-gray-200 pt-4">
+    <dt class="text-sm text-gray-600">Verzendkosten</dt>
+    <dd class="text-sm font-medium text-gray-900">
+        {% if cart.shipping_price == 0 %}
+        <span class="text-green-500 font-medium text-sm">Gratis</span>
+        {% else %}
+        €{{ cart.shipping_price }}
+        {% endif %}
+    </dd>
+</div>
+
 
                         <div class="flex items-center justify-between border-t border-gray-200 pt-4">
                             <dt class="text-base font-medium text-gray-900">Order totaal</dt>
