@@ -12,6 +12,7 @@ class Command(BaseCommand):
         # Delete existing data
         Product.objects.all().delete()
         ProductSale.objects.all().delete()
+        Sale.objects.all().delete()
         ProductAttributeType.objects.all().delete()
         ProductAttribute.objects.all().delete()
         ProductStock.objects.all().delete()
@@ -19,6 +20,8 @@ class Command(BaseCommand):
         ProductFilter.objects.all().delete()
         Order.objects.all().delete()
         OrderLine.objects.all().delete()
+        DeliveryMethod.objects.all().delete()
+        StoreMotivation.objects.all().delete()
 
         # Reset primary key sequences for autoincrement fields
         with connection.cursor() as cursor:
@@ -40,10 +43,18 @@ class Command(BaseCommand):
                 "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_orderline';")
             cursor.execute(
                 "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_productsale';")
+            cursor.execute(
+                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_deliverymethod';")
+            cursor.execute(
+                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_sale';")
+            cursor.execute(
+                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_storemotivation';")
 
         # Seed initial data
+        RealDeliveryMethodDataSeeder.seed()
+        RealStoreMotivationDataSeeder.seed()
         RealProductDataSeeder.seed()
-        RealProductSaleSeeder.seed()
+        # RealProductSaleSeeder.seed()
         RealProductCategorySeeder.seed()
         RealProductFilterSeeder.seed()
 
