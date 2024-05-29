@@ -210,7 +210,10 @@ class ProductImage(models.Model):
     def __str__(self):
         return f"Image for {self.product.name}"
 
-
+class Brand(models.Model):
+    name = models.CharField(unique=True, max_length=100)
+    image = models.ImageField(
+        upload_to='brand_images/', null=True, blank=True)
 
 class ProductFilter(models.Model):
     name = models.CharField(max_length=100)
