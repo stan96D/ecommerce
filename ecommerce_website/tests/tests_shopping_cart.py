@@ -4,6 +4,7 @@ from django.test.client import RequestFactory
 from ecommerce_website.classes.model.shopping_cart import SessionShoppingCart
 from ecommerce_website.models import Product
 from decimal import Decimal
+from ecommerce_website.settings.webshop_config import WebShopConfig
 
 class ShoppingCartTestCase(TestCase):
     def setUp(self):
@@ -13,6 +14,9 @@ class ShoppingCartTestCase(TestCase):
         self.product1 = Product.objects.create(
             name='Product 1', unit_price=10, tax=9.00)
         self.product2 = Product.objects.create(name='Product 2', unit_price=20, tax=21.00)
+
+        self.product3 = Product.objects.create(
+            name='Product 3', unit_price=100, tax=21.00, selling_percentage=5)
 
     def test_add_item(self):
         request = self.factory.get('/')
@@ -25,6 +29,19 @@ class ShoppingCartTestCase(TestCase):
 
         self.assertEqual(cart.cart_items, [
                          {'product_id': str(self.product1.id), 'quantity': 2}])
+        
+    def test_total_price_with_margin(self):
+        request = self.factory.get('/')
+        self.middleware.process_request(request)
+        request.session.save()
+
+        cart = SessionShoppingCart(request)
+
+        cart.add_item(self.product3.id, quantity=1)
+
+        total_price = cart.total_price
+
+        self.assertEqual(total_price, 105 * WebShopConfig.shipping_margin())
 
     def test_remove_item(self):
         request = self.factory.get('/')
@@ -80,7 +97,7 @@ class ShoppingCartTestCase(TestCase):
 
         total_price = cart.total_price
 
-        self.assertEqual(total_price, 40)
+        self.assertEqual(total_price, 40 * WebShopConfig.shipping_margin())
 
     def test_total_price_discount(self):
         request = self.factory.get('/')
@@ -94,7 +111,8 @@ class ShoppingCartTestCase(TestCase):
 
         total_price = cart.total_price
 
-        self.assertEqual(total_price, 15)
+        self.assertEqual(total_price, round(
+            40 * WebShopConfig.shipping_margin(), 2) - 25)
 
     def test_total_price_shipping_cost(self):
         request = self.factory.get('/')
@@ -108,7 +126,8 @@ class ShoppingCartTestCase(TestCase):
 
         total_price = cart.total_price
 
-        self.assertEqual(total_price, 45)
+        self.assertEqual(total_price, round(
+            40 * WebShopConfig.shipping_margin(), 2) + 5)
 
     def test_total_price_shipping_cost_and_discount(self):
         request = self.factory.get('/')
@@ -122,7 +141,8 @@ class ShoppingCartTestCase(TestCase):
 
         total_price = cart.total_price
 
-        self.assertEqual(total_price, 35)
+        self.assertEqual(total_price, round(
+            40 * WebShopConfig.shipping_margin(), 2) - 5)
 
     def test_tax_low(self):
         request = self.factory.get('/')
@@ -135,7 +155,8 @@ class ShoppingCartTestCase(TestCase):
 
         tax_low = cart.total_tax(9)
 
-        self.assertEqual(tax_low, Decimal('1.65'))
+        self.assertEqual(tax_low, round(Decimal('1.65') *
+                         WebShopConfig.shipping_margin(), 2))
 
     def test_tax_high(self):
         request = self.factory.get('/')
@@ -148,7 +169,8 @@ class ShoppingCartTestCase(TestCase):
 
         tax_high = cart.total_tax(21)
 
-        self.assertEqual(tax_high, Decimal('3.47'))
+        self.assertEqual(tax_high, round(Decimal('3.47') *
+                         WebShopConfig.shipping_margin(), 2))
 
     def test_clear_cart(self):
         request = self.factory.get('/')
