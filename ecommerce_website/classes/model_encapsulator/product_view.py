@@ -21,6 +21,7 @@ class ProductView:
 
         if product.has_product_sale:
             self.sale_price = product.sale_price
+            self.unit_sale_price = product.unit_sale_price
 
 
 class ProductDetailView:
@@ -40,6 +41,10 @@ class ProductDetailView:
         self.surface = SurfaceAreaCalculator.parse_surface_area(
             attributes_dict.get('Oppervlakte', ''))
         self.brand = attributes_dict.get('Merk', '')
+        self.has_sale = str(product.has_product_sale).lower()
+
+        self.sale_price = product.sale_price
+        self.unit_sale_price = product.unit_sale_price
 
         # Initialize product specifications
         product_specifications = {
