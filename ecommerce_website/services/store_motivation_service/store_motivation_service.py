@@ -7,12 +7,12 @@ class StoreMotivationService(StoreMotivationInterface):
     def get_all_motivations():
         try:
             return StoreMotivation.objects.all()
-        except Order.DoesNotExist:
+        except StoreMotivation.DoesNotExist:
             return None
         
     @staticmethod
     def get_all_active_motivations():
         try:
             return StoreMotivation.objects.filter(active=True)
-        except Order.DoesNotExist:
+        except StoreMotivation.DoesNotExist:
             return None

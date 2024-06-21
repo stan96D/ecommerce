@@ -33,8 +33,9 @@ class ProductFilterService(ProductFilterServiceInterface):
                 for attribute in filter_obj.product_attributes.all():
                     
                     if filter_obj.name in matched_filters_dict:
-                        matched_filters_dict[filter_obj.name].append(
-                        attribute.value)
+
+                        if not attribute.value in matched_filters_dict[filter_obj.name]:
+                            matched_filters_dict[filter_obj.name].append(attribute.value)
 
                     else: 
                         matched_filters_dict[filter_obj.name] = [

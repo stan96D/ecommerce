@@ -38,7 +38,7 @@ class OrderInfoService:
             return None
 
     def update_order(self, contact_info, billing_address_info, delivery_address_info):
-        existing_order = self.get_order(self.request)
+        existing_order = self.get_order()
 
         if existing_order:
 
