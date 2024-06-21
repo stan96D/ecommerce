@@ -1,10 +1,11 @@
+from datetime import timedelta
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, AnonymousUser
-from django.db import models
 from decimal import Decimal
+from ecommerce_website.settings.webshop_config import WebShopConfig
 
 class AccountManager(BaseUserManager):
 
@@ -86,16 +87,17 @@ class Product(models.Model):
 
     @property
     def unit_selling_price(self):
-        selling_price = round(self.unit_price * (1 - self.selling_percentage / 100), 2)
+        selling_price = round(self.unit_price * (1 + self.selling_percentage / 100), 2)
         selling_price_with_shipping_costs = round(
-            selling_price * Decimal('1.05'), 2)
+            selling_price * WebShopConfig.shipping_margin(), 2)
         return selling_price_with_shipping_costs
     
     @property
     def selling_price(self):
         selling_price = round(
             self.price * (1 - self.selling_percentage / 100), 2)
-        selling_price_with_shipping_costs = round(selling_price * Decimal('1.05'), 2)
+        selling_price_with_shipping_costs = round(
+            selling_price * WebShopConfig.shipping_margin(), 2)
         return selling_price_with_shipping_costs
     
     def __str__(self):
@@ -125,6 +127,18 @@ class Product(models.Model):
             sale_price = selling_price - \
                 (selling_price * discount_percentage / 100)
             return round(sale_price, 2) 
+        return None
+    
+    @property
+    def unit_sale_price(self):
+        active_product_sale = self.productsale_set.filter(
+            sale__active=True).first()
+        if active_product_sale:
+            selling_price = self.unit_selling_price
+            discount_percentage = active_product_sale.percentage
+            sale_price = selling_price - \
+                (selling_price * discount_percentage / 100)
+            return round(sale_price, 2)
         return None
 
     
@@ -173,6 +187,8 @@ class ProductCategory(models.Model):
     parent_category = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='subcategories')
     active = models.BooleanField(default=True)
+    for_homepage = models.BooleanField(default=True)
+
     thumbnail = models.ImageField(
         upload_to='category_thumbnails/', null=True, blank=True)
 
@@ -246,13 +262,29 @@ class OrderLine(models.Model):
     unit_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     total_price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
+    return_order = models.ForeignKey(
+        'ReturnOrder', related_name='order_lines', on_delete=models.SET_NULL, null=True, blank=True)
+
+
 
 class Order(models.Model):
+
+    ORDER_STATUS_CHOICES = [
+        ('open', 'Openstaand'),
+        ('paid', 'Betaald'),
+        ('delivered', 'Geleverd'),
+        ('failed', 'Mislukt'),
+
+    ]
+
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField()
     phone = models.CharField(max_length=20)
     payment_information = models.TextField()
+    payment_information_id = models.TextField(default=None, max_length=20)
+    payment_issuer = models.TextField(null=True, max_length=20)
+
     deliver_date = models.DateField()
     deliver_method = models.CharField(max_length=100)
 
@@ -276,5 +308,66 @@ class Order(models.Model):
 
     payment_id = models.CharField(max_length=100, unique=True, null=True)
     payment_status = models.TextField(null=True)
+    payment_url = models.CharField(max_length=100, unique=True, null=True)
+
+    order_status = models.TextField(default='Openstaand', choices=ORDER_STATUS_CHOICES)
+
+    @property
+    def is_paid(self):
+        return self.order_status == 'Betaald' and self.payment_status == 'paid'
+
+    @property
+    def can_be_returned(self):
+        return timezone.now() <= self.created_date + timedelta(days=WebShopConfig.return_days())
 
 
+class ReturnOrder(models.Model):
+    RETURN_STATUS_CHOICES = [
+        ('requested', 'Requested'),
+        ('approved', 'Approved'),
+        ('rejected', 'Rejected'),
+        ('processed', 'Processed'),
+        ('pending', 'Pending'),
+        ('failed', 'Failed'),
+
+    ]
+
+    order = models.ForeignKey(
+        Order, related_name='returns', on_delete=models.CASCADE)
+    reason = models.TextField()
+    status = models.CharField(
+        max_length=20, choices=RETURN_STATUS_CHOICES, default='requested')
+    return_date = models.DateTimeField(auto_now_add=True)
+    refund_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+    shipping_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f'Return {self.id} for Order {self.order.id}'
+
+
+class ReturnOrderLine(models.Model):
+    return_order = models.ForeignKey(
+        ReturnOrder, related_name='return_order_lines', on_delete=models.CASCADE)
+    order_line = models.ForeignKey(
+        OrderLine, related_name='return_order_lines', on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    refund_amount = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f'ReturnOrderLine {self.id} for ReturnOrder {self.return_order.id}'
+
+class Store(models.Model):
+    contact_email = models.EmailField(max_length=254)
+    address = models.CharField(max_length=255)
+    postal_code = models.CharField(max_length=20)
+    vat_number = models.CharField(max_length=20)
+    coc_number = models.CharField(max_length=20)
+    opening_time_week = models.CharField(max_length=100)
+    opening_time_weekend = models.CharField(max_length=100)
+    active = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.address + self.postal_code
