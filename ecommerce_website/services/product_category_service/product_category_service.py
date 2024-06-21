@@ -34,7 +34,7 @@ class ProductCategoryService(ProductCategoryServiceInterface):
     @staticmethod
     def get_all_active_head_product_categories():
         try:
-            return ProductCategory.objects.filter(active=True, parent_category=None)
+            return ProductCategory.objects.filter(active=True, for_homepage=True, parent_category=None)
         except ProductCategory.DoesNotExist:
             return None
         
