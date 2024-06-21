@@ -294,23 +294,43 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="relative mt-6 flex-1 px-4 sm:px-6">
-                            <div class="mt-6">
-                                <a href="{% url 'cart' %}">
-                                    <button type="submit"
-                                        class="w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50">Winkelmandje</button>
-                                </a>
-                            </div>
+                        <ul  class="p-4">
 
-                            <div class="mt-2">
-                                <a href="{% url 'navigate_checkout' %}">
+                        {% for item in items %}
+                    {% include 'components/small_cart_item.html' %}
 
-                                    <button type="button"
-                                        class="w-full rounded-md border border-customColor bg-white px-4 py-3 text-base font-medium text-customColor shadow-sm hover:text-white focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50">Naar
-                                        kassa</button>
-                                </a>
-                            </div>
-                        </div>
+                        {% endfor %}
+                        </ul >
+
+
+            <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+                <div class="flex justify-between text-base font-medium text-gray-900">
+                    <p>Subtotaal</p>
+                    <p>$262.00</p>
+                    {{shopping_cart}}
+                </div>
+                <p class="mt-0.5 text-sm text-gray-500">Prijzen incl. BTW</p>
+                <div class="mt-6">
+                                                <a href="{% url 'cart' %}">
+                                                    <button type="submit"
+                                                        class="w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50">Winkelmandje</button>
+                                                </a>
+                </div>
+                <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+<p>
+    of
+    <a href="/checkout">
+        <button type="button" class="font-medium text-gray-600 hover:text-amber-500">
+            ga naar kassa
+            <span aria-hidden="true"> &rarr;</span>
+        </button>
+    </a>
+</p>
+
+                </div>
+            </div>
+
+                       
                     </div>
                 </div>
             </div>
@@ -322,6 +342,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 
 <script>
+
+
+
+
     function openFlyoutPanel() {
         console.log('clicked')
         document.getElementById('flyout-panel').style.display = 'block';
