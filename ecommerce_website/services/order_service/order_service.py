@@ -20,7 +20,7 @@ class OrderService(OrderServiceInterface):
     @staticmethod
     def get_orders_by_account(account):
         try:
-            return Order.objects.filter(account=account)
+            return Order.objects.filter(account=account).order_by('-created_date')
         except Order.DoesNotExist:
             return None
 
@@ -30,6 +30,17 @@ class OrderService(OrderServiceInterface):
             order = Order.objects.get(payment_id=payment_id)
 
             order.payment_status = status
+            print('JAJAJAJAJAJ', status)
+            if status == "paid":
+                order.order_status = "Betaald"
+            elif status == "failed":
+                order.order_status = "Mislukt"
+            elif status == "canceled":
+                order.order_status = "Mislukt"
+            elif status == "expired":
+                order.order_status = "Mislukt"
+            else:
+                order.order_status = "Openstaand"
 
             order.save()
             return order
@@ -42,8 +53,9 @@ class OrderService(OrderServiceInterface):
 
             order = Order.objects.get(id=order.id)
 
-            order.payment_id = payment.id
-            order.payment_status = payment.status
+            order.payment_id = payment['id']
+            order.payment_status = payment['status']
+            order.payment_url = payment['_links']['checkout']['href']
 
             order.save()
             return order
