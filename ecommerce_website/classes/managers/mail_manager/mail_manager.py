@@ -3,7 +3,10 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import os
 from abc import ABC, abstractmethod
-
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from ecommerce_website.classes.helpers.token_generator.token_generator import ResetPasswordTokenGenerator
 
 class BaseMailManager(ABC):
 
@@ -102,3 +105,38 @@ class AdminMailSender():
 
         return self.mail_manager.send(self.sender_email, self.sender_password,
                                self.recipient_email, subject, message)
+
+
+
+class ForgotPasswordMailSender():
+
+    def __init__(self, mail_manager: BaseMailManager):
+        self.sender_email = os.getenv('SENDER_EMAIL')
+        self.sender_password = os.getenv('SENDER_PASSWORD')
+        self.mail_manager = mail_manager
+
+    def send_password_reset_email(self, user):
+
+        token_generator = ResetPasswordTokenGenerator(user)
+        token = token_generator.generate()
+
+        reset_password_confirm_url = f"http://127.0.0.1:8000/new_password/{
+            token}/"
+
+        subject = "Password Reset Request"
+        message = f"""Hello {user.first_name},
+
+        We received a request to reset your password. Please click the link below to reset your password:
+
+        <a href="{reset_password_confirm_url}">{reset_password_confirm_url}</a>
+
+        If you did not request a password reset, please ignore this email.
+
+        Best regards,
+        Your Application Team
+        """
+
+        self.mail_manager.send(
+            self.sender_email, self.sender_password, user.email, subject, message)
+
+
