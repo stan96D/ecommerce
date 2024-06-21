@@ -37,6 +37,9 @@ class CheckoutService:
             phone=order_info.contact_info.phonenumber,
 
             payment_information=payment_info.payment_information,
+            payment_information_id=payment_info.payment_method_id,
+            payment_issuer=payment_info.bank_id,
+
             deliver_date=delivery_info.delivery_date,
             deliver_method=delivery_info.delivery_method,
 
@@ -61,8 +64,17 @@ class CheckoutService:
             except Product.DoesNotExist:
                 continue
 
-            unit_price = product.price
+            print("Name", product.name, "has: ", product.has_product_sale)
+            if product.has_product_sale == True:
+                unit_price = product.unit_sale_price
+            else:
+                unit_price = product.unit_selling_price
+
+
             total_price = unit_price * quantity
+
+            print(unit_price, quantity, total_price)
+
 
             OrderLine.objects.create(
                 product=product,
@@ -71,3 +83,17 @@ class CheckoutService:
                 total_price=total_price,
                 order=order
             )
+
+    def add_payment(self, payment, order):
+        try:
+
+            order = Order.objects.get(id=order.id)
+
+            order.payment_id = payment['id']
+            order.payment_status = payment['status']
+            order.payment_url = payment['_links']['checkout']['href']
+
+            order.save()
+            return order
+        except Order.DoesNotExist:
+            return None

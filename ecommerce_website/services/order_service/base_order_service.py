@@ -9,3 +9,11 @@ class OrderServiceInterface(ABC):
     def get_all_orders(self):
         pass
 
+    @abstractmethod
+    def add_payment(self, payment, order):
+        pass
+
+    @abstractmethod
+    def update_payment_status(self, payment_id, status):
+        pass
+
