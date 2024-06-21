@@ -4,11 +4,22 @@ from . import views
 urlpatterns = [
     
     path('mollie_webhook/', views.mollie_webhook, name="mollie_webhook"),
+    path('tracking_code_webhook/', views.tracking_code_webhook,
+         name="tracking_code_webhook"),
 
     path('', views.home, name="home"),
     path('login/', views.login_view, name="login"),
+    path('forgot_password/', views.forgot_password, name='forgot_password'),
+    path('new_password/<token>/', views.new_password, name='new_password'),
+
     path('logout/', views.logout_user, name="logout"),
+
     path('account/', views.account_view, name="account"),
+    path('change_account_information/', views.change_account_information,
+         name="change_account_information"),
+    path('change_delivery_address_information/', views.change_delivery_address_information,
+         name="change_delivery_address_information"),
+    path('delete_account/', views.delete_account, name='delete_account'),
 
     path('sign_in/', views.sign_in, name="sign_in"),
     path('sign_up/', views.sign_up, name="sign_up"),
@@ -21,8 +32,13 @@ urlpatterns = [
     path('confirm_order/', views.confirm_order, name="confirm_order"),
     path('order_detail/', views.order_detail,
          name="order_detail"),
+    path('repay_order/<int:order_id>/', views.repay_order, name='repay_order'),
+
     path('search/', views.search_products,
          name='search_products'),
+    path('products/', views.products,
+         name='products'),
+
     path('products/<str:category>/', views.products_by_category, name='products_by_category'),
     path('products/<str:category>/<str:subcategory>/',
          views.products_by_subcategory, name='products_by_subcategory'),
@@ -36,4 +52,6 @@ urlpatterns = [
     path('delete-cart-item/',
          views.delete_cart_item, name='delete_cart_item'),
     path('runners/', views.runner_products, name='runner_products'),
+    path('discounts/', views.discount_products, name='discount_products'),
+
 ]
