@@ -86,6 +86,7 @@ class RealProductCategorySeeder(RealSeederInterface):
             {
                 'name': 'PVC',
                 'active': True,
+                'for_homepage': True,
                 'description': "PVC vloeren",
                 'thumbnail': 'category_thumbnails/pvc_category.webp',
                 'subcategories': [
@@ -110,6 +111,7 @@ class RealProductCategorySeeder(RealSeederInterface):
             {
                 'name': 'Laminaat',
                 'active': True,
+                'for_homepage': True,
                 'description': "Laminaat vloeren",
                 'thumbnail': 'category_thumbnails/laminaat_category.jpg',
                 'subcategories': [
@@ -130,6 +132,7 @@ class RealProductCategorySeeder(RealSeederInterface):
             {
                 'name': 'Lamelparket',
                 'active': True,
+                'for_homepage': True,
                 'description': "Lamerlparket vloeren",
                 'thumbnail': 'category_thumbnails/lamelparket-category.jpg',
                 'subcategories': [
@@ -150,6 +153,7 @@ class RealProductCategorySeeder(RealSeederInterface):
             {
                 'name': 'Vinyl',
                 'active': True,
+                'for_homepage': True,
                 'description': "Klik Vinyl vloeren",
                 'thumbnail': 'category_thumbnails/klik-vinyl-category.jpg',
                 'subcategories': [
@@ -170,6 +174,7 @@ class RealProductCategorySeeder(RealSeederInterface):
             {
                 'name': 'Hardlopers',
                 'active': True,
+                'for_homepage': True,
                 'description': "De beste vloeren volgens klanten.",
                 'thumbnail': 'category_thumbnails/hardlopers_category.jpg',
                 'subcategories': [
@@ -177,8 +182,41 @@ class RealProductCategorySeeder(RealSeederInterface):
             },
             {
                 'name': 'Zoeken',
-                'active': False,
+                'active': True,
+                'for_homepage': False,
                 'description': "Vind de mooiste vloeren bij ons voor de goedkoopste prijs!",
+                'thumbnail': None,
+                'subcategories': []
+            },
+            {
+                'name': 'Assortiment',
+                'active': True,
+                'for_homepage': False,
+                'description': "Neem een kijkje in ons assortiment. Van PVC tot Laminaat, en Parket tot Visrgaat. Wij hebben het allemaal!",
+                'thumbnail': None,
+                'subcategories': []
+            },
+            {
+                'name': 'Kortingen',
+                'active': True,
+                'for_homepage': False,
+                'description': "Op zoek naar nog goedkopere vloeren? Zie hier al onze kortingen op de beste vloeren!",
+                'thumbnail': None,
+                'subcategories': []
+            },
+            {
+                'name': 'Mflor',
+                'active': True,
+                'for_homepage': False,
+                'description': "",
+                'thumbnail': None,
+                'subcategories': []
+            },
+            {
+                'name': 'Beautifloor',
+                'active': True,
+                'for_homepage': False,
+                'description': "",
                 'thumbnail': None,
                 'subcategories': []
             }
