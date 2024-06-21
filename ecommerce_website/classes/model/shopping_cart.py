@@ -66,7 +66,11 @@ class SessionShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.unit_selling_price
+                if product.has_product_sale:
+                    product_price = product.unit_sale_price
+                else:
+                    product_price = product.unit_selling_price
+                print("PRIJS", product_price)
                 subtotal = item['quantity'] * product_price
                 total += subtotal
 
@@ -75,7 +79,7 @@ class SessionShoppingCart(ShoppingCartInterface):
 
         total -= discount_amount 
         total += shipping_price
-
+        print("SHOPPINGPRICE:", shipping_price, discount_amount, total)
         return total
     
     @property
@@ -84,7 +88,10 @@ class SessionShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.unit_selling_price
+                if product.has_product_sale:
+                    product_price = product.unit_sale_price
+                else:
+                    product_price = product.unit_selling_price
                 subtotal_amount += item['quantity'] * product_price
         
         total_tax_low = self.total_tax(9) 
@@ -100,7 +107,10 @@ class SessionShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None and product.tax == tax_percentage:
-                product_price = product.unit_selling_price
+                if product.has_product_sale:
+                    product_price = product.unit_sale_price
+                else:
+                    product_price = product.unit_selling_price
                 subtotal = item['quantity'] * product_price
                 tax_amount = subtotal * (Decimal(tax_percentage) / 100)
                 tax_amount = (subtotal * tax_percentage) /  (Decimal('100') + tax_percentage)
@@ -164,7 +174,10 @@ class AccountShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.unit_selling_price
+                if product.has_product_sale:
+                    product_price = product.unit_sale_price
+                else:
+                    product_price = product.unit_selling_price
                 subtotal = item['quantity'] * product_price
                 total += subtotal
 
@@ -182,7 +195,10 @@ class AccountShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                product_price = product.unit_selling_price
+                if product.has_product_sale:
+                    product_price = product.unit_sale_price
+                else:
+                    product_price = product.unit_selling_price
                 subtotal_amount += item['quantity'] * product_price
 
         total_tax_low = self.total_tax(9)
@@ -197,7 +213,10 @@ class AccountShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None and product.tax == tax_percentage:
-                product_price = product.unit_selling_price
+                if product.has_product_sale:
+                    product_price = product.unit_sale_price
+                else:
+                    product_price = product.unit_selling_price
                 subtotal = item['quantity'] * product_price
                 tax_amount = subtotal * (Decimal(tax_percentage) / 100)
                 total_tax_amount += tax_amount

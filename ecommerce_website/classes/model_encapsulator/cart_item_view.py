@@ -14,13 +14,23 @@ class CartItemView:
         self.thumbnail = product.thumbnail
         self.quantity = quantity
         self.stock = product.stock.quantity
-        self.totalPrice = quantity * product.unit_selling_price
 
         surface = attributes_dict['Oppervlakte']
         self.surface = SurfaceAreaCalculator.parse_surface_area(surface)
 
         brand = attributes_dict['Merk']
         self.brand = brand
+
+        self.has_sale = str(product.has_product_sale).lower()
+
+        if product.has_product_sale:
+            self.totalPrice = quantity * product.unit_sale_price
+        else:
+            self.totalPrice = quantity * product.unit_selling_price
+
+
+        self.sale_price = product.sale_price
+        self.unit_sale_price = product.unit_sale_price
         
 class CartView:
     def __init__(self, total_price, sub_price, tax_price_high, tax_price_low, shipping_price):
