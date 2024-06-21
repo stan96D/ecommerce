@@ -10,3 +10,8 @@ class AuthenticationInterface(ABC):
     def logout(self, request):
         pass
 
+
+    @abstractmethod
+    def sign_up(self, request, form):
+        pass
+
