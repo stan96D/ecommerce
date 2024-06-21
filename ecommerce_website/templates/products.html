@@ -25,7 +25,9 @@
   <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
 <div class="border-b border-gray-200 pt-24 relative">
   <h1 class="text-4xl font-bold tracking-tight text-gray-900">{{categoryData.name}}</h1>
+  {% if  categoryData.description %}
   <p class="mt-4 text-base text-gray-500">{{categoryData.description}}</p>
+  {% endif %}
   <div class="pb-4 pt-10 flex justify-between items-start">
     <div></div>
     <div id="selected-sort" class="text-sm text-gray-700 ">Sort by: </div>

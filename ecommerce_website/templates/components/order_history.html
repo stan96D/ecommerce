@@ -1,15 +1,19 @@
 <div aria-labelledby="order-heading">
+
     <div
         class="bg-gray-50 px-4 py-6 sm:rounded-lg sm:p-6 md:flex md:items-center md:justify-between md:space-x-6 lg:space-x-8">
         <h2 id="order-heading" class="text-lg font-medium text-gray-900 md:flex-shrink-0">
             Order
-            <a href="/order_detail/?order_id={{ order.id }}" class="text-amber-500 hover:text-customColor">{{ order.order_number }}</a>
+            <a href="/order_detail/?order_id={{ order.id }}"
+                class="text-amber-500 hover:text-customColor">{{order.order_number }}</a>
         </h2>
 
         <div class="space-y-5 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 md:min-w-0 md:flex-1">
             <p class="text-sm font-medium text-gray-500">Gemaakt op {{ order.created_date }}</p>
             <div class="flex text-sm font-medium">
-                <p class="mt-1 text-lg font-medium text-gray-900">€{{ order.total_price }}</p>
+
+
+
             </div>
         </div>
     </div>
@@ -17,25 +21,51 @@
     {% for order_line in order.order_lines %}
     <div class="flow-root divide-y divide-gray-200">
         <div class="py-6 sm:flex">
-            <div class="flex space-x-4 sm:min-w-0 sm:flex-1 sm:space-x-6 lg:space-x-8">
+            <div class="flex space-x-4 sm:min-w-0 sm:flex-1 sm:space-x-6 lg:space-x-8 relative">
                 <img src="{{ order_line.thumbnail.url }}" alt="{{ order_line.name }}"
                     class="h-20 w-20 flex-none rounded-md object-cover object-center sm:h-48 sm:w-48">
                 <div class="min-w-0 flex-1 pt-1.5 sm:pt-0">
                     <h3 class="text-sm font-medium text-gray-900">
                         <a href="/product/{{order_line.product_id}}">{{ order_line.name }}</a>
                     </h3>
-                    <p class="truncate text-sm text-gray-500">
-                        <span>{{ order_line.material }}</span>
-                        <span class="mx-1 text-gray-400" aria-hidden="true">&middot;</span>
-                        <span>{{ order_line.dimensions }}</span>
-                    </p>
+                    <h4>
+                        <p class="mt-2 text-sm text-gray-500 sm:block">{{ order_line.description }}</p>
+                    </h4>
+                    <p class="mt-1 font-normal text-sm text-gray-400">{{ order_line.quantity }} stuk(s)</p>
                     <p class="mt-1 font-medium text-gray-900">€{{ order_line.total_price }}</p>
+
                 </div>
             </div>
         </div>
     </div>
+
+
     {% if not forloop.last %}
-    <div class="border-t border-gray-200"></div>
+
     {% endif %}
     {% endfor %}
+
+</div>
+<div class="border-b border-gray-200 pb-5">
+    <div class="flex justify-end items-center">
+
+        <div class="mt-2 pr-4 mr-4 flex flex-col items-end">
+            {% if order.order_status == "Betaald" %}
+            <p class="text-left font-normal pl-2  text-green-600 flex items-center">
+                <i class="fas fa-check-circle text-green-600 mr-1"></i>{{ order.order_status }}
+            </p>
+            {% elif order.order_status == "Openstaand" %}
+            <p class="text-left font-normal pl-2  text-amber-500 flex items-center">
+                <i class="fas fa-exclamation-circle text-amber-500 mr-1"></i>{{ order.order_status }}
+            </p>
+            {% elif order.order_status == "Mislukt" %}
+            <p class="text-left font-normal pl-2  text-red-600 flex items-center">
+                <i class="fas fa-times-circle text-red-600 mr-1"></i>{{ order.order_status }}
+            </p>
+            {% endif %}
+        </div>
+                <div class="bg-gray-900 w-fit rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-3 mt-2">
+                    <p class="text-xl font-semibold text-gray-100">€{{ order.total_price }}</p>
+                </div>
+    </div>
 </div>

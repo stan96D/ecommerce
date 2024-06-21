@@ -21,6 +21,11 @@
     {% include 'components/header.html'%}
 
     <main>
+
+        {% for message in messages %}
+            {% include 'components/notifications/message_notification.html' %}
+        {% endfor %}
+
         {% block content %}
 
         {% endblock %}
@@ -28,6 +33,8 @@
 
     {% include 'components/footer.html'%}
 
+
 </body>
 
 </html>
+

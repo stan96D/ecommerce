@@ -233,6 +233,7 @@
 
     <!-- Hero section -->
     <div class="relative bg-gray-900">
+        
         <!-- Decorative image and overlay -->
 
         <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
@@ -243,11 +244,12 @@
 
 
         <div class="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center sm:py-64 lg:px-0">
+            
             <h1 class="text-4xl font-bold tracking-tight text-white lg:text-6xl">De goedkoopste vloeren
             </h1>
             <p class="mt-4 text-xl text-white">Van PVC tot laminaat, deze zijn allemaal verkrijgbaar
                 in ons uitgebreide assortiment!</p>
-            <a href="#"
+            <a href="/products"
                 class="mt-8 inline-block rounded-md border border-transparent bg-amber-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-50">Bekijk
                 assortiment</a>
 
@@ -288,30 +290,77 @@
         {% endif %}
 
 </div>
-
-<!-- Callout -->
-<section aria-labelledby="sale-heading"
-    class="relative mx-auto flex max-w-7xl flex-col items-center px-4 pt-32 text-center sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-2xl lg:max-w-none">
-        <h2 id="sale-heading" class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-            Keihard de
-            goedkoopste van Nederland!</h2>
-        <p class="mx-auto mt-4 max-w-xl text-xl text-gray-600">Nu met extra kortingen op bepaalde vloeren!
-        </p>
-        <a href="#"
-            class="mt-6 inline-block w-full rounded-md border border-transparent bg-amber-500 px-8 py-3 font-medium text-white hover:bg-customColor sm:w-auto">Zie
-            kortingen</a>
+<div class="relative">
+    <div class=" overflow-hidden px-24">
+        <img src="media\brand_images\hardlopers_category.jpg" alt=""
+            class="h-96 w-full object-cover object-center opacity-10 rounded-lg">
     </div>
-</section>
+
+    <section aria-labelledby="sale-heading"
+        class="absolute inset-0 flex items-center justify-center flex-col px-4 pt-16 text-center sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl lg:max-w-none">
+            <h2 id="sale-heading" class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+                Keihard de
+                goedkoopste van Nederland!</h2>
+            <p class="mx-auto mt-4 max-w-xl text-xl text-gray-600">Nu met extra kortingen op bepaalde vloeren!
+            </p>
+            <a href="/discounts"
+                class="mt-6 inline-block w-full rounded-md border border-transparent bg-amber-500 px-8 py-3 font-medium text-white hover:bg-customColor sm:w-auto">Zie
+                kortingen</a>
+        </div>
+    </section>
 </div>
 
 
 
+
+
+{% if brands %}
+<section aria-labelledby="category-heading" class="pt-24 xl:mx-auto xl:max-w-7xl xl:px-8">
+    <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
+        <h2 id="category-heading" class="text-2xl font-bold tracking-tight text-gray-900">De beste merken</h2>
+
+    </div>
+
+    <div class="mt-10 flow-root">
+
+        <div class="-my-2">
+
+            <div class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible">
+
+                <div
+                    class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0">
+                    {% for brand in brands.all %}
+                    <div class="group relative">
+                        <div class="aspect-w-1 aspect-h-1 w-full  overflow-hidden rounded-full bg-gray-200">
+                            <img src="media/{{ brand.image }}" alt="{{ brand.name }}"
+                                class="h-full w-full object-cover object-center group-hover:opacity-75 rounded-full">
+                        </div>
+                        <div class="mt-6 text-center">
+                            <h3 class="mt-1 text-lg font-semibold text-gray-900">
+                                <a href="/products/{{brand.name}}">
+                                    <span class="absolute inset-0"></span>
+                                    {{ brand.name }}
+                                </a>
+                            </h3>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
 <!-- Category section -->
 <section aria-labelledby="category-heading" class="py-24  sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8">
     <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
         <h2 id="category-heading" class="text-2xl font-bold tracking-tight text-gray-900">Onze categorieën</h2>
-
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
     </div>
 
     <div class="mt-4 flow-root">
@@ -424,9 +473,12 @@
 
 </section>
 
+
+
 </main>
 
 </div>
+
 <script>
 
     function to(event) {

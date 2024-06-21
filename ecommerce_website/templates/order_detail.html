@@ -1,7 +1,7 @@
 {% extends 'components/main.html' %}
 {% load static tailwind_tags %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Order {{order.order_number}}{% endblock %}
 
 {% block content %}
 
@@ -14,110 +14,170 @@
   ```
 -->
 
- <div class="mx-auto">
-    {{order.payment_status}}
+<div class="mx-auto">
     <div class="mx-auto w-1/2 px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl ">
-        <div >
-                <p class="flex-1 text-sm font-normal text-green-600 lg:flex-none">
-                    <i class="fas fa-check-circle text-green-600 mr-1"></i> Betaling gelukt
-                </p>   
+        {% if not order %}
+        <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Geen order gevonden...</p>
 
-                <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Bedankt voor je bestelling</p>
-                <p class="mt-2 text-base text-gray-500">We waarderen uw bestelling, we zijn deze momenteel aan het verwerken. Dus heb
-                    even geduld en dan ontvangt u binnenkort een bevestiging!</p>
+        {% else %}
+        <div>
+            {% if order.order_status == "Betaald" %}
+            <p class="flex-1 text-sm font-normal text-green-600 lg:flex-none">
+                <i class="fas fa-check-circle text-green-600 mr-1"></i> Betaling gelukt
+            </p>
+            <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Bedankt voor je bestelling!</p>
+
+            {% elif order.order_status == "Openstaand"%}
+            <p class="flex-1 text-sm font-normal text-amber-500 lg:flex-none">
+                <i class="fas fa-exclamation-circle text-amber-500 mr-1"></i> Openstaande betaling
+            </p>
+            <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Bedankt voor je bestelling!</p>
+
+            {% elif order.order_status == "Mislukt"%}
+            <p class="flex-1 text-sm font-normal text-red-600 lg:flex-none">
+                <i class="fas fa-exclamation-circle text-red-600 mr-1"></i> Betaling mislukt
+            </p>
+            <p class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Oeps.....</p>
+
+            {%endif%}
+            {% if order.order_status == "Betaald" %}
+            <p class="mt-2 text-base text-gray-500">We waarderen uw bestelling, we zijn deze momenteel aan het
+                verwerken. Dus heb
+                even geduld en dan ontvangt u binnenkort een bevestiging!</p>
+            {% elif order.order_status == "Openstaand"%}
+            <p class="mt-2 pb-2 text-base text-gray-500">We waarderen uw bestelling, momenteel is deze niet betaald dus
+                kunnen wij op dit moment de bestelling nog niet in orde maken. </p>
+
+            {% elif order.order_status == "Mislukt"%}
+            <p class="mt-2 text-base text-gray-500">Bedankt voor uw bestelling, echter is er helaas tijdens het proces
+                iets
+                misgegaan waardoor de betaling is mislukt. Onze excuses hiervoor.</p>
+            {% endif %}
+            
+            <div class="mt-16">
+
+                {% if order.tracking_code %}
+            <dl class="text-sm font-medium">
+                <dt class="text-gray-900">Tracking nummer</dt>
+                <dd class="mt-2 text-amber-500">51547878755545848512</dd>
+            </dl>
+
+            {%endif%}
+            </div>
 
 
-                <dl class="mt-16 text-sm font-medium">
-                    <dt class="text-gray-900">Tracking nummer</dt>
-                    <dd class="mt-2 text-amber-500">51547878755545848512</dd>
-                </dl>
-
-                <ul role="list"
-                    class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500">
-                        {% for order_line in order.order_lines.all %}
-                                <li class="flex space-x-6 py-6">
-                                    <img src="{{ order_line.product.thumbnail.url }}" alt="{{ order_line.product.name }}"
-                                        alt="Model wearing men&#039;s charcoal basic tee in large."
-                                        class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center">
-                                    <div class="flex-auto space-y-1">
-                                        <h3 class="text-gray-900">
-                                            <a href="{% url 'product_detail' order_line.product.id %}">{{order_line.product.name}}</a>
-                                        </h3>
-                                    </div>
-                                    <p class="flex-none font-medium text-gray-900">€{{order_line.product.price}}</p>
-                                </li>
-                        {% endfor %}
-                    
-
-                    <!-- More products... -->
-                </ul>
-
-                <dl class="space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500">
-                    <div class="flex justify-between">
-                        <dt>Subtotaal</dt>
-                        <dd class="text-gray-900">${{order.sub_price}}</dd>
+            <ul role="list"
+                class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500">
+                {% for order_line in order.order_lines %}
+                <li class="flex space-x-6 py-6">
+                    <img src="{{ order_line.thumbnail.url }}" alt="{{ order_line.name }}"
+                        class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center">
+                    <div class="flex-auto space-y-1">
+                        <h3 class="text-gray-900">
+                            <a href="{% url 'product_detail' order_line.product_id %}">{{order_line.name}}</a>
+                        </h3>
+                        <p class="text-gray-400">{{order_line.quantity}} stuk(s)</p>
+                        <p>€{{order_line.unit_price}} per pak</p>
                     </div>
+                    <p class="flex-none font-medium text-gray-900">€{{order_line.total_price}}</p>
+                </li>
+                {% endfor %}
 
-                    <div class="flex justify-between">
-                        <dt>Verzendkosten</dt>
-                        <dd class="text-gray-900">${{order.shipping_price}}</dd>
-                    </div>
+            </ul>
 
-                    <div class="flex justify-between">
-                        <dt>BTW 9%</dt>
-                        <dd class="text-gray-900">${{order.tax_price_low}}</dd>
-                    </div>
-
-                    <div class="flex justify-between">
-                        <dt>BTW 21%</dt>
-                        <dd class="text-gray-900">${{order.tax_price_high}}</dd>
-                    </div>
-
-                    <div class="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900">
-                        <dt class="text-base">Totaal</dt>
-                        <dd class="text-base">${{order.total_price}}</dd>
-                    </div>
-                </dl>
-
-                <dl class="mt-16 grid grid-cols-2 gap-x-4 text-sm text-gray-600">
-                    <div>
-                        <dt class="font-medium text-gray-900">Factuur adres</dt>
-                        <dd class="mt-2">
-                            <address class="not-italic">
-                                <span class="block">{{order.first_name}} {{order.last_name}}</span>
-                                <span class="block">{{order.billing_address}}</span>
-                                <span class="block">Toronto, ON N3Y 4H8</span>
-                            </address>
-                        </dd>
-                    </div>
-                    <div>
-                        <dt class="font-medium text-gray-900">Betalingsinformatie</dt>
-                        <dd class="mt-2 space-y-2 sm:flex sm:space-x-4 sm:space-y-0">
-                            <div class="flex-none">
-                                <svg aria-hidden="true" width="36" height="24" viewBox="0 0 36 24" class="h-6 w-auto">
-                                    <rect width="36" height="24" rx="4" fill="#224DBA" />
-                                    <path
-                                        d="M10.925 15.673H8.874l-1.538-6c-.073-.276-.228-.52-.456-.635A6.575 6.575 0 005 8.403v-.231h3.304c.456 0 .798.347.855.75l.798 4.328 2.05-5.078h1.994l-3.076 7.5zm4.216 0h-1.937L14.8 8.172h1.937l-1.595 7.5zm4.101-5.422c.057-.404.399-.635.798-.635a3.54 3.54 0 011.88.346l.342-1.615A4.808 4.808 0 0020.496 8c-1.88 0-3.248 1.039-3.248 2.481 0 1.097.969 1.673 1.653 2.02.74.346 1.025.577.968.923 0 .519-.57.75-1.139.75a4.795 4.795 0 01-1.994-.462l-.342 1.616a5.48 5.48 0 002.108.404c2.108.057 3.418-.981 3.418-2.539 0-1.962-2.678-2.077-2.678-2.942zm9.457 5.422L27.16 8.172h-1.652a.858.858 0 00-.798.577l-2.848 6.924h1.994l.398-1.096h2.45l.228 1.096h1.766zm-2.905-5.482l.57 2.827h-1.596l1.026-2.827z"
-                                        fill="#fff" />
-                                </svg>
-                                <p class="sr-only">Visa</p>
-                            </div>
-                            <div class="flex-auto">
-                                <p class="text-gray-900">{{order.payment_information}}</p>
-                                <p>Expires 12 / 21</p>
-                            </div>
-                        </dd>
-                    </div>
-                </dl>
-
-                <div class="mt-16 border-t border-gray-200 py-6 text-right">
-                    <a href="/" class="text-sm font-medium text-amber-500 hover:text-customColor">
-                        Verder met shoppen
-                        <span aria-hidden="true"> &rarr;</span>
-                    </a>
+            <dl class="space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500">
+                <div class="flex justify-between">
+                    <dt>Subtotaal</dt>
+                    <dd class="text-gray-900">€{{order.sub_price}}</dd>
                 </div>
+
+
+
+                <div class="flex justify-between">
+                    <dt>BTW 9%</dt>
+                    <dd class="text-gray-900">€{{order.tax_price_low}}</dd>
+                </div>
+
+                <div class="flex justify-between">
+                    <dt>BTW 21%</dt>
+                    <dd class="text-gray-900">€{{order.tax_price_high}}</dd>
+                </div>
+
+                <div class="flex justify-between">
+                    <dt>Verzendkosten</dt>
+                    <dd class="text-sm font-medium text-gray-900">
+                        {% if order.shipping_price == 0 %}
+                        <span class="text-green-500 font-medium text-sm">Gratis</span>
+                        {% else %}
+                        €{{ order.shipping_price }}
+                        {% endif %}
+                    </dd>
+                </div>
+
+                <div class="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900">
+                    <dt class="text-base">Totaal</dt>
+                    <dd class="text-base">€{{order.total_price}}</dd>
+                </div>
+            </dl>
+
+            <dl class="mt-16 grid grid-cols-2 gap-x-4 text-sm text-gray-600">
+                <div>
+                    <dt class="font-medium text-gray-900">Aflever adres</dt>
+                    <dd class="mt-2">
+                        <address class="not-italic">
+                            <span class="block">{{order.first_name}} {{order.last_name}}</span>
+                            <span class="block">{{order.billing_address |safe}}</span>
+                        </address>
+                    </dd>
+                </div>
+
+                <div>
+                    <dt class="font-medium text-gray-900">Betalingsinformatie</dt>
+                    <dd class="mt-2 space-y-2 sm:flex sm:space-x-4 sm:space-y-0">
+                        <div class="flex-none">
+
+                            <img src="{{ order.payment_logo }}" alt="{{order.payment_information}}"
+                                class="flex-none rounded-md bg-gray-100 object-cover object-center">
+                        </div>
+                        <div class="flex-auto">
+                            <p class="text-gray-900">{{order.payment_information}}</p>
+                            <p>{{order.payment_status}}</p>
+                            {% if order.order_status == 'Openstaand' %}
+                            <a href="{{ order.payment_url }}" target="_blank"
+                                class="font-normal text-blue-600 custom-link">Betaalpagina
+                            </a>
+                            {% elif order.order_status == 'Mislukt'%}
+
+                            <form action="{% url 'repay_order' order.id %}" method="post">
+                                {% csrf_token %}
+                                <button class="font-normal text-blue-600 custom-link" type="submit">Opnieuw proberen</button>
+                            </form>
+
+                            {% endif %}
+                        </div>
+                    </dd>
+                </div>
+                <div class="pt-10">
+                    <dt class="font-medium text-gray-900">Factuur adres</dt>
+                    <dd class="mt-2">
+                        <address class="not-italic">
+                            <span class="block">{{order.first_name}} {{order.last_name}}</span>
+                            <span class="block">{{order.shipping_address |safe}}</span>
+                        </address>
+                    </dd>
+                </div>
+            </dl>
+
+            <div class="mt-16 border-t border-gray-200 py-6 text-right">
+                <a href="/" class="text-sm font-medium text-amber-500 hover:text-customColor">
+                    Verder met shoppen
+                    <span aria-hidden="true"> &rarr;</span>
+                </a>
             </div>
         </div>
+        {% endif %}
+
     </div>
+</div>
 
 {% endblock %}

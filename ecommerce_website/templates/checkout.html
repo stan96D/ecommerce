@@ -109,15 +109,28 @@
                                 <div>
                                     <label for="country" class="block text-sm font-medium text-gray-700">Land</label>
                                     <div class="mt-1">
-                                        <select id="country" name="country" value="{{order_info.country}}" autocomplete="country"
-                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                            required>
-                                            <option>United States</option>
-                                            <option>Canada</option>
-                                            <option>Mexico</option>
-                                            <option>Nederland</option>
-
-                                        </select>
+                                <select id="country" name="country" autocomplete="country"
+                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                    {% if order_info.country == "Nederland" %}
+                                    <option value="Nederland" selected>Nederland</option>
+                                    {% else %}
+                                    <option value="Nederland">Nederland</option>
+                                
+                                    {%endif%}
+                                    {% if order_info.country == "Duitsland" %}
+                                    <option value="Duitsland" selected>Duitsland</option>
+                                    {% else %}
+                                    <option value="Duitsland">Duitsland</option>
+                                
+                                    {%endif%}
+                                    {% if order_info.country == "België" %}
+                                    <option value="België" selected>België</option>
+                                    {% else %}
+                                    <option value="België">België</option>
+                                
+                                    {%endif%}
+                                
+                                </select>
                                     </div>
                                 </div>
 
