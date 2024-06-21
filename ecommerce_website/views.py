@@ -773,6 +773,12 @@ def get_cart_count(request):
     cart_count = ShoppingCartService(request).count
     return JsonResponse({'count': cart_count})
 
+def get_shopping_cart(request):
+    cart = ShoppingCartService(request)
+
+    return JsonResponse({'cart': cart})
+
+
 
 def delete_cart_item(request):
       if request.method == 'POST':
