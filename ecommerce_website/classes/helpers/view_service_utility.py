@@ -31,11 +31,20 @@ from ecommerce_website.services.view_service.store_motivation_view_service impor
 from ecommerce_website.classes.managers.authentication_manager.authentication_manager import AuthenticationManager
 from ecommerce_website.services.delivery_method_service.delivery_method_service import *
 from ecommerce_website.services.view_service.delivery_method_view_service import *
+from ecommerce_website.services.brand_service.brand_service import BrandService
+from ecommerce_website.services.return_service.return_service import ReturnService
+from ecommerce_website.services.view_service.return_order_view_service import ReturnOrderViewService
 
 class ViewServiceUtility:
     @staticmethod
     def get_header_data():
         return ProductCategoryService().get_all_active_head_product_categories()
+
+    @staticmethod
+    def get_payment_methods():
+        client = MollieClient()
+        payment_methods = client.get_payment_methods()
+        return payment_methods
 
     @staticmethod
     def get_store_motivations():
@@ -56,6 +65,22 @@ class ViewServiceUtility:
     def get_orders_by_user(user):
         orders =  OrderService().get_orders_by_account(user)
         return OrderItemViewService().generate(orders)
+    
+    @staticmethod
+    def get_returnable_orders_by_user(user):
+        orders = OrderService().get_orders_by_account(user)
+        returnable_orders = []
+
+        for order in orders:
+            if order.can_be_returned:
+                returnable_orders.append(order)
+
+        return OrderItemViewService().generate(returnable_orders)
+
+    @staticmethod
+    def get_return_orders_by_user(user):
+        orders = ReturnService.get_all_returns_for_user(user)
+        return ReturnOrderViewService().generate(orders)
 
     @staticmethod
     def get_cart_items_view(request):
@@ -77,7 +102,9 @@ class ViewServiceUtility:
 
     @staticmethod
     def get_order_by_id(id):
-        return OrderService().get_order_by_id(id)
+        order = OrderService().get_order_by_id(id)
+        return OrderItemViewService().get(order)
+
 
     @staticmethod
     def get_product_views(products):
@@ -92,4 +119,8 @@ class ViewServiceUtility:
     def get_related_products(id):
         products = ProductService.get_related_products(id)
         return ProductDetailViewService().generate(products)
+    
+    @staticmethod
+    def get_all_brands():
+        return BrandService.get_all_brands()
 
