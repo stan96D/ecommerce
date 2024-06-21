@@ -13,7 +13,13 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import environ
 from pathlib import Path
 import os
+import json
 
+with open('ngrok_conf.json') as config_file:
+    config = json.load(config_file)
+
+NGROK_URL = config.get('NGROK_URL', 'http://localhost:8000')
+print(NGROK_URL)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
@@ -29,7 +35,13 @@ SECRET_KEY = 'django-insecure-@+7l*%+0#9n=_g0)&6dnolzv3g%+llw@!f4q@h$b84f!+rl&+b
 DEBUG = True
 
 ALLOWED_HOSTS = [ 'localhost',
-                  '127.0.0.1', 'e6d6-217-100-168-106.ngrok-free.app',  'cb2e-2001-1c05-2233-8d00-89d3-33fc-5ae9-6526.ngrok-free.app']
+                  '127.0.0.1', 
+                  '*.ngrok-free.app',
+                  '*.ngrok.io',
+                  ]
+
+if NGROK_URL:
+    ALLOWED_HOSTS.append(NGROK_URL)
 
 CACHES = {
     'default': {
