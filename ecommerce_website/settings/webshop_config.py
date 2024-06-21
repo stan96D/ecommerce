@@ -1,11 +1,14 @@
+from decimal import Decimal
 
 class WebShopConfig:
 
-    percentage = 10
+    @staticmethod
+    def shipping_margin():
+        return Decimal('1.05')
+    
+    @staticmethod
+    def return_days():
+        return 14
+    
 
-    def __init__(self):
-        pass
 
-    @property
-    def selling_percentage(self):
-        return self.percentage
