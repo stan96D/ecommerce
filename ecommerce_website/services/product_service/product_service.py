@@ -55,7 +55,6 @@ class ProductService(ProductServiceInterface):
                 else:
                     filters[key].add(value)
 
-            print(filters)
 
             products = Product.objects.filter(runner=True)
 
@@ -75,13 +74,101 @@ class ProductService(ProductServiceInterface):
                     filtered_products.append(product)
 
 
-            print(filtered_products)
+            return filtered_products
+        except Product.DoesNotExist:
+            return None
+        
+    @staticmethod
+    def get_sale_products_by_attributes(attributes):
+        try:
+
+            filters = defaultdict(set)
+
+            for key, value in attributes.items():
+                if ',' in value:
+                    values = value.split(',')
+                    filters[key].update(values)
+                else:
+                    filters[key].add(value)
+
+            products = Product.objects.filter(
+                productsale__sale__active=True).distinct()
+            
+            filtered_products = []
+            for product in products:
+                matches_any_attribute = False
+
+                for attr_name, attr_values in filters.items():
+
+                    for attr_value in attr_values:
+                        if product.attributes.filter(attribute_type__name__iexact=attr_name, value__iexact=attr_value).exists():
+                            matches_any_attribute = True
+                            break
+                    if matches_any_attribute:
+                        break
+                if matches_any_attribute:
+                    filtered_products.append(product)
+
+            return filtered_products
+        except Product.DoesNotExist:
+            return None
+        
+    @staticmethod
+    def get_important_products_by_attributes(attributes):
+        try:
+
+            filters = defaultdict(set)
+
+            for key, value in attributes.items():
+                if ',' in value:
+                    values = value.split(',')
+                    filters[key].update(values)
+                else:
+                    filters[key].add(value)
+
+            products = Product.objects.filter(
+                Q(runner=True) | Q(productsale__sale__active=True)
+            ).distinct()
+
+            filtered_products = []
+            for product in products:
+                matches_any_attribute = False
+
+                for attr_name, attr_values in filters.items():
+
+                    for attr_value in attr_values:
+                        if product.attributes.filter(attribute_type__name__iexact=attr_name, value__iexact=attr_value).exists():
+                            matches_any_attribute = True
+                            break
+                    if matches_any_attribute:
+                        break
+                if matches_any_attribute:
+                    filtered_products.append(product)
+
             return filtered_products
         except Product.DoesNotExist:
             return None
 
-
+    @staticmethod
+    def get_products_on_sale():
+        try:
+            products_on_sale = Product.objects.filter(
+                productsale__sale__active=True).distinct()
+            return list(products_on_sale)
+        except Product.DoesNotExist:
+            return None
         
+
+    @staticmethod
+    def get_important_products():
+        try:
+            important_products = Product.objects.filter(
+                Q(runner=True) | Q(productsale__sale__active=True)
+            ).distinct()
+            return list(important_products)
+        except Product.DoesNotExist:
+            return None
+
     @staticmethod
     def get_products_by_attribute_from_category(attribute, category):
         try:
