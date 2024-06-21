@@ -13,3 +13,11 @@ class PaymentClient(ABC):
     @abstractmethod
     def get_issuers(self):
         pass
+
+    @abstractmethod
+    def get_payment_methods(self):
+        pass
+
+    @abstractmethod
+    def refund_payment(self, payment_id, amount):
+        pass
