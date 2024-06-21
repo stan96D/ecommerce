@@ -6,11 +6,8 @@ class BrandService():
     @staticmethod
     def get_all_brands():
         try:
-            brand_attributes = ProductAttribute.objects.filter(
-                attribute_type__name="Merk")
+            brands = Brand.objects.all()
 
-            unique_brands = brand_attributes.values_list(
-                'value', flat=True).distinct()
-            return unique_brands
-        except ProductAttribute.DoesNotExist:
+            return brands
+        except Brand.DoesNotExist:
             return None
