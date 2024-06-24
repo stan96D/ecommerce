@@ -9,7 +9,12 @@ class ProductView:
         self.price = product.selling_price
         self.price_per_pack = product.unit_selling_price
 
-        self.thumbnail = product.thumbnail
+        if product.thumbnail and product.thumbnail.url:
+            self.thumbnail_url = product.thumbnail.url
+
+        else:
+            self.thumbnail_url = "/static/images/no_image_placeholder.png"
+            
         self.images = product.images
         self.quantity = product.stock.quantity
         self.is_runner = product.runner
@@ -34,7 +39,13 @@ class ProductDetailView:
         self.name = product.name
         self.price_per_pack = product.unit_selling_price
         self.price = product.selling_price
-        self.thumbnail = product.thumbnail
+        
+        if product.thumbnail and product.thumbnail.url:
+            self.thumbnail_url = product.thumbnail.url
+
+        else:
+            self.thumbnail_url = "/static/images/no_image_placeholder.png"
+        
         self.images = product.images
         self.quantity = product.stock.quantity
         self.description = attributes_dict.get('Omschrijving', '')

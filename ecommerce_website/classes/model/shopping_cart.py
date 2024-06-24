@@ -111,7 +111,7 @@ class SessionShoppingCart(ShoppingCartInterface):
                     product_price = product.unit_sale_price
                 else:
                     product_price = product.unit_selling_price
-                subtotal = item['quantity'] * product_price
+                subtotal = item['quantity'] * product_price 
                 tax_amount = subtotal * (Decimal(tax_percentage) / 100)
                 tax_amount = (subtotal * tax_percentage) /  (Decimal('100') + tax_percentage)
 

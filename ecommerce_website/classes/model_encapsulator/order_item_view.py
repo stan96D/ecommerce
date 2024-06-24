@@ -66,6 +66,10 @@ class OrderLineItemView:
         self.unit_price = order_line.unit_price
         self.quantity = order_line.quantity
         self.name = order_line.product.name
-        self.thumbnail = order_line.product.thumbnail
+        if order_line.product.thumbnail and order_line.product.thumbnail.url:
+            self.thumbnail_url = order_line.product.thumbnail.url
+
+        else:
+            self.thumbnail_url = "/static/images/no_image_placeholder.png"
         self.description = attributes_dict['Omschrijving']
 

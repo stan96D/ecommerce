@@ -70,7 +70,7 @@
                 class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500">
                 {% for order_line in order.order_lines %}
                 <li class="flex space-x-6 py-6">
-                    <img src="{{ order_line.thumbnail.url }}" alt="{{ order_line.name }}"
+                    <img src="{{ order_line.thumbnail_url }}" alt="{{ order_line.name }}"
                         class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center">
                     <div class="flex-auto space-y-1">
                         <h3 class="text-gray-900">

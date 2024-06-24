@@ -51,7 +51,7 @@
                 <div class="aspect-h-1 aspect-w-1 w-full">
                     <!-- Tab panel, show/hide based on tab state. -->
                     <div id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
-                        <img id="mainImage" src="{{ product.thumbnail.url }}" alt="{{ product.name }}"
+                        <img id="mainImage" src="{{ product.thumbnail_url }}" alt="{{ product.name }}"
                             class="h-full w-full object-cover object-center sm:rounded-lg">
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                                             class="sr-only peer" checked>
                                         <span aria-hidden="true"
                                             class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden peer-checked:border-2 peer-checked:border-amber-500 p-0.5">
-                                            <img src="{{ related_product.thumbnail.url }}"
+                                            <img src="{{ related_product.thumbnail_url }}"
                                                 alt="{{ related_product.name }}"
                                                 class="h-full w-full object-cover rounded-full">
                                         </span>
@@ -137,7 +137,7 @@
                                             class="sr-only peer">
                                         <span aria-hidden="true"
                                             class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden p-0.5">
-                                            <img src="{{ related_product.thumbnail.url }}"
+                                            <img src="{{ related_product.thumbnail_url }}"
                                                 alt="{{ related_product.name }}"
                                                 class="h-full w-full object-cover rounded-full">
                                         </span>

@@ -5,7 +5,7 @@ class CartItemView:
         attributes_dict = {}
         for attribute in product.attributes.all():
             attributes_dict[attribute.attribute_type.name] = attribute.value
-            
+        
         self.id = product.id
         self.name = product.name
         self.price = product.selling_price
