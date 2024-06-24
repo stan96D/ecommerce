@@ -11,12 +11,20 @@ class CartItemView:
         self.price = product.selling_price
         self.unit_price = product.unit_selling_price
         self.attributes = attributes_dict
-        self.thumbnail = product.thumbnail
+
+        if product.thumbnail and product.thumbnail.url:
+            self.thumbnail_url = product.thumbnail.url
+
+        else:
+            self.thumbnail_url = "/static/images/no_image_placeholder.png"
+
         self.quantity = quantity
         self.stock = product.stock.quantity
 
-        surface = attributes_dict['Oppervlakte']
-        self.surface = SurfaceAreaCalculator.parse_surface_area(surface)
+        
+
+        # surface = attributes_dict['Oppervlakte']
+        # self.surface = SurfaceAreaCalculator.parse_surface_area(surface)
 
         brand = attributes_dict['Merk']
         self.brand = brand

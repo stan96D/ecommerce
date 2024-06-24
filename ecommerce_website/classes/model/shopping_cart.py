@@ -129,10 +129,16 @@ class SessionShoppingCart(ShoppingCartInterface):
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
                 product_price = product.unit_sale_price if product.has_product_sale else product.unit_selling_price
+                if product.thumbnail and product.thumbnail.url:
+                    thumbnail_url = product.thumbnail.url
+                else:
+                    thumbnail_url = "/static/images/no_image_placeholder.png"
+
                 item_data = {
                     'product_id': product_id,
                     'name': product.name,
-                    'thumbnail': product.thumbnail.url,
+
+                    'thumbnail': thumbnail_url,
                     'unit_sale_price': float(product.unit_sale_price) if product.has_product_sale else None,
                     'unit_price': float(product.unit_selling_price),
                     'price': float(product_price),
@@ -260,10 +266,17 @@ class AccountShoppingCart(ShoppingCartInterface):
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
                 product_price = product.unit_sale_price if product.has_product_sale else product.unit_selling_price
+
+                if product.thumbnail and product.thumbnail.url:
+                    thumbnail_url = product.thumbnail.url
+                else:
+                    thumbnail_url = "/static/images/no_image_placeholder.png"
+
                 item_data = {
                     'product_id': product_id,
                     'name': product.name,
-                    'thumbnail': product.thumbnail.url,
+                    
+                    'thumbnail': thumbnail_url,
                     'unit_sale_price': float(product.unit_sale_price) if product.has_product_sale else None,
                     'unit_price': float(product.unit_selling_price),
                     'price': float(product_price),
