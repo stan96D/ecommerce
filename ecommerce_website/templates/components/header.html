@@ -268,13 +268,14 @@
 <!-- Flyout panel -->
 <div class="relative z-10 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="flyout-panel">
     <!-- Background backdrop, show/hide based on slide-over state. -->
-    <div class="fixed inset-0"></div>
+    <div onclick="closeFlyoutPanel()" class="fixed inset-0 bg-black bg-opacity-25"></div>
+    <!-- Dark backdrop with 25% opacity -->
 
-    <div class="fixed inset-0 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
         <div class="absolute inset-0 overflow-hidden">
             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
                 <div class="pointer-events-auto w-screen max-w-md">
-                    <div class="flex h-full flex-col bg-white py-6 shadow-xl">
+                    <div class="flex h-full flex-col bg-white py-6 shadow-xl overflow-y-auto">
                         <div class="px-4 sm:px-6">
                             <div class="flex items-start justify-between">
                                 <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">
@@ -294,43 +295,30 @@
                                 </div>
                             </div>
                         </div>
-                        <ul  class="p-4">
-
-                        {% for item in items %}
-                    {% include 'components/small_cart_item.html' %}
-
-                        {% endfor %}
-                        </ul >
-
-
-            <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <div class="flex justify-between text-base font-medium text-gray-900">
-                    <p>Subtotaal</p>
-                    <p>$262.00</p>
-                    {{shopping_cart}}
-                </div>
-                <p class="mt-0.5 text-sm text-gray-500">Prijzen incl. BTW</p>
-                <div class="mt-6">
-                                                <a href="{% url 'cart' %}">
-                                                    <button type="submit"
-                                                        class="w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50">Winkelmandje</button>
-                                                </a>
-                </div>
-                <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-<p>
-    of
-    <a href="/checkout">
-        <button type="button" class="font-medium text-gray-600 hover:text-amber-500">
-            ga naar kassa
-            <span aria-hidden="true"> &rarr;</span>
-        </button>
-    </a>
-</p>
-
-                </div>
-            </div>
-
-                       
+                        <ul id="cartItemList" class="p-4 flex-1 overflow-y-auto">
+                            <!-- Your item list here -->
+                        </ul>
+                        <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+                            <div class="flex justify-between text-base font-medium text-gray-900">
+                                <p>Subtotaal</p>
+                                <p id="subtotalAmount">€00.00</p> <!-- Placeholder for subtotal amount -->
+                            </div>
+                            <p class="mt-0.5 text-sm text-gray-500">Prijzen incl. BTW</p>
+                            <div class="mt-6">
+                                <a href="{% url 'cart' %}">
+                                    <button type="submit"
+                                        class="w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50">Winkelmandje</button>
+                                </a>
+                            </div>
+                            <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                                <p>of <a href="/checkout">
+                                        <button type="button" class="font-medium text-gray-600 hover:text-amber-500">ga
+                                            naar kassa
+                                            <span aria-hidden="true"> &rarr;</span>
+                                        </button>
+                                    </a></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -338,21 +326,188 @@
     </div>
 </div>
 
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 
 <script>
 
 
+    function fetchShoppingCart() {
+        $.ajax({
+            url: '/get-shopping-cart/',  // Replace with your actual endpoint URL
+            method: 'GET',
+            success: function (data) {
+                // Update the flyout panel with the retrieved shopping cart data
+                console.log(data)
+                updateSubtotal(data)
+                updateCartItems(data)
+            },
+            error: function (error) {
+                console.error('Error fetching shopping cart:', error);
+            }
+        });
+    }
 
+    function updateCartItems(cartData) {
+        const cartItemList = document.getElementById('cartItemList');
+        cartItemList.innerHTML = ''; // Clear previous items
+
+        const baseUrl = window.location.origin; // Get the base URL dynamically
+
+        cartData.cart.items.forEach(item => {
+            // Create li element for each item
+            const li = document.createElement('li');
+            li.className = 'flex py-6';
+            console.log(item)
+            // Create image container
+            const imageContainer = document.createElement('div');
+            imageContainer.className = 'h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200';
+            console.log(item.thumbnail)
+            // Create image element
+            const img = document.createElement('img');
+            img.src = item.thumbnail; // Replace with actual thumbnail URL
+            img.alt = item.name; // Replace with actual product name
+            img.className = 'h-full w-full object-cover object-center';
+
+            // Append image to its container
+            imageContainer.appendChild(img);
+
+            // Create content container
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'ml-4 flex flex-1 flex-col';
+
+            // Create first row container
+            const firstRow = document.createElement('div');
+            firstRow.className = 'flex justify-between gap-x-2 text-sm font-medium text-gray-900';
+
+            // Create product name element
+            const productName = document.createElement('h3');
+            const productLink = document.createElement('a');
+            productLink.href = `${baseUrl}/product/${item.product_id}`;
+            productLink.textContent = item.name; // Replace with actual product name
+            productName.appendChild(productLink);
+
+            // Create remove button container
+            const removeButtonContainer = document.createElement('div');
+            removeButtonContainer.className = 'ml-2';
+
+            // Create remove button
+            const removeButton = document.createElement('button');
+            removeButton.type = 'submit';
+            removeButton.className = 'text-base inline-flex pt-1 pr-2 text-gray-300 hover:text-red-400';
+
+            // Create icon for remove button
+            const removeIcon = document.createElement('i');
+            removeIcon.className = 'fas fa-trash-alt h-5 w-5';
+            removeButton.appendChild(removeIcon);
+
+            // Append remove button to its container
+            removeButtonContainer.appendChild(removeButton);
+
+            // Append product name and remove button to first row
+            firstRow.appendChild(productName);
+            firstRow.appendChild(removeButtonContainer);
+
+            // Append first row to content container
+            contentContainer.appendChild(firstRow);
+
+            // Create price container
+            if (item.unit_sale_price) {
+                const salePriceContainer = document.createElement('div');
+                salePriceContainer.className = 'flex items-center mt-1 text-xs text-gray-500';
+
+                const discountLabel = document.createElement('span');
+                discountLabel.className = 'text-amber-500 font-semibold';
+                discountLabel.textContent = 'Kortingsprijs:';
+
+                const salePrice = document.createElement('span');
+                salePrice.className = 'ml-1';
+                salePrice.textContent = `€${item.unit_sale_price} per pak`; // Replace with actual sale price
+
+                salePriceContainer.appendChild(discountLabel);
+                salePriceContainer.appendChild(salePrice);
+                contentContainer.appendChild(salePriceContainer);
+
+                const originalPrice = document.createElement('p');
+                originalPrice.className = 'mt-1 text-xs text-gray-500 line-through';
+                originalPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
+                contentContainer.appendChild(originalPrice);
+            } else {
+                const unitPrice = document.createElement('p');
+                unitPrice.className = 'mt-1 text-xs text-gray-500';
+                unitPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
+                contentContainer.appendChild(unitPrice);
+            }
+
+            // Create bottom row container
+            const bottomRow = document.createElement('div');
+            bottomRow.className = 'flex flex-1 items-end justify-between text-sm';
+
+            // Create quantity input container
+            const quantityContainer = document.createElement('div');
+            quantityContainer.className = 'pt-2';
+
+            // Create quantity input
+            const quantityInput = document.createElement('input');
+            quantityInput.type = 'number';
+            quantityInput.id = item.id; // Replace with actual item ID
+            quantityInput.name = item.id; // Replace with actual item ID
+            quantityInput.value = item.quantity; // Replace with actual quantity
+            quantityInput.min = 1;
+            quantityInput.max = item.stock; // Replace with actual stock
+            quantityInput.step = 1;
+            quantityInput.onchange = function () {
+                updateQuantity(this, item.id); // Replace with actual update function
+            };
+            quantityInput.className = 'max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm';
+
+            // Append quantity input to its container
+            quantityContainer.appendChild(quantityInput);
+
+            // Create total price element
+            const totalPrice = document.createElement('span');
+            totalPrice.className = 'font-medium text-gray-900 text-sm pr-3';
+            totalPrice.textContent = `€${item.totalPrice}`; // Replace with actual total price
+
+            // Append quantity container and total price to bottom row
+            bottomRow.appendChild(quantityContainer);
+            bottomRow.appendChild(totalPrice);
+
+            // Append bottom row to content container
+            contentContainer.appendChild(bottomRow);
+
+            // Append image container and content container to li element
+            li.appendChild(imageContainer);
+            li.appendChild(contentContainer);
+
+            // Append li element to cart item list
+            cartItemList.appendChild(li);
+        });
+    }
+
+
+
+    function updateSubtotal(cartData) {
+            let subtotal = cartData.cart.total_price
+            let subtotalElement = document.getElementById('subtotalAmount');
+            subtotalElement.textContent = `€${subtotal}`; 
+        }
 
     function openFlyoutPanel() {
-        console.log('clicked')
+        console.log('clicked');
         document.getElementById('flyout-panel').style.display = 'block';
+        document.body.classList.add('overflow-hidden');
+
+        // Make an AJAX request to fetch the current shopping cart
+        fetchShoppingCart();
     }
 
     function closeFlyoutPanel() {
+        console.log('Clicked bro')
         document.getElementById('flyout-panel').style.display = 'none';
+        document.body.classList.remove('overflow-hidden');
+
     }
 
     $(document).ready(function () {
