@@ -342,7 +342,7 @@ def order_info(request):
                                                  'brands': ViewServiceUtility.get_all_brands(),
                                                  'cart': ViewServiceUtility.get_cart_view(request), 
                                                  'order_info': order_info_view, 
-                                                 'store_motivatins': ViewServiceUtility.get_store_motivations()})
+                                                 'store_motivations': ViewServiceUtility.get_store_motivations()})
     elif request.method == "POST":
 
         attributes = request.POST.copy()

@@ -355,15 +355,49 @@
 
         const baseUrl = window.location.origin; // Get the base URL dynamically
 
+        // Check if cart has items
+        if (cartData.cart.items.length === 0) {
+            // Create error message container
+            const errorMessageContainer = document.createElement('div');
+            errorMessageContainer.className = 'rounded-md bg-amber-50 p-4';
+
+            // Create error message content
+            const errorMessageContent = `
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3 flex-1 md:flex md:justify-between">
+                    <p class="text-sm text-amber-500">Uw winkelmandje is leeg</p>
+
+                </div>
+            </div>
+        `;
+
+            // Append error message content to container
+            errorMessageContainer.innerHTML = errorMessageContent;
+
+            // Append error message container to cart item list
+            cartItemList.appendChild(errorMessageContainer);
+
+            // Exit function early since cart is empty
+            return;
+        }
+
+        // Iterate over cart items if cart is not empty
         cartData.cart.items.forEach(item => {
             // Create li element for each item
             const li = document.createElement('li');
             li.className = 'flex py-6';
-            console.log(item)
+
             // Create image container
             const imageContainer = document.createElement('div');
             imageContainer.className = 'h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200';
-            console.log(item.thumbnail)
+
             // Create image element
             const img = document.createElement('img');
             img.src = item.thumbnail; // Replace with actual thumbnail URL
@@ -402,6 +436,10 @@
             removeIcon.className = 'fas fa-trash-alt h-5 w-5';
             removeButton.appendChild(removeIcon);
 
+            removeButton.onclick = function () {
+                // Function to remove item from cart and submit form
+                removeFromCart(item.product_id); // Custom function to remove from cart
+            };
             // Append remove button to its container
             removeButtonContainer.appendChild(removeButton);
 
@@ -458,9 +496,9 @@
             quantityInput.max = item.stock; // Replace with actual stock
             quantityInput.step = 1;
             quantityInput.onchange = function () {
-                updateQuantity(this, item.id); // Replace with actual update function
+                updateQuantityPanel(this, item.product_id); // Replace with actual update function
             };
-            quantityInput.className = 'max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm';
+            quantityInput.className = 'w-20 rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm';
 
             // Append quantity input to its container
             quantityContainer.appendChild(quantityInput);
@@ -487,6 +525,77 @@
     }
 
 
+    function removeFromCart(itemId) {
+        
+            const baseUrl = window.location.origin; // Get the base URL dynamically
+
+            const csrftoken = getCookie('csrftoken');
+            console.log("Product deleting, ", itemId)
+            // Submit the form to delete the item
+            const formData = new FormData();
+            formData.append('id', itemId); // Add item_id to FormData if needed
+            fetch(`${baseUrl}/delete-cart-item/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                body: formData
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    console.log("Product ID: " + itemId + ", succesfully deleted");
+                    console.log("Cart updated:", response);
+                    fetchShoppingCart();
+                    // location.reload();
+                })
+                .catch(error => console.error('Error deleting item:', error));
+        }
+
+    function updateQuantityPanel(input, productId) {
+        var quantity = parseInt(input.value);
+        var csrftoken = getCookie('csrftoken');
+        
+        $.ajax({
+            url: '/change-quantity-in-cart/',
+            method: 'POST',
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+            data: JSON.stringify({
+                product_id: productId,
+                quantity: quantity
+            }),
+            success: function (response) {
+                console.log("Product ID: " + productId + ", Quantity updated to: " + quantity);
+                console.log("Cart updated:", response);
+                fetchShoppingCart();
+
+                // location.reload();
+
+            },
+            error: function (xhr, status, error) {
+                console.error("Error updating cart:", error);
+            }
+        });
+    }
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
     function updateSubtotal(cartData) {
             let subtotal = cartData.cart.total_price
@@ -495,7 +604,6 @@
         }
 
     function openFlyoutPanel() {
-        console.log('clicked');
         document.getElementById('flyout-panel').style.display = 'block';
         document.body.classList.add('overflow-hidden');
 
@@ -504,7 +612,6 @@
     }
 
     function closeFlyoutPanel() {
-        console.log('Clicked bro')
         document.getElementById('flyout-panel').style.display = 'none';
         document.body.classList.remove('overflow-hidden');
 
