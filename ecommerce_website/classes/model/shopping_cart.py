@@ -117,6 +117,32 @@ class SessionShoppingCart(ShoppingCartInterface):
 
                 total_tax_amount += tax_amount
         return total_tax_amount.quantize(Decimal('0.00')) 
+    
+    def to_json(self):
+        cart_data = {
+            'subtotal': float(self.sub_total),
+            'total_price': float(self.total_price),
+            'items': []
+        }
+
+        for product_id, item in self.cart.items():
+            product = ProductService.get_product_by_id(product_id)
+            if product is not None:
+                product_price = product.unit_sale_price if product.has_product_sale else product.unit_selling_price
+                item_data = {
+                    'product_id': product_id,
+                    'name': product.name,
+                    'thumbnail': product.thumbnail.url,
+                    'unit_sale_price': float(product.unit_sale_price) if product.has_product_sale else None,
+                    'unit_price': float(product.unit_selling_price),
+                    'price': float(product_price),
+                    'quantity': item['quantity'],
+                    'subtotal': float(item['quantity'] * product_price),
+                    'totalPrice': float(item['quantity'] * product_price)
+                }
+                cart_data['items'].append(item_data)
+
+        return cart_data
 
 
 class AccountShoppingCart(ShoppingCartInterface):
@@ -221,3 +247,30 @@ class AccountShoppingCart(ShoppingCartInterface):
                 tax_amount = subtotal * (Decimal(tax_percentage) / 100)
                 total_tax_amount += tax_amount
         return total_tax_amount.quantize(Decimal('0.00'))
+
+
+    def to_json(self):
+        cart_data = {
+           'subtotal': float(self.sub_total),
+            'total_price': float(self.total_price),
+            'items': []
+           }
+
+        for product_id, item in self.cart.items():
+            product = ProductService.get_product_by_id(product_id)
+            if product is not None:
+                product_price = product.unit_sale_price if product.has_product_sale else product.unit_selling_price
+                item_data = {
+                    'product_id': product_id,
+                    'name': product.name,
+                    'thumbnail': product.thumbnail.url,
+                    'unit_sale_price': float(product.unit_sale_price) if product.has_product_sale else None,
+                    'unit_price': float(product.unit_selling_price),
+                    'price': float(product_price),
+                    'quantity': item['quantity'],
+                    'subtotal': float(item['quantity'] * product_price),
+                    'totalPrice': float(item['quantity'] * product_price)
+                }
+                cart_data['items'].append(item_data)
+
+        return cart_data

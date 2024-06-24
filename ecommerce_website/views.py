@@ -774,9 +774,9 @@ def get_cart_count(request):
     return JsonResponse({'count': cart_count})
 
 def get_shopping_cart(request):
-    cart = ShoppingCartService(request)
+    cart_details = ShoppingCartService(request).to_json()
 
-    return JsonResponse({'cart': cart})
+    return JsonResponse({'cart': cart_details})
 
 
 

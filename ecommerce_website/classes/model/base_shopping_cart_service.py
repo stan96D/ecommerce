@@ -18,6 +18,10 @@ class ShoppingCartInterface(ABC):
     def clear_cart(self):
         pass
 
+    @abstractmethod
+    def to_json(self):
+        pass
+
     @property
     @abstractmethod
     def cart_items(self):

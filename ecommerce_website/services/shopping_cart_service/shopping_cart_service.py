@@ -31,6 +31,9 @@ class ShoppingCartService(AbstractShoppingCartService):
     def clear_cart(self):
         self.shopping_cart.clear_cart()
 
+    def to_json(self):
+        return self.shopping_cart.to_json()
+
     @property
     def cart_items(self):
         return self.shopping_cart.cart_items
