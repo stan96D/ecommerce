@@ -36,16 +36,28 @@
             <div class="flex justify-between items-center">
                 {% if product.sale_price %}
                 <div class="flex">
+                    {% if product.product_type == "Vloer" %}
                     <div class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
                         <p class="text-lg font-semibold text-gray-100">€{{ product.sale_price }} <sup>m²</sup></p>
                     </div>
                     <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400"><del>€{{ product.price }} m&sup2;</del></p>
-
+                    {% else %}
+                    <div class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
+                        <p class="text-lg font-semibold text-gray-100">€{{ product.unit_sale_price }} </p>
+                    </div>
+                    <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400"><del>€{{ product.unit_price }}</del></p>
+                    {% endif %}
                 </div>
 
                 {%else%}
                 <div class="flex">
-                    <p class="mt-1 text-lg font-medium text-gray-900">€{{ product.price }} m&sup2;</p>
+                    {% if product.sale_price %}
+                        <p class="mt-1 text-lg font-medium text-gray-900">€{{ product.price }} m&sup2;</p>
+
+                    {% else %}
+                        <p class="mt-1 text-lg font-medium text-gray-900">€{{ product.unit_price }} per {{ product.unit }}</p>
+
+                    {% endif %}
                     
                 </div>
                 {% endif %}
