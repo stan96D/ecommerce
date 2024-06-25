@@ -21,13 +21,10 @@ class CartItemView:
         self.quantity = quantity
         self.stock = product.stock.quantity
 
-        
+        self.product_type = attributes_dict.get('Producttype', 'Vloer')
+        self.unit = attributes_dict.get('Eenheid', 'm²')
 
-        # surface = attributes_dict['Oppervlakte']
-        # self.surface = SurfaceAreaCalculator.parse_surface_area(surface)
-
-        brand = attributes_dict['Merk']
-        self.brand = brand
+        self.brand = attributes_dict.get('Merk', '')
 
         self.has_sale = str(product.has_product_sale).lower()
 
