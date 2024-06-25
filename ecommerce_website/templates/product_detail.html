@@ -91,7 +91,7 @@
                         <p class="text-base tracking-tight text-gray-500">€{{ product.unit_sale_price }} per pak</p>
 
                         {% else %}
-                        <p class="text-base tracking-tight text-gray-500">€{{ product.price_per_pack }} per pak</p>
+                        <p class="text-base tracking-tight text-gray-500">€{{ product.unit_price }} per pak</p>
 
                         {% endif %}
                     </div>
@@ -373,7 +373,7 @@
         if (hasSale) {
             pricePerPack = {{ product.unit_sale_price }};
         } else {
-            pricePerPack = {{ product.price_per_pack }};
+            pricePerPack = {{ product.unit_price }};
         }
 
         if (surfacePerPack && unit == 'm²') {

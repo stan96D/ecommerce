@@ -4,25 +4,29 @@ import json
 class ProductView:
     def __init__(self, product):
 
+        attributes_dict = {}
+        for attribute in product.attributes.all():
+            attributes_dict[attribute.attribute_type.name] = attribute.value
+
         self.id = product.id
         self.name = product.name
         self.price = product.selling_price
-        self.price_per_pack = product.unit_selling_price
+        self.unit_price = product.unit_selling_price
 
         if product.thumbnail and product.thumbnail.url:
             self.thumbnail_url = product.thumbnail.url
 
         else:
             self.thumbnail_url = "/static/images/no_image_placeholder.png"
-            
+
+        self.product_type = attributes_dict.get('Producttype', 'Vloer')
+        self.unit = attributes_dict.get('Eenheid', 'm²')
+
         self.images = product.images
         self.quantity = product.stock.quantity
         self.is_runner = product.runner
 
-        brand = product.attributes.filter(
-            attribute_type__name='Merk').first().value
-
-        self.brand = brand
+        self.brand = attributes_dict.get('Merk', '')
 
         if product.has_product_sale:
             self.sale_price = product.sale_price
@@ -37,7 +41,7 @@ class ProductDetailView:
 
         self.id = product.id
         self.name = product.name
-        self.price_per_pack = product.unit_selling_price
+        self.unit_price = product.unit_selling_price
         self.price = product.selling_price
 
         if product.thumbnail and product.thumbnail.url:
