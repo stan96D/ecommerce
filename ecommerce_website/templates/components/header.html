@@ -477,7 +477,7 @@
                     if (item.product_type == 'Vloer') {
                         originalPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
                     } else {
-                        originalPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
+                        originalPrice.textContent = `€${item.unit_price} per ${item.unit}`; // Replace with actual unit price
                     }
                     contentContainer.appendChild(originalPrice);
 
