@@ -39,7 +39,7 @@ class ProductDetailView:
         self.name = product.name
         self.price_per_pack = product.unit_selling_price
         self.price = product.selling_price
-        
+
         if product.thumbnail and product.thumbnail.url:
             self.thumbnail_url = product.thumbnail.url
 
@@ -49,15 +49,25 @@ class ProductDetailView:
         self.images = product.images
         self.quantity = product.stock.quantity
         self.description = attributes_dict.get('Omschrijving', '')
-        self.surface = SurfaceAreaCalculator.parse_surface_area(
-            attributes_dict.get('Oppervlakte', ''))
+
+
+        self.product_type = attributes_dict.get('Producttype', 'Vloer')
+        self.unit = attributes_dict.get('Eenheid', 'm²')
+        surface = attributes_dict.get('Oppervlakte', None)
+
+        if self.product_type == "Vloer" and surface:
+            self.surface = SurfaceAreaCalculator.parse_surface_area(
+                surface)
+        else:
+            self.surface = "undefined"
+            
+
         self.brand = attributes_dict.get('Merk', '')
         self.has_sale = str(product.has_product_sale).lower()
 
         self.sale_price = product.sale_price
         self.unit_sale_price = product.unit_sale_price
 
-        # Initialize product specifications
         product_specifications = {
             "Algemene Specificaties": {},
             "Overige Specificaties": {},
@@ -65,7 +75,6 @@ class ProductDetailView:
             "Omschrijving": {}
         }
 
-        # Extract attributes and organize them into sections
         for attribute in product.attributes.all():
             attribute_type = attribute.attribute_type.name
             attribute_value = attribute.value
@@ -86,9 +95,6 @@ class ProductDetailView:
             else:
                 product_specifications["Overige Specificaties"][attribute_type] = attribute_value
 
-
-
-            # Combine all sections into a list
             self.sections = [
                 {"Omschrijving": product_specifications["Omschrijving"]},
 
@@ -99,7 +105,6 @@ class ProductDetailView:
                     product_specifications["Overige Specificaties"]},
                 {"Aanvullende Informatie":
                     product_specifications["Aanvullende Informatie"]},
-
             ]
 
 
