@@ -452,30 +452,49 @@
 
             // Create price container
             if (item.unit_sale_price) {
-                const salePriceContainer = document.createElement('div');
-                salePriceContainer.className = 'flex items-center mt-1 text-xs text-gray-500';
 
-                const discountLabel = document.createElement('span');
-                discountLabel.className = 'text-amber-500 font-semibold';
-                discountLabel.textContent = 'Kortingsprijs:';
+                    const salePriceContainer = document.createElement('div');
+                    salePriceContainer.className = 'flex items-center mt-1 text-xs text-gray-500';
 
-                const salePrice = document.createElement('span');
-                salePrice.className = 'ml-1';
-                salePrice.textContent = `€${item.unit_sale_price} per pak`; // Replace with actual sale price
+                    const discountLabel = document.createElement('span');
+                    discountLabel.className = 'text-amber-500 font-semibold';
+                    discountLabel.textContent = 'Kortingsprijs:';
 
-                salePriceContainer.appendChild(discountLabel);
-                salePriceContainer.appendChild(salePrice);
-                contentContainer.appendChild(salePriceContainer);
+                    const salePrice = document.createElement('span');
+                    salePrice.className = 'ml-1';
+                    if (item.product_type == 'Vloer') {
+                        salePrice.textContent = `€${item.unit_sale_price} per pak`; // Replace with actual sale price
+                    } else {
+                        salePrice.textContent = `€${item.unit_sale_price} per ${item.unit }` ; // Replace with actual sale price
 
-                const originalPrice = document.createElement('p');
-                originalPrice.className = 'mt-1 text-xs text-gray-500 line-through';
-                originalPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
-                contentContainer.appendChild(originalPrice);
+                    }
+                    salePriceContainer.appendChild(discountLabel);
+                    salePriceContainer.appendChild(salePrice);
+                    contentContainer.appendChild(salePriceContainer);
+
+                    const originalPrice = document.createElement('p');
+                    originalPrice.className = 'mt-1 text-xs text-gray-500 line-through';
+                    if (item.product_type == 'Vloer') {
+                        originalPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
+                    } else {
+                        originalPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
+                    }
+                    contentContainer.appendChild(originalPrice);
+
             } else {
-                const unitPrice = document.createElement('p');
-                unitPrice.className = 'mt-1 text-xs text-gray-500';
-                unitPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
-                contentContainer.appendChild(unitPrice);
+
+                if (item.product_type == "Vloer") {
+                    const unitPrice = document.createElement('p');
+                    unitPrice.className = 'mt-1 text-xs text-gray-500';
+                    unitPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
+                    contentContainer.appendChild(unitPrice);
+                } else {
+                    const unitPrice = document.createElement('p');
+                    unitPrice.className = 'mt-1 text-xs text-gray-500';
+                    unitPrice.textContent = `€${item.unit_price} per ${item.unit}`; // Replace with actual unit price
+                    contentContainer.appendChild(unitPrice);
+                }
+
             }
 
             // Create bottom row container

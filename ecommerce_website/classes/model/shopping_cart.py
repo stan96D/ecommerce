@@ -118,17 +118,28 @@ class SessionShoppingCart(ShoppingCartInterface):
                 total_tax_amount += tax_amount
         return total_tax_amount.quantize(Decimal('0.00')) 
     
+
     def to_json(self):
         cart_data = {
-            'subtotal': float(self.sub_total),
+           'subtotal': float(self.sub_total),
             'total_price': float(self.total_price),
             'items': []
-        }
+           }
 
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
+
+            product_type_attr = product.attributes.all().filter(
+                attribute_type__name='Producttype').first()
+            product_type = product_type_attr.value if product_type_attr else 'Vloer'
+
+            product_unit_attr = product.attributes.all().filter(
+                attribute_type__name='Eenheid').first()
+            product_unit = product_unit_attr.value if product_unit_attr else 'm²'
+
             if product is not None:
                 product_price = product.unit_sale_price if product.has_product_sale else product.unit_selling_price
+
                 if product.thumbnail and product.thumbnail.url:
                     thumbnail_url = product.thumbnail.url
                 else:
@@ -137,7 +148,8 @@ class SessionShoppingCart(ShoppingCartInterface):
                 item_data = {
                     'product_id': product_id,
                     'name': product.name,
-
+                    'product_type': product_type,
+                    'unit': product_unit,
                     'thumbnail': thumbnail_url,
                     'unit_sale_price': float(product.unit_sale_price) if product.has_product_sale else None,
                     'unit_price': float(product.unit_selling_price),
@@ -264,6 +276,15 @@ class AccountShoppingCart(ShoppingCartInterface):
 
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
+
+            product_type_attr = product.attributes.all().filter(
+                attribute_type__name='Producttype').first()
+            product_type = product_type_attr.value if product_type_attr else 'Vloer'
+
+            product_unit_attr = product.attributes.all().filter(
+                attribute_type__name='Eenheid').first()
+            product_unit = product_unit_attr.value if product_unit_attr else 'm²'
+
             if product is not None:
                 product_price = product.unit_sale_price if product.has_product_sale else product.unit_selling_price
 
@@ -275,7 +296,8 @@ class AccountShoppingCart(ShoppingCartInterface):
                 item_data = {
                     'product_id': product_id,
                     'name': product.name,
-                    
+                    'product_type': product_type,
+                    'unit': product_unit,
                     'thumbnail': thumbnail_url,
                     'unit_sale_price': float(product.unit_sale_price) if product.has_product_sale else None,
                     'unit_price': float(product.unit_selling_price),
