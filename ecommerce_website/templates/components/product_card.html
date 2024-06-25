@@ -51,7 +51,8 @@
 
                 {%else%}
                 <div class="flex">
-                    {% if product.sale_price %}
+                    
+                    {% if product.product_type == "Vloer" %}
                         <p class="mt-1 text-lg font-medium text-gray-900">€{{ product.price }} m&sup2;</p>
 
                     {% else %}

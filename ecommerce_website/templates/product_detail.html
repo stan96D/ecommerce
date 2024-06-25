@@ -62,27 +62,51 @@
                 <h4 class="text-xs pt-4 pb-1  text-amber-500 font-semibold ">{{ product.brand }}</h3>
 
                     <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ product.name }}</h1>
-                    {% if product.sale_price %}
-                    <div class="flex">
 
-                        
-                        <div
-                            class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
-                            <p class="text-lg font-semibold text-gray-100">€{{ product.sale_price }} {{product.unit}}</p>
+                    {% if product.product_type == "Vloer" %}
+
+                        {% if product.sale_price %}
+                        <div class="flex">
+
+                            
+                            <div
+                                class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
+                                <p class="text-lg font-semibold text-gray-100">€{{ product.sale_price }} {{product.unit}}</p>
+                            </div>
+                            <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400"><del>€{{ product.price }}
+                                    {{product.unit}}</del></p>
+
                         </div>
-                        <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400"><del>€{{ product.price }}
-                                {{product.unit}}</del></p>
 
-                    </div>
+                        {%else%}
+                        <div class="mt-3">
+                            <h2 class="sr-only">Product information</h2>
+                            <p class="text-3xl font-medium tracking-tight text-gray-900">€{{ product.price }} per {{product.unit}}
+                            </p>
 
-                    {%else%}
-                    <div class="mt-3">
-                        <h2 class="sr-only">Product information</h2>
-                        <p class="text-3xl font-medium tracking-tight text-gray-900">€{{ product.price }} per {{product.unit}}
-                        </p>
-
-                    </div>
-                    {% endif %}
+                        </div>
+                        {% endif %}
+                    {% else %}
+                        {% if product.unit_sale_price %}
+                        <div class="flex">
+                        
+                            <div class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
+                                <p class="text-lg font-semibold text-gray-100">€{{ product.unit_sale_price }} per {{product.unit}}</p>
+                            </div>
+                            <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400"><del>€{{ product.unit_price }}
+                                    </del></p>
+                        
+                        </div>
+                        
+                        {%else%}
+                        <div class="mt-3">
+                            <h2 class="sr-only">Product information</h2>
+                            <p class="text-3xl font-medium tracking-tight text-gray-900">€{{ product.unit_price }} per {{product.unit}}
+                            </p>
+                        
+                        </div>
+                        {% endif %}
+                    {% endif%}
                     {% if product.unit == 'm²' %}
                     <div class="mt-1">
 
