@@ -1,10 +1,8 @@
 from datetime import timedelta
 from django.db import models
-from django.utils.text import slugify
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, AnonymousUser
-from decimal import Decimal
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AnonymousUser
 from ecommerce_website.settings.webshop_config import WebShopConfig
 
 class AccountManager(BaseUserManager):
@@ -147,7 +145,25 @@ class Product(models.Model):
             return round(sale_price, 2)
         return None
 
-    
+
+class RelatedProduct(models.Model):
+    main_product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='related_products')
+    related_products = models.ManyToManyField(
+        Product, related_name='related_to', blank=True)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"Related products for {self.main_product.name}"
+
+    def clean(self):
+        if self.main_product in self.related_products.all():
+            raise ValidationError("A product cannot be related to itself.")
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
 
 class Sale(models.Model):
     name = models.CharField(max_length=100)

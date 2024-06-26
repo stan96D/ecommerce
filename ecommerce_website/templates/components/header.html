@@ -463,9 +463,9 @@
                     const salePrice = document.createElement('span');
                     salePrice.className = 'ml-1';
                     if (item.product_type == 'Vloer') {
-                        salePrice.textContent = `€${item.unit_sale_price} per pak`; // Replace with actual sale price
+                        salePrice.textContent = `€${item.unit_sale_price.toFixed(2)} per pak`; // Replace with actual sale price
                     } else {
-                        salePrice.textContent = `€${item.unit_sale_price} per ${item.unit }` ; // Replace with actual sale price
+                        salePrice.textContent = `€${item.unit_sale_price.toFixed(2) } per ${item.unit }` ; // Replace with actual sale price
 
                     }
                     salePriceContainer.appendChild(discountLabel);
@@ -475,9 +475,9 @@
                     const originalPrice = document.createElement('p');
                     originalPrice.className = 'mt-1 text-xs text-gray-500 line-through';
                     if (item.product_type == 'Vloer') {
-                        originalPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
+                        originalPrice.textContent = `€${item.unit_price.toFixed(2) } per pak`; // Replace with actual unit price
                     } else {
-                        originalPrice.textContent = `€${item.unit_price} per ${item.unit}`; // Replace with actual unit price
+                        originalPrice.textContent = `€${item.unit_price.toFixed(2) } per ${item.unit}`; // Replace with actual unit price
                     }
                     contentContainer.appendChild(originalPrice);
 
@@ -486,12 +486,12 @@
                 if (item.product_type == "Vloer") {
                     const unitPrice = document.createElement('p');
                     unitPrice.className = 'mt-1 text-xs text-gray-500';
-                    unitPrice.textContent = `€${item.unit_price} per pak`; // Replace with actual unit price
+                    unitPrice.textContent = `€${item.unit_price.toFixed(2) } per pak`; // Replace with actual unit price
                     contentContainer.appendChild(unitPrice);
                 } else {
                     const unitPrice = document.createElement('p');
                     unitPrice.className = 'mt-1 text-xs text-gray-500';
-                    unitPrice.textContent = `€${item.unit_price} per ${item.unit}`; // Replace with actual unit price
+                    unitPrice.textContent = `€${item.unit_price.toFixed(2) } per ${item.unit}`; // Replace with actual unit price
                     contentContainer.appendChild(unitPrice);
                 }
 
@@ -525,7 +525,7 @@
             // Create total price element
             const totalPrice = document.createElement('span');
             totalPrice.className = 'font-medium text-gray-900 text-sm pr-3';
-            totalPrice.textContent = `€${item.totalPrice}`; // Replace with actual total price
+            totalPrice.textContent = `€${item.totalPrice.toFixed(2)}`; // Replace with actual total price
 
             // Append quantity container and total price to bottom row
             bottomRow.appendChild(quantityContainer);
@@ -619,7 +619,7 @@
     function updateSubtotal(cartData) {
             let subtotal = cartData.cart.total_price
             let subtotalElement = document.getElementById('subtotalAmount');
-            subtotalElement.textContent = `€${subtotal}`; 
+            subtotalElement.textContent = `€${subtotal.toFixed(2) }`; 
         }
 
     function openFlyoutPanel() {
@@ -633,7 +633,7 @@
     function closeFlyoutPanel() {
         document.getElementById('flyout-panel').style.display = 'none';
         document.body.classList.remove('overflow-hidden');
-
+        location.reload()
     }
 
     $(document).ready(function () {
