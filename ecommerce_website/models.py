@@ -148,21 +148,22 @@ class Product(models.Model):
 
 class RelatedProduct(models.Model):
     main_product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name='related_products')
+        Product, on_delete=models.CASCADE, related_name='main_product')
     related_products = models.ManyToManyField(
-        Product, related_name='related_to', blank=True)
-    name = models.CharField(max_length=100)
+        Product, related_name='related_products')
+    name = models.CharField(max_length=255)
+
+    def clean(self):
+        if not self.pk:
+            self.save()
+
+        if self.main_product in self.related_products.all():
+            raise ValidationError(
+                "Main product cannot be in the related products.")
 
     def __str__(self):
         return f"Related products for {self.main_product.name}"
 
-    def clean(self):
-        if self.main_product in self.related_products.all():
-            raise ValidationError("A product cannot be related to itself.")
-
-    def save(self, *args, **kwargs):
-        self.clean()
-        super().save(*args, **kwargs)
 
 
 class Sale(models.Model):

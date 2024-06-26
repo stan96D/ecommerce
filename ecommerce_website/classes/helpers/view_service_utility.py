@@ -34,6 +34,9 @@ from ecommerce_website.services.view_service.delivery_method_view_service import
 from ecommerce_website.services.brand_service.brand_service import BrandService
 from ecommerce_website.services.return_service.return_service import ReturnService
 from ecommerce_website.services.view_service.return_order_view_service import ReturnOrderViewService
+from ecommerce_website.services.related_products_service.related_products_service import RelatedProductService
+from ecommerce_website.services.view_service.related_products_view_service import RelatedProductViewService
+
 
 class ViewServiceUtility:
     @staticmethod
@@ -116,11 +119,16 @@ class ViewServiceUtility:
         return DeliveryMethodViewService().generate(delivery_methods)
     
     @staticmethod
-    def get_related_products(id):
+    def get_alternative_products(id):
         products = ProductService.get_related_products(id)
         return ProductDetailViewService().generate(products)
     
     @staticmethod
     def get_all_brands():
         return BrandService.get_all_brands()
-
+    
+    @staticmethod
+    def get_related_products(id):
+        related_products = RelatedProductService.get_related_by_product(id)
+        print(related_products)
+        return RelatedProductViewService().generate(related_products)

@@ -136,7 +136,7 @@
                         <input type="hidden" id="packs" name="packs">
 
                         <!-- Color selection -->
-                        {% if related_products %}
+                        {% if alternative_products %}
                         <div class="mt-10">
                             <h3 class="text-sm text-gray-600 font-medium">Overige kleuren</h3>
                             <fieldset class="mt-2">
@@ -144,28 +144,28 @@
                                 <span class="flex items-center space-x-3">
                                     <!-- Loop through product colors -->
 
-                                    {% for related_product in related_products %}
-                                    {% if related_product.id == product.id %}
-                                    <a href="/product/{{ related_product.id }}"
+                                    {% for alternative_product in alternative_products %}
+                                    {% if alternative_product.id == product.id %}
+                                    <a href="/product/{{ alternative_product.id }}"
                                         class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-700">
-                                        <input type="radio" name="related_product.id" value="{{ related_product.id }}"
+                                        <input type="radio" name="alternative_product.id" value="{{ alternative_product.id }}"
                                             class="sr-only peer" checked>
                                         <span aria-hidden="true"
                                             class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden peer-checked:border-2 peer-checked:border-amber-500 p-0.5">
-                                            <img src="{{ related_product.thumbnail_url }}"
-                                                alt="{{ related_product.name }}"
+                                            <img src="{{ alternative_product.thumbnail_url }}"
+                                                alt="{{ alternative_product.name }}"
                                                 class="h-full w-full object-cover rounded-full">
                                         </span>
                                     </a>
                                     {% else %}
-                                    <a href="/product/{{ related_product.id }}"
+                                    <a href="/product/{{ alternative_product.id }}"
                                         class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-700">
-                                        <input type="radio" name="related_product.id" value="{{ related_product.id }}"
+                                        <input type="radio" name="alternative_product.id" value="{{ alternative_product.id }}"
                                             class="sr-only peer">
                                         <span aria-hidden="true"
                                             class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden p-0.5">
-                                            <img src="{{ related_product.thumbnail_url }}"
-                                                alt="{{ related_product.name }}"
+                                            <img src="{{ alternative_product.thumbnail_url }}"
+                                                alt="{{ alternative_product.name }}"
                                                 class="h-full w-full object-cover rounded-full">
                                         </span>
                                     </a>

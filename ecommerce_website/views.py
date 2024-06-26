@@ -725,14 +725,19 @@ def products_by_attribute(request, category, subcategory, attribute):
         'store_motivations': ViewServiceUtility.get_store_motivations()
     })
 
+from ecommerce_website.services.related_products_service.related_products_service import RelatedProductService
+
+
+
 
 def product_detail(request, id=None):
 
     return render(request, 'product_detail.html', {'product': ViewServiceUtility.get_product_view_by_id(id), 
+                                                   'related_products': ViewServiceUtility.get_related_products(id), 
                                                    'headerData': ViewServiceUtility.get_header_data(), 
                                                    'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                    'brands': ViewServiceUtility.get_all_brands(),
-                                                   'related_products': ViewServiceUtility.get_related_products(id),
+                                                   'alternative_products': ViewServiceUtility.get_alternative_products(id),
                                                    'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 

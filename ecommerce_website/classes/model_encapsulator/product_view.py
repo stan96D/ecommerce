@@ -43,7 +43,7 @@ class ProductDetailView:
         self.name = product.name
         self.unit_price = product.unit_selling_price
         self.price = product.selling_price
-
+    
         if product.thumbnail and product.thumbnail.url:
             self.thumbnail_url = product.thumbnail.url
 
@@ -87,7 +87,7 @@ class ProductDetailView:
                 product_specifications["Algemene Specificaties"][attribute_type] = attribute_value
             elif attribute_type in ["Omschrijving"]:
                 product_specifications["Omschrijving"][attribute_type] = attribute_value
-
+            
             elif attribute_type in ["Links"]:
                 try:
                     links_dict = json.loads(attribute_value)
