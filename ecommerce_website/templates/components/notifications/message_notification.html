@@ -1,20 +1,22 @@
-<!-- Global notification live region, render this permanently at the end of the document -->
 <div aria-live="assertive" id="notification"
     class="pointer-events-none absolute z-10 inset-0 flex items-start px-4 py-6 sm:items-start sm:pr-32 sm:pt-52">
     <div class="flex w-full flex-col items-center space-y-4 sm:items-end">
         <!-- Notification panel, dynamically insert this into the live region when it needs to be displayed -->
+        {% for message in messages %}
+        {% if 'cart-success' not in message.tags %}
         <div
             class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5">
             <div class="p-4">
                 <div class="flex items-start">
                     <div class="flex-shrink-0">
-                        {% if message.tags == 'success' %}
+                        
+                        {% if 'success' in message.tags %}
                         <svg class="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
-                        {% elif message.tags == 'error' %}
+                        {% elif 'error' in message.tags %}
                         <svg class="h-6 w-6 text-red-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -38,6 +40,8 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+        {% endfor %}
     </div>
 </div>
 

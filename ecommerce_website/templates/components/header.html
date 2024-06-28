@@ -264,6 +264,13 @@
 {% include 'components/breadcrumb.html' %}
 
 {% endif %}
+{% if messages %}
+    {% for message in messages %}
+        {% if 'cart-success' in message.tags %}
+            {% include 'components/cart_confirmation.html' %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
 
 <!-- Flyout panel -->
 <div class="relative z-10 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="flyout-panel">

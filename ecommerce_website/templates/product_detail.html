@@ -134,6 +134,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="product_id" value="{{ product.id }}">
                         <input type="hidden" id="packs" name="packs">
+                        <input type="hidden" id="is_product_detail" name="is_product_detail" value="True">
 
                         <!-- Color selection -->
                         {% if alternative_products %}

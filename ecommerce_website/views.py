@@ -745,7 +745,8 @@ def add_to_cart(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
         pack_quantity = request.POST.get('packs')
-        
+        is_product_detail = request.POST.get('is_product_detail')
+        print(type(is_product_detail), request.POST)
         try:
             quantity = int(pack_quantity)
         except (TypeError, ValueError):
@@ -755,7 +756,14 @@ def add_to_cart(request):
 
         ShoppingCartService(request).add_item(product.id, quantity)
 
-    return redirect('cart')
+        if is_product_detail:
+            messages.add_message(request, messages.SUCCESS, 'Toegevoegd aan je winkelmand.', extra_tags='cart-success')
+        else:
+            messages.add_message(
+                request, messages.SUCCESS, 'Toegevoegd aan je winkelmand.')
+
+
+    return redirect(request.META.get('HTTP_REFERER', '/'))
 
 
 def change_quantity_in_cart(request):

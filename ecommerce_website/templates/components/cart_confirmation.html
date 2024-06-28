@@ -1,0 +1,63 @@
+<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true" id="cart-confirmation-modal">
+    <div class="fixed inset-0 bg-black bg-opacity-25 transition-opacity" onclick="hideModal()" aria-hidden="true"></div>
+
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div
+                class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                <div class="pb-4">
+                    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+                        <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-5">
+                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">{{ message }}</h3>
+                        {% if related_products %}
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500">Maak je aankoop compleet. Sommige producten zijn benodigd
+                                om met elkaar te combineren. Kijk hier welke je het meest aanspreken.</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if related_products %}
+                <!-- Add scrollable container -->
+                <div class="overflow-y-auto max-h-96">
+                    {% for related_product in related_products %}
+                    <div class="mx-auto max-w-2xl lg:max-w-7xl pt-4 pb-4">
+                        <div class="flex items-center justify-between space-x-4">
+                            <h2 class="text-base font-medium text-gray-900">{{related_product.name}}</h2>
+                        </div>
+                        <div class="mt-3 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8">
+
+                            {% for product in related_product.products|slice:":3" %}
+                            {% include 'components/related_product_cart_item.html' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
+                    <a href="/cart"
+                        class="inline-flex w-full justify-center rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 sm:col-start-2">
+                        Naar winkelmand
+                    </a>
+                    <button type="button" onclick="hideModal()"
+                        class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0">
+                        Verder winkelen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function hideModal() {
+        document.getElementById('cart-confirmation-modal').style.display = 'none';
+    }
+</script>
