@@ -734,6 +734,7 @@ def product_detail(request, id=None):
 
     return render(request, 'product_detail.html', {'product': ViewServiceUtility.get_product_view_by_id(id), 
                                                    'related_products': ViewServiceUtility.get_related_products(id), 
+                                                   'misc_products': ViewServiceUtility.get_misc_products(),
                                                    'headerData': ViewServiceUtility.get_header_data(), 
                                                    'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                    'brands': ViewServiceUtility.get_all_brands(),

@@ -130,5 +130,9 @@ class ViewServiceUtility:
     @staticmethod
     def get_related_products(id):
         related_products = RelatedProductService.get_related_by_product(id)
-        print(related_products)
         return RelatedProductViewService().generate(related_products)
+    
+    @staticmethod
+    def get_misc_products():
+        misc_products = ProductService.get_misc_products()
+        return ProductViewService().generate(misc_products)

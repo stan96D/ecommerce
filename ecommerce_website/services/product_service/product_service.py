@@ -21,6 +21,16 @@ class ProductService(ProductServiceInterface):
         except Product.DoesNotExist:
             return None
         
+    @staticmethod
+    def get_misc_products():
+        try:
+            products = Product.objects.filter(
+                attributes__value__iexact="Accessoires",
+                attributes__attribute_type__name="Producttype"
+            ).distinct()
+            return list(products)
+        except Product.DoesNotExist:
+            return None
 
     @staticmethod
     def get_products_by_attribute(attribute):

@@ -188,7 +188,7 @@
                             {% endfor %}
                         </div>
                         
-                        {% if product.surface and product.unit == 'm²' %}
+                        {% if product.surface != 'undefined' and product.unit == 'm²' %}
                         <div class=" bg-gray-100 p-4 mt-6 rounded-md">
                             <div class="flex justify-between items-end">
                                 <label for="quantity" class="block text-sm font-medium text-gray-700 pb-2">
@@ -294,24 +294,23 @@
                     </form>
             </div>
         </div>
-{% if related_products %}
-<section class="sm:pb-12">
-    <div class="bg-white">
-        <div class="mx-auto max-w-2xl lg:max-w-7xl">
-            <div class="flex items-center justify-between space-x-4">
-                <h2 class="text-lg font-medium text-gray-900">Andere bekeken ook</h2>
+
+        {% if misc_products and product.product_type != "Accessoires"%}
+        <section class="sm:pb-12">
+            <div class="bg-white">
+                <div class="mx-auto max-w-2xl lg:max-w-7xl">
+                    <div class="flex items-center justify-between space-x-4">
+                        <h2 class="text-lg font-medium text-gray-900">Deze heb je misschien ook nodig</h2>
+                    </div>
+                    <div class="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-6 xl:gap-x-8">
+                        {% for product in misc_products|slice:":6" %}
+                        {% include 'components/related_product_item.html' %}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-            <div class="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-6 xl:gap-x-8">
-                {% for related_product in related_products %}
-                {% for product in related_product.products|slice:":6" %}
-                {% include 'components/related_product_item.html' %}
-                {% endfor %}
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</section>
-{% endif %}
+        </section>
+        {% endif %}
 
 
         {% for product_section in product.sections %}

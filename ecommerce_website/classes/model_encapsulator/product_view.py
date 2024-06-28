@@ -65,7 +65,7 @@ class ProductDetailView:
         else:
             self.surface = "undefined"
             
-
+        
         self.brand = attributes_dict.get('Merk', '')
         self.has_sale = str(product.has_product_sale).lower()
 
