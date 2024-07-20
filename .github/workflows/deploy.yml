@@ -16,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: 'latest'  # or the version you're using
+        python-version: 'latest' 
 
     - name: Install dependencies
       run: |
