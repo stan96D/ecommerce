@@ -62,6 +62,14 @@ class ProductDetailView:
         if self.product_type == "Vloer" and surface:
             self.surface = SurfaceAreaCalculator.parse_surface_area(
                 surface)
+            self.big_unit = "pak"
+            self.big_unit_multi = "pakken"
+
+        elif self.product_type == "Ondervloer" and surface:
+            self.surface = SurfaceAreaCalculator.parse_surface_area(
+                surface)
+            self.big_unit = "rol"
+            self.big_unit_multi = "rollen"
         else:
             self.surface = "undefined"
 
