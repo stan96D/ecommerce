@@ -1,3 +1,4 @@
+from ecommerce_website.services.related_products_service.related_products_service import RelatedProductService
 from django.contrib.auth.hashers import make_password
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
@@ -34,7 +35,6 @@ from ecommerce_website.classes.helpers.token_generator.token_generator import Re
 from django.contrib import messages
 
 
-
 def sign_in(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -51,13 +51,14 @@ def sign_in(request):
 
     else:
         return render(request, 'login.html')
-    
+
+
 def home(request):
-    
-    return render(request, "home.html", {'headerData': ViewServiceUtility.get_header_data(), 
+
+    return render(request, "home.html", {'headerData': ViewServiceUtility.get_header_data(),
                                          'payment_methods': ViewServiceUtility.get_payment_methods(),
-                                         'store_motivations': ViewServiceUtility.get_store_motivations(), 
-                                         'runner_products_data': ViewServiceUtility.get_runner_products(), 
+                                         'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                         'runner_products_data': ViewServiceUtility.get_runner_products(),
                                          'brands': ViewServiceUtility.get_all_brands(),
                                          'messages': messages.get_messages(request),
                                          'category_data': ViewServiceUtility.get_active_categories()})
@@ -89,11 +90,10 @@ def new_password(request, token):
         else:
             return redirect('home')
 
-
     if request.method == 'POST':
         new_password1 = request.POST.get('new_password1')
         new_password2 = request.POST.get('new_password2')
-        
+
         if new_password1 != new_password2:
             return render(request, "new_password.html", {'token': token, 'error_message': "Wachtwoorden komen niet overeen."})
 
@@ -112,14 +112,16 @@ def new_password(request, token):
         except (Account.DoesNotExist, ValueError, TypeError):
             return render(request, "new_password.html", {'token': token, 'error_message': "Ongeldige of verlopen token."})
 
+
 def forgot_password(request):
     if request.method == 'POST':
         email = request.POST.get('email')
-        
+
         try:
             user = Account.objects.get(email=email)
 
-            ForgotPasswordMailSender(HTMLMailManager()).send_password_reset_email(user)
+            ForgotPasswordMailSender(
+                HTMLMailManager()).send_password_reset_email(user)
 
             return render(request, "login.html", {'success_message': "Nieuw wachtwoord aangevraagd."})
         except Account.DoesNotExist:
@@ -128,26 +130,26 @@ def forgot_password(request):
     elif request.method == 'GET':
         return render(request, "forgot_password.html")
 
+
 def registration_view(request):
 
-    return render(request, "sign_up.html", {'headerData': ViewServiceUtility.get_header_data(), 
+    return render(request, "sign_up.html", {'headerData': ViewServiceUtility.get_header_data(),
                                             'payment_methods': ViewServiceUtility.get_payment_methods(),
                                             'brands': ViewServiceUtility.get_all_brands(),
                                             'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 
-def account_view(request): 
+def account_view(request):
 
     user = request.user
 
-    return render(request, "account.html", {'headerData': ViewServiceUtility.get_header_data(), 
+    return render(request, "account.html", {'headerData': ViewServiceUtility.get_header_data(),
                                             'account': user,
                                             'payment_methods': ViewServiceUtility.get_payment_methods(),
                                             'brands': ViewServiceUtility.get_all_brands(),
-                                            'orders': ViewServiceUtility.get_orders_by_user(user), 
+                                            'orders': ViewServiceUtility.get_orders_by_user(user),
                                             'returns': ViewServiceUtility.get_return_orders_by_user(user),
                                             'store_motivations': ViewServiceUtility.get_store_motivations()})
-
 
 
 @csrf_protect
@@ -167,8 +169,7 @@ def change_account_information(request):
             existing_account = len(Account.objects.filter(email=email)) > 0
 
             if existing_account:
-                return JsonResponse({'status': 'fail', 'errors': { 'email': 'Dit emailadres is niet beschikbaar.' }}, status=400)
-        
+                return JsonResponse({'status': 'fail', 'errors': {'email': 'Dit emailadres is niet beschikbaar.'}}, status=400)
 
         account = Account.objects.get(email=user.email)
 
@@ -189,7 +190,7 @@ def change_account_information(request):
         return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
 
     return JsonResponse({'status': 'fail', 'message': 'Invalid request method'}, status=405)
-        
+
 
 @csrf_protect
 def change_delivery_address_information(request):
@@ -260,7 +261,7 @@ def sign_up(request):
                 'payment_methods': ViewServiceUtility.get_payment_methods(),
                 'brands': ViewServiceUtility.get_all_brands(),
                 'store_motivations': ViewServiceUtility.get_store_motivations()
-    })
+            })
 
     else:
         return redirect('registration')
@@ -281,11 +282,11 @@ def navigate_checkout(request):
 
 def cart(request):
 
-    return render(request, "cart.html", {'items': ViewServiceUtility.get_cart_items_view(request), 
-                                         'headerData': ViewServiceUtility.get_header_data(), 
+    return render(request, "cart.html", {'items': ViewServiceUtility.get_cart_items_view(request),
+                                         'headerData': ViewServiceUtility.get_header_data(),
                                          'payment_methods': ViewServiceUtility.get_payment_methods(),
                                          'brands': ViewServiceUtility.get_all_brands(),
-                                         'cart': ViewServiceUtility.get_cart_view(request), 
+                                         'cart': ViewServiceUtility.get_cart_view(request),
                                          'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 
@@ -322,26 +323,25 @@ def order_info(request):
         elif user.is_authenticated:
 
             order_info_view = info_view_service.get({
-                "first_name": user.first_name, 
+                "first_name": user.first_name,
                 "last_name": user.last_name,
-                "email": user.email, 
+                "email": user.email,
                 "phone": user.phone_number,
-                "address": user.address, 
-                "house_number": user.house_number, 
-                "city": user.city, 
-                "postal_code": user.postal_code, 
-                "country": user.country, 
+                "address": user.address,
+                "house_number": user.house_number,
+                "city": user.city,
+                "postal_code": user.postal_code,
+                "country": user.country,
             })
 
         else:
             order_info_view = info_view_service.get_single()
 
-
-        return render(request, "checkout.html", {'headerData': ViewServiceUtility.get_header_data(), 
+        return render(request, "checkout.html", {'headerData': ViewServiceUtility.get_header_data(),
                                                  'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                  'brands': ViewServiceUtility.get_all_brands(),
-                                                 'cart': ViewServiceUtility.get_cart_view(request), 
-                                                 'order_info': order_info_view, 
+                                                 'cart': ViewServiceUtility.get_cart_view(request),
+                                                 'order_info': order_info_view,
                                                  'store_motivations': ViewServiceUtility.get_store_motivations()})
     elif request.method == "POST":
 
@@ -364,12 +364,13 @@ def order_info(request):
             address, house_number, city, postal_code, country)
 
         order_info_service.create_order(
-                                        contact_info, billing_address_info, shipping_address_info)
+            contact_info, billing_address_info, shipping_address_info)
 
         return redirect("navigate_checkout")
 
+
 def checkout(request):
-        
+
     if request.method == 'GET':
 
         if not ShoppingCartService(request).is_valid:
@@ -381,12 +382,12 @@ def checkout(request):
 
             issuers = MollieClient().get_issuers('ideal')
 
-            return render(request, "payment.html", {'headerData': ViewServiceUtility.get_header_data(), 
-                                                    'cart': ViewServiceUtility.get_cart_view(request), 
+            return render(request, "payment.html", {'headerData': ViewServiceUtility.get_header_data(),
+                                                    'cart': ViewServiceUtility.get_cart_view(request),
                                                     'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                     'brands': ViewServiceUtility.get_all_brands(),
-                                                    'order': order, 
-                                                    'payment_issuers': issuers, 
+                                                    'order': order,
+                                                    'payment_issuers': issuers,
                                                     'delivery_methods': ViewServiceUtility.get_active_delivery_methods(),
                                                     'store_motivations': ViewServiceUtility.get_store_motivations()})
 
@@ -395,13 +396,13 @@ def checkout(request):
 
 
 def order_detail(request):
-    
+
     order_id = request.GET.get('order_id')
 
-    return render(request, "order_detail.html", {'headerData': ViewServiceUtility.get_header_data(), 
+    return render(request, "order_detail.html", {'headerData': ViewServiceUtility.get_header_data(),
                                                  'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                  'brands': ViewServiceUtility.get_all_brands(),
-                                                 'order': ViewServiceUtility.get_order_by_id(order_id), 
+                                                 'order': ViewServiceUtility.get_order_by_id(order_id),
                                                  'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 
@@ -437,17 +438,20 @@ def confirm_order(request):
         if not order_info:
             return HttpResponseBadRequest("Order information not found")
 
-        payment_info = PaymentInfo(payment_name, issuer_name, issuer_id, payment_method)
+        payment_info = PaymentInfo(
+            payment_name, issuer_name, issuer_id, payment_method)
         delivery_info = DeliveryInfo(delivery_method, delivery_date)
 
         account = request.user
-        order = CheckoutService().create_order(account, order_info, payment_info, delivery_info, cart_service.shopping_cart)
-        
+        order = CheckoutService().create_order(account, order_info, payment_info,
+                                               delivery_info, cart_service.shopping_cart)
+
         cart_service.clear_cart()
         order_service.delete_order()
 
         # For Mollie testing purposes
-        redirect_url = f"https://{settings.NGROK_URL}/order_detail?order_id={order.id}"
+        redirect_url = f"https://{
+            settings.NGROK_URL}/order_detail?order_id={order.id}"
         webhook_url = f"https://{settings.NGROK_URL}/mollie_webhook/"
         print(payment_method, issuer_id, issuer_name, payment_name)
         payment = MollieClient().create_payment('EUR', str(
@@ -458,14 +462,13 @@ def confirm_order(request):
         checkout_url = payment['_links']['checkout']['href']
         print(payment)
         ClientMailSender(mail_manager=HTMLMailManager()).send_order_confirmation(account.salutation,
-                                                   account.last_name, 
-                                                   account.email, 
-                                                   order.order_number, 
-                                                   redirect_url)
-        
+                                                                                 account.last_name,
+                                                                                 account.email,
+                                                                                 order.order_number,
+                                                                                 redirect_url)
 
         return redirect(checkout_url)
-    
+
 
 def products(request, category='Assortiment'):
     attributes = request.GET.copy()
@@ -500,7 +503,8 @@ def products(request, category='Assortiment'):
         'store_motivations': ViewServiceUtility.get_store_motivations()
     })
 
-def search_products(request, category = "Zoeken"):
+
+def search_products(request, category="Zoeken"):
 
     attributes = request.GET.copy()
 
@@ -528,7 +532,8 @@ def search_products(request, category = "Zoeken"):
 
     category_data = ProductCategoryService().get_product_category_by_name(category)
 
-    filter_data = ProductFilterService().get_products_filters_for_search(products_for_filters)
+    filter_data = ProductFilterService(
+    ).get_products_filters_for_search(products_for_filters)
 
     return render(request, 'products.html', {
         'products': ViewServiceUtility.get_product_views(products),
@@ -573,6 +578,7 @@ def discount_products(request, category='Kortingen'):
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations()
     })
+
 
 def runner_products(request, category='Hardlopers'):
     attributes = request.GET.copy()
@@ -673,7 +679,7 @@ def products_by_subcategory(request, category, subcategory):
 
     filter_data = ProductFilterService().get_nested_product_filters_by_category_name(
         category, subcategory)
-    
+
     return render(request, 'products.html', {
         'products': ViewServiceUtility.get_product_views(products),
         'filterData': filter_data,
@@ -704,7 +710,8 @@ def products_by_attribute(request, category, subcategory, attribute):
         if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
-        products = ProductService.get_products_by_attribute_from_category(attribute, category)
+        products = ProductService.get_products_by_attribute_from_category(
+            attribute, category)
 
         if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
@@ -725,17 +732,13 @@ def products_by_attribute(request, category, subcategory, attribute):
         'store_motivations': ViewServiceUtility.get_store_motivations()
     })
 
-from ecommerce_website.services.related_products_service.related_products_service import RelatedProductService
-
-
-
 
 def product_detail(request, id=None):
 
-    return render(request, 'product_detail.html', {'product': ViewServiceUtility.get_product_view_by_id(id), 
-                                                   'related_products': ViewServiceUtility.get_related_products(id), 
+    return render(request, 'product_detail.html', {'product': ViewServiceUtility.get_product_view_by_id(id),
+                                                   'related_products': ViewServiceUtility.get_related_products(id),
                                                    'misc_products': ViewServiceUtility.get_misc_products(),
-                                                   'headerData': ViewServiceUtility.get_header_data(), 
+                                                   'headerData': ViewServiceUtility.get_header_data(),
                                                    'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                    'brands': ViewServiceUtility.get_all_brands(),
                                                    'alternative_products': ViewServiceUtility.get_alternative_products(id),
@@ -751,18 +754,18 @@ def add_to_cart(request):
         try:
             quantity = int(pack_quantity)
         except (TypeError, ValueError):
-            quantity = 1  
+            quantity = 1
 
         product = ProductService().get_product_by_id(product_id)
 
         ShoppingCartService(request).add_item(product.id, quantity)
 
         if is_product_detail:
-            messages.add_message(request, messages.SUCCESS, 'Toegevoegd aan je winkelmand.', extra_tags='cart-success')
+            messages.add_message(
+                request, messages.SUCCESS, 'Toegevoegd aan je winkelmand.', extra_tags='cart-success')
         else:
             messages.add_message(
                 request, messages.SUCCESS, 'Toegevoegd aan je winkelmand.')
-
 
     return redirect(request.META.get('HTTP_REFERER', '/'))
 
@@ -770,14 +773,14 @@ def add_to_cart(request):
 def change_quantity_in_cart(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        
+
         product_id = data.get('product_id')
         quantity = data.get('quantity')
 
         product = ProductService.get_product_by_id(product_id)
 
         ShoppingCartService(request).update_quantity(product.id, quantity)
-        
+
         return JsonResponse({'message': 'Product added to cart successfully'}, status=200)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
@@ -787,18 +790,18 @@ def get_cart_count(request):
     cart_count = ShoppingCartService(request).count
     return JsonResponse({'count': cart_count})
 
+
 def get_shopping_cart(request):
     cart_details = ShoppingCartService(request).to_json()
 
     return JsonResponse({'cart': cart_details})
 
 
-
 def delete_cart_item(request):
-      if request.method == 'POST':
+    if request.method == 'POST':
         product_id = request.POST.get('id')
         ShoppingCartService(request).remove_item(product_id)
-        return redirect('cart') 
+        return redirect('cart')
 
 
 @csrf_exempt
@@ -813,7 +816,6 @@ def mollie_webhook(request):
 
             new_order = OrderService.update_payment_status(
                 payment_id, payment.status)
-
 
             if new_order.is_paid:
                 AdminMailSender(mail_manager=HTMLMailManager()).send_order_confirmation(

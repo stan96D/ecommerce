@@ -1,148 +1,193 @@
 {% load static %}
 <footer class="bg-gray-900" aria-labelledby="footer-heading">
-    <h2 id="footer-heading" class="sr-only">Footer</h2>
-    
-    <div class="mx-auto max-w-7xl px-6 pt-24 sm:pt-24 lg:px-8 ">
+  <h2 id="footer-heading" class="sr-only">Footer</h2>
 
-        <div class="xl:grid xl:grid-cols-3 xl:gap-8">
-            
-            <div class="mt-20 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
-
-
-                <div class="md:grid md:grid-cols-3 md:gap-8">
-                    <div>
-                        <h3 class="text-lg font-semibold leading-6 text-white">Klantenservice</h3>
-                        <ul role="list" class="mt-10 space-y-4">
-                            <li>
-                                <a href="#" class="text-base leading-6 text-gray-300 hover:text-white">Over ons</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-base leading-6 text-gray-300 hover:text-white">Algemene
-                                    voorwaarden</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-base leading-6 text-gray-300 hover:text-white">Veelgestelde
-                                    vragen</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-base leading-6 text-gray-300 hover:text-white">Betaling &
-                                    verzending</a>
-                            </li>
-                            <li>
-                                <a href="#" class="text-base leading-6 text-gray-300 hover:text-white">Retourneren</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="mt-10 md:mt-0">
-                        <h3 class="text-lg font-semibold leading-6 text-white">Vloeren</h3>
-                        <ul role="list" class="mt-10 space-y-4">
-                            {% for header in headerData %}
-                            <li>
-                                <a href="/products/{{header}}" class="text-base leading-6 text-gray-300 hover:text-white">{{header}}</a>
-                            </li>
-                            {% endfor %}
-
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-semibold leading-6 text-white">Merken</h3>
-                        <ul role="list" class="mt-10 space-y-4">
-                            {% for brand in brands %}
-                            <li>
-                                <a href="/products/{{brand.name}}" class="text-base leading-6 text-gray-300 hover:text-white">{{brand.name}}</a>
-                            </li>
-                            {% endfor %}
-
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-            <div class="">
-                <h3 class="text-lg font-semibold leading-6 text-white ">Contact</h3>
-                                    <!-- <img class="h-16" src="{% static 'images/gvs_logo_text.png' %}" alt="Company name"> -->
-
-                <div>
-                    <div class="pt-10">
-                        <a href="#" class="h-full border-gray-100 bg-transparent  text-sm font-medium text-gray-100 ">
-                            <div class="text-sm font-normal text-gray-100 flex items-center">
-                                <i class="fas fa-home mr-2"></i>
-                                <p class="text-sm leading-6 text-gray-300 m-0"></p>
-                    
-                                <span class="text-sm font-normal text-gray-100 ml-2">Pulperdonk 12</span>
-                                <span class="text-sm font-normal text-gray-100 ml-1">6218 HD</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="pt-2 pb-2">
-                        <a href="#" class="h-full border-gray-100 bg-transparent  text-sm font-medium text-gray-100 ">
-                            <div class="text-sm font-normal text-gray-100 flex items-center">
-                                <i class="fas fa-envelope mr-2"></i>
-                                <p class="text-sm leading-6 text-gray-300 m-0"></p>
-                    
-                                <span class="text-sm font-normal text-gray-100 ml-2">stan-deckers@live.nl</span>
-                            </div>
-                        </a>
-                        <!-- <p class="text-sm leading-6 text-gray-300 ">Bereikbaar tussen 10:00-17:00</p> -->
-                    </div>
-
-                    <div class="py-4">
-            
-                        <div class="text-sm font-normal text-gray-100 flex items-center">
-                            <p class="text-sm leading-6 text-gray-300 ">Maandag t/m vrijdag</p>
-                            <span class="text-sm font-normal text-gray-100 ml-2">10:00-17:00</span>
-            
-                        </div>
-                        <div class="text-sm font-normal text-gray-100 flex items-center">
-                            <p class="text-sm leading-6 text-gray-300 ">Zaterdag en zondag</p>
-                            <span class="text-sm font-normal text-gray-100 ml-2">Gesloten</span>
-            
-                        </div>
-            
-            
-                    </div>
-            
-                    <div class="pt-2">
-            
-            
-                        <div class="text-sm font-normal text-gray-100 flex items-center">
-                            <p class="text-sm leading-6 text-gray-300 m-0">KVK nummer</p>
-                            <span class="text-sm font-normal text-gray-100 ml-2">12345678</span>
-                        </div>
-            
-                        <div class="text-sm font-normal text-gray-100 flex items-center">
-                            <p class="text-sm leading-6 text-gray-300 m-0">BTW nummer</p>
-                            <span class="text-sm font-normal text-gray-100 ml-2">NL123456789B01</span>
-                        </div>
-                    </div>
-            
-            
-            
-            
-
-                </div>
-            
-            
-            </div>
+  <div class="mx-auto max-w-7xl px-6 pt-24 sm:pt-24 lg:px-8 ">
+    <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+      <div class="mt-20 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
+        <div class="md:grid md:grid-cols-3 md:gap-8">
+          <div>
+            <h3 class="text-lg font-semibold leading-6 text-white">
+              Klantenservice
+            </h3>
+            <ul role="list" class="mt-10 space-y-4">
+              <li>
+                <a
+                  href="#"
+                  class="text-base leading-6 text-gray-300 hover:text-white"
+                  >Over ons</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-base leading-6 text-gray-300 hover:text-white"
+                  >Algemene voorwaarden</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-base leading-6 text-gray-300 hover:text-white"
+                  >Veelgestelde vragen</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-base leading-6 text-gray-300 hover:text-white"
+                  >Betaling & verzending</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-base leading-6 text-gray-300 hover:text-white"
+                  >Retourneren</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="mt-10 md:mt-0">
+            <h3 class="text-lg font-semibold leading-6 text-white">Vloeren</h3>
+            <ul role="list" class="mt-10 space-y-4">
+              {% for header in headerData %}
+                <li>
+                  <a
+                    href="/products/{{ header }}"
+                    class="text-base leading-6 text-gray-300 hover:text-white"
+                    >{{ header }}</a
+                  >
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold leading-6 text-white">Merken</h3>
+            <ul role="list" class="mt-10 space-y-4">
+              {% for brand in brands %}
+                <li>
+                  <a
+                    href="/products/{{ brand.name }}"
+                    class="text-base leading-6 text-gray-300 hover:text-white"
+                    >{{ brand.name }}</a
+                  >
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
-        <div class="mt-20 border-t border-white/10 pt-4 pb-4 text-left flex items-center justify-between">
-            <div class="flex space-x-4">
-                {% for payment_method in payment_methods %}
-                <img class="max-h-24 max-w-24 mt-1" src="{{ payment_method.image_url }}" alt="{{ payment_method.id }}">
-                {% endfor %}
+      </div>
+      <div class="">
+        <h3 class="text-lg font-semibold leading-6 text-white ">Contact</h3>
+        <!-- <img class="h-16" src="{% static 'images/gvs_logo_text.png' %}" alt="Company name"> -->
+
+        <div>
+          <div class="pt-10">
+            <a
+              href="#"
+              class="h-full border-gray-100 bg-transparent  text-sm font-medium text-gray-100 "
+            >
+              <div class="text-sm font-normal text-gray-100 flex items-center">
+                <i class="fas fa-home mr-2"></i>
+                <p class="text-sm leading-6 text-gray-300 m-0"></p>
+
+                <span class="text-sm font-normal text-gray-100 ml-2"
+                  >Pulperdonk 12</span
+                >
+                <span class="text-sm font-normal text-gray-100 ml-1"
+                  >6218 HD</span
+                >
+              </div>
+            </a>
+          </div>
+          <div class="pt-2 pb-2">
+            <a
+              href="#"
+              class="h-full border-gray-100 bg-transparent  text-sm font-medium text-gray-100 "
+            >
+              <div class="text-sm font-normal text-gray-100 flex items-center">
+                <i class="fas fa-envelope mr-2"></i>
+                <p class="text-sm leading-6 text-gray-300 m-0"></p>
+
+                <span class="text-sm font-normal text-gray-100 ml-2"
+                  >stan-deckers@live.nl</span
+                >
+              </div>
+            </a>
+            <!-- <p class="text-sm leading-6 text-gray-300 ">Bereikbaar tussen 10:00-17:00</p> -->
+          </div>
+
+          <div class="py-4">
+            <div class="text-sm font-normal text-gray-100 flex items-center">
+              <p class="text-sm leading-6 text-gray-300 ">
+                Maandag t/m vrijdag
+              </p>
+              <span class="text-sm font-normal text-gray-100 ml-2"
+                >10:00-17:00</span
+              >
             </div>
-            <div class="flex items-center space-x-4">
-                <a href="#" class="text-sm font-normal leading-4 text-gray-400 hover:text-amber-400">Disclaimer</a>
-                <span class="text-sm font-light leading-4 text-gray-600">|</span>
-                <a href="#" class="text-sm font-normal leading-4 text-gray-400 hover:text-amber-400">Privacy</a>
-                <span class="text-sm font-light leading-4 text-gray-600">|</span>
-                <a href="#" class="text-sm font-normal leading-4 text-gray-400 hover:text-amber-400">Algemene voorwaarden</a>
-                <span class="text-sm font-light leading-4 text-gray-600">|</span>
-                <p class="text-sm font-semibold leading-4 text-gray-200">&copy; 2024 Goedkopevloeren.nl</p>
+            <div class="text-sm font-normal text-gray-100 flex items-center">
+              <p class="text-sm leading-6 text-gray-300 ">Zaterdag en zondag</p>
+              <span class="text-sm font-normal text-gray-100 ml-2"
+                >Gesloten</span
+              >
             </div>
+          </div>
+
+          <div class="pt-2">
+            <div class="text-sm font-normal text-gray-100 flex items-center">
+              <p class="text-sm leading-6 text-gray-300 m-0">KVK nummer</p>
+              <span class="text-sm font-normal text-gray-100 ml-2"
+                >12345678</span
+              >
+            </div>
+
+            <div class="text-sm font-normal text-gray-100 flex items-center">
+              <p class="text-sm leading-6 text-gray-300 m-0">BTW nummer</p>
+              <span class="text-sm font-normal text-gray-100 ml-2"
+                >NL123456789B01</span
+              >
+            </div>
+          </div>
         </div>
-
-
-
+      </div>
     </div>
+    <div
+      class="mt-20 border-t border-white/10 pt-4 pb-4 text-left flex items-center justify-between"
+    >
+      <div class="flex space-x-4">
+        {% for payment_method in payment_methods %}
+          <img
+            class="max-h-24 max-w-24 mt-1"
+            src="{{ payment_method.image_url }}"
+            alt="{{ payment_method.id }}"
+          />
+        {% endfor %}
+      </div>
+      <div class="flex items-center space-x-4">
+        <a
+          href="#"
+          class="text-sm font-normal leading-4 text-gray-400 hover:text-amber-400"
+          >Disclaimer</a
+        >
+        <span class="text-sm font-light leading-4 text-gray-600">|</span>
+        <a
+          href="#"
+          class="text-sm font-normal leading-4 text-gray-400 hover:text-amber-400"
+          >Privacy</a
+        >
+        <span class="text-sm font-light leading-4 text-gray-600">|</span>
+        <a
+          href="#"
+          class="text-sm font-normal leading-4 text-gray-400 hover:text-amber-400"
+          >Algemene voorwaarden</a
+        >
+        <span class="text-sm font-light leading-4 text-gray-600">|</span>
+        <p class="text-sm font-semibold leading-4 text-gray-200">
+          &copy; 2024 Goedkopevloeren.nl
+        </p>
+      </div>
+    </div>
+  </div>
 </footer>

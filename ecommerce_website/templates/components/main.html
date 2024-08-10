@@ -1,40 +1,45 @@
 {% load static tailwind_tags %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    {% tailwind_css %}
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css"
+    />
 
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        {% tailwind_css %}
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css"
+    />
+  </head>
 
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" />
-        <link rel="stylesheet" type="text/css"
-            href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" />
-    </head>
-
-<body>
-    
-    {% include 'components/header.html'%}
+  <body>
+    {% include 'components/header.html' %}
 
     <main>
+      {% for message in messages %}
+        {% include 'components/notifications/message_notification.html' %}
+      {% endfor %}
 
-        {% for message in messages %}
-            {% include 'components/notifications/message_notification.html' %}
-        {% endfor %}
-
-        {% block content %}
-
-        {% endblock %}
+      {% block content %}
+      {% endblock %}
     </main>
 
-    {% include 'components/footer.html'%}
-
-
-</body>
-
+    {% include 'components/footer.html' %}
+  </body>
 </html>
-

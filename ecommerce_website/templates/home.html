@@ -4,553 +4,722 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<div class="bg-white">
-    <!--
-    Mobile menu
-
-    Off-canvas menu for mobile, show/hide based on off-canvas menu state.
-  -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <div class="bg-white">
     <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
-        <!--
-      Off-canvas menu backdrop, show/hide based on off-canvas menu state.
+      <div class="fixed inset-0 bg-black bg-opacity-25"></div>
 
-      Entering: "transition-opacity ease-linear duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-      Leaving: "transition-opacity ease-linear duration-300"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
-        <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+      <div class="fixed inset-0 z-40 flex">
+        <div
+          class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl"
+        >
+          <div class="flex px-4 pb-2 pt-5">
+            <button
+              type="button"
+              class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
+            >
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
 
-        <div class="fixed inset-0 z-40 flex">
-
-            <!--
-        Off-canvas menu, show/hide based on off-canvas menu state.
-
-        Entering: "transition ease-in-out duration-300 transform"
-          From: "-translate-x-full"
-          To: "translate-x-0"
-        Leaving: "transition ease-in-out duration-300 transform"
-          From: "translate-x-0"
-          To: "-translate-x-full"
-      -->
-            <div class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
-                <div class="flex px-4 pb-2 pt-5">
-                    <button type="button"
-                        class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400">
-                        <span class="sr-only">Close menu</span>
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                            aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Links -->
-                <div class="mt-2">
-                    <div class="border-b border-gray-200">
-                        <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">
-                            <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-                            <button id="tabs-1-tab-1"
-                                class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"
-                                aria-controls="tabs-1-panel-1" role="tab" type="button">Women</button>
-                            <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
-                            <button id="tabs-1-tab-2"
-                                class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"
-                                aria-controls="tabs-1-panel-2" role="tab" type="button">Men</button>
-                        </div>
-                    </div>
-
-                    <!-- 'Women' tab panel, show/hide based on tab state. -->
-                    <div id="tabs-1-panel-1" class="space-y-12 px-4 py-6" aria-labelledby="tabs-1-tab-1" role="tabpanel"
-                        tabindex="0">
-                        <div class="grid grid-cols-2 gap-x-4 gap-y-10">
-                            <div class="group relative">
-                                <div
-                                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg"
-                                        alt="Models sitting back to back, wearing Basic Tee in black and bone."
-                                        class="object-cover object-center">
-                                </div>
-                                <a href="#" class="mt-6 block text-sm font-medium text-gray-900">
-                                    <span class="absolute inset-0 z-10" aria-hidden="true"></span>
-                                    New Arrivals
-                                </a>
-                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
-                            </div>
-                            <div class="group relative">
-                                <div
-                                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg"
-                                        alt="Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees."
-                                        class="object-cover object-center">
-                                </div>
-                                <a href="#" class="mt-6 block text-sm font-medium text-gray-900">
-                                    <span class="absolute inset-0 z-10" aria-hidden="true"></span>
-                                    Basic Tees
-                                </a>
-                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
-                            </div>
-                            <div class="group relative">
-                                <div
-                                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg"
-                                        alt="Model wearing minimalist watch with black wristband and white watch face."
-                                        class="object-cover object-center">
-                                </div>
-                                <a href="#" class="mt-6 block text-sm font-medium text-gray-900">
-                                    <span class="absolute inset-0 z-10" aria-hidden="true"></span>
-                                    Accessories
-                                </a>
-                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
-                            </div>
-                            <div class="group relative">
-                                <div
-                                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg"
-                                        alt="Model opening tan leather long wallet with credit card pockets and cash pouch."
-                                        class="object-cover object-center">
-                                </div>
-                                <a href="#" class="mt-6 block text-sm font-medium text-gray-900">
-                                    <span class="absolute inset-0 z-10" aria-hidden="true"></span>
-                                    Carry
-                                </a>
-                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 'Men' tab panel, show/hide based on tab state. -->
-                    <div id="tabs-1-panel-2" class="space-y-12 px-4 py-6" aria-labelledby="tabs-1-tab-2" role="tabpanel"
-                        tabindex="0">
-                        <div class="grid grid-cols-2 gap-x-4 gap-y-10">
-                            <div class="group relative">
-                                <div
-                                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg"
-                                        alt="Hats and sweaters on wood shelves next to various colors of t-shirts on hangers."
-                                        class="object-cover object-center">
-                                </div>
-                                <a href="#" class="mt-6 block text-sm font-medium text-gray-900">
-                                    <span class="absolute inset-0 z-10" aria-hidden="true"></span>
-                                    New Arrivals
-                                </a>
-                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
-                            </div>
-                            <div class="group relative">
-                                <div
-                                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg"
-                                        alt="Model wearing light heather gray t-shirt."
-                                        class="object-cover object-center">
-                                </div>
-                                <a href="#" class="mt-6 block text-sm font-medium text-gray-900">
-                                    <span class="absolute inset-0 z-10" aria-hidden="true"></span>
-                                    Basic Tees
-                                </a>
-                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
-                            </div>
-                            <div class="group relative">
-                                <div
-                                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg"
-                                        alt="Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body."
-                                        class="object-cover object-center">
-                                </div>
-                                <a href="#" class="mt-6 block text-sm font-medium text-gray-900">
-                                    <span class="absolute inset-0 z-10" aria-hidden="true"></span>
-                                    Accessories
-                                </a>
-                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
-                            </div>
-                            <div class="group relative">
-                                <div
-                                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
-                                    <img src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg"
-                                        alt="Model putting folded cash into slim card holder olive leather wallet with hand stitching."
-                                        class="object-cover object-center">
-                                </div>
-                                <a href="#" class="mt-6 block text-sm font-medium text-gray-900">
-                                    <span class="absolute inset-0 z-10" aria-hidden="true"></span>
-                                    Carry
-                                </a>
-                                <p aria-hidden="true" class="mt-1 text-sm text-gray-500">Shop now</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-                    <div class="flow-root">
-                        <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Company</a>
-                    </div>
-                    <div class="flow-root">
-                        <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Stores</a>
-                    </div>
-                </div>
-
-                <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-                    <div class="flow-root">
-                        <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
-                    </div>
-                    <div class="flow-root">
-                        <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
-                    </div>
-                </div>
-
-                <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-                    <!-- Currency selector -->
-                    <form>
-                        <div class="inline-block">
-                            <label for="mobile-currency" class="sr-only">Currency</label>
-                            <div
-                                class="group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white">
-                                <select id="mobile-currency" name="currency"
-                                    class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800">
-                                    <option>CAD</option>
-                                    <option>USD</option>
-                                    <option>AUD</option>
-                                    <option>EUR</option>
-                                    <option>GBP</option>
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">
-                                    <svg class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor"
-                                        aria-hidden="true">
-                                        <path fill-rule="evenodd"
-                                            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                                            clip-rule="evenodd" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+          <div class="mt-2">
+            <div class="border-b border-gray-200">
+              <div
+                class="-mb-px flex space-x-8 px-4"
+                aria-orientation="horizontal"
+                role="tablist"
+              >
+                <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
+                <button
+                  id="tabs-1-tab-1"
+                  class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"
+                  aria-controls="tabs-1-panel-1"
+                  role="tab"
+                  type="button"
+                >
+                  Women
+                </button>
+                <!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" -->
+                <button
+                  id="tabs-1-tab-2"
+                  class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"
+                  aria-controls="tabs-1-panel-2"
+                  role="tab"
+                  type="button"
+                >
+                  Men
+                </button>
+              </div>
             </div>
+
+            <!-- 'Women' tab panel, show/hide based on tab state. -->
+            <div
+              id="tabs-1-panel-1"
+              class="space-y-12 px-4 py-6"
+              aria-labelledby="tabs-1-tab-1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div class="grid grid-cols-2 gap-x-4 gap-y-10">
+                <div class="group relative">
+                  <div
+                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
+                  >
+                    <img
+                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg"
+                      alt="Models sitting back to back, wearing Basic Tee in black and bone."
+                      class="object-cover object-center"
+                    />
+                  </div>
+                  <a
+                    href="#"
+                    class="mt-6 block text-sm font-medium text-gray-900"
+                  >
+                    <span
+                      class="absolute inset-0 z-10"
+                      aria-hidden="true"
+                    ></span>
+                    New Arrivals
+                  </a>
+                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
+                    Shop now
+                  </p>
+                </div>
+                <div class="group relative">
+                  <div
+                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
+                  >
+                    <img
+                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg"
+                      alt="Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees."
+                      class="object-cover object-center"
+                    />
+                  </div>
+                  <a
+                    href="#"
+                    class="mt-6 block text-sm font-medium text-gray-900"
+                  >
+                    <span
+                      class="absolute inset-0 z-10"
+                      aria-hidden="true"
+                    ></span>
+                    Basic Tees
+                  </a>
+                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
+                    Shop now
+                  </p>
+                </div>
+                <div class="group relative">
+                  <div
+                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
+                  >
+                    <img
+                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg"
+                      alt="Model wearing minimalist watch with black wristband and white watch face."
+                      class="object-cover object-center"
+                    />
+                  </div>
+                  <a
+                    href="#"
+                    class="mt-6 block text-sm font-medium text-gray-900"
+                  >
+                    <span
+                      class="absolute inset-0 z-10"
+                      aria-hidden="true"
+                    ></span>
+                    Accessories
+                  </a>
+                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
+                    Shop now
+                  </p>
+                </div>
+                <div class="group relative">
+                  <div
+                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
+                  >
+                    <img
+                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg"
+                      alt="Model opening tan leather long wallet with credit card pockets and cash pouch."
+                      class="object-cover object-center"
+                    />
+                  </div>
+                  <a
+                    href="#"
+                    class="mt-6 block text-sm font-medium text-gray-900"
+                  >
+                    <span
+                      class="absolute inset-0 z-10"
+                      aria-hidden="true"
+                    ></span>
+                    Carry
+                  </a>
+                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
+                    Shop now
+                  </p>
+                </div>
+              </div>
+            </div>
+            <!-- 'Men' tab panel, show/hide based on tab state. -->
+            <div
+              id="tabs-1-panel-2"
+              class="space-y-12 px-4 py-6"
+              aria-labelledby="tabs-1-tab-2"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <div class="grid grid-cols-2 gap-x-4 gap-y-10">
+                <div class="group relative">
+                  <div
+                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
+                  >
+                    <img
+                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg"
+                      alt="Hats and sweaters on wood shelves next to various colors of t-shirts on hangers."
+                      class="object-cover object-center"
+                    />
+                  </div>
+                  <a
+                    href="#"
+                    class="mt-6 block text-sm font-medium text-gray-900"
+                  >
+                    <span
+                      class="absolute inset-0 z-10"
+                      aria-hidden="true"
+                    ></span>
+                    New Arrivals
+                  </a>
+                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
+                    Shop now
+                  </p>
+                </div>
+                <div class="group relative">
+                  <div
+                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
+                  >
+                    <img
+                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg"
+                      alt="Model wearing light heather gray t-shirt."
+                      class="object-cover object-center"
+                    />
+                  </div>
+                  <a
+                    href="#"
+                    class="mt-6 block text-sm font-medium text-gray-900"
+                  >
+                    <span
+                      class="absolute inset-0 z-10"
+                      aria-hidden="true"
+                    ></span>
+                    Basic Tees
+                  </a>
+                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
+                    Shop now
+                  </p>
+                </div>
+                <div class="group relative">
+                  <div
+                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
+                  >
+                    <img
+                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg"
+                      alt="Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body."
+                      class="object-cover object-center"
+                    />
+                  </div>
+                  <a
+                    href="#"
+                    class="mt-6 block text-sm font-medium text-gray-900"
+                  >
+                    <span
+                      class="absolute inset-0 z-10"
+                      aria-hidden="true"
+                    ></span>
+                    Accessories
+                  </a>
+                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
+                    Shop now
+                  </p>
+                </div>
+                <div class="group relative">
+                  <div
+                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
+                  >
+                    <img
+                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg"
+                      alt="Model putting folded cash into slim card holder olive leather wallet with hand stitching."
+                      class="object-cover object-center"
+                    />
+                  </div>
+                  <a
+                    href="#"
+                    class="mt-6 block text-sm font-medium text-gray-900"
+                  >
+                    <span
+                      class="absolute inset-0 z-10"
+                      aria-hidden="true"
+                    ></span>
+                    Carry
+                  </a>
+                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
+                    Shop now
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+            <div class="flow-root">
+              <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
+                >Company</a
+              >
+            </div>
+            <div class="flow-root">
+              <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
+                >Stores</a
+              >
+            </div>
+          </div>
+
+          <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+            <div class="flow-root">
+              <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
+                >Create an account</a
+              >
+            </div>
+            <div class="flow-root">
+              <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
+                >Sign in</a
+              >
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Hero section -->
     <div class="relative bg-gray-900">
-        
-        <!-- Decorative image and overlay -->
+      <!-- Decorative image and overlay -->
 
-        <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
+      <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
+        <img
+          src="{% static 'images/landing_page.webp' %}"
+          alt=""
+          class="h-full w-full object-cover object-center"
+        />
+      </div>
+      <div
+        aria-hidden="true"
+        class="absolute inset-0 bg-gray-900 opacity-50"
+      ></div>
 
-            <img src="{% static 'images/landing_page.webp' %}" alt="" class="h-full w-full object-cover object-center">
-        </div>
-        <div aria-hidden="true" class="absolute inset-0 bg-gray-900 opacity-50"></div>
-
-
-        <div class="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center sm:py-64 lg:px-0">
-            
-            <h1 class="text-4xl font-bold tracking-tight text-white lg:text-6xl">De goedkoopste vloeren
-            </h1>
-            <p class="mt-4 text-xl text-white">Van PVC tot laminaat, deze zijn allemaal verkrijgbaar
-                in ons uitgebreide assortiment!</p>
-            <a href="/products"
-                class="mt-8 inline-block rounded-md border border-transparent bg-amber-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-50">Bekijk
-                assortiment</a>
-
-        </div>
+      <div
+        class="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center sm:py-64 lg:px-0"
+      >
+        <h1 class="text-4xl font-bold tracking-tight text-white lg:text-6xl">
+          De goedkoopste vloeren
+        </h1>
+        <p class="mt-4 text-xl text-white">
+          Van PVC tot laminaat, deze zijn allemaal verkrijgbaar in ons
+          uitgebreide assortiment!
+        </p>
+        <a
+          href="/products"
+          class="mt-8 inline-block rounded-md border border-transparent bg-amber-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-50"
+          >Bekijk assortiment</a
+        >
+      </div>
     </div>
 
     <main>
-        {% if runner_products_data %}
+      {% if runner_products_data %}
         <section aria-labelledby="trending-heading">
-            <div class="mx-auto max-w-7xl px-4 py-24 lg:px-8 relative">
-                <button id="nextButtonRunners"
-                    class="absolute top-1/2 right-0 transform text-amber-400 -translate-y-1/2 px-4 py-2 bg-gray-50 border-gray-200 border-2  rounded-full z-10"><i
-                        class="fas fa-chevron-right"></i></button>
+          <div class="mx-auto max-w-7xl px-4 py-24 lg:px-8 relative">
+            <button
+              id="nextButtonRunners"
+              class="absolute top-1/2 right-0 transform text-amber-400 -translate-y-1/2 px-4 py-2 bg-gray-50 border-gray-200 border-2  rounded-full z-10"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
 
-                <div class="md:flex md:items-center md:justify-between">
-                    <h2 id="favorites-heading" class="text-2xl font-bold tracking-tight text-gray-900">De beste vloeren!
-                    </h2>
-                    <a href="/runners"
-                        class="hidden text-sm font-medium text-amber-500 hover:text-customColor md:block">Zie
-                        alles<span aria-hidden="true"> &rarr;</span></a>
-                </div>
-
-                <div class="mt-6 relative">
-                    <div class="slider-runners overflow-hidden relative" id="productContainer">
-                        {% for product in runner_products_data %}
-                        <div class="px-4"> <!-- Add padding here to create space between items -->
-                            {% include 'components/product_card.html' %}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div
-                        class="absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-white via-white to-transparent">
-                    </div>
-                </div>
-
+            <div class="md:flex md:items-center md:justify-between">
+              <h2
+                id="favorites-heading"
+                class="text-2xl font-bold tracking-tight text-gray-900"
+              >
+                De beste vloeren!
+              </h2>
+              <a
+                href="/runners"
+                class="hidden text-sm font-medium text-amber-500 hover:text-customColor md:block"
+                >Zie alles<span aria-hidden="true"> &rarr;</span></a
+              >
             </div>
+
+            <div class="mt-6 relative">
+              <div
+                class="slider-runners overflow-hidden relative"
+                id="productContainer"
+              >
+                {% for product in runner_products_data %}
+                  <div class="px-4">
+                    <!-- Add padding here to create space between items -->
+                    {% include 'components/product_card.html' %}
+                  </div>
+                {% endfor %}
+              </div>
+              <div
+                class="absolute top-0 right-0 w-16 h-full bg-gradient-to-l from-white via-white to-transparent"
+              ></div>
+            </div>
+          </div>
         </section>
-        {% endif %}
+      {% endif %}
 
-</div>
-<div class="relative">
-    <div class=" overflow-hidden px-24">
-        <img src="media\brand_images\hardlopers_category.jpg" alt=""
-            class="h-96 w-full object-cover object-center opacity-10 rounded-lg">
-    </div>
+      <div class="relative">
+        <div class=" overflow-hidden px-24">
+          <img
+            src="media\brand_images\hardlopers_category.jpg"
+            alt=""
+            class="h-96 w-full object-cover object-center opacity-10 rounded-lg"
+          />
+        </div>
 
-    <section aria-labelledby="sale-heading"
-        class="absolute inset-0 flex items-center justify-center flex-col px-4 pt-16 text-center sm:px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl lg:max-w-none">
-            <h2 id="sale-heading" class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
-                Keihard de
-                goedkoopste van Nederland!</h2>
-            <p class="mx-auto mt-4 max-w-xl text-xl text-gray-600">Nu met extra kortingen op bepaalde vloeren!
+        <section
+          aria-labelledby="sale-heading"
+          class="absolute inset-0 flex items-center justify-center flex-col px-4 pt-16 text-center sm:px-6 lg:px-8"
+        >
+          <div class="mx-auto max-w-2xl lg:max-w-none">
+            <h2
+              id="sale-heading"
+              class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl"
+            >
+              Keihard de goedkoopste van Nederland!
+            </h2>
+            <p class="mx-auto mt-4 max-w-xl text-xl text-gray-600">
+              Nu met extra kortingen op bepaalde vloeren!
             </p>
-            <a href="/discounts"
-                class="mt-6 inline-block w-full rounded-md border border-transparent bg-amber-500 px-8 py-3 font-medium text-white hover:bg-customColor sm:w-auto">Zie
-                kortingen</a>
-        </div>
-    </section>
-</div>
+            <a
+              href="/discounts"
+              class="mt-6 inline-block w-full rounded-md border border-transparent bg-amber-500 px-8 py-3 font-medium text-white hover:bg-customColor sm:w-auto"
+              >Zie kortingen</a
+            >
+          </div>
+        </section>
+      </div>
 
+      {% if brands %}
+        <section
+          aria-labelledby="category-heading"
+          class="pt-24 xl:mx-auto xl:max-w-7xl xl:px-8"
+        >
+          <div
+            class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
+          >
+            <h2
+              id="category-heading"
+              class="text-2xl font-bold tracking-tight text-gray-900"
+            >
+              De beste merken
+            </h2>
+          </div>
 
-
-
-
-{% if brands %}
-<section aria-labelledby="category-heading" class="pt-24 xl:mx-auto xl:max-w-7xl xl:px-8">
-    <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
-        <h2 id="category-heading" class="text-2xl font-bold tracking-tight text-gray-900">De beste merken</h2>
-
-    </div>
-
-    <div class="mt-10 flow-root">
-
-        <div class="-my-2">
-
-            <div class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible">
-
+          <div class="mt-10 flow-root">
+            <div class="-my-2">
+              <div
+                class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible"
+              >
                 <div
-                    class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0">
-                    {% for brand in brands.all %}
+                  class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0"
+                >
+                  {% for brand in brands.all %}
                     <div class="group relative">
-                        <div class="aspect-w-1 aspect-h-1 w-full  overflow-hidden rounded-full bg-gray-200">
-                            <img src="media/{{ brand.image }}" alt="{{ brand.name }}"
-                                class="h-full w-full object-cover object-center group-hover:opacity-75 rounded-full">
-                        </div>
-                        <div class="mt-6 text-center">
-                            <h3 class="mt-1 text-lg font-semibold text-gray-900">
-                                <a href="/products/{{brand.name}}">
-                                    <span class="absolute inset-0"></span>
-                                    {{ brand.name }}
-                                </a>
-                            </h3>
-                        </div>
+                      <div
+                        class="aspect-w-1 aspect-h-1 w-full  overflow-hidden rounded-full bg-gray-200"
+                      >
+                        <img
+                          src="media/{{ brand.image }}"
+                          alt="{{ brand.name }}"
+                          class="h-full w-full object-cover object-center group-hover:opacity-75 rounded-full"
+                        />
+                      </div>
+                      <div class="mt-6 text-center">
+                        <h3 class="mt-1 text-lg font-semibold text-gray-900">
+                          <a href="/products/{{ brand.name }}">
+                            <span class="absolute inset-0"></span>
+                            {{ brand.name }}
+                          </a>
+                        </h3>
+                      </div>
                     </div>
-                    {% endfor %}
-
+                  {% endfor %}
                 </div>
-
+              </div>
             </div>
+          </div>
+        </section>
+      {% endif %}
+      <!-- Category section -->
+      <section
+        aria-labelledby="category-heading"
+        class="py-24  sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8"
+      >
+        <div
+          class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
+        >
+          <h2
+            id="category-heading"
+            class="text-2xl font-bold tracking-tight text-gray-900"
+          >
+            Onze categorieën
+          </h2>
+          {% for message in messages %}
+            <li class="{{ message.tags }}">{{ message }}</li>
+          {% endfor %}
         </div>
-    </div>
-</section>
-{% endif %}
-<!-- Category section -->
-<section aria-labelledby="category-heading" class="py-24  sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8">
-    <div class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0">
-        <h2 id="category-heading" class="text-2xl font-bold tracking-tight text-gray-900">Onze categorieën</h2>
-        {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
-        {% endfor %}
-    </div>
 
-    <div class="mt-4 flow-root">
-
-        <div class="-my-2">
-
-            <div class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible">
-
-                <div
-                    class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0">
-
-                    {% for category in category_data %}
-                    {% if category.thumbnail %}
+        <div class="mt-4 flow-root">
+          <div class="-my-2">
+            <div
+              class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible"
+            >
+              <div
+                class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0"
+              >
+                {% for category in category_data %}
+                  {% if category.thumbnail %}
 
                     {% if category.name == 'Hardlopers' %}
-                    <a href="/runners"
-                        class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
-                        {% else %}
-
-                        <a href="/products/{{ category.name }}"
-                            class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto">
-                            {% endif %}
-                            <span aria-hidden="true" class="absolute inset-0">
-                                <img src="{{ category.thumbnail.url }}" alt="{{ category.name }}"
-                                    class="h-full w-full object-cover object-center">
-                            </span>
-                            <span aria-hidden="true"
-                                class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"></span>
-                            <span
-                                class="relative mt-auto text-center text-xl font-bold text-white">{{category.name}}</span>
-                        </a>
-                        {% endif %}
-
-                        {% endfor %}
-                </div>
-
+                      <a
+                        href="/runners"
+                        class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
+                      >
+                      </a>
+                    {% else %}
+                      <a
+                        href="/products/{{ category.name }}"
+                        class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
+                      >
+                      </a>
+                    {% endif %}
+                    <span aria-hidden="true" class="absolute inset-0">
+                      <img
+                        src="{{ category.thumbnail.url }}"
+                        alt="{{ category.name }}"
+                        class="h-full w-full object-cover object-center"
+                      />
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"
+                    ></span>
+                    <span
+                      class="relative mt-auto text-center text-xl font-bold text-white"
+                      >{{ category.name }}</span
+                    >
+                  {% endif %}
+                {% endfor %}
+              </div>
             </div>
+          </div>
         </div>
-    </div>
-</section>
+      </section>
 
-<section>
-    <div class="isolate bg-gray-50 px-6 py-6 sm:pt-16 sm:pb-16 lg:px-8">
-        <div class="mx-auto max-w-2xl sm:text-center">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Onze service</h2>
-            <p class="mt-2 text-lg leading-8 text-gray-600">Problemen bij je bestelling? Geen zorgen! Wij zijn er om jou
-                te helpen.
+      <section>
+        <div class="isolate bg-gray-50 px-6 py-6 sm:pt-16 sm:pb-16 lg:px-8">
+          <div class="mx-auto max-w-2xl sm:text-center">
+            <h2
+              class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+            >
+              Onze service
+            </h2>
+            <p class="mt-2 text-lg leading-8 text-gray-600">
+              Problemen bij je bestelling? Geen zorgen! Wij zijn er om jou te
+              helpen.
             </p>
             <div class="mx-auto mt-5 text-center">
-                <!-- Green circle icon -->
-                <i class="fas fa-circle text-green-500"></i>
-                <!-- Text -->
-                <span class="ml-1 text-sm font-medium ">Dagelijks geopend</span>
+              <!-- Green circle icon -->
+              <i class="fas fa-circle text-green-500"></i>
+              <!-- Text -->
+              <span class="ml-1 text-sm font-medium ">Dagelijks geopend</span>
             </div>
-        </div>
+          </div>
 
-        <div class="mx-auto mt-20 max-w-screen-md space-x-6 flex">
+          <div class="mx-auto mt-20 max-w-screen-md space-x-6 flex">
             <div class="flex gap-x-6 ">
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-500">
-                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-base font-semibold leading-7 text-gray-900">Email</h3><a href="#"
-                        class="text-sm font-semibold leading-6 text-amber-500">stan-deckers@live.nl<span
-                            aria-hidden="true">&rarr;</span></a>
-                    <p class="mt-2 leading-7 text-gray-600">Wij proberen jouw verzoek binnen maximaal twee werkdagen te
-                        beantwoorden!</p>
-                </div>
+              <div
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-500"
+              >
+                <svg
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-base font-semibold leading-7 text-gray-900">
+                  Email
+                </h3>
+                <a
+                  href="#"
+                  class="text-sm font-semibold leading-6 text-amber-500"
+                  >stan-deckers@live.nl<span aria-hidden="true">&rarr;</span></a
+                >
+                <p class="mt-2 leading-7 text-gray-600">
+                  Wij proberen jouw verzoek binnen maximaal twee werkdagen te
+                  beantwoorden!
+                </p>
+              </div>
             </div>
 
             <div class="flex gap-x-6">
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-500">
-                    <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
-                    </svg>
-                </div>
-                <div>
-                    <h3 class="text-base font-semibold leading-7 text-gray-900">Beschikbaarheid</h3><a href="#"
-                        class="text-sm font-semibold leading-6 text-amber-500">10:00 - 17:00
-                    </a>
-                    <p class="mt-2 leading-7 text-gray-600">Onze klantenservice is alle werkdagen geopend met
-                        uitzondering van
-                        de feestdagen.</p>
-                </div>
+              <div
+                class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-500"
+              >
+                <svg
+                  class="h-6 w-6 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-base font-semibold leading-7 text-gray-900">
+                  Beschikbaarheid
+                </h3>
+                <a
+                  href="#"
+                  class="text-sm font-semibold leading-6 text-amber-500"
+                  >10:00 - 17:00
+                </a>
+                <p class="mt-2 leading-7 text-gray-600">
+                  Onze klantenservice is alle werkdagen geopend met uitzondering
+                  van de feestdagen.
+                </p>
+              </div>
             </div>
-
-        </div>
-        <h2 id="perks-heading" class="sr-only">Our perks</h2>
-        <div class="mt-16">
+          </div>
+          <h2 id="perks-heading" class="sr-only">Our perks</h2>
+          <div class="mt-16">
             <div class="mx-auto rounded-lg p-10 bg-gray-100">
-                <div class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0">
-
-                    {% for store_motivation in store_motivations %}
-                    {% if store_motivation.for_homepage %}
+              <div
+                class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0"
+              >
+                {% for store_motivation in store_motivations %}
+                  {% if store_motivation.for_homepage %}
                     {% include 'components/store_motivation.html' %}
-                    {% endif %}
-                    {% endfor %}
-
-                </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
             </div>
+          </div>
         </div>
+      </section>
+    </main>
+  </div>
 
-    </div>
-
-</section>
-
-
-
-</main>
-
-</div>
-
-<script>
-
+  <script>
     function to(event) {
-        event.preventDefault();
-        const searchInput = document.getElementById('search').value.trim();
-        if (searchInput) {
-            localStorage.setItem('searchInput', searchInput);
-            window.location.href = '/search/?q=' + encodeURIComponent(searchInput);
-        }
+      event.preventDefault()
+      const searchInput = document.getElementById('search').value.trim()
+      if (searchInput) {
+        localStorage.setItem('searchInput', searchInput)
+        window.location.href = '/search/?q=' + encodeURIComponent(searchInput)
+      }
     }
 
     $(document).ready(function () {
-        $('.slider-runners').slick({
-            slidesToShow: 4,
-            slidesToScroll: 1,
-            nextArrow: $('#nextButtonRunners'),
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                    }
-                },
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                    }
-                }
-            ]
-        });
-    });
+      $('.slider-runners').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        nextArrow: $('#nextButtonRunners'),
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+            },
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+        ],
+      })
+    })
 
     $(document).ready(function () {
-        $('.slider-categories').slick({
-            slidesToShow: 5,
-            slidesToScroll: 1,
-            nextArrow: $('#nextButtonCategories'),
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 1,
-                    }
-                },
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                    }
-                }
-            ]
-        });
-    });
-
-</script>
+      $('.slider-categories').slick({
+        slidesToShow: 5,
+        slidesToScroll: 1,
+        nextArrow: $('#nextButtonCategories'),
+        responsive: [
+          {
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 1,
+            },
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 2,
+              slidesToScroll: 1,
+            },
+          },
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+            },
+          },
+        ],
+      })
+    })
+  </script>
 {% endblock %}

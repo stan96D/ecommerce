@@ -1,375 +1,475 @@
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
 {% load static %}
 <style>
-    /* Hide the default clear button */
-    #search::-webkit-search-cancel-button {
-        -webkit-appearance: none;
-        display: none;
-    }
+  /* Hide the default clear button */
+  #search::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    display: none;
+  }
 </style>
 <header class="bg-gray-900">
-    <div class="bg-gradient-to-r from-gray-900 to-gray-700">
-        <div class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-            <!-- Currency selector -->
-            <div class="hidden lg:block lg:flex-1"></div>
+  <div class="bg-gradient-to-r from-gray-900 to-gray-700">
+    <div
+      class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
+    >
+      <!-- Currency selector -->
+      <div class="hidden lg:block lg:flex-1"></div>
 
-            <form class="hidden lg:block lg:flex-1 absolute right-4">
-                <div class="flex items-center">
-                    <label for="desktop-language" class="sr-only">Language</label>
-                    <div
-                        class="group relative -ml-2 rounded-md border-transparent bg-gray-900 focus-within:ring-2 focus-within:ring-white">
-                        <select id="desktop-language" name="language"
-                            class="flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-10 text-sm font-medium text-white focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-100"
-                            onchange="updateSelectedFlag(this)">
-                            <option value="en" data-icon="flag-icon-gb"><span class="flag-icon flag-icon-gb"></span>
-                                English
-                            </option>
-                            <option value="nl" data-icon="flag-icon-nl"><span class="flag-icon flag-icon-nl"></span>
-                                Nederlands
-                            </option>
-                            <option value="de" data-icon="flag-icon-de"><span class="flag-icon flag-icon-de"></span>
-                                Deutsch
-                            </option>
-                        </select>
-                        <div id="selected-flag"
-                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <!-- The selected flag will be displayed here -->
-                        </div>
-                    </div>
-                </div>
-            </form>
+      <p
+        id="storeMotivation"
+        class="flex-1 text-center text-sm font-medium text-white lg:flex-none"
+      >
+        <!-- Initial content will be replaced by JavaScript -->
+      </p>
 
-
-            <!-- <p class="flex-1 text-center text-sm font-medium text-white lg:flex-none">
-                <i class="fas fa-check-circle text-green-500 mr-1"></i> Binnen 48 uur in huis
-            </p> -->
-
-            <p id="storeMotivation" class="flex-1 text-center text-sm font-medium text-white lg:flex-none">
-                <!-- Initial content will be replaced by JavaScript -->
-            </p>
-
-            <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                {% if user.is_authenticated %}
-                <a href="#" class="text-sm font-medium text-white hover:text-gray-100">{{user}}</a>
-                <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
-                <a href="/logout" class="text-sm font-medium text-white hover:text-gray-100">Uitloggen</a>
-                {% else %}
-                <a href="/registration" class="text-sm font-medium text-white hover:text-gray-100">Account aanmaken</a>
-                <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
-                <a href="/login" class="text-sm font-medium text-white hover:text-gray-100">Inloggen</a>
-                {% endif %}
-            </div>
-
-        </div>
+      <div
+        class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6"
+      >
+        {% if user.is_authenticated %}
+          <a href="#" class="text-sm font-medium text-white hover:text-gray-100"
+            >{{ user }}</a
+          >
+          <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
+          <a
+            href="/logout"
+            class="text-sm font-medium text-white hover:text-gray-100"
+            >Uitloggen</a
+          >
+        {% else %}
+          <a
+            href="/registration"
+            class="text-sm font-medium text-white hover:text-gray-100"
+            >Account aanmaken</a
+          >
+          <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
+          <a
+            href="/login"
+            class="text-sm font-medium text-white hover:text-gray-100"
+            >Inloggen</a
+          >
+        {% endif %}
+      </div>
     </div>
-    <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-700">
-        <div class="relative flex h-16 justify-between">
-            <div class="relative z-10 flex px-2 lg:px-0">
-                <a href="{% url 'home' %}" class="flex flex-shrink-0 items-center">
-                    <img class="max-h-14 w-auto" src="{% static 'images/gvs_logo_text.png' %}" alt="Your Company">
-                </a>
+  </div>
+  <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-700">
+    <div class="relative flex h-16 justify-between">
+      <div class="relative z-10 flex px-2 lg:px-0">
+        <a href="{% url 'home' %}" class="flex flex-shrink-0 items-center">
+          <img
+            class="max-h-14 w-auto"
+            src="{% static 'images/gvs_logo_text.png' %}"
+            alt="Your Company"
+          />
+        </a>
+      </div>
+
+      <div
+        class="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0"
+      >
+        <div class="w-full sm:max-w-xs relative">
+          <form id="searchForm" onsubmit="submitSearch(event)">
+            <label for="search" class="sr-only">Search</label>
+            <div class="relative">
+              <div
+                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+              >
+                <svg
+                  class="h-5 w-5 text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <input
+                id="search"
+                name="search"
+                class="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 focus:placeholder:text-gray-600 sm:text-sm sm:leading-6"
+                placeholder="Zoeken in assortiment"
+                type="search"
+              />
+              <button
+                type="button"
+                id="custom-clear-button"
+                class="absolute inset-y-0 right-0 px-3 py-1.5 text-sm font-medium text-gray-700 bg-transparent hover:text-amber-500 focus:outline-none"
+                onclick="clearSearchInput()"
+              >
+                <i class="fas fa-times"></i>
+              </button>
             </div>
+          </form>
+        </div>
+        <div>
+          <a
+            href="mailto:stan-deckers@live.nl"
+            class="inline-block ml-2 h-full rounded-md border border-gray-100 bg-transparent px-4 py-1.5 text-sm font-medium text-gray-100  hover:bg-amber-500"
+          >
+            <i class="fas fa-envelope mr-1"></i>
+            stan-deckers@live.nl
+          </a>
+        </div>
+      </div>
 
-            <div class="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
-                <div class="w-full sm:max-w-xs relative">
-                    <form id="searchForm" onsubmit="submitSearch(event)">
-                        <label for="search" class="sr-only">Search</label>
-                        <div class="relative">
-                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
-                                    aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <input id="search" name="search"
-                                class="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 focus:placeholder:text-gray-600 sm:text-sm sm:leading-6"
-                                placeholder="Zoeken in assortiment" type="search">
-                            <button type="button" id="custom-clear-button"
-                                class="absolute inset-y-0 right-0 px-3 py-1.5 text-sm font-medium text-gray-700 bg-transparent hover:text-amber-500 focus:outline-none"
-                                onclick="clearSearchInput()">
-                                <i class="fas fa-times"></i>
-                            </button>
-
-                        </div>
-                    </form>
-                </div>
-                <div>
-                    <a href="mailto:stan-deckers@live.nl"
-                        class="inline-block ml-2 h-full rounded-md border border-gray-100 bg-transparent px-4 py-1.5 text-sm font-medium text-gray-100  hover:bg-amber-500">
-<i class="fas fa-envelope mr-1"></i>
-                        stan-deckers@live.nl
-                    </a>
-                </div>
-            </div>
-
-
-
-            <div class="relative z-10 flex items-center lg:hidden">
-                <!-- Mobile menu button -->
-                <button type="button"
-                    class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                    aria-controls="mobile-menu" aria-expanded="false">
-                    <span class="absolute -inset-0.5"></span>
-                    <span class="sr-only">Open menu</span>
-                    <!--
+      <div class="relative z-10 flex items-center lg:hidden">
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span class="absolute -inset-0.5"></span>
+          <span class="sr-only">Open menu</span>
+          <!--
             Icon when menu is closed.
 
             Menu open: "hidden", Menu closed: "block"
           -->
-                    <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                    </svg>
-                    <!--
+          <svg
+            class="block h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+          <!--
             Icon when menu is open.
 
             Menu open: "block", Menu closed: "hidden"
           -->
-                    <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+          <svg
+            class="hidden h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
 
-            <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
-                {% if user.is_authenticated %}
-                <a href="{% url 'account' %}">
-                    <button type="button"
-                        class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white mr-2 w-10 h-10">
-                        <span class="sr-only">Account</span>
-                        <i class="far fa-user fa-lg"></i>
-                    </button>
-                </a>
-                {% endif %}
+      <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+        {% if user.is_authenticated %}
+          <a href="{% url 'account' %}">
+            <button
+              type="button"
+              class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white mr-2 w-10 h-10"
+            >
+              <span class="sr-only">Account</span>
+              <i class="far fa-user fa-lg"></i>
+            </button>
+          </a>
+        {% endif %}
 
+        <!-- Favorite icon -->
+        <button
+          type="button"
+          class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white  mr-2 w-10 h-10"
+        >
+          <span class="sr-only">Favorite</span>
+          <i class="far fa-heart fa-lg"></i>
+        </button>
 
-                <!-- Favorite icon -->
-                <button type="button"
-                    class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white  mr-2 w-10 h-10">
-                    <span class="sr-only">Favorite</span>
-                    <i class="far fa-heart fa-lg"></i>
-                </button>
-
-                <!-- Store cart icon -->
-                <!-- Store cart icon -->
-                <button type="button" onclick="openFlyoutPanel()"
-                    class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white  w-10 h-10">
-                    <span class="sr-only">Store Cart</span>
-                    <i class="fas fa-shopping-cart fa-lg"></i>
-                    <!-- Circle indicator -->
-                    <span id="cart-count"
-                        class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold"></span>
-                </button>
-
-
-            </div>
-        </div>
-
-        <nav id="navigation-container" class="hidden lg:flex lg:space-x-6 lg:py-4" aria-label="Global">
-
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            {% for category in headerData %}
-            {% if category.name == 'Hardlopers' %}
-            <a href="/runners" id="dropdown-btn-{{ category.id }}"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-3 px-4 text-sm font-medium">
-                {{ category.name }}
-            </a>
-            {% else %}
-            <a href="/products/{{ category.name }}" id="dropdown-btn-{{ category.id }}"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-3 px-4 text-sm font-medium"
-                onmouseover="showDropdown('{{ category.id }}')" onmouseout="hideDropdown('{{ category.id }}')">
-                {{ category.name }}
-            </a>
-            {% endif %}
-            {% endfor %}
-
-        </nav>
-
-        {% for header in headerData %}
-        {% include 'components/fly_out_menu_standard.html' %}
-
-        {% endfor %}
-
+        <!-- Store cart icon -->
+        <!-- Store cart icon -->
+        <button
+          type="button"
+          onclick="openFlyoutPanel()"
+          class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white  w-10 h-10"
+        >
+          <span class="sr-only">Store Cart</span>
+          <i class="fas fa-shopping-cart fa-lg"></i>
+          <!-- Circle indicator -->
+          <span
+            id="cart-count"
+            class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold"
+          ></span>
+        </button>
+      </div>
     </div>
 
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <nav class="lg:hidden" aria-label="Global" id="mobile-menu">
-        <div class="space-y-1 px-2 pb-3 pt-2">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="#" class="bg-gray-900 text-white block rounded-md py-2 px-3 text-base font-medium"
-                aria-current="page">Dashboard</a>
-            <a href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium">Team</a>
-            <a href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium">Projects</a>
-            <a href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium">Calendar</a>
-        </div>
-        <div class="border-t border-gray-700 pb-3 pt-4">
-            <div class="flex items-center px-4">
-                <div class="flex-shrink-0">
-                    <img class="h-10 w-10 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                        alt="">
-                </div>
-                <div class="ml-3">
-                    <div class="text-base font-medium text-white">Tom Cook</div>
-                    <div class="text-sm font-medium text-gray-400">tom@example.com</div>
-                </div>
-                <button type="button"
-                    class="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                    <span class="absolute -inset-1.5"></span>
-                    <span class="sr-only">View notifications</span>
-                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
-                    </svg>
-                </button>
-            </div>
-            <div class="mt-3 space-y-1 px-2">
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Your
-                    Profile</a>
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Settings</a>
-                <a href="#"
-                    class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white">Sign
-                    out</a>
-            </div>
-        </div>
+    <nav
+      id="navigation-container"
+      class="hidden lg:flex lg:space-x-6 lg:py-4"
+      aria-label="Global"
+    >
+      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+      {% for category in headerData %}
+        {% if category.name == 'Hardlopers' %}
+          <a
+            href="/runners"
+            id="dropdown-btn-{{ category.id }}"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-3 px-4 text-sm font-medium"
+          >
+            {{ category.name }}
+          </a>
+        {% else %}
+          <a
+            href="/products/{{ category.name }}"
+            id="dropdown-btn-{{ category.id }}"
+            class="text-gray-300 hover:bg-gray-700 hover:text-white inline-flex items-center rounded-md py-3 px-4 text-sm font-medium"
+            onmouseover="showDropdown('{{ category.id }}')"
+            onmouseout="hideDropdown('{{ category.id }}')"
+          >
+            {{ category.name }}
+          </a>
+        {% endif %}
+      {% endfor %}
     </nav>
 
+    {% for header in headerData %}
+      {% include 'components/fly_out_menu_standard.html' %}
+    {% endfor %}
+  </div>
+
+  <!-- Mobile menu, show/hide based on menu state. -->
+  <nav class="lg:hidden" aria-label="Global" id="mobile-menu">
+    <div class="space-y-1 px-2 pb-3 pt-2">
+      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+      <a
+        href="#"
+        class="bg-gray-900 text-white block rounded-md py-2 px-3 text-base font-medium"
+        aria-current="page"
+        >Dashboard</a
+      >
+      <a
+        href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
+        >Team</a
+      >
+      <a
+        href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
+        >Projects</a
+      >
+      <a
+        href="#"
+        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
+        >Calendar</a
+      >
+    </div>
+    <div class="border-t border-gray-700 pb-3 pt-4">
+      <div class="flex items-center px-4">
+        <div class="flex-shrink-0">
+          <img
+            class="h-10 w-10 rounded-full"
+            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt=""
+          />
+        </div>
+        <div class="ml-3">
+          <div class="text-base font-medium text-white">Tom Cook</div>
+          <div class="text-sm font-medium text-gray-400">tom@example.com</div>
+        </div>
+        <button
+          type="button"
+          class="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+        >
+          <span class="absolute -inset-1.5"></span>
+          <span class="sr-only">View notifications</span>
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-3 space-y-1 px-2">
+        <a
+          href="#"
+          class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+          >Your Profile</a
+        >
+        <a
+          href="#"
+          class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+          >Settings</a
+        >
+        <a
+          href="#"
+          class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+          >Sign out</a
+        >
+      </div>
+    </div>
+  </nav>
 </header>
 
 {% if breadcrumbs %}
-
-{% include 'components/breadcrumb.html' %}
-
+  {% include 'components/breadcrumb.html' %}
 {% endif %}
 {% if messages %}
-    {% for message in messages %}
-        {% if 'cart-success' in message.tags %}
-            {% include 'components/cart_confirmation.html' %}
-        {% endif %}
-    {% endfor %}
+  {% for message in messages %}
+    {% if 'cart-success' in message.tags %}
+      {% include 'components/cart_confirmation.html' %}
+    {% endif %}
+  {% endfor %}
 {% endif %}
 
 <!-- Flyout panel -->
-<div class="relative z-10 hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true" id="flyout-panel">
-    <!-- Background backdrop, show/hide based on slide-over state. -->
-    <div onclick="closeFlyoutPanel()" class="fixed inset-0 bg-black bg-opacity-25"></div>
-    <!-- Dark backdrop with 25% opacity -->
+<div
+  class="relative z-10 hidden"
+  aria-labelledby="slide-over-title"
+  role="dialog"
+  aria-modal="true"
+  id="flyout-panel"
+>
+  <!-- Background backdrop, show/hide based on slide-over state. -->
+  <div
+    onclick="closeFlyoutPanel()"
+    class="fixed inset-0 bg-black bg-opacity-25"
+  ></div>
+  <!-- Dark backdrop with 25% opacity -->
 
+  <div class="absolute inset-0 overflow-hidden">
     <div class="absolute inset-0 overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-                <div class="pointer-events-auto w-screen max-w-md">
-                    <div class="flex h-full flex-col bg-white py-6 shadow-xl overflow-y-auto">
-                        <div class="px-4 sm:px-6">
-                            <div class="flex items-start justify-between">
-                                <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">
-                                    Overzicht bestelling</h2>
-                                <div class="ml-3 flex h-7 items-center">
-                                    <button type="button"
-                                        class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                        onclick="closeFlyoutPanel()">
-                                        <span class="absolute -inset-2.5"></span>
-                                        <span class="sr-only">Close panel</span>
-                                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                            stroke="currentColor" aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <ul id="cartItemList" class="p-4 flex-1 overflow-y-auto">
-                            <!-- Your item list here -->
-                        </ul>
-                        <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
-                            <div class="flex justify-between text-base font-medium text-gray-900">
-                                <p>Subtotaal</p>
-                                <p id="subtotalAmount">€00.00</p> <!-- Placeholder for subtotal amount -->
-                            </div>
-                            <p class="mt-0.5 text-sm text-gray-500">Prijzen incl. BTW</p>
-                            <div class="mt-6">
-                                <a href="{% url 'cart' %}">
-                                    <button type="submit"
-                                        class="w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50">Winkelmandje</button>
-                                </a>
-                            </div>
-                            <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
-                                <p>of <a href="/checkout">
-                                        <button type="button" class="font-medium text-gray-600 hover:text-amber-500">ga
-                                            naar kassa
-                                            <span aria-hidden="true"> &rarr;</span>
-                                        </button>
-                                    </a></p>
-                            </div>
-                        </div>
-                    </div>
+      <div
+        class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+      >
+        <div class="pointer-events-auto w-screen max-w-md">
+          <div
+            class="flex h-full flex-col bg-white py-6 shadow-xl overflow-y-auto"
+          >
+            <div class="px-4 sm:px-6">
+              <div class="flex items-start justify-between">
+                <h2
+                  class="text-base font-semibold leading-6 text-gray-900"
+                  id="slide-over-title"
+                >
+                  Overzicht bestelling
+                </h2>
+                <div class="ml-3 flex h-7 items-center">
+                  <button
+                    type="button"
+                    class="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    onclick="closeFlyoutPanel()"
+                  >
+                    <span class="absolute -inset-2.5"></span>
+                    <span class="sr-only">Close panel</span>
+                    <svg
+                      class="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
                 </div>
+              </div>
             </div>
+            <ul id="cartItemList" class="p-4 flex-1 overflow-y-auto">
+              <!-- Your item list here -->
+            </ul>
+            <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+              <div
+                class="flex justify-between text-base font-medium text-gray-900"
+              >
+                <p>Subtotaal</p>
+                <p id="subtotalAmount">€00.00</p>
+                <!-- Placeholder for subtotal amount -->
+              </div>
+              <p class="mt-0.5 text-sm text-gray-500">Prijzen incl. BTW</p>
+              <div class="mt-6">
+                <a href="{% url 'cart' %}">
+                  <button
+                    type="submit"
+                    class="w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
+                  >
+                    Winkelmandje
+                  </button>
+                </a>
+              </div>
+              <div
+                class="mt-6 flex justify-center text-center text-sm text-gray-500"
+              >
+                <p>
+                  of
+                  <a href="/checkout">
+                    <button
+                      type="button"
+                      class="font-medium text-gray-600 hover:text-amber-500"
+                    >
+                      ga naar kassa
+                      <span aria-hidden="true"> &rarr;</span>
+                    </button>
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 
 <script>
+  function fetchShoppingCart() {
+    $.ajax({
+      url: '/get-shopping-cart/', // Replace with your actual endpoint URL
+      method: 'GET',
+      success: function (data) {
+        // Update the flyout panel with the retrieved shopping cart data
+        console.log(data)
+        updateSubtotal(data)
+        updateCartItems(data)
+      },
+      error: function (error) {
+        console.error('Error fetching shopping cart:', error)
+      },
+    })
+  }
 
+  function updateCartItems(cartData) {
+    const cartItemList = document.getElementById('cartItemList')
+    cartItemList.innerHTML = '' // Clear previous items
 
-    function fetchShoppingCart() {
-        $.ajax({
-            url: '/get-shopping-cart/',  // Replace with your actual endpoint URL
-            method: 'GET',
-            success: function (data) {
-                // Update the flyout panel with the retrieved shopping cart data
-                console.log(data)
-                updateSubtotal(data)
-                updateCartItems(data)
-            },
-            error: function (error) {
-                console.error('Error fetching shopping cart:', error);
-            }
-        });
-    }
+    const baseUrl = window.location.origin // Get the base URL dynamically
 
-    function updateCartItems(cartData) {
-        const cartItemList = document.getElementById('cartItemList');
-        cartItemList.innerHTML = ''; // Clear previous items
+    // Check if cart has items
+    if (cartData.cart.items.length === 0) {
+      // Create error message container
+      const errorMessageContainer = document.createElement('div')
+      errorMessageContainer.className = 'rounded-md bg-amber-50 p-4'
 
-        const baseUrl = window.location.origin; // Get the base URL dynamically
-
-        // Check if cart has items
-        if (cartData.cart.items.length === 0) {
-            // Create error message container
-            const errorMessageContainer = document.createElement('div');
-            errorMessageContainer.className = 'rounded-md bg-amber-50 p-4';
-
-            // Create error message content
-            const errorMessageContent = `
+      // Create error message content
+      const errorMessageContent = `
             <div class="flex">
                 <div class="flex-shrink-0">
                     <svg class="h-5 w-5 text-amber-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -383,410 +483,420 @@
 
                 </div>
             </div>
-        `;
+        `
 
-            // Append error message content to container
-            errorMessageContainer.innerHTML = errorMessageContent;
+      // Append error message content to container
+      errorMessageContainer.innerHTML = errorMessageContent
 
-            // Append error message container to cart item list
-            cartItemList.appendChild(errorMessageContainer);
+      // Append error message container to cart item list
+      cartItemList.appendChild(errorMessageContainer)
 
-            // Exit function early since cart is empty
-            return;
-        }
-
-        // Iterate over cart items if cart is not empty
-        cartData.cart.items.forEach(item => {
-            // Create li element for each item
-            const li = document.createElement('li');
-            li.className = 'flex py-6';
-
-            // Create image container
-            const imageContainer = document.createElement('div');
-            imageContainer.className = 'h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200';
-
-            // Create image element
-            const img = document.createElement('img');
-            img.src = item.thumbnail; // Replace with actual thumbnail URL
-            img.alt = item.name; // Replace with actual product name
-            img.className = 'h-full w-full object-cover object-center';
-
-            // Append image to its container
-            imageContainer.appendChild(img);
-
-            // Create content container
-            const contentContainer = document.createElement('div');
-            contentContainer.className = 'ml-4 flex flex-1 flex-col';
-
-            // Create first row container
-            const firstRow = document.createElement('div');
-            firstRow.className = 'flex justify-between gap-x-2 text-sm font-medium text-gray-900';
-
-            // Create product name element
-            const productName = document.createElement('h3');
-            const productLink = document.createElement('a');
-            productLink.href = `${baseUrl}/product/${item.product_id}`;
-            productLink.textContent = item.name; // Replace with actual product name
-            productName.appendChild(productLink);
-
-            // Create remove button container
-            const removeButtonContainer = document.createElement('div');
-            removeButtonContainer.className = 'ml-2';
-
-            // Create remove button
-            const removeButton = document.createElement('button');
-            removeButton.type = 'submit';
-            removeButton.className = 'text-base inline-flex pt-1 pr-2 text-gray-300 hover:text-red-400';
-
-            // Create icon for remove button
-            const removeIcon = document.createElement('i');
-            removeIcon.className = 'fas fa-trash-alt h-5 w-5';
-            removeButton.appendChild(removeIcon);
-
-            removeButton.onclick = function () {
-                // Function to remove item from cart and submit form
-                removeFromCart(item.product_id); // Custom function to remove from cart
-            };
-            // Append remove button to its container
-            removeButtonContainer.appendChild(removeButton);
-
-            // Append product name and remove button to first row
-            firstRow.appendChild(productName);
-            firstRow.appendChild(removeButtonContainer);
-
-            // Append first row to content container
-            contentContainer.appendChild(firstRow);
-
-            // Create price container
-            if (item.unit_sale_price) {
-
-                    const salePriceContainer = document.createElement('div');
-                    salePriceContainer.className = 'flex items-center mt-1 text-xs text-gray-500';
-
-                    const discountLabel = document.createElement('span');
-                    discountLabel.className = 'text-amber-500 font-semibold';
-                    discountLabel.textContent = 'Kortingsprijs:';
-
-                    const salePrice = document.createElement('span');
-                    salePrice.className = 'ml-1';
-                    if (item.product_type == 'Vloer') {
-                        salePrice.textContent = `€${item.unit_sale_price.toFixed(2)} per pak`; // Replace with actual sale price
-                    } else {
-                        salePrice.textContent = `€${item.unit_sale_price.toFixed(2) } per ${item.unit }` ; // Replace with actual sale price
-
-                    }
-                    salePriceContainer.appendChild(discountLabel);
-                    salePriceContainer.appendChild(salePrice);
-                    contentContainer.appendChild(salePriceContainer);
-
-                    const originalPrice = document.createElement('p');
-                    originalPrice.className = 'mt-1 text-xs text-gray-500 line-through';
-                    if (item.product_type == 'Vloer') {
-                        originalPrice.textContent = `€${item.unit_price.toFixed(2) } per pak`; // Replace with actual unit price
-                    } else {
-                        originalPrice.textContent = `€${item.unit_price.toFixed(2) } per ${item.unit}`; // Replace with actual unit price
-                    }
-                    contentContainer.appendChild(originalPrice);
-
-            } else {
-
-                if (item.product_type == "Vloer") {
-                    const unitPrice = document.createElement('p');
-                    unitPrice.className = 'mt-1 text-xs text-gray-500';
-                    unitPrice.textContent = `€${item.unit_price.toFixed(2) } per pak`; // Replace with actual unit price
-                    contentContainer.appendChild(unitPrice);
-                } else {
-                    const unitPrice = document.createElement('p');
-                    unitPrice.className = 'mt-1 text-xs text-gray-500';
-                    unitPrice.textContent = `€${item.unit_price.toFixed(2) } per ${item.unit}`; // Replace with actual unit price
-                    contentContainer.appendChild(unitPrice);
-                }
-
-            }
-
-            // Create bottom row container
-            const bottomRow = document.createElement('div');
-            bottomRow.className = 'flex flex-1 items-end justify-between text-sm';
-
-            // Create quantity input container
-            const quantityContainer = document.createElement('div');
-            quantityContainer.className = 'pt-2';
-
-            // Create quantity input
-            const quantityInput = document.createElement('input');
-            quantityInput.type = 'number';
-            quantityInput.id = item.id; // Replace with actual item ID
-            quantityInput.name = item.id; // Replace with actual item ID
-            quantityInput.value = item.quantity; // Replace with actual quantity
-            quantityInput.min = 1;
-            quantityInput.max = item.stock; // Replace with actual stock
-            quantityInput.step = 1;
-            quantityInput.onchange = function () {
-                updateQuantityPanel(this, item.product_id); // Replace with actual update function
-            };
-            quantityInput.className = 'w-20 rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm';
-
-            // Append quantity input to its container
-            quantityContainer.appendChild(quantityInput);
-
-            // Create total price element
-            const totalPrice = document.createElement('span');
-            totalPrice.className = 'font-medium text-gray-900 text-sm pr-3';
-            totalPrice.textContent = `€${item.totalPrice.toFixed(2)}`; // Replace with actual total price
-
-            // Append quantity container and total price to bottom row
-            bottomRow.appendChild(quantityContainer);
-            bottomRow.appendChild(totalPrice);
-
-            // Append bottom row to content container
-            contentContainer.appendChild(bottomRow);
-
-            // Append image container and content container to li element
-            li.appendChild(imageContainer);
-            li.appendChild(contentContainer);
-
-            // Append li element to cart item list
-            cartItemList.appendChild(li);
-        });
+      // Exit function early since cart is empty
+      return
     }
 
+    // Iterate over cart items if cart is not empty
+    cartData.cart.items.forEach((item) => {
+      // Create li element for each item
+      const li = document.createElement('li')
+      li.className = 'flex py-6'
 
-    function removeFromCart(itemId) {
-        
-            const baseUrl = window.location.origin; // Get the base URL dynamically
+      // Create image container
+      const imageContainer = document.createElement('div')
+      imageContainer.className =
+        'h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'
 
-            const csrftoken = getCookie('csrftoken');
-            console.log("Product deleting, ", itemId)
-            // Submit the form to delete the item
-            const formData = new FormData();
-            formData.append('id', itemId); // Add item_id to FormData if needed
-            fetch(`${baseUrl}/delete-cart-item/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken
-                },
-                body: formData
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    console.log("Product ID: " + itemId + ", succesfully deleted");
-                    console.log("Cart updated:", response);
-                    fetchShoppingCart();
-                    // location.reload();
-                })
-                .catch(error => console.error('Error deleting item:', error));
-        }
+      // Create image element
+      const img = document.createElement('img')
+      img.src = item.thumbnail // Replace with actual thumbnail URL
+      img.alt = item.name // Replace with actual product name
+      img.className = 'h-full w-full object-cover object-center'
 
-    function updateQuantityPanel(input, productId) {
-        var quantity = parseInt(input.value);
-        var csrftoken = getCookie('csrftoken');
-        
-        $.ajax({
-            url: '/change-quantity-in-cart/',
-            method: 'POST',
-            contentType: 'application/json',
-            headers: {
-                'X-CSRFToken': csrftoken
-            },
-            data: JSON.stringify({
-                product_id: productId,
-                quantity: quantity
-            }),
-            success: function (response) {
-                console.log("Product ID: " + productId + ", Quantity updated to: " + quantity);
-                console.log("Cart updated:", response);
-                fetchShoppingCart();
+      // Append image to its container
+      imageContainer.appendChild(img)
 
-                // location.reload();
+      // Create content container
+      const contentContainer = document.createElement('div')
+      contentContainer.className = 'ml-4 flex flex-1 flex-col'
 
-            },
-            error: function (xhr, status, error) {
-                console.error("Error updating cart:", error);
-            }
-        });
-    }
+      // Create first row container
+      const firstRow = document.createElement('div')
+      firstRow.className =
+        'flex justify-between gap-x-2 text-sm font-medium text-gray-900'
 
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
+      // Create product name element
+      const productName = document.createElement('h3')
+      const productLink = document.createElement('a')
+      productLink.href = `${baseUrl}/product/${item.product_id}`
+      productLink.textContent = item.name // Replace with actual product name
+      productName.appendChild(productLink)
 
-    function updateSubtotal(cartData) {
-            let subtotal = cartData.cart.total_price
-            let subtotalElement = document.getElementById('subtotalAmount');
-            subtotalElement.textContent = `€${subtotal.toFixed(2) }`; 
-        }
+      // Create remove button container
+      const removeButtonContainer = document.createElement('div')
+      removeButtonContainer.className = 'ml-2'
 
-    function openFlyoutPanel() {
-        document.getElementById('flyout-panel').style.display = 'block';
-        document.body.classList.add('overflow-hidden');
+      // Create remove button
+      const removeButton = document.createElement('button')
+      removeButton.type = 'submit'
+      removeButton.className =
+        'text-base inline-flex pt-1 pr-2 text-gray-300 hover:text-red-400'
 
-        // Make an AJAX request to fetch the current shopping cart
-        fetchShoppingCart();
-    }
+      // Create icon for remove button
+      const removeIcon = document.createElement('i')
+      removeIcon.className = 'fas fa-trash-alt h-5 w-5'
+      removeButton.appendChild(removeIcon)
 
-    function closeFlyoutPanel() {
-        document.getElementById('flyout-panel').style.display = 'none';
-        document.body.classList.remove('overflow-hidden');
-        location.reload()
-    }
+      removeButton.onclick = function () {
+        // Function to remove item from cart and submit form
+        removeFromCart(item.product_id) // Custom function to remove from cart
+      }
+      // Append remove button to its container
+      removeButtonContainer.appendChild(removeButton)
 
-    $(document).ready(function () {
-        updateCartCount();
-    });
+      // Append product name and remove button to first row
+      firstRow.appendChild(productName)
+      firstRow.appendChild(removeButtonContainer)
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = localStorage.getItem('searchInput');
-        if (searchInput) {
-            document.getElementById('search').value = searchInput;
-        }
-    });
+      // Append first row to content container
+      contentContainer.appendChild(firstRow)
 
-    function updateCartCount() {
-        $.ajax({
-            url: '/get-cart-count/',
-            method: 'GET',
-            success: function (data) {
-                var cartCount = data.count;
-                console.log(cartCount)
+      // Create price container
+      if (item.unit_sale_price) {
+        const salePriceContainer = document.createElement('div')
+        salePriceContainer.className =
+          'flex items-center mt-1 text-xs text-gray-500'
 
-                $('#cart-count').text(cartCount);
-                if (cartCount === 0) {
-                    $('#cart-count').hide();
-                } else {
-                    $('#cart-count').show();
-                }
-            },
-            error: function (error) {
-                console.log(error)
-            }
-        });
-    }
+        const discountLabel = document.createElement('span')
+        discountLabel.className = 'text-amber-500 font-semibold'
+        discountLabel.textContent = 'Kortingsprijs:'
 
-    let isMouseOverDropdown = {};
-
-    let timeoutIds = {};
-
-    function showDropdown(categoryId) {
-        clearTimeout(timeoutIds[categoryId]);
-        document.getElementById('dropdown-' + categoryId).classList.remove('hidden');
-    }
-
-    function hideDropdown(categoryId) {
-        timeoutIds[categoryId] = setTimeout(() => {
-            document.getElementById('dropdown-' + categoryId).classList.add('hidden');
-        }, 50);
-    }
-
-    function submitSearch(event) {
-        event.preventDefault();
-        const searchInput = document.getElementById('search').value.trim();
-        if (searchInput) {
-            localStorage.setItem('searchInput', searchInput);
-            window.location.href = '/search/?q=' + encodeURIComponent(searchInput);
-        }
-    }
-
-    function mouseOverDropdown(categoryId) {
-        clearTimeout(timeoutIds[categoryId]);
-        isMouseOverDropdown[categoryId] = true;
-        showDropdown(categoryId);
-    }
-
-    function mouseOutDropdown(categoryId) {
-        isMouseOverDropdown[categoryId] = false;
-        hideDropdown(categoryId);
-    }
-
-    const storeMotivations = {{ store_motivations | safe }};
-
-    function updateStoreMotivation() {
-        const storeMotivationElement = document.getElementById("storeMotivation");
-        const currentMotivation = storeMotivationElement.textContent.trim();
-
-        let currentIndex = -1;
-        for (let i = 0; i < storeMotivations.length; i++) {
-            if (storeMotivations[i].name === currentMotivation) {
-                currentIndex = i;
-                break;
-            }
-        }
-
-        if (currentIndex === -1) {
-            currentIndex = 0;
-        }
-
-        const nextIndex = (currentIndex + 1) % storeMotivations.length;
-        console.log(storeMotivations)
-        storeMotivationElement.innerHTML = `
-        <i class="fas fa-check-circle text-green-500 mr-1"></i>
-        ${storeMotivations[nextIndex].name}!`;
-    }
-
-    updateStoreMotivation();
-    setInterval(updateStoreMotivation, 10000);
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const searchInput = localStorage.getItem('searchInput');
-        const searchField = document.getElementById('search');
-
-        if (searchInput) {
-            searchField.value = searchInput;
-        }
-
-        toggleClearButtonVisibility(searchField.value);
-
-        searchField.addEventListener('input', function () {
-            toggleClearButtonVisibility(this.value);
-        });
-    });
-
-    function toggleClearButtonVisibility(value) {
-        const clearButton = document.getElementById('custom-clear-button');
-        if (value.trim() !== '') {
-            clearButton.style.display = 'block';
+        const salePrice = document.createElement('span')
+        salePrice.className = 'ml-1'
+        if (item.product_type == 'Vloer') {
+          salePrice.textContent = `€${item.unit_sale_price.toFixed(2)} per pak` // Replace with actual sale price
         } else {
-            clearButton.style.display = 'none';
+          salePrice.textContent = `€${item.unit_sale_price.toFixed(2)} per ${item.unit}` // Replace with actual sale price
         }
+        salePriceContainer.appendChild(discountLabel)
+        salePriceContainer.appendChild(salePrice)
+        contentContainer.appendChild(salePriceContainer)
+
+        const originalPrice = document.createElement('p')
+        originalPrice.className = 'mt-1 text-xs text-gray-500 line-through'
+        if (item.product_type == 'Vloer') {
+          originalPrice.textContent = `€${item.unit_price.toFixed(2)} per pak` // Replace with actual unit price
+        } else {
+          originalPrice.textContent = `€${item.unit_price.toFixed(2)} per ${item.unit}` // Replace with actual unit price
+        }
+        contentContainer.appendChild(originalPrice)
+      } else {
+        if (item.product_type == 'Vloer') {
+          const unitPrice = document.createElement('p')
+          unitPrice.className = 'mt-1 text-xs text-gray-500'
+          unitPrice.textContent = `€${item.unit_price.toFixed(2)} per pak` // Replace with actual unit price
+          contentContainer.appendChild(unitPrice)
+        } else {
+          const unitPrice = document.createElement('p')
+          unitPrice.className = 'mt-1 text-xs text-gray-500'
+          unitPrice.textContent = `€${item.unit_price.toFixed(2)} per ${item.unit}` // Replace with actual unit price
+          contentContainer.appendChild(unitPrice)
+        }
+      }
+
+      // Create bottom row container
+      const bottomRow = document.createElement('div')
+      bottomRow.className = 'flex flex-1 items-end justify-between text-sm'
+
+      // Create quantity input container
+      const quantityContainer = document.createElement('div')
+      quantityContainer.className = 'pt-2'
+
+      // Create quantity input
+      const quantityInput = document.createElement('input')
+      quantityInput.type = 'number'
+      quantityInput.id = item.id // Replace with actual item ID
+      quantityInput.name = item.id // Replace with actual item ID
+      quantityInput.value = item.quantity // Replace with actual quantity
+      quantityInput.min = 1
+      quantityInput.max = item.stock // Replace with actual stock
+      quantityInput.step = 1
+      quantityInput.onchange = function () {
+        updateQuantityPanel(this, item.product_id) // Replace with actual update function
+      }
+      quantityInput.className =
+        'w-20 rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
+
+      // Append quantity input to its container
+      quantityContainer.appendChild(quantityInput)
+
+      // Create total price element
+      const totalPrice = document.createElement('span')
+      totalPrice.className = 'font-medium text-gray-900 text-sm pr-3'
+      totalPrice.textContent = `€${item.totalPrice.toFixed(2)}` // Replace with actual total price
+
+      // Append quantity container and total price to bottom row
+      bottomRow.appendChild(quantityContainer)
+      bottomRow.appendChild(totalPrice)
+
+      // Append bottom row to content container
+      contentContainer.appendChild(bottomRow)
+
+      // Append image container and content container to li element
+      li.appendChild(imageContainer)
+      li.appendChild(contentContainer)
+
+      // Append li element to cart item list
+      cartItemList.appendChild(li)
+    })
+  }
+
+  function removeFromCart(itemId) {
+    const baseUrl = window.location.origin // Get the base URL dynamically
+
+    const csrftoken = getCookie('csrftoken')
+    console.log('Product deleting, ', itemId)
+    // Submit the form to delete the item
+    const formData = new FormData()
+    formData.append('id', itemId) // Add item_id to FormData if needed
+    fetch(`${baseUrl}/delete-cart-item/`, {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrftoken,
+      },
+      body: formData,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        console.log('Product ID: ' + itemId + ', succesfully deleted')
+        console.log('Cart updated:', response)
+        fetchShoppingCart()
+        // location.reload();
+      })
+      .catch((error) => console.error('Error deleting item:', error))
+  }
+
+  function updateQuantityPanel(input, productId) {
+    var quantity = parseInt(input.value)
+    var csrftoken = getCookie('csrftoken')
+
+    $.ajax({
+      url: '/change-quantity-in-cart/',
+      method: 'POST',
+      contentType: 'application/json',
+      headers: {
+        'X-CSRFToken': csrftoken,
+      },
+      data: JSON.stringify({
+        product_id: productId,
+        quantity: quantity,
+      }),
+      success: function (response) {
+        console.log(
+          'Product ID: ' + productId + ', Quantity updated to: ' + quantity,
+        )
+        console.log('Cart updated:', response)
+        fetchShoppingCart()
+
+        // location.reload();
+      },
+      error: function (xhr, status, error) {
+        console.error('Error updating cart:', error)
+      },
+    })
+  }
+
+  function getCookie(name) {
+    var cookieValue = null
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';')
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim()
+        if (cookie.substring(0, name.length + 1) === name + '=') {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+          break
+        }
+      }
+    }
+    return cookieValue
+  }
+
+  function updateSubtotal(cartData) {
+    let subtotal = cartData.cart.total_price
+    let subtotalElement = document.getElementById('subtotalAmount')
+    subtotalElement.textContent = `€${subtotal.toFixed(2)}`
+  }
+
+  function openFlyoutPanel() {
+    document.getElementById('flyout-panel').style.display = 'block'
+    document.body.classList.add('overflow-hidden')
+
+    // Make an AJAX request to fetch the current shopping cart
+    fetchShoppingCart()
+  }
+
+  function closeFlyoutPanel() {
+    document.getElementById('flyout-panel').style.display = 'none'
+    document.body.classList.remove('overflow-hidden')
+    location.reload()
+  }
+
+  $(document).ready(function () {
+    updateCartCount()
+  })
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = localStorage.getItem('searchInput')
+    if (searchInput) {
+      document.getElementById('search').value = searchInput
+    }
+  })
+
+  function updateCartCount() {
+    $.ajax({
+      url: '/get-cart-count/',
+      method: 'GET',
+      success: function (data) {
+        var cartCount = data.count
+        console.log(cartCount)
+
+        $('#cart-count').text(cartCount)
+        if (cartCount === 0) {
+          $('#cart-count').hide()
+        } else {
+          $('#cart-count').show()
+        }
+      },
+      error: function (error) {
+        console.log(error)
+      },
+    })
+  }
+
+  let isMouseOverDropdown = {}
+
+  let timeoutIds = {}
+
+  function showDropdown(categoryId) {
+    clearTimeout(timeoutIds[categoryId])
+    document.getElementById('dropdown-' + categoryId).classList.remove('hidden')
+  }
+
+  function hideDropdown(categoryId) {
+    timeoutIds[categoryId] = setTimeout(() => {
+      document.getElementById('dropdown-' + categoryId).classList.add('hidden')
+    }, 50)
+  }
+
+  function submitSearch(event) {
+    event.preventDefault()
+    const searchInput = document.getElementById('search').value.trim()
+    if (searchInput) {
+      localStorage.setItem('searchInput', searchInput)
+      window.location.href = '/search/?q=' + encodeURIComponent(searchInput)
+    }
+  }
+
+  function mouseOverDropdown(categoryId) {
+    clearTimeout(timeoutIds[categoryId])
+    isMouseOverDropdown[categoryId] = true
+    showDropdown(categoryId)
+  }
+
+  function mouseOutDropdown(categoryId) {
+    isMouseOverDropdown[categoryId] = false
+    hideDropdown(categoryId)
+  }
+
+  const storeMotivationsData = '{{ store_motivations|safe|escapejs }}'
+  let jsonCorrected = storeMotivationsData
+    .replace(/'/g, '"')
+    .replace(/"true"/g, 'true')
+    .replace(/"false"/g, 'false')
+
+  const storeMotivations = JSON.parse(jsonCorrected)
+
+  function updateStoreMotivation() {
+    const storeMotivationElement = document.getElementById('storeMotivation')
+    const currentMotivation = storeMotivationElement.textContent
+      .trim()
+      .replace(/!/g, '')
+
+    let currentIndex = -1
+
+    for (let i = 0; i < storeMotivations.length; i++) {
+      console.log(storeMotivations[i].name, currentMotivation)
+
+      if (storeMotivations[i].name === currentMotivation) {
+        console.log(storeMotivations[i])
+        currentIndex = i
+        break
+      }
     }
 
-
-    function submitSearch(event) {
-        event.preventDefault();
-        const searchInput = document.getElementById('search').value.trim();
-        if (searchInput) {
-            localStorage.setItem('searchInput', searchInput);
-            window.location.href = '/search/?q=' + encodeURIComponent(searchInput);
-        }
+    console.log(currentIndex)
+    if (currentIndex === -1) {
+      currentIndex = 0
     }
 
-    function clearSearchInput() {
-        const searchField = document.getElementById('search');
-        searchField.value = '';
-        localStorage.removeItem('searchInput');
-        toggleClearButtonVisibility('');
+    const nextIndex = (currentIndex + 1) % storeMotivations.length
+    console.log(storeMotivations[nextIndex].name, nextIndex)
+    storeMotivationElement.innerHTML = `
+        <i class="fas fa-check-circle text-green-500 mr-1"></i>
+        ${storeMotivations[nextIndex].name}!`
+  }
+
+  updateStoreMotivation()
+  setInterval(updateStoreMotivation, 10000)
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = localStorage.getItem('searchInput')
+    const searchField = document.getElementById('search')
+
+    if (searchInput) {
+      searchField.value = searchInput
     }
 
-        function updateSelectedFlag(selectElement) {
-            var selectedOption = selectElement.options[selectElement.selectedIndex];
-            var iconClass = selectedOption.getAttribute('data-icon');
-            document.getElementById('selected-flag').innerHTML = '';
-            var flagIcon = document.createElement('span');
-            flagIcon.className = 'flag-icon ' + iconClass;
-            document.getElementById('selected-flag').appendChild(flagIcon);
-        }
-        updateSelectedFlag(document.getElementById('desktop-language'));
+    toggleClearButtonVisibility(searchField.value)
 
+    searchField.addEventListener('input', function () {
+      toggleClearButtonVisibility(this.value)
+    })
+  })
+
+  function toggleClearButtonVisibility(value) {
+    const clearButton = document.getElementById('custom-clear-button')
+    if (value.trim() !== '') {
+      clearButton.style.display = 'block'
+    } else {
+      clearButton.style.display = 'none'
+    }
+  }
+
+  function submitSearch(event) {
+    event.preventDefault()
+    const searchInput = document.getElementById('search').value.trim()
+    if (searchInput) {
+      localStorage.setItem('searchInput', searchInput)
+      window.location.href = '/search/?q=' + encodeURIComponent(searchInput)
+    }
+  }
+
+  function clearSearchInput() {
+    const searchField = document.getElementById('search')
+    searchField.value = ''
+    localStorage.removeItem('searchInput')
+    toggleClearButtonVisibility('')
+  }
+
+  function updateSelectedFlag(selectElement) {
+    var selectedOption = selectElement.options[selectElement.selectedIndex]
+    var iconClass = selectedOption.getAttribute('data-icon')
+    document.getElementById('selected-flag').innerHTML = ''
+    var flagIcon = document.createElement('span')
+    flagIcon.className = 'flag-icon ' + iconClass
+    document.getElementById('selected-flag').appendChild(flagIcon)
+  }
+  updateSelectedFlag(document.getElementById('desktop-language'))
 </script>

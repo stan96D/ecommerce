@@ -4,9 +4,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
-
-<!--
+  <!--
   This example requires some changes to your config:
   
   ```
@@ -21,299 +19,351 @@
   ```
 -->
 
-<div class="bg-white">
-  <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-<div class="border-b border-gray-200 pt-24 relative">
-  <h1 class="text-4xl font-bold tracking-tight text-gray-900">{{categoryData.name}}</h1>
-  {% if  categoryData.description %}
-  <p class="mt-4 text-base text-gray-500">{{categoryData.description}}</p>
-  {% endif %}
-  <div class="pb-4 pt-10 flex justify-between items-start">
-    <div></div>
-    <div id="selected-sort" class="text-sm text-gray-700 ">Sort by: </div>
-    <div class="relative flex items-center">
-      <button type="button"
-        class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900" id="menu-button"
-        aria-expanded="false" aria-haspopup="true" onclick="toggleSortMenu()">
-        Sort
-        <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20"
-          fill="currentColor" aria-hidden="true">
-          <path fill-rule="evenodd"
-            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-            clip-rule="evenodd" />
-        </svg>
-      </button>
-      <div id="sort-menu"
-        class="absolute z-10 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 hidden">
-        <div class="py-1">
-          <button class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            onclick="sortBy('price-highest')">
-            Price Highest
-          </button>
-          <button class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-            onclick="sortBy('price-lowest')">
-            Price Lowest
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-    <div class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
-    <aside>
-      <h2 class="sr-only">Filters</h2>
-      <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
-      <button type="button" class="inline-flex items-center lg:hidden">
-        <span class="text-sm font-medium text-gray-700">Filters</span>
-        <svg class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-          <path
-            d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-        </svg>
-      </button>
-      <div class="hidden lg:block">
-        <form class="space-y-5 divide-y divide-gray-200">
-          {% for product_filter in filterData %}
-          
-          <div class="pt-5">
-            <fieldset>
-              <div>
-                <legend class="text-sm font-medium text-gray-900 flex justify-between items-center cursor-pointer"
-                  onclick="toggleFilter('{{ product_filter.name }}')">
-                  <span>{{ product_filter.name }}</span>
-                  <button type="button" class="focus:outline-none">
-                    <i id="arrow-{{ product_filter.name }}"
-                      class="fas fa-chevron-down text-gray-400 transition-transform transform"></i>
-                  </button>
-                </legend>
-              </div>
-
-              <div id="{{ product_filter.name }}" class="filter-container space-y-3 pt-6 hidden">
-                {% for product_attribute in product_filter.product_attributes %}
-                <div class="flex items-center">
-                  <input id="attr-{{ product_attribute }}" name="{{ product_filter.name }}"
-                    value="{{ product_attribute }}" type="checkbox"
-                    class="filter-checkbox h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-customColor"
-                    onclick="executeSearch()">
-                  <label for="attr-{{ product_attribute }}" class="ml-3 text-sm text-gray-600">{{ product_attribute }}</label>
-                </div>
-                {% endfor %}
-              </div>
-            </fieldset>
-          </div>
-          {% endfor %}
-        </form>
-      </div>
-    </aside>
-
-  
-      <section aria-labelledby="product-heading" class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3">
-        <h2 id="product-heading" class="sr-only">Products</h2>
-  
-            <div class="mx-auto max-w-2xl px-4  sm:px-6 lg:max-w-7xl lg:px-8">
-              <h2 class="sr-only">Products</h2>
-            
-              <div class=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8">
-                {% for product in products %}
-                {% include 'components/product_card.html' with product=product %}
-                {% endfor %}
+  <div class="bg-white">
+    <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+      <div class="border-b border-gray-200 pt-24 relative">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900">
+          {{ categoryData.name }}
+        </h1>
+        {% if  categoryData.description %}
+          <p class="mt-4 text-base text-gray-500">
+            {{ categoryData.description }}
+          </p>
+        {% endif %}
+        <div class="pb-4 pt-10 flex justify-between items-start">
+          <div></div>
+          <div id="selected-sort" class="text-sm text-gray-700 ">Sort by:</div>
+          <div class="relative flex items-center">
+            <button
+              type="button"
+              class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
+              id="menu-button"
+              aria-expanded="false"
+              aria-haspopup="true"
+              onclick="toggleSortMenu()"
+            >
+              Sort
+              <svg
+                class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <div
+              id="sort-menu"
+              class="absolute z-10 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 hidden"
+            >
+              <div class="py-1">
+                <button
+                  class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  onclick="sortBy('price-highest')"
+                >
+                  Price Highest
+                </button>
+                <button
+                  class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  onclick="sortBy('price-lowest')"
+                >
+                  Price Lowest
+                </button>
               </div>
             </div>
-      </section>
-    </div>
-  </main>
-</div>
+          </div>
+        </div>
+      </div>
 
-<script>
+      <div class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+        <aside>
+          <h2 class="sr-only">Filters</h2>
+          <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
+          <button type="button" class="inline-flex items-center lg:hidden">
+            <span class="text-sm font-medium text-gray-700">Filters</span>
+            <svg
+              class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"
+              />
+            </svg>
+          </button>
+          <div class="hidden lg:block">
+            <form class="space-y-5 divide-y divide-gray-200">
+              {% for product_filter in filterData %}
+                <div class="pt-5">
+                  <fieldset>
+                    <div>
+                      <legend
+                        class="text-sm font-medium text-gray-900 flex justify-between items-center cursor-pointer"
+                        onclick="toggleFilter('{{ product_filter.name }}')"
+                      >
+                        <span>{{ product_filter.name }}</span>
+                        <button type="button" class="focus:outline-none">
+                          <i
+                            id="arrow-{{ product_filter.name }}"
+                            class="fas fa-chevron-down text-gray-400 transition-transform transform"
+                          ></i>
+                        </button>
+                      </legend>
+                    </div>
 
-  window.addEventListener('DOMContentLoaded', () => {
-    initializeSortTypeDisplay();
+                    <div
+                      id="{{ product_filter.name }}"
+                      class="filter-container space-y-3 pt-6 hidden"
+                    >
+                      {% for product_attribute in product_filter.product_attributes %}
+                        <div class="flex items-center">
+                          <input
+                            id="attr-{{ product_attribute }}"
+                            name="{{ product_filter.name }}"
+                            value="{{ product_attribute }}"
+                            type="checkbox"
+                            class="filter-checkbox h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-customColor"
+                            onclick="executeSearch()"
+                          />
+                          <label
+                            for="attr-{{ product_attribute }}"
+                            class="ml-3 text-sm text-gray-600"
+                            >{{ product_attribute }}</label
+                          >
+                        </div>
+                      {% endfor %}
+                    </div>
+                  </fieldset>
+                </div>
+              {% endfor %}
+            </form>
+          </div>
+        </aside>
 
-    const currentUrl = window.location.href;
-    const query = new URLSearchParams(window.location.search);
+        <section
+          aria-labelledby="product-heading"
+          class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
+        >
+          <h2 id="product-heading" class="sr-only">Products</h2>
 
-    const hasQueryParams = currentUrl.includes('?');
-    if (!hasQueryParams) {
-      return;
+          <div class="mx-auto max-w-2xl px-4  sm:px-6 lg:max-w-7xl lg:px-8">
+            <h2 class="sr-only">Products</h2>
+
+            <div
+              class=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8"
+            >
+              {% for product in products %}
+                {% include 'components/product_card.html' with product=product %}
+              {% endfor %}
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      initializeSortTypeDisplay()
+
+      const currentUrl = window.location.href
+      const query = new URLSearchParams(window.location.search)
+
+      const hasQueryParams = currentUrl.includes('?')
+      if (!hasQueryParams) {
+        return
+      }
+
+      const filterDivs = document.querySelectorAll('.filter-container')
+      filterDivs.forEach((filterDiv) => {
+        const filterName = filterDiv.id
+        const filterValues = query.getAll(filterName)
+        const isOpen = filterValues.length > 0
+        const arrowIcon = document.getElementById(`arrow-${filterName}`)
+
+        if (isOpen) {
+          filterDiv.classList.remove('hidden')
+          arrowIcon.classList.remove('fa-chevron-down')
+          arrowIcon.classList.add('fa-chevron-up')
+        } else {
+          filterDiv.classList.add('hidden')
+          arrowIcon.classList.remove('fa-chevron-up')
+          arrowIcon.classList.add('fa-chevron-down')
+        }
+
+        filterValues.forEach((filterValueString) => {
+          const filterValues = filterValueString
+            .split(',')
+            .map((value) => value.trim())
+          filterValues.forEach((filterValue) => {
+            const checkbox = document.querySelector(
+              `.filter-checkbox[name="${filterName}"][value="${filterValue}"]`,
+            )
+            if (checkbox) {
+              checkbox.checked = true
+            }
+          })
+        })
+      })
+    })
+
+    function executeSearch() {
+      const filters = getFilterCriteria()
+      const queryString = Object.keys(filters)
+        .map((key) => key + '=' + encodeURIComponent(filters[key]))
+        .join('&')
+      const newUrl = window.location.pathname + '?' + queryString
+      window.location.href = newUrl
     }
 
-    const filterDivs = document.querySelectorAll('.filter-container');
-    filterDivs.forEach(filterDiv => {
-      const filterName = filterDiv.id;
-      const filterValues = query.getAll(filterName);
-      const isOpen = filterValues.length > 0;
-      const arrowIcon = document.getElementById(`arrow-${filterName}`);
+    function toggleFilter(filterName) {
+      const filterDiv = document.getElementById(filterName)
+      const arrowIcon = document.getElementById(`arrow-${filterName}`)
+      const isOpen = filterDiv.classList.toggle('hidden')
 
-      if (isOpen) {
-        filterDiv.classList.remove('hidden');
-        arrowIcon.classList.remove('fa-chevron-down');
-        arrowIcon.classList.add('fa-chevron-up');
+      const filterStates = getFilterStates()
+      filterStates[filterName] = !isOpen
+      localStorage.setItem('filterStates', JSON.stringify(filterStates))
+
+      if (!isOpen) {
+        arrowIcon.classList.remove('fa-chevron-down')
+        arrowIcon.classList.add('fa-chevron-up')
       } else {
-        filterDiv.classList.add('hidden');
-        arrowIcon.classList.remove('fa-chevron-up');
-        arrowIcon.classList.add('fa-chevron-down');
+        arrowIcon.classList.remove('fa-chevron-up')
+        arrowIcon.classList.add('fa-chevron-down')
+      }
+    }
+
+    function getFilterStates() {
+      const filterStates = {}
+      const filterDivs = document.querySelectorAll('.filter-container')
+      filterDivs.forEach((filterDiv) => {
+        const filterName = filterDiv.id
+        const isOpen = !filterDiv.classList.contains('hidden')
+        filterStates[filterName] = isOpen
+      })
+
+      return filterStates
+    }
+
+    function getFilterCriteria() {
+      const filters = {}
+      const checkboxes = document.querySelectorAll('.filter-checkbox:checked')
+      checkboxes.forEach(function (checkbox) {
+        const filterName = checkbox.getAttribute('name')
+        const filterValue = checkbox.value
+
+        if (!filters[filterName]) {
+          filters[filterName] = []
+        }
+        filters[filterName].push(filterValue)
+      })
+
+      const sortType = getActiveSortType()
+      if (sortType) {
+        filters['tn_sort'] = [sortType]
       }
 
-      filterValues.forEach(filterValueString => {
-        const filterValues = filterValueString.split(',').map(value => value.trim());
-        filterValues.forEach(filterValue => {
-          const checkbox = document.querySelector(`.filter-checkbox[name="${filterName}"][value="${filterValue}"]`);
-          if (checkbox) {
-            checkbox.checked = true;
-          }
-        });
-      });
-    });
-  });
-
-  function executeSearch() {
-    const filters = getFilterCriteria();
-    const queryString = Object.keys(filters).map(key => key + '=' + encodeURIComponent(filters[key])).join('&');
-    const newUrl = window.location.pathname + '?' + queryString;
-    window.location.href = newUrl;
-  }
-
-
-
-  function toggleFilter(filterName) {
-    const filterDiv = document.getElementById(filterName);
-    const arrowIcon = document.getElementById(`arrow-${filterName}`);
-    const isOpen = filterDiv.classList.toggle('hidden');
-
-    const filterStates = getFilterStates();
-    filterStates[filterName] = !isOpen;
-    localStorage.setItem('filterStates', JSON.stringify(filterStates));
-
-    if (!isOpen) {
-      arrowIcon.classList.remove('fa-chevron-down');
-      arrowIcon.classList.add('fa-chevron-up');
-    } else {
-      arrowIcon.classList.remove('fa-chevron-up');
-      arrowIcon.classList.add('fa-chevron-down');
-    }
-  }
-
-  function getFilterStates() {
-      const filterStates = {};
-      const filterDivs = document.querySelectorAll('.filter-container');
-      filterDivs.forEach(filterDiv => {
-        const filterName = filterDiv.id;
-        const isOpen = !filterDiv.classList.contains('hidden');
-        filterStates[filterName] = isOpen;
-      });
-
-      return filterStates;
-    }
-
-  function getFilterCriteria() {
-    const filters = {};
-    const checkboxes = document.querySelectorAll('.filter-checkbox:checked');
-    checkboxes.forEach(function (checkbox) {
-      const filterName = checkbox.getAttribute('name');
-      const filterValue = checkbox.value;
-
-      if (!filters[filterName]) {
-        filters[filterName] = [];
+      const currentUrlParams = new URLSearchParams(window.location.search)
+      if (currentUrlParams.has('q')) {
+        filters['q'] = currentUrlParams.get('q')
       }
-      filters[filterName].push(filterValue);
-    });
 
-    const sortType = getActiveSortType();
-    if (sortType) {
-      filters['tn_sort'] = [sortType];
+      return filters
     }
-
-    const currentUrlParams = new URLSearchParams(window.location.search);
-    if (currentUrlParams.has('q')) {
-      filters['q'] = currentUrlParams.get('q');
-    }
-
-    return filters;
-  }
 
     function toggleSortMenu() {
-      const sortMenu = document.getElementById('sort-menu');
-      sortMenu.classList.toggle('hidden');
+      const sortMenu = document.getElementById('sort-menu')
+      sortMenu.classList.toggle('hidden')
     }
 
-  function sortBy(sortType) {
-    const selectedSort = document.getElementById('selected-sort');
-    const sortMenu = document.getElementById('sort-menu');
-    const menuButton = document.getElementById('menu-button');
+    function sortBy(sortType) {
+      const selectedSort = document.getElementById('selected-sort')
+      const sortMenu = document.getElementById('sort-menu')
+      const menuButton = document.getElementById('menu-button')
 
-    let queryString = '';
-    switch (sortType) {
-      case 'price-highest':
-        queryString = 'tn_sort=Prijs%20aflopend';
-        break;
-      case 'price-lowest':
-        queryString = 'tn_sort=Prijs%20oplopend';
-        break;
-      default:
-        break;
-    }
-
-    const existingQueryString = window.location.search;
-
-    const sortingParamIndex = existingQueryString.indexOf('tn_sort=');
-
-    if (sortingParamIndex !== -1) {
-      const ampersandIndex = existingQueryString.indexOf('&', sortingParamIndex);
-      if (ampersandIndex !== -1) {
-        queryString = existingQueryString.substring(0, sortingParamIndex) + queryString + existingQueryString.substring(ampersandIndex);
-      } else {
-        queryString = existingQueryString.substring(0, sortingParamIndex) + queryString;
+      let queryString = ''
+      switch (sortType) {
+        case 'price-highest':
+          queryString = 'tn_sort=Prijs%20aflopend'
+          break
+        case 'price-lowest':
+          queryString = 'tn_sort=Prijs%20oplopend'
+          break
+        default:
+          break
       }
-    } else {
-      queryString = existingQueryString === '' ? '?' + queryString : existingQueryString + '&' + queryString;
+
+      const existingQueryString = window.location.search
+
+      const sortingParamIndex = existingQueryString.indexOf('tn_sort=')
+
+      if (sortingParamIndex !== -1) {
+        const ampersandIndex = existingQueryString.indexOf(
+          '&',
+          sortingParamIndex,
+        )
+        if (ampersandIndex !== -1) {
+          queryString =
+            existingQueryString.substring(0, sortingParamIndex) +
+            queryString +
+            existingQueryString.substring(ampersandIndex)
+        } else {
+          queryString =
+            existingQueryString.substring(0, sortingParamIndex) + queryString
+        }
+      } else {
+        queryString =
+          existingQueryString === ''
+            ? '?' + queryString
+            : existingQueryString + '&' + queryString
+      }
+
+      const newUrl = window.location.pathname + queryString
+
+      window.location.href = newUrl
     }
 
-    const newUrl = window.location.pathname + queryString;
-
-    window.location.href = newUrl;
-  }
-
-  function getActiveSortType() {
-      const sortTypes = ['Prijs oplopend', 'Prijs aflopend']; 
+    function getActiveSortType() {
+      const sortTypes = ['Prijs oplopend', 'Prijs aflopend']
       for (const sortType of sortTypes) {
         if (isSortTypeActive(sortType)) {
-          return sortType;
+          return sortType
         }
       }
-      return null; 
+      return null
     }
 
-  function isSortTypeActive(sortType) {
-    const currentUrl = window.location.href;
-    const searchString = encodeURIComponent(sortType)
-    const isActive = currentUrl.includes(searchString);
+    function isSortTypeActive(sortType) {
+      const currentUrl = window.location.href
+      const searchString = encodeURIComponent(sortType)
+      const isActive = currentUrl.includes(searchString)
 
-    console.log(isActive, currentUrl, searchString)
-    return isActive
-  }
+      console.log(isActive, currentUrl, searchString)
+      return isActive
+    }
 
-  function initializeSortTypeDisplay() {
-    const sortTypes = ['Prijs aflopend', 'Prijs oplopend']; 
-    let isActive = false;
-    sortTypes.forEach(sortType => {
-
-      if (isSortTypeActive(sortType)) {
-        isActive = true;
-        document.getElementById('selected-sort').textContent = `Sort by: ${sortType}`;
+    function initializeSortTypeDisplay() {
+      const sortTypes = ['Prijs aflopend', 'Prijs oplopend']
+      let isActive = false
+      sortTypes.forEach((sortType) => {
+        if (isSortTypeActive(sortType)) {
+          isActive = true
+          document.getElementById('selected-sort').textContent =
+            `Sort by: ${sortType}`
+        }
+      })
+      const sortTypeSpan = document.getElementById('selected-sort')
+      if (isActive) {
+        sortTypeSpan.classList.remove('hidden')
+      } else {
+        sortTypeSpan.classList.add('hidden')
       }
-    });
-    const sortTypeSpan = document.getElementById('selected-sort');
-    if (isActive) {
-      sortTypeSpan.classList.remove('hidden');
-    } else {
-      sortTypeSpan.classList.add('hidden');
     }
-  }
-
-
-</script>
-
+  </script>
 {% endblock %}

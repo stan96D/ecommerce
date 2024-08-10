@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    
+
     path('mollie_webhook/', views.mollie_webhook, name="mollie_webhook"),
     path('tracking_code_webhook/', views.tracking_code_webhook,
          name="tracking_code_webhook"),
@@ -39,7 +39,8 @@ urlpatterns = [
     path('products/', views.products,
          name='products'),
 
-    path('products/<str:category>/', views.products_by_category, name='products_by_category'),
+    path('products/<str:category>/', views.products_by_category,
+         name='products_by_category'),
     path('products/<str:category>/<str:subcategory>/',
          views.products_by_subcategory, name='products_by_subcategory'),
     path('products/<str:category>/<str:subcategory>/<str:attribute>/',

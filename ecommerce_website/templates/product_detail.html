@@ -1,460 +1,575 @@
 {% extends 'components/main.html' %}
 {% load static tailwind_tags %}
-
-{% block title %}Home{% endblock %}
-
+{% block title %}
+  Home
+{% endblock %}
 {% block content %}
-
-
-<!--
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/typography'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
--->
-<div class="bg-white">
-    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8 pb-12">
-            <!-- Image gallery -->
-            <div class="flex flex-col-reverse">
-                <!-- Image selector -->
-                <div class="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">
-                    <div class="grid grid-cols-4 gap-6" aria-orientation="horizontal" role="tablist">
-                        {% for image in product.images.all %}
-                        <button id="tabs-1-tab-{{ forloop.counter }}"
-                            class="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-amber-400 focus:ring-offset-4"
-                            aria-controls="tabs-1-panel-{{ forloop.counter }}" role="tab" type="button"
-                            onclick="changeImage('{{ image.image.url }}')">
-                            <span class="sr-only">{{ image.alt }}</span>
-                            <span class="absolute inset-0 overflow-hidden rounded-md">
-                                <img src="{{ image.image.url }}" alt="{{ image.alt }}"
-                                    class="h-full w-full object-cover object-center">
-                            </span>
-                            <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
-                            <span
-                                class="ring-transparent pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2"
-                                aria-hidden="true"></span>
-                        </button>
-                        {% endfor %}
-                    </div>
-                </div>
-
-                <div class="aspect-h-1 aspect-w-1 w-full">
-                    <!-- Tab panel, show/hide based on tab state. -->
-                    <div id="tabs-1-panel-1" aria-labelledby="tabs-1-tab-1" role="tabpanel" tabindex="0">
-                        <img id="mainImage" src="{{ product.thumbnail_url }}" alt="{{ product.name }}"
-                            class="h-full w-full object-cover object-center sm:rounded-lg">
-                    </div>
-                </div>
+  <div class="bg-white">
+    <div
+      class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
+    >
+      <div class="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8 pb-12">
+        <!-- Image gallery -->
+        <div class="flex flex-col-reverse">
+          <!-- Image selector -->
+          <div
+            class="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none"
+          >
+            <div
+              class="grid grid-cols-4 gap-6"
+              aria-orientation="horizontal"
+              role="tablist"
+            >
+              {% for image in product.images.all %}
+                <button
+                  id="tabs-1-tab-{{ forloop.counter }}"
+                  class="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-amber-400 focus:ring-offset-4"
+                  aria-controls="tabs-1-panel-{{ forloop.counter }}"
+                  role="tab"
+                  type="button"
+                  onclick="changeImage('{{ image.image.url }}')"
+                >
+                  <span class="sr-only">{{ image.alt }}</span>
+                  <span class="absolute inset-0 overflow-hidden rounded-md">
+                    <img
+                      src="{{ image.image.url }}"
+                      alt="{{ image.alt }}"
+                      class="h-full w-full object-cover object-center"
+                    />
+                  </span>
+                  <!-- Selected: "ring-indigo-500", Not Selected: "ring-transparent" -->
+                  <span
+                    class="ring-transparent pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2"
+                    aria-hidden="true"
+                  ></span>
+                </button>
+              {% endfor %}
             </div>
+          </div>
 
-            <!-- Product info -->
-            <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-                <h4 class="text-xs pt-4 pb-1  text-amber-500 font-semibold ">{{ product.brand }}</h3>
-
-                    <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ product.name }}</h1>
-
-                    {% if product.product_type == "Vloer" %}
-
-                        {% if product.sale_price %}
-                        <div class="flex">
-
-                            
-                            <div
-                                class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
-                                <p class="text-lg font-semibold text-gray-100">€{{ product.sale_price }} per {{product.unit}}</p>
-                            </div>
-                            <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400"><del>€{{ product.price }}</del></p>
-
-                        </div>
-
-                        {%else%}
-                        <div class="mt-3">
-                            <h2 class="sr-only">Product information</h2>
-                            <p class="text-3xl font-medium tracking-tight text-gray-900">€{{ product.price }} per {{product.unit}}
-                            </p>
-
-                        </div>
-                        {% endif %}
-                    {% else %}
-                        {% if product.unit_sale_price %}
-                        <div class="flex">
-                        
-                            <div class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
-                                <p class="text-lg font-semibold text-gray-100">€{{ product.unit_sale_price }} per {{product.unit}}</p>
-                            </div>
-                            <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400"><del>€{{ product.unit_price }}
-                                    </del></p>
-                        
-                        </div>
-                        
-                        {%else%}
-                        <div class="mt-3">
-                            <h2 class="sr-only">Product information</h2>
-                            <p class="text-3xl font-medium tracking-tight text-gray-900">€{{ product.unit_price }} per {{product.unit}}
-                            </p>
-                        
-                        </div>
-                        {% endif %}
-                    {% endif%}
-                    {% if product.unit == 'm²' %}
-                    <div class="mt-1">
-
-                        <h2 class="sr-only">Product information</h2>
-                        {% if product.sale_price %}
-                        <p class="text-base tracking-tight text-gray-500">€{{ product.unit_sale_price }} per pak</p>
-
-                        {% else %}
-                        <p class="text-base tracking-tight text-gray-500">€{{ product.unit_price }} per pak</p>
-
-                        {% endif %}
-                    </div>
-                    {% endif %}
-                    <div class="mt-6">
-                        <h3 class="text-xs font-semibold tracking-wide text-gray-500 uppercase">Artikelnummer </h3>
-                        {% if product.attribtues.Artikelnummer %}
-                        <p class="text-gray-300 text-sm font-medium">{{ product.attributes.Artikelnummer }}</p>
-                        {% else %}
-                        <p class="text-gray-300 text-sm font-medium">Geen</p>
-
-                        {% endif %}
-                    </div>
-
-                    <form action="{% url 'add_to_cart' %}" id="add-to-cart-form" method="post"
-                        onsubmit="return validateForm()">
-                        {% csrf_token %}
-                        <input type="hidden" name="product_id" value="{{ product.id }}">
-                        <input type="hidden" id="packs" name="packs">
-                        <input type="hidden" id="is_product_detail" name="is_product_detail" value="True">
-
-                        <!-- Color selection -->
-                        {% if alternative_products %}
-                        <div class="mt-10">
-                            <h3 class="text-sm text-gray-600 font-medium">Overige kleuren</h3>
-                            <fieldset class="mt-2">
-                                <legend class="sr-only">Kies een kleur</legend>
-                                <span class="flex items-center space-x-3">
-                                    <!-- Loop through product colors -->
-
-                                    {% for alternative_product in alternative_products %}
-                                    {% if alternative_product.id == product.id %}
-                                    <a href="/product/{{ alternative_product.id }}"
-                                        class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-700">
-                                        <input type="radio" name="alternative_product.id" value="{{ alternative_product.id }}"
-                                            class="sr-only peer" checked>
-                                        <span aria-hidden="true"
-                                            class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden peer-checked:border-2 peer-checked:border-amber-500 p-0.5">
-                                            <img src="{{ alternative_product.thumbnail_url }}"
-                                                alt="{{ alternative_product.name }}"
-                                                class="h-full w-full object-cover rounded-full">
-                                        </span>
-                                    </a>
-                                    {% else %}
-                                    <a href="/product/{{ alternative_product.id }}"
-                                        class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-700">
-                                        <input type="radio" name="alternative_product.id" value="{{ alternative_product.id }}"
-                                            class="sr-only peer">
-                                        <span aria-hidden="true"
-                                            class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden p-0.5">
-                                            <img src="{{ alternative_product.thumbnail_url }}"
-                                                alt="{{ alternative_product.name }}"
-                                                class="h-full w-full object-cover rounded-full">
-                                        </span>
-                                    </a>
-                                    {% endif %}
-                                    {% endfor %}
-
-                                </span>
-                            </fieldset>
-                        </div>
-
-                        {% endif %}
-
-                        <div class="py-6">
-                            {% for motivation in store_motivations %}
-                            <p>
-                                <i class="fas fa-check-circle text-green-500 mr-2 "></i>
-                                {{ motivation.name }}
-                            </p>
-                            {% endfor %}
-                        </div>
-                        
-                        {% if product.surface != 'undefined' and product.unit == 'm²' %}
-                        <div class=" bg-gray-100 p-4 mt-6 rounded-md">
-                            <div class="flex justify-between items-end">
-                                <label for="quantity" class="block text-sm font-medium text-gray-700 pb-2">
-                                    Aantal meter (m²)
-                                </label>
-                                <span class="block text-sm font-medium text-gray-700 pb-2">
-                                    Aantal pakketten
-                                </span>
-
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <div class="relative w-5/6">
-                                    <input type="number" id="quantity" min="1" max="{{ product.quantity }}"
-                                        class="mt-1 focus:ring-indigo-500 focus:border-gray-300 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                        <!-- Add the arrow icon if needed -->
-                                    </div>
-                                </div>
-                                <div class="ml-4 w-1/3 text-right">
-                                    <p class="text-sm font-normal text-gray-700" id="packs-display">
-                                        <!-- Placeholder text for packs -->
-                                        0
-                                    </p>
-                                </div>
-
-                            </div>
-
-                            <div class="mt-2 flex justify-between">
-                                <div class="text-xs text-left text-gray-700">
-                                    {{ product.surface }} m² per pak
-                                </div>
-                                <div class="text-sm font-medium text-right text-gray-900">
-                                    <p id="total_price">€0.00</p>
-                                </div>
-                            </div>
-
-
-                        </div>
-
-                        <p id="quantity-error" class="hidden text-red-500 text-sm mt-1">Vul alsjeblieft een waarde in.
-                        </p>
-                        <div class="text-left text-xs italic text-gray-700 font-medium mt-3 pl-3 pb-3">
-                            Denk aan 10% snijverlies!
-
-                        </div>
-                        {% else %}
-                                                <div class=" bg-gray-100 p-4 mt-6 rounded-md">
-                                                    <div class="flex justify-between items-end">
-                                                        <label for="quantity" class="block text-sm font-medium text-gray-700 pb-2">
-                                                            Aantal stuks
-                                                        </label>
-
-                                                
-                                                    </div>
-                                                    <div class="flex justify-between items-center">
-                                                        <div class="relative w-5/6">
-                                                            <input type="number" id="quantity" min="1" max="{{ product.quantity }}"
-                                                                class="mt-1 focus:ring-indigo-500 focus:border-gray-300 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
-                                                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                                                                <!-- Add the arrow icon if needed -->
-                                                            </div>
-                                                        </div>
-                                                        <div class="ml-4 w-1/3 text-right">
-                                                    <div class="text-sm font-medium text-right text-gray-900">
-                                                        <p id="total_price">€0.00</p>
-                                                    </div>
-                                                        </div>
-                                                
-                                                    </div>
-
-                                                    {% if product.surface != 'undefined' %}
-                                                        <div class="mt-2 flex justify-between">
-                                                            <div class="text-xs text-left text-gray-700">
-                                                                {{ product.surface }} m² per pak
-                                                            </div>
-            
-                                                        </div>
-                                                    {% endif %}
-                                                </div>
-                                                
-                                                <p id="quantity-error" class="hidden text-red-500 text-sm mt-1">Vul alsjeblieft een waarde in.
-                                                </p>
-
-                        {% endif %}
-                        <!-- Submit button -->
-                        <div class="mt-10 flex">
-
-                            <button type="submit"
-                                class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-amber-500 px-8 py-3 text-base font-medium text-white hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full">In
-                                winkelmand</button>
-
-                            <button type="button"
-                                class="ml-4 flex items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
-                                <svg class="h-6 w-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                    stroke="currentColor" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-                                </svg>
-                                <span class="sr-only">Add to favorites</span>
-                            </button>
-
-                        </div>
-                    </form>
+          <div class="aspect-h-1 aspect-w-1 w-full">
+            <!-- Tab panel, show/hide based on tab state. -->
+            <div
+              id="tabs-1-panel-1"
+              aria-labelledby="tabs-1-tab-1"
+              role="tabpanel"
+              tabindex="0"
+            >
+              <img
+                id="mainImage"
+                src="{{ product.thumbnail_url }}"
+                alt="{{ product.name }}"
+                class="h-full w-full object-cover object-center sm:rounded-lg"
+              />
             </div>
+          </div>
         </div>
 
-        {% if misc_products and product.product_type != "Accessoires"%}
+        <!-- Product info -->
+        <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
+          <h4 class="text-xs pt-4 pb-1 text-amber-500 font-semibold">
+            {{ product.brand }}
+          </h4>
+
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+            {{ product.name }}
+          </h1>
+
+          {% if product.product_type == "Vloer" %}
+            {% if product.sale_price %}
+              <div class="flex">
+                <div
+                  class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
+                >
+                  <p class="text-lg font-semibold text-gray-100">
+                    €{{ product.sale_price }} per {{ product.unit }}
+                  </p>
+                </div>
+                <p class="mt-2 py-2 px-4 text-lg font-base text-gray-400">
+                  <del>€{{ product.price }}</del>
+                </p>
+              </div>
+            {% else %}
+              <div class="mt-3">
+                <h2 class="sr-only">Product information</h2>
+                <p class="text-3xl font-medium tracking-tight text-gray-900">
+                  €{{ product.price }} per {{ product.unit }}
+                </p>
+              </div>
+            {% endif %}
+          {% else %}
+            {% if product.unit_sale_price %}
+              <div class="flex">
+                <div
+                  class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
+                >
+                  <p class="text-lg font-semibold text-gray-100">
+                    €{{ product.unit_sale_price }} per {{ product.unit }}
+                  </p>
+                </div>
+                <p class="mt-2 py-2 px-4 text-lg font-base text-gray-400">
+                  <del>€{{ product.unit_price }} </del>
+                </p>
+              </div>
+            {% else %}
+              <div class="mt-3">
+                <h2 class="sr-only">Product information</h2>
+                <p class="text-3xl font-medium tracking-tight text-gray-900">
+                  €{{ product.unit_price }} per {{ product.unit }}
+                </p>
+              </div>
+            {% endif %}
+          {% endif %}
+          {% if product.unit == 'm²' %}
+            <div class="mt-1">
+              <h2 class="sr-only">Product information</h2>
+              {% if product.sale_price %}
+                <p class="text-base tracking-tight text-gray-500">
+                  €{{ product.unit_sale_price }} per pak
+                </p>
+              {% else %}
+                <p class="text-base tracking-tight text-gray-500">
+                  €{{ product.unit_price }} per pak
+                </p>
+              {% endif %}
+            </div>
+          {% endif %}
+          <div class="mt-6">
+            <h3
+              class="text-xs font-semibold tracking-wide text-gray-500 uppercase"
+            >
+              Artikelnummer
+            </h3>
+            {% if product.attribtues.Artikelnummer %}
+              <p class="text-gray-300 text-sm font-medium">
+                {{ product.attributes.Artikelnummer }}
+              </p>
+            {% else %}
+              <p class="text-gray-300 text-sm font-medium">Geen</p>
+            {% endif %}
+          </div>
+
+          <form
+            action="{% url 'add_to_cart' %}"
+            id="add-to-cart-form"
+            method="post"
+            onsubmit="return validateForm()"
+          >
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ product.id }}" />
+            <input type="hidden" id="packs" name="packs" />
+            <input
+              type="hidden"
+              id="is_product_detail"
+              name="is_product_detail"
+              value="True"
+            />
+
+            <!-- Color selection -->
+            {% if alternative_products %}
+              <div class="mt-10">
+                <h3 class="text-sm text-gray-600 font-medium">
+                  Overige kleuren
+                </h3>
+                <fieldset class="mt-2">
+                  <legend class="sr-only">Kies een kleur</legend>
+                  <span class="flex items-center space-x-3">
+                    <!-- Loop through product colors -->
+
+                    {% for alternative_product in alternative_products %}
+                      {% if alternative_product.id == product.id %}
+                        <a
+                          href="/product/{{ alternative_product.id }}"
+                          class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-700"
+                        >
+                          <input
+                            type="radio"
+                            name="alternative_product.id"
+                            value="{{ alternative_product.id }}"
+                            class="sr-only peer"
+                            checked
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden peer-checked:border-2 peer-checked:border-amber-500 p-0.5"
+                          >
+                            <img
+                              src="{{ alternative_product.thumbnail_url }}"
+                              alt="{{ alternative_product.name }}"
+                              class="h-full w-full object-cover rounded-full"
+                            />
+                          </span>
+                        </a>
+                      {% else %}
+                        <a
+                          href="/product/{{ alternative_product.id }}"
+                          class="relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none ring-gray-700"
+                        >
+                          <input
+                            type="radio"
+                            name="alternative_product.id"
+                            value="{{ alternative_product.id }}"
+                            class="sr-only peer"
+                          />
+                          <span
+                            aria-hidden="true"
+                            class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden p-0.5"
+                          >
+                            <img
+                              src="{{ alternative_product.thumbnail_url }}"
+                              alt="{{ alternative_product.name }}"
+                              class="h-full w-full object-cover rounded-full"
+                            />
+                          </span>
+                        </a>
+                      {% endif %}
+                    {% endfor %}
+                  </span>
+                </fieldset>
+              </div>
+            {% endif %}
+
+            <div class="py-6">
+              {% for motivation in store_motivations %}
+                <p>
+                  <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                  {{ motivation.name }}
+                </p>
+              {% endfor %}
+            </div>
+
+            {% if product.surface != 'undefined' and product.unit == 'm²' %}
+              <div class="bg-gray-100 p-4 mt-6 rounded-md">
+                <div class="flex justify-between items-end">
+                  <label
+                    for="quantity"
+                    class="block text-sm font-medium text-gray-700 pb-2"
+                  >
+                    Aantal meter (m²)
+                  </label>
+
+                  <span class="block text-sm font-medium text-gray-700 pb-2">
+                    Aantal pakken
+                  </span>
+                </div>
+                <div class="flex justify-between items-center">
+                  <div class="relative w-5/6">
+                    <input
+                      type="number"
+                      id="quantity"
+                      min="1"
+                      max="{{ product.quantity }}"
+                      class="mt-1 focus:ring-indigo-500 focus:border-gray-300 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                    <div
+                      class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+                    >
+                      <!-- Add the arrow icon if needed -->
+                    </div>
+                  </div>
+                  <div class="ml-4 w-1/3 text-right">
+                    <p
+                      class="text-sm font-normal text-gray-700"
+                      id="packs-display"
+                    >
+                      <!-- Placeholder text for packs -->
+                      0
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mt-2 flex justify-between">
+                  <div class="text-xs text-left text-gray-700">
+                    {{ product.surface }} m² per pak
+                  </div>
+                  <div class="text-sm font-medium text-right text-gray-900">
+                    <p id="total_price">€0.00</p>
+                  </div>
+                </div>
+              </div>
+
+              <p id="quantity-error" class="hidden text-red-500 text-sm mt-1">
+                Vul alsjeblieft een waarde in.
+              </p>
+              <div
+                class="text-left text-xs italic text-gray-700 font-medium mt-3 pl-3 pb-3"
+              >
+                Denk aan 10% snijverlies!
+              </div>
+            {% else %}
+              <div class="bg-gray-100 p-4 mt-6 rounded-md">
+                <div class="flex justify-between items-end">
+                  <label
+                    for="quantity"
+                    class="block text-sm font-medium text-gray-700 pb-2"
+                  >
+                    Aantal stuks
+                  </label>
+                </div>
+                <div class="flex justify-between items-center">
+                  <div class="relative w-5/6">
+                    <input
+                      type="number"
+                      id="quantity"
+                      min="1"
+                      max="{{ product.quantity }}"
+                      class="mt-1 focus:ring-indigo-500 focus:border-gray-300 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                    />
+                    <div
+                      class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+                    >
+                      <!-- Add the arrow icon if needed -->
+                    </div>
+                  </div>
+                  <div class="ml-4 w-1/3 text-right">
+                    <div class="text-sm font-medium text-right text-gray-900">
+                      <p id="total_price">€0.00</p>
+                    </div>
+                  </div>
+                </div>
+
+                {% if product.surface != 'undefined' %}
+                  <div class="mt-2 flex justify-between">
+                    <div class="text-xs text-left text-gray-700">
+                      {{ product.surface }} m² per pak
+                    </div>
+                  </div>
+                {% endif %}
+              </div>
+
+              <p id="quantity-error" class="hidden text-red-500 text-sm mt-1">
+                Vul alsjeblieft een waarde in.
+              </p>
+            {% endif %}
+            <!-- Submit button -->
+            <div class="mt-10 flex">
+              <button
+                type="submit"
+                class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-amber-500 px-8 py-3 text-base font-medium text-white hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+              >
+                In winkelmand
+              </button>
+
+              <button
+                type="button"
+                class="ml-4 flex items-center justify-center rounded-md px-3 py-3 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+              >
+                <svg
+                  class="h-6 w-6 flex-shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                  />
+                </svg>
+                <span class="sr-only">Add to favorites</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {% if misc_products and product.product_type != "Accessoires" %}
         <section class="sm:pb-12">
-            <div class="bg-white">
-                <div class="mx-auto max-w-2xl lg:max-w-7xl">
-                    <div class="flex items-center justify-between space-x-4">
-                        <h2 class="text-lg font-medium text-gray-900">Deze heb je misschien ook nodig</h2>
-                    </div>
-                    <div class="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-6 xl:gap-x-8">
-                        {% for product in misc_products|slice:":6" %}
-                        {% include 'components/related_product_item.html' %}
-                        {% endfor %}
-                    </div>
-                </div>
+          <div class="bg-white">
+            <div class="mx-auto max-w-2xl lg:max-w-7xl">
+              <div class="flex items-center justify-between space-x-4">
+                <h2 class="text-lg font-medium text-gray-900">
+                  Deze heb je misschien ook nodig
+                </h2>
+              </div>
+              <div
+                class="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-6 xl:gap-x-8"
+              >
+                {% for product in misc_products|slice:":6" %}
+                  {% include 'components/related_product_item.html' %}
+                {% endfor %}
+              </div>
             </div>
+          </div>
         </section>
-        {% endif %}
-
-
-        {% for product_section in product.sections %}
+      {% endif %}
+      {% for product_section in product.sections %}
         {% for section_name, section_values in product_section.items %}
-        {% if section_values %}
-        <section aria-labelledby="details-heading">
-            <h2 id="details-heading" class="sr-only">Additional details</h2>
-            <div class="divide-y divide-gray-200 border-t">
+          {% if section_values %}
+            <section aria-labelledby="details-heading">
+              <h2 id="details-heading" class="sr-only">Additional details</h2>
+              <div class="divide-y divide-gray-200 border-t">
                 <div>
-                    <!-- Changed to <h2> for example, adjust as needed -->
-                    <h2 class="flex items-center justify-between text-left cursor-pointer"
-                        onclick="toggleSection('{{ forloop.parentloop.counter }}')">
-                        <span class="text-gray-900 text-sm font-medium">{{ section_name }}</span>
-                        <button type="button" aria-expanded="false"
-                            class="group relative flex items-center justify-between py-4 text-left">
-                            <svg class="hidden h-6 w-6 text-gray-400 group-hover:text-gray-500 toggle-icon toggle-plus"
-                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                            </svg>
-                            <!-- Open: "block", Closed: "hidden" -->
-                            <svg class="block h-6 w-6 text-gray-400 group-hover:text-gray-500 toggle-icon toggle-minus"
-                                fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-                            </svg>
-                        </button>
-                    </h2>
-                    <div id="disclosure-{{ forloop.parentloop.counter }}"
-                        class="prose prose-sm {% if  section_visible %}hidden{% endif %}  pb-6">
-                        {% if section_name == "Omschrijving" %}
-                        <p class="text-gray-700 text-sm">
-                            {% for attribute_name, attribute_value in section_values.items %}
+                  <!-- Changed to <h2> for example, adjust as needed -->
+                  <h2
+                    class="flex items-center justify-between text-left cursor-pointer"
+                    onclick="toggleSection('{{ forloop.parentloop.counter }}')"
+                  >
+                    <span class="text-gray-900 text-sm font-medium"
+                      >{{ section_name }}</span
+                    >
+                    <button
+                      type="button"
+                      aria-expanded="false"
+                      class="group relative flex items-center justify-between py-4 text-left"
+                    >
+                      <svg
+                        class="hidden h-6 w-6 text-gray-400 group-hover:text-gray-500 toggle-icon toggle-plus"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                      <!-- Open: "block", Closed: "hidden" -->
+                      <svg
+                        class="block h-6 w-6 text-gray-400 group-hover:text-gray-500 toggle-icon toggle-minus"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M19.5 12h-15"
+                        />
+                      </svg>
+                    </button>
+                  </h2>
+                  <div
+                    id="disclosure-{{ forloop.parentloop.counter }}"
+                    class="prose prose-sm {% if section_visible %}hidden{% endif %} pb-6"
+                  >
+                    {% if section_name == "Omschrijving" %}
+                      <p class="text-gray-700 text-sm">
+                        {% for attribute_name, attribute_value in section_values.items %}
+                          {{ attribute_value }}
+                        {% endfor %}
+                      </p>
+                    {% elif section_name == "Aanvullende Informatie" %}
+                      <ul role="list" class="text-gray-700">
+                        {% for attribute_name, attribute_value in section_values.items %}
+                          <li>
+                            {{ attribute_name }}
+                            {% if attribute_value|urlize %}
+                              <a
+                                href="{{ attribute_value }}"
+                                target="_blank"
+                                class="font-semibold text-blue-600 custom-link"
+                                >{{ attribute_value }}
+                              </a>
+                            {% else %}
+                              {{ attribute_value }}
+                            {% endif %}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <ul role="list" class="text-gray-700">
+                        {% for attribute_name, attribute_value in section_values.items %}
+                          <li class="">
+                            <bold>{{ attribute_name }}</bold>
                             {{ attribute_value }}
-                            {% endfor %}
-                        </p>
-                        {% elif section_name == "Aanvullende Informatie" %}
-                        <ul role="list" class="text-gray-700">
-                            {% for attribute_name, attribute_value in section_values.items %}
-                            <li>{{ attribute_name }}
-                                {% if attribute_value|urlize %}
-                                <a href="{{ attribute_value }}" target="_blank"
-                                    class="font-semibold text-blue-600 custom-link">{{ attribute_value }} </a>
-                                {% else %}
-                                {{ attribute_value }}
-                                {% endif %}
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        {% else %}
-                        <ul role="list" class="text-gray-700">
-                            {% for attribute_name, attribute_value in section_values.items %}
-                            <li class="">
-                                <bold>{{ attribute_name }}</bold> {{ attribute_value }}
-                            </li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                    </div>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
                 </div>
-            </div>
-        </section>
-        {% endif %}
+              </div>
+            </section>
+          {% endif %}
         {% endfor %}
-        {% endfor %}
+      {% endfor %}
     </div>
-    <div>
-        {% include 'components/store_motivation_section.html' %}
-    </div>
-</div>
-<script>
-
+    <div>{% include 'components/store_motivation_section.html' %}</div>
+  </div>
+  <script>
     function toggleSection(sectionNumber) {
-        const disclosureContent = document.getElementById(`disclosure-${sectionNumber}`);
-        const togglePlusIcon = disclosureContent.previousElementSibling.querySelector('.toggle-plus');
-        const toggleMinusIcon = disclosureContent.previousElementSibling.querySelector('.toggle-minus');
+      const disclosureContent = document.getElementById(
+        `disclosure-${sectionNumber}`,
+      )
+      const togglePlusIcon =
+        disclosureContent.previousElementSibling.querySelector('.toggle-plus')
+      const toggleMinusIcon =
+        disclosureContent.previousElementSibling.querySelector('.toggle-minus')
 
-        const isOpen = disclosureContent.classList.toggle('hidden');
+      const isOpen = disclosureContent.classList.toggle('hidden')
 
-        // Toggle icons
-        togglePlusIcon.classList.toggle('hidden', !isOpen);
-        toggleMinusIcon.classList.toggle('hidden', isOpen);
+      // Toggle icons
+      togglePlusIcon.classList.toggle('hidden', !isOpen)
+      toggleMinusIcon.classList.toggle('hidden', isOpen)
 
-        // Update aria-expanded attribute
-        disclosureContent.previousElementSibling.querySelector('button').setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      // Update aria-expanded attribute
+      disclosureContent.previousElementSibling
+        .querySelector('button')
+        .setAttribute('aria-expanded', isOpen ? 'true' : 'false')
     }
 
-
-    document.getElementById('add-to-cart-form').addEventListener('submit', function (event) {
+    document
+      .getElementById('add-to-cart-form')
+      .addEventListener('submit', function (event) {
         if (!document.getElementById('quantity').value) {
-            event.preventDefault();
-            document.getElementById('quantity-error').classList.remove('hidden');
+          event.preventDefault()
+          document.getElementById('quantity-error').classList.remove('hidden')
         }
-    });
-    
-    const unit = "{{ product.unit }}";
-    const quantityInput = document.getElementById('quantity');
-    const packsDisplay = document.getElementById('packs-display');
-    const packsInput = document.getElementById('packs');
-    const totalPriceDisplay = document.getElementById('total_price');
-    const hasSale = {{ product.has_sale }};
+      })
+
+    const quantityInput = document.getElementById('quantity')
+    const packsDisplay = document.getElementById('packs-display')
+    const packsInput = document.getElementById('packs')
+    const totalPriceDisplay = document.getElementById('total_price')
+    const pricePerPack = '{{ product.unit_price }}'
+    const salePricePerPack = '{{ product.unit_sale_price }}'
 
     function updatePacksDisplay() {
-        const quantity = parseFloat(quantityInput.value) || 0;
-        const surfacePerPack = {{ product.surface }};
+      const quantity = parseFloat(quantityInput.value) || 0
+      const surfacePerPack = '{{ product.surface }}'
+      const hasSaleString = '{{ product.has_sale }}'
 
-        let pricePerPack;
+      const hasSale = JSON.parse(hasSaleString.toLowerCase())
+      const unit = '{{ product.unit }}'
+      let price = pricePerPack
 
-        if (hasSale) {
-            pricePerPack = {{ product.unit_sale_price }};
-        } else {
-            pricePerPack = {{ product.unit_price }};
-        }
+      if (hasSale) {
+        price = salePricePerPack
+      }
 
-        if (surfacePerPack && unit == 'm²') {
+      if (surfacePerPack && unit == 'm²') {
+        const packs = Math.ceil(quantity / surfacePerPack)
+        packsDisplay.textContent = `${packs} pakketten`
+        packsInput.value = packs
 
-            const packs = Math.ceil(quantity / surfacePerPack);
-            packsDisplay.textContent = `${packs} pakketten`;
-            packsInput.value = packs;
+        const totalPrice = (packs * price).toFixed(2)
+        console.log(totalPrice)
+        totalPriceDisplay.textContent = '€' + totalPrice
+        console.log(totalPriceDisplay)
+      } else {
+        console.log('undefined')
+        packsInput.value = quantity
 
-            const totalPrice = (packs * pricePerPack).toFixed(2);
-            console.log(totalPrice)
-            totalPriceDisplay.textContent = "€" + totalPrice;
-            console.log(totalPriceDisplay)
-
-        } else {
-            console.log('undefined')
-            packsInput.value = quantity;
-
-            const totalPrice = (quantity * pricePerPack).toFixed(2);
-            console.log(totalPrice)
-            totalPriceDisplay.textContent = "€" + totalPrice;
-            console.log(totalPriceDisplay)
-
-        }
-
+        const totalPrice = (quantity * price).toFixed(2)
+        console.log(totalPrice)
+        totalPriceDisplay.textContent = '€' + totalPrice
+        console.log(totalPriceDisplay)
+      }
     }
 
-    quantityInput.addEventListener('input', updatePacksDisplay);
-    quantityInput.addEventListener('change', updatePacksDisplay);
+    quantityInput.addEventListener('input', updatePacksDisplay)
+    quantityInput.addEventListener('change', updatePacksDisplay)
 
     function changeImage(imageUrl) {
-        document.getElementById('mainImage').src = imageUrl;
+      document.getElementById('mainImage').src = imageUrl
     }
-
-</script>
+  </script>
 {% endblock %}

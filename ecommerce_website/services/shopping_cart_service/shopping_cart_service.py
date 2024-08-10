@@ -7,7 +7,6 @@ class ShoppingCartService(AbstractShoppingCartService):
 
         self.request = request
 
-
     @property
     def shopping_cart(self) -> ShoppingCartInterface:
 
@@ -17,7 +16,6 @@ class ShoppingCartService(AbstractShoppingCartService):
             return AccountShoppingCart()
         else:
             return SessionShoppingCart(self.request)
-
 
     def add_item(self, product_id, quantity):
         self.shopping_cart.add_item(product_id, quantity)
@@ -41,19 +39,19 @@ class ShoppingCartService(AbstractShoppingCartService):
     @property
     def total_price(self):
         return self.shopping_cart.total_price
-    
+
     @property
     def sub_price(self):
         return self.shopping_cart.sub_total
-    
+
     @property
     def tax_price_high(self):
         return self.shopping_cart.total_tax(21)
-    
+
     @property
     def tax_price_low(self):
         return self.shopping_cart.total_tax(9)
-    
+
     @property
     def shipping_price(self):
         return self.shopping_cart.shipping_price
@@ -61,7 +59,7 @@ class ShoppingCartService(AbstractShoppingCartService):
     @property
     def count(self):
         return len(self.shopping_cart.cart_items)
-    
+
     @property
     def is_valid(self):
         return len(self.shopping_cart.cart_items) > 0

@@ -1,5 +1,6 @@
 from ecommerce_website.classes.helpers.surface_area_calculator import SurfaceAreaCalculator
-import json 
+import json
+
 
 class ProductView:
     def __init__(self, product):
@@ -43,17 +44,16 @@ class ProductDetailView:
         self.name = product.name
         self.unit_price = product.unit_selling_price
         self.price = product.selling_price
-    
+
         if product.thumbnail and product.thumbnail.url:
             self.thumbnail_url = product.thumbnail.url
 
         else:
             self.thumbnail_url = "/static/images/no_image_placeholder.png"
-        
+
         self.images = product.images
         self.quantity = product.stock.quantity
         self.description = attributes_dict.get('Omschrijving', '')
-
 
         self.product_type = attributes_dict.get('Producttype', 'Vloer')
         self.unit = attributes_dict.get('Eenheid', 'm²')
@@ -64,10 +64,9 @@ class ProductDetailView:
                 surface)
         else:
             self.surface = "undefined"
-            
-        
+
         self.brand = attributes_dict.get('Merk', '')
-        self.has_sale = str(product.has_product_sale).lower()
+        self.has_sale = str(product.has_product_sale)
 
         self.sale_price = product.sale_price
         self.unit_sale_price = product.unit_sale_price
@@ -87,7 +86,7 @@ class ProductDetailView:
                 product_specifications["Algemene Specificaties"][attribute_type] = attribute_value
             elif attribute_type in ["Omschrijving"]:
                 product_specifications["Omschrijving"][attribute_type] = attribute_value
-            
+
             elif attribute_type in ["Links"]:
                 try:
                     links_dict = json.loads(attribute_value)
@@ -110,7 +109,3 @@ class ProductDetailView:
                 {"Aanvullende Informatie":
                     product_specifications["Aanvullende Informatie"]},
             ]
-
-
-
-

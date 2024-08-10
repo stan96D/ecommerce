@@ -1,41 +1,65 @@
 <li class="flex py-6">
-    <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-        <img src="{{ item.thumbnail.url }}" alt="{{ item.name }}" class="h-full w-full object-cover object-center">
+  <div
+    class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200"
+  >
+    <img
+      src="{{ item.thumbnail.url }}"
+      alt="{{ item.name }}"
+      class="h-full w-full object-cover object-center"
+    />
+  </div>
+
+  <div class="ml-4 flex flex-1 flex-col">
+    <div class="flex justify-between gap-x-2 text-sm font-medium text-gray-900">
+      <h3>
+        <a href="#">{{ item.name }}</a>
+      </h3>
+      <div class="ml-2">
+        <button
+          type="submit"
+          class="text-base inline-flex pt-1 pr-2 text-gray-300 hover:text-red-400"
+        >
+          <span class="sr-only">Remove</span>
+          <i class="fas fa-trash-alt h-5 w-5"></i>
+          <!-- FontAwesome trashcan icon -->
+        </button>
+      </div>
     </div>
 
-    <div class="ml-4 flex flex-1 flex-col">
-        <div class="flex justify-between gap-x-2 text-sm font-medium text-gray-900">
-            <h3>
-                <a href="#">{{ item.name }}</a>
-            </h3>
-            <div class="ml-2">
-                <button type="submit" class="text-base inline-flex pt-1 pr-2 text-gray-300 hover:text-red-400">
-                    <span class="sr-only">Remove</span>
-                    <i class="fas fa-trash-alt h-5 w-5"></i> <!-- FontAwesome trashcan icon -->
-                </button>
-            </div>
-        </div>
+    {% if item.sale_price %}
+      <div class="flex items-center mt-1 text-xs text-gray-500">
+        <span class="text-amber-500 font-semibold">Kortingsprijs:</span>
+        <span class="ml-1">€{{ item.unit_sale_price }} per pak</span>
+      </div>
+      <p class="mt-1 text-xs text-gray-500 line-through">
+        €{{ item.unit_price }} per pak
+      </p>
+    {% else %}
+      <p class="mt-1 text-xs text-gray-500">€{{ item.unit_price }} per pak</p>
+    {% endif %}
 
-        {% if item.sale_price %}
-        <div class="flex items-center mt-1 text-xs text-gray-500">
-            <span class="text-amber-500 font-semibold">Kortingsprijs:</span>
-            <span class="ml-1">€{{ item.unit_sale_price }} per pak</span>
+    <div class="flex flex-1 items-end justify-between text-sm">
+      <div class="pt-2">
+        <input
+          type="number"
+          id="{{ item.id }}"
+          name="{{ item.id }}"
+          value="{{ item.quantity }}"
+          min="1"
+          max="{{ item.stock }}"
+          step="1"
+          onchange="updateQuantity(this, '{{ item.id }}')"
+          class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+        />
+        <div
+          class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+        >
+          <!-- Optional: Add any additional elements or indicators here -->
         </div>
-        <p class="mt-1 text-xs text-gray-500 line-through">€{{ item.unit_price }} per pak</p>
-        {% else %}
-        <p class="mt-1 text-xs text-gray-500">€{{ item.unit_price }} per pak</p>
-        {% endif %}
-
-        <div class="flex flex-1 items-end justify-between text-sm">
-            <div class="pt-2">
-                <input type="number" id="{{ item.id }}" name="{{ item.id }}" value="{{ item.quantity }}" min="1"
-                    max="{{ item.stock }}" step="1" onchange="updateQuantity(this, '{{ item.id }}')"
-                    class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                    <!-- Optional: Add any additional elements or indicators here -->
-                </div>
-            </div>
-            <span class="font-medium text-gray-900 text-sm pr-3">€{{ item.totalPrice }} </span>
-        </div>
+      </div>
+      <span class="font-medium text-gray-900 text-sm pr-3"
+        >€{{ item.totalPrice }}
+      </span>
     </div>
+  </div>
 </li>

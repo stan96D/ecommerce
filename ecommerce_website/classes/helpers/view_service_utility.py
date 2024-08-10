@@ -52,23 +52,25 @@ class ViewServiceUtility:
     @staticmethod
     def get_store_motivations():
         store_motivations_data = StoreMotivationService.get_all_active_motivations()
+        print(store_motivations_data)
         return StoreMotivationViewService().generate(store_motivations_data)
 
     @staticmethod
     def get_active_categories():
-        active_categories = ProductCategoryService().get_all_active_head_product_categories()
+        active_categories = ProductCategoryService(
+        ).get_all_active_head_product_categories()
         return active_categories
 
     @staticmethod
     def get_runner_products():
         products = ProductService().get_all_runner_products()
         return ProductViewService().generate(products)
-    
+
     @staticmethod
     def get_orders_by_user(user):
-        orders =  OrderService().get_orders_by_account(user)
+        orders = OrderService().get_orders_by_account(user)
         return OrderItemViewService().generate(orders)
-    
+
     @staticmethod
     def get_returnable_orders_by_user(user):
         orders = OrderService().get_orders_by_account(user)
@@ -101,13 +103,12 @@ class ViewServiceUtility:
 
     @staticmethod
     def get_order_info(request):
-        return  OrderInfoService(request).get_order()
+        return OrderInfoService(request).get_order()
 
     @staticmethod
     def get_order_by_id(id):
         order = OrderService().get_order_by_id(id)
         return OrderItemViewService().get(order)
-
 
     @staticmethod
     def get_product_views(products):
@@ -117,21 +118,21 @@ class ViewServiceUtility:
     def get_active_delivery_methods():
         delivery_methods = DeliveryMethodService.get_all_active_delivery_methods()
         return DeliveryMethodViewService().generate(delivery_methods)
-    
+
     @staticmethod
     def get_alternative_products(id):
         products = ProductService.get_related_products(id)
         return ProductDetailViewService().generate(products)
-    
+
     @staticmethod
     def get_all_brands():
         return BrandService.get_all_brands()
-    
+
     @staticmethod
     def get_related_products(id):
         related_products = RelatedProductService.get_related_by_product(id)
         return RelatedProductViewService().generate(related_products)
-    
+
     @staticmethod
     def get_misc_products():
         misc_products = ProductService.get_misc_products()

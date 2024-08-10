@@ -4,614 +4,786 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-
-<div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+  <div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
     <div class="border-b pb-12 border-gray-200 pt-24 relative">
-        <h1 class="text-4xl font-bold tracking-tight text-gray-900" id="header-text">Account</h1>
-        <p class="mt-4 text-base text-gray-500">Hoi, Stan Deckers!</p>
+      <h1
+        class="text-4xl font-bold tracking-tight text-gray-900"
+        id="header-text"
+      >
+        Account
+      </h1>
+      <p class="mt-4 text-base text-gray-500">Hoi, Stan Deckers!</p>
 
-        <!-- Move buttons inside the header -->
-        <div class="mb-6 flex items-center justify-end gap-x-6 absolute bottom-0 right-0">
-            <button type="submit" id="save-button"
-                class="rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500">Opslaan</button>
-        <button type="button" id="create-return-button"
-            class="rounded-md bg-transparent pr-3 pl-2 py-2 text-sm font-semibold text-amber-500 shadow-sm hover:text-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 flex items-center justify-center">
-
-            Retour aanmaken
+      <!-- Move buttons inside the header -->
+      <div
+        class="mb-6 flex items-center justify-end gap-x-6 absolute bottom-0 right-0"
+      >
+        <button
+          type="submit"
+          id="save-button"
+          class="rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
+        >
+          Opslaan
         </button>
-
-
-
-        </div>
+        <button
+          type="button"
+          id="create-return-button"
+          class="rounded-md bg-transparent pr-3 pl-2 py-2 text-sm font-semibold text-amber-500 shadow-sm hover:text-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 flex items-center justify-center"
+        >
+          Retour aanmaken
+        </button>
+      </div>
     </div>
-</div>
+  </div>
 
-<div class="mx-auto max-w-7xl  lg:flex lg:gap-x-16 lg:px-8">
+  <div class="mx-auto max-w-7xl  lg:flex lg:gap-x-16 lg:px-8">
     <h1 class="sr-only">General Settings</h1>
     <aside
-        class="flex overflow-x-auto border-b border-gray-900/5 py-4 lg:block lg:w-64 lg:flex-none lg:border-0 lg:py-20">
-        <nav class="flex-none px-4 sm:px-6 lg:px-0">
-            <ul role="list" class="flex gap-x-3 gap-y-1 whitespace-nowrap lg:flex-col">
-                <li>
-                    <a href="#" id="account" onclick="showMain('account')"
-                        class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500">
-                        <i class="far fa-user flex-shrink-0 mt-1"></i>
-                        <span>Account</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" id="adresgegevens" onclick="showMain('adresgegevens')"
-                        class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500">
-                        <i class="far fa-address-card flex-shrink-0 mt-1"></i>
-                        <span>Adresgegevens</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" id="orders" onclick="showMain('orders')"
-                        class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500">
-                        <i class="far fa-file-alt flex-shrink-0 mt-1"></i>
-                        <span>Orders</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" id="returns" onclick="showMain('returns')"
-                        class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500">
-                        <i class="fas fa-exchange-alt flex-shrink-0 mt-1"></i>
-                        <span>Retouren</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+      class="flex overflow-x-auto border-b border-gray-900/5 py-4 lg:block lg:w-64 lg:flex-none lg:border-0 lg:py-20"
+    >
+      <nav class="flex-none px-4 sm:px-6 lg:px-0">
+        <ul
+          role="list"
+          class="flex gap-x-3 gap-y-1 whitespace-nowrap lg:flex-col"
+        >
+          <li>
+            <a
+              href="#"
+              id="account"
+              onclick="showMain('account')"
+              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500"
+            >
+              <i class="far fa-user flex-shrink-0 mt-1"></i>
+              <span>Account</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              id="adresgegevens"
+              onclick="showMain('adresgegevens')"
+              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500"
+            >
+              <i class="far fa-address-card flex-shrink-0 mt-1"></i>
+              <span>Adresgegevens</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              id="orders"
+              onclick="showMain('orders')"
+              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500"
+            >
+              <i class="far fa-file-alt flex-shrink-0 mt-1"></i>
+              <span>Orders</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              id="returns"
+              onclick="showMain('returns')"
+              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500"
+            >
+              <i class="fas fa-exchange-alt flex-shrink-0 mt-1"></i>
+              <span>Retouren</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </aside>
 
-    <section id="section-account" class="hidden px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20">
-        <div class="">
+    <section
+      id="section-account"
+      class="hidden px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20"
+    >
+      <div class="">
+        <div
+          class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 pb-16 sm:px-6 md:grid-cols-3 lg:px-8 border-b border-gray-900/10"
+        >
+          <div>
+            <h2 class="text-base font-semibold leading-7 text-gray-900">
+              Persoonlijke informatie
+            </h2>
+            <p class="mt-1 text-sm leading-6 text-gray-400">
+              Vul hier je persoonlijke informatie in.
+            </p>
+          </div>
+
+          <form id="form-account" class="md:col-span-2" method="POST">
+            {% csrf_token %}
+
             <div
-                class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 pb-16 sm:px-6 md:grid-cols-3 lg:px-8 border-b border-gray-900/10">
-                <div>
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Persoonlijke informatie</h2>
-                    <p class="mt-1 text-sm leading-6 text-gray-400">Vul hier je persoonlijke informatie in.
-                    </p>
+              class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6"
+            >
+              <div class="sm:col-span-3">
+                <label
+                  for="first-name"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Voornaam</label
+                >
+                <div class="mt-2">
+                  <input
+                    type="text"
+                    name="first-name"
+                    id="first-name"
+                    autocomplete="given-name"
+                    placeholder="{{ account.first_name }}"
+                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                  />
                 </div>
+              </div>
 
-                <form id="form-account" class="md:col-span-2" method="POST" >
-                        {% csrf_token %}
+              <div class="sm:col-span-3">
+                <label
+                  for="last-name"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Achternaam</label
+                >
+                <div class="mt-2">
+                  <input
+                    type="text"
+                    name="last-name"
+                    id="last-name"
+                    autocomplete="family-name"
+                    placeholder="{{ account.last_name }}"
+                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
 
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6">
+              <div class="col-span-full">
+                <label
+                  for="email"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Email adres</label
+                >
+                <div class="mt-2">
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    placeholder="{{ account.email }}"
+                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                  />
+                </div>
+                <div class="error-message"></div>
+                <!-- Error message container -->
+              </div>
 
-                        <div class="sm:col-span-3">
-                            <label for="first-name"
-                                class="block text-sm font-medium leading-6 text-gray-900">Voornaam</label>
-                            <div class="mt-2">
-                                <input type="text" name="first-name" id="first-name" autocomplete="given-name"
-                                    placeholder="{{account.first_name}}"
-                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-3">
-                            <label for="last-name"
-                                class="block text-sm font-medium leading-6 text-gray-900">Achternaam</label>
-                            <div class="mt-2">
-                                <input type="text" name="last-name" id="last-name" autocomplete="family-name"
-                                    placeholder="{{account.last_name}}"
-                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                            </div>
-                        </div>
-
-                        <div class="col-span-full">
-                            <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email
-                                adres</label>
-                            <div class="mt-2">
-                                <input id="email" name="email" type="email" autocomplete="email"
-                                    placeholder="{{account.email}}"
-                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                            </div>
-                                            <div class="error-message"></div> <!-- Error message container -->
-
-                        </div>
-
-                        <div class="col-span-full">
-                            <label for="phone"
-                                class="block text-sm font-medium leading-6 text-gray-900">Telefoonnummer</label>
-                            <div class="mt-2">
-                                <input id="phone" name="phone" autocomplete="phone"
-                                    placeholder="{{ account.phone_number|default_if_none:'Voer telefoonnummer in' }}"
-                                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6">
-                            </div>
-                        </div>
-
-                    </div>
-
-                </form>
+              <div class="col-span-full">
+                <label
+                  for="phone"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Telefoonnummer</label
+                >
+                <div class="mt-2">
+                  <input
+                    id="phone"
+                    name="phone"
+                    autocomplete="phone"
+                    placeholder="{{ account.phone_number|default_if_none:'Voer telefoonnummer in' }}"
+                    class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                  />
+                </div>
+              </div>
             </div>
-
-
-            <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
-                <div>
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Verwijder account</h2>
-                    <p class="mt-1 text-sm leading-6 text-gray-400"> U kunt hier uw account verwijderen. Deze actie is
-                        niet
-                        omkeerbaar. Alle
-                        informatie gerelateerd aan uw account wordt permanent verwijderd.</p>
-                </div>
-
-                <div class="md:col-span-2 flex justify-end items-end">
-                    <form id="delete-account-form">
-                    <button type="button" id="delete-account-button"
-                            class="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400">Ja,
-                            verwijder account</button>
-                    </form>
-                </div>
-            </div>
-
+          </form>
         </div>
+
+        <div
+          class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8"
+        >
+          <div>
+            <h2 class="text-base font-semibold leading-7 text-gray-900">
+              Verwijder account
+            </h2>
+            <p class="mt-1 text-sm leading-6 text-gray-400">
+              U kunt hier uw account verwijderen. Deze actie is niet omkeerbaar.
+              Alle informatie gerelateerd aan uw account wordt permanent
+              verwijderd.
+            </p>
+          </div>
+
+          <div class="md:col-span-2 flex justify-end items-end">
+            <form id="delete-account-form">
+              <button
+                type="button"
+                id="delete-account-button"
+                class="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400"
+              >
+                Ja, verwijder account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="section-adresgegevens" class="hidden px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20">
-        <div class="">
-            <div class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 pb-16 sm:px-6 md:grid-cols-3 lg:px-8 border-b border-gray-900/10 ">
-                <div>
-                    <h2 class="text-base font-semibold leading-7 text-gray-900">Persoonlijk adres</h2>
-                    <p class="mt-1 text-sm leading-6 text-gray-400">Vul hier je persoonlijke adresgegevens in.
+    <section
+      id="section-adresgegevens"
+      class="hidden px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20"
+    >
+      <div class="">
+        <div
+          class="grid max-w-7xl grid-cols-1 gap-x-8 gap-y-10 px-4 pb-16 sm:px-6 md:grid-cols-3 lg:px-8 border-b border-gray-900/10 "
+        >
+          <div>
+            <h2 class="text-base font-semibold leading-7 text-gray-900">
+              Persoonlijk adres
+            </h2>
+            <p class="mt-1 text-sm leading-6 text-gray-400">
+              Vul hier je persoonlijke adresgegevens in.
+            </p>
+          </div>
+
+          <form id="form-delivery-address" class="md:col-span-2" method="POST">
+            {% csrf_token %}
+            <div
+              class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6 "
+            >
+              <div class="sm:col-span-4 sm:col-start-1">
+                <label
+                  for="address"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Adres</label
+                >
+                <div class="mt-2">
+                  <input
+                    type="text"
+                    name="address"
+                    id="address"
+                    autocomplete="address"
+                    placeholder="{{ account.address }}"
+                    value="{{ form.address.value }}"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {% if form.address.errors %}
+                    <p id="address-error" class="text-red-500 text-sm mt-1">
+                      {{ form.address.errors|striptags }}
                     </p>
-                    
+                  {% endif %}
                 </div>
+              </div>
 
-                <form id="form-delivery-address" class="md:col-span-2" method="POST">
-                                        {% csrf_token %}
-                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6 ">
+              <div class="sm:col-span-2">
+                <label
+                  for="house_number"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Nummer</label
+                >
+                <div class="mt-2">
+                  <input
+                    type="text"
+                    name="house_number"
+                    id="house-number"
+                    autocomplete="house_number"
+                    placeholder="{{ account.house_number }}"
+                    value="{{ form.house_number.value }}"
+                    pattern="[0-9]*"
+                    class=" block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
+                                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {% if form.house_number.errors %}
+                    <p
+                      id="house_number-error"
+                      class="text-red-500 text-sm mt-1"
+                    >
+                      {{ form.house_number.errors|striptags }}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
 
-                        <div class="sm:col-span-4 sm:col-start-1">
-                            <label for="address" class="block text-sm font-medium leading-6 text-gray-900">Adres</label>
-                            <div class="mt-2">
-                                <input type="text" name="address" id="address" autocomplete="address"
-                                    placeholder="{{account.address}}" value="{{ form.address.value }}"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                {% if form.address.errors %}
-                                <p id="address-error" class="text-red-500 text-sm mt-1">{{ form.address.errors|striptags
-                                    }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
+              <div class="sm:col-span-2 sm:col-start-1">
+                <label
+                  for="postal_code"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Postcode</label
+                >
+                <div class="mt-2">
+                  <input
+                    type="text"
+                    name="postal_code"
+                    id="postal_code"
+                    autocomplete="postal-code"
+                    placeholder="{{ account.postal_code }}"
+                    value="{{ form.postal_code.value }}"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {% if form.postal_code.errors %}
+                    <p id="postal_code-error" class="text-red-500 text-sm mt-1">
+                      {{ form.postal_code.errors|striptags }}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
 
-                        <div class="sm:col-span-2">
-                            <label for="house_number" class="block text-sm font-medium leading-6 text-gray-900">Nummer</label>
-                            <div class="mt-2">
-                                <input type="text" name="house_number" id="house-number" autocomplete="house_number"
-                                    placeholder="{{ account.house_number }}" 
-                                value="{{ form.house_number.value }}"
-                                pattern="[0-9]*" 
-                                class=" block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
-                                placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                {% if form.house_number.errors %}
-                                <p id="house_number-error" class="text-red-500 text-sm mt-1">{{ form.house_number.errors|striptags }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-
-
-
-                        <div class="sm:col-span-2 sm:col-start-1">
-                            <label for="postal_code"
-                                class="block text-sm font-medium leading-6 text-gray-900">Postcode</label>
-                            <div class="mt-2">
-                                <input type="text" name="postal_code" id="postal_code" autocomplete="postal-code"
-                                    placeholder="{{account.postal_code}}" value="{{ form.postal_code.value }}"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                {% if form.postal_code.errors %}
-                                <p id="postal_code-error" class="text-red-500 text-sm mt-1">{{
-                                    form.postal_code.errors|striptags }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="sm:col-span-2">
-                            <label for="city" class="block text-sm font-medium leading-6 text-gray-900">Stad</label>
-                            <div class="mt-2">
-                                <input type="text" name="city" id="city" autocomplete="city"
-                                    value="{{ form.city.value }}" placeholder="{{account.city}}"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                {% if form.city.errors %}
-                                <p id="city-error" class="text-red-500 text-sm mt-1">{{ form.city.errors|striptags }}
-                                </p>
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="sm:col-span-3">
-                            <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Land</label>
-                            <div class="mt-2">
-                                <select id="country" name="country" autocomplete="country"
-                                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
-                                    {% if account.country == "Nederland" %}
-                                    <option value="Nederland" selected>Nederland</option>
-                                    {% else %}
-                                    <option value="Nederland">Nederland</option>
-
-                                    {%endif%}
-                                    {% if account.country == "Duitsland" %}
-                                    <option value="Duitsland" selected>Duitsland</option>
-                                    {% else %}
-                                    <option value="Duitsland">Duitsland</option>
-
-                                    {%endif%}
-                                    {% if account.country == "België" %}
-                                    <option value="België" selected>België</option>
-                                    {% else %}
-                                    <option value="België">België</option>
-
-                                    {%endif%}
-
-                                </select>
-                                {% if form.country.errors %}
-                                <p id="country-error" class="text-red-500 text-sm mt-1">{{ form.country.errors|striptags
-                                    }}</p>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                    </div>
-
-                </form>
-
-                             
+              <div class="sm:col-span-2">
+                <label
+                  for="city"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Stad</label
+                >
+                <div class="mt-2">
+                  <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    autocomplete="city"
+                    value="{{ form.city.value }}"
+                    placeholder="{{ account.city }}"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {% if form.city.errors %}
+                    <p id="city-error" class="text-red-500 text-sm mt-1">
+                      {{ form.city.errors|striptags }}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="sm:col-span-3">
+                <label
+                  for="country"
+                  class="block text-sm font-medium leading-6 text-gray-900"
+                  >Land</label
+                >
+                <div class="mt-2">
+                  <select
+                    id="country"
+                    name="country"
+                    autocomplete="country"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  >
+                    {% if account.country == "Nederland" %}
+                      <option value="Nederland" selected>Nederland</option>
+                    {% else %}
+                      <option value="Nederland">Nederland</option>
+                    {% endif %}
+                    {% if account.country == "Duitsland" %}
+                      <option value="Duitsland" selected>Duitsland</option>
+                    {% else %}
+                      <option value="Duitsland">Duitsland</option>
+                    {% endif %}
+                    {% if account.country == "België" %}
+                      <option value="België" selected>België</option>
+                    {% else %}
+                      <option value="België">België</option>
+                    {% endif %}
+                  </select>
+                  {% if form.country.errors %}
+                    <p id="country-error" class="text-red-500 text-sm mt-1">
+                      {{ form.country.errors|striptags }}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
             </div>
-
-                <div class="pt-10 px-4">
-                    <dt class="font-medium text-gray-900">Aflever adres</dt>
-                    <dd class="mt-2">
-                        <address class="not-italic">
-                            <span class="block">{{account.first_name}}&nbsp;{{account.last_name}}</span>
-                            <span class="block">{{account.address }}&nbsp;{{account.house_number }}</span>
-                            <span class="block">{{account.postal_code }} {{account.city }}</span>
-                            <span class="block">{{account.country }}</span>
-                
-                
-                        </address>
-                    </dd>
-                </div>
-
-
+          </form>
         </div>
+
+        <div class="pt-10 px-4">
+          <dt class="font-medium text-gray-900">Aflever adres</dt>
+          <dd class="mt-2">
+            <address class="not-italic">
+              <span class="block"
+                >{{ account.first_name }}&nbsp;{{ account.last_name }}</span
+              >
+              <span class="block"
+                >{{ account.address }}&nbsp;{{ account.house_number }}</span
+              >
+              <span class="block"
+                >{{ account.postal_code }} {{ account.city }}</span
+              >
+              <span class="block">{{ account.country }}</span>
+            </address>
+          </dd>
+        </div>
+      </div>
     </section>
 
-    <section id="section-orders" class="hidden px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20">
-        {% if not orders %}
+    <section
+      id="section-orders"
+      class="hidden px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20"
+    >
+      {% if not orders %}
         {% include 'components/messages/empty_generic_message.html' with error_message="U heeft nog geen orders." %}
-
-        {% endif %}
-        {% for order in orders %}
+      {% endif %}
+      {% for order in orders %}
 
         {% if not forloop.first %}
-        <div class="pt-24">
-            {% include 'components/order_history.html' %}
-        </div>
+          <div class="pt-24">{% include 'components/order_history.html' %}</div>
         {% else %}
-        {% include 'components/order_history.html' %}
+          {% include 'components/order_history.html' %}
         {% endif %}
-        <div>
-
-        </div>
-
-        {% endfor %}
+        <div></div>
+      {% endfor %}
     </section>
 
-    <section id="section-returns" class="hidden px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20">
-
-        {% if not returns%}
+    <section
+      id="section-returns"
+      class="hidden px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20"
+    >
+      {% if not returns %}
         {% include 'components/messages/empty_generic_message.html' with error_message="U heeft nog geen retouren." %}
+      {% endif %}
 
-        {% endif %}
-
-        {% for return in returns %}
-
+      {% for return in returns %}
         {% include 'components/order_history.html' %}
-        {% endfor %}
+      {% endfor %}
     </section>
-
-
-</div>
-{% include 'components/store_motivation_section.html' %}
-<!-- HTML Structure for the Confirm Delete Modal -->
-<div class="relative z-10 hidden" id="confirmDeleteModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+  </div>
+  {% include 'components/store_motivation_section.html' %}
+  <!-- HTML Structure for the Confirm Delete Modal -->
+  <div
+    class="relative z-10 hidden"
+    id="confirmDeleteModal"
+    aria-labelledby="modal-title"
+    role="dialog"
+    aria-modal="true"
+  >
     <!-- Background backdrop -->
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+    <div
+      class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    ></div>
 
     <!-- Modal content -->
     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+      <div
+        class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+      >
+        <div
+          class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6"
+        >
+          <div class="sm:flex sm:items-start">
             <div
-                class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                <div class="sm:flex sm:items-start">
-                    <div
-                        class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                        <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                        </svg>
-                    </div>
-                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Account verwijderen
-                        </h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-500" id="modal-message">Weet je zeker dat je je account definitief wilt verwijderen? Deze actie is niet onomkeerbaar en al je gegevens zullen worden verwijderd.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                    <button onclick="confirmModalAction()" type="button" id="confirmButton" 
-                        class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Verwijderen</button>
-                    <button onclick="cancelModalAction()" type="button" id="cancelButton"
-                        class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto">Annuleer</button>
-                </div>
+              class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
+            >
+              <svg
+                class="h-6 w-6 text-red-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                />
+              </svg>
             </div>
+            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+              <h3
+                class="text-base font-semibold leading-6 text-gray-900"
+                id="modal-title"
+              >
+                Account verwijderen
+              </h3>
+              <div class="mt-2">
+                <p class="text-sm text-gray-500" id="modal-message">
+                  Weet je zeker dat je je account definitief wilt verwijderen?
+                  Deze actie is niet onomkeerbaar en al je gegevens zullen
+                  worden verwijderd.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+            <button
+              onclick="confirmModalAction()"
+              type="button"
+              id="confirmButton"
+              class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+            >
+              Verwijderen
+            </button>
+            <button
+              onclick="cancelModalAction()"
+              type="button"
+              id="cancelButton"
+              class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
+            >
+              Annuleer
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-<script>
-        
-        const modal = document.getElementById('confirmDeleteModal');
+  </div>
+  <script>
+    const modal = document.getElementById('confirmDeleteModal')
 
+    function showConfirmDeleteModal() {
+      // Show the modal
+      modal.classList.remove('hidden')
+    }
 
-        function showConfirmDeleteModal() {
-                // Show the modal
-                modal.classList.remove('hidden');
-        }
+    function confirmModalAction() {
+      // Show the modal
+      fetch('/delete_account/', {
+        method: 'DELETE',
+        headers: {
+          'X-CSRFToken': getCookie('csrftoken'),
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === 'success') {
+            alert('Uw account is succesvol verwijderd.')
+            window.location.href = '/' // Redirect to homepage or login page
+          } else {
+            alert('Er is iets misgegaan bij het verwijderen van uw account.')
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error)
+          alert('Er is een fout opgetreden bij het verwijderen van uw account.')
+        })
+    }
+    function cancelModalAction() {
+      modal.classList.add('hidden')
+    }
 
-                function confirmModalAction() {
-                        // Show the modal
-                        fetch('/delete_account/', {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRFToken': getCookie('csrftoken')
-                        }
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.status === 'success') {
-                                alert('Uw account is succesvol verwijderd.');
-                                window.location.href = '/'; // Redirect to homepage or login page
-                            } else {
-                                
-                                alert('Er is iets misgegaan bij het verwijderen van uw account.');
+    const deleteAccountButton = document.getElementById('delete-account-button')
+    deleteAccountButton.addEventListener('click', function (event) {
+      event.preventDefault()
 
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Er is een fout opgetreden bij het verwijderen van uw account.');
-                        });
-                    }
-                            function cancelModalAction() {
-                                    modal.classList.add('hidden');
-                                }
-
-            const deleteAccountButton = document.getElementById('delete-account-button');
-            deleteAccountButton.addEventListener('click', function (event) {
-                event.preventDefault();
-
-                showConfirmDeleteModal()
-            });
-
+      showConfirmDeleteModal()
+    })
 
     const saveButton = document.getElementById('save-button')
     saveButton.addEventListener('click', function () {
-        saveAccount()
-    });
-
+      saveAccount()
+    })
 
     function saveAccount() {
-        // Determine active section
-        const activeSection = document.querySelector('section:not(.hidden)');
-        const sectionId = activeSection ? activeSection.id : '';
-        const section = sectionId.replace('section-', '');
+      // Determine active section
+      const activeSection = document.querySelector('section:not(.hidden)')
+      const sectionId = activeSection ? activeSection.id : ''
+      const section = sectionId.replace('section-', '')
 
-        switch (section) {
-            case 'account':
-                const formAccount = document.getElementById('form-account');
+      switch (section) {
+        case 'account':
+          const formAccount = document.getElementById('form-account')
 
-                const formDataAccount = new FormData(formAccount); 
-                
-                fetch('/change_account_information/', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken')
-                    },
-                    body: formDataAccount
+          const formDataAccount = new FormData(formAccount)
+
+          fetch('/change_account_information/', {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: formDataAccount,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === 'success') {
+                location.reload()
+              } else {
+                const errors = data.errors
+                const errorElements =
+                  formAccount.querySelectorAll('.error-message')
+
+                // Remove existing error messages that are not in the current error response
+                errorElements.forEach((el) => {
+                  const inputFieldId = el.id.replace('-error', '') // Extract input field ID from error message ID
+                  if (!(inputFieldId in errors)) {
+                    el.remove() // Remove error message if the field is not in the current errors
+                  }
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            location.reload();  
-                        } else {
-                            const errors = data.errors;
-                            const errorElements = formAccount.querySelectorAll('.error-message');
 
-                            // Remove existing error messages that are not in the current error response
-                            errorElements.forEach(el => {
-                                const inputFieldId = el.id.replace('-error', ''); // Extract input field ID from error message ID
-                                if (!(inputFieldId in errors)) {
-                                    el.remove(); // Remove error message if the field is not in the current errors
-                                }
-                            });
-
-                            // Display error messages for each field
-                            Object.keys(errors).forEach(field => {
-                                const errorMessage = errors[field];
-                                const inputField = formAccount.querySelector(`#${field}`);
-                                if (inputField) {
-                                    const existingError = formAccount.querySelector(`#${field}-error`);
-                                    if (!existingError) {
-                                        const errorContainer = document.createElement('p');
-                                        errorContainer.id = `${field}-error`;
-                                        errorContainer.classList.add('error-message', 'text-red-500', 'text-sm', 'mt-1');
-                                        errorContainer.textContent = errorMessage;
-                                        inputField.parentNode.appendChild(errorContainer);
-                                    }
-                                }
-                            });
-
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-
-                break;
-            case 'adresgegevens':
-
-                const formDeliveryAddress = document.getElementById('form-delivery-address');
-
-                const formDataDeliveryAddress = new FormData(formDeliveryAddress);
-
-                const houseNumberField = formDeliveryAddress.querySelector('#house-number');
-                const errorContainer = document.getElementById('house_number-error');
-
-                if (!houseNumberField.checkValidity()) {
-                    // If house number field is invalid, show error message or handle accordingly
-                    const errorMessage = houseNumberField.validationMessage;
-
-                    if (errorContainer) {
-                        // If error container exists, update the error message
-                        errorContainer.textContent = errorMessage;
-                    } else {
-                        // If error container does not exist, create and append a new error container
-                        const newErrorContainer = document.createElement('p');
-                        newErrorContainer.id = 'house_number-error';
-                        newErrorContainer.classList.add('text-red-500', 'text-sm', 'mt-1');
-                        newErrorContainer.textContent = errorMessage;
-                        houseNumberField.parentNode.appendChild(newErrorContainer);
+                // Display error messages for each field
+                Object.keys(errors).forEach((field) => {
+                  const errorMessage = errors[field]
+                  const inputField = formAccount.querySelector(`#${field}`)
+                  if (inputField) {
+                    const existingError = formAccount.querySelector(
+                      `#${field}-error`,
+                    )
+                    if (!existingError) {
+                      const errorContainer = document.createElement('p')
+                      errorContainer.id = `${field}-error`
+                      errorContainer.classList.add(
+                        'error-message',
+                        'text-red-500',
+                        'text-sm',
+                        'mt-1',
+                      )
+                      errorContainer.textContent = errorMessage
+                      inputField.parentNode.appendChild(errorContainer)
                     }
-
-                    return; // Prevent form submission if validation fails
-                } else {
-                    // If validation passes, remove the error message if it exists
-                    if (errorContainer) {
-                        errorContainer.remove();
-                    }
-                }
-
-                fetch('/change_delivery_address_information/', {
-                    method: 'POST',
-                    headers: {
-                        'X-CSRFToken': getCookie('csrftoken')
-                    },
-                    body: formDataDeliveryAddress
+                  }
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.status === 'success') {
-                            location.reload();
-                        } else {
-                            const errors = data.errors;
-                            const errorElements = formAccount.querySelectorAll('.error-message');
-                            errorElements.forEach(el => el.remove());
-                            console.log(errors)
-                            // Display error messages for each field
-                            Object.keys(errors).forEach(field => {
-                                const errorMessage = errors[field];
-                                                            console.log(errorMessage)
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error)
+            })
 
-                                const inputField = formAccount.querySelector(`#${field}`);
-                                const errorContainer = document.createElement('p'); // Use <p> instead of <div> for consistency with your example
-                                errorContainer.id = `${field}-error`;
-                                errorContainer.classList.add('text-red-500', 'text-sm', 'mt-1');
-                                errorContainer.textContent = errorMessage;
-                                inputField.parentNode.appendChild(errorContainer);
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
+          break
+        case 'adresgegevens':
+          const formDeliveryAddress = document.getElementById(
+            'form-delivery-address',
+          )
 
-                break;
-            default:
-                break;
-        }
+          const formDataDeliveryAddress = new FormData(formDeliveryAddress)
+
+          const houseNumberField =
+            formDeliveryAddress.querySelector('#house-number')
+          const errorContainer = document.getElementById('house_number-error')
+
+          if (!houseNumberField.checkValidity()) {
+            // If house number field is invalid, show error message or handle accordingly
+            const errorMessage = houseNumberField.validationMessage
+
+            if (errorContainer) {
+              // If error container exists, update the error message
+              errorContainer.textContent = errorMessage
+            } else {
+              // If error container does not exist, create and append a new error container
+              const newErrorContainer = document.createElement('p')
+              newErrorContainer.id = 'house_number-error'
+              newErrorContainer.classList.add('text-red-500', 'text-sm', 'mt-1')
+              newErrorContainer.textContent = errorMessage
+              houseNumberField.parentNode.appendChild(newErrorContainer)
+            }
+
+            return // Prevent form submission if validation fails
+          } else {
+            // If validation passes, remove the error message if it exists
+            if (errorContainer) {
+              errorContainer.remove()
+            }
+          }
+
+          fetch('/change_delivery_address_information/', {
+            method: 'POST',
+            headers: {
+              'X-CSRFToken': getCookie('csrftoken'),
+            },
+            body: formDataDeliveryAddress,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === 'success') {
+                location.reload()
+              } else {
+                const errors = data.errors
+                const errorElements =
+                  formAccount.querySelectorAll('.error-message')
+                errorElements.forEach((el) => el.remove())
+                console.log(errors)
+                // Display error messages for each field
+                Object.keys(errors).forEach((field) => {
+                  const errorMessage = errors[field]
+                  console.log(errorMessage)
+
+                  const inputField = formAccount.querySelector(`#${field}`)
+                  const errorContainer = document.createElement('p') // Use <p> instead of <div> for consistency with your example
+                  errorContainer.id = `${field}-error`
+                  errorContainer.classList.add(
+                    'text-red-500',
+                    'text-sm',
+                    'mt-1',
+                  )
+                  errorContainer.textContent = errorMessage
+                  inputField.parentNode.appendChild(errorContainer)
+                })
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error)
+            })
+
+          break
+        default:
+          break
+      }
     }
 
     function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
+      let cookieValue = null
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';')
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim()
+          if (cookie.substring(0, name.length + 1) === name + '=') {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+            break
+          }
         }
-        return cookieValue;
+      }
+      return cookieValue
     }
     function showMain(section) {
-        // Hide all main elements
-        document.querySelectorAll('section').forEach(main => {
-            if (main.id != 'motivation-section') {
-                main.classList.add('hidden');
-            }
-        });
-
-        // Show the selected main element
-        const selectedMain = document.getElementById(`section-${section}`);
-        selectedMain.classList.remove('hidden');
-
-        // Update header text and buttons based on the selected section
-        const headerText = document.getElementById('header-text');
-        const saveButton = document.getElementById('save-button');
-        const createReturnButton = document.getElementById('create-return-button');
-
-        switch (section) {
-            case 'account':
-                headerText.textContent = 'Account';
-                saveButton.classList.remove('hidden');
-                createReturnButton.classList.add('hidden');
-                break;
-            case 'adresgegevens':
-                headerText.textContent = 'Adresgegevens';
-                saveButton.classList.remove('hidden');
-                createReturnButton.classList.add('hidden');
-                break;
-            case 'orders':
-                headerText.textContent = 'Orders';
-                saveButton.classList.add('hidden');
-                createReturnButton.classList.add('hidden');
-                break;
-            case 'returns':
-                headerText.textContent = 'Retouren';
-                saveButton.classList.add('hidden');
-                createReturnButton.classList.remove('hidden');
-                break;
-            default:
-                break;
+      // Hide all main elements
+      document.querySelectorAll('section').forEach((main) => {
+        if (main.id != 'motivation-section') {
+          main.classList.add('hidden')
         }
+      })
 
-        // Save the selected tab to localStorage
-        localStorage.setItem('selectedTab', section);
+      // Show the selected main element
+      const selectedMain = document.getElementById(`section-${section}`)
+      selectedMain.classList.remove('hidden')
+
+      // Update header text and buttons based on the selected section
+      const headerText = document.getElementById('header-text')
+      const saveButton = document.getElementById('save-button')
+      const createReturnButton = document.getElementById('create-return-button')
+
+      switch (section) {
+        case 'account':
+          headerText.textContent = 'Account'
+          saveButton.classList.remove('hidden')
+          createReturnButton.classList.add('hidden')
+          break
+        case 'adresgegevens':
+          headerText.textContent = 'Adresgegevens'
+          saveButton.classList.remove('hidden')
+          createReturnButton.classList.add('hidden')
+          break
+        case 'orders':
+          headerText.textContent = 'Orders'
+          saveButton.classList.add('hidden')
+          createReturnButton.classList.add('hidden')
+          break
+        case 'returns':
+          headerText.textContent = 'Retouren'
+          saveButton.classList.add('hidden')
+          createReturnButton.classList.remove('hidden')
+          break
+        default:
+          break
+      }
+
+      // Save the selected tab to localStorage
+      localStorage.setItem('selectedTab', section)
     }
 
     // Call showMain function to display a specific section on initialization
     window.onload = function () {
-        // Retrieve the selected tab from localStorage
-        const savedTab = localStorage.getItem('selectedTab') || 'account';
-        showMain(savedTab);
+      // Retrieve the selected tab from localStorage
+      const savedTab = localStorage.getItem('selectedTab') || 'account'
+      showMain(savedTab)
 
-        // Highlight the initially selected aside item based on the saved tab
-        const initialAsideLink = document.getElementById(savedTab);
-        initialAsideLink.classList.add('bg-gray-50', 'text-amber-500');
-    };
+      // Highlight the initially selected aside item based on the saved tab
+      const initialAsideLink = document.getElementById(savedTab)
+      initialAsideLink.classList.add('bg-gray-50', 'text-amber-500')
+    }
 
     // Add event listeners to handle click events and highlight the selected aside item
-    document.querySelectorAll('.aside-link').forEach(link => {
-        link.addEventListener('click', function () {
-            document.querySelectorAll('.aside-link').forEach(link => {
-                link.classList.remove('bg-gray-50', 'text-amber-500');
-            });
-            this.classList.add('bg-gray-50', 'text-amber-500');
-        });
-    });
-</script>
-
+    document.querySelectorAll('.aside-link').forEach((link) => {
+      link.addEventListener('click', function () {
+        document.querySelectorAll('.aside-link').forEach((link) => {
+          link.classList.remove('bg-gray-50', 'text-amber-500')
+        })
+        this.classList.add('bg-gray-50', 'text-amber-500')
+      })
+    })
+  </script>
 {% endblock %}

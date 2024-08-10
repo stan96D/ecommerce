@@ -1,142 +1,170 @@
 <li class="flex py-6 sm:py-10">
+  <div class="flex-shrink-0">
+    <img
+      src="{{ item.thumbnail_url }}"
+      alt="{{ item.name }}"
+      class="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
+    />
+  </div>
+  <div class="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
+    <div class="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
+      <div>
+        <h4 class="text-xs text-amber-500 pb-1 pt-1 font-medium">
+          <a
+            href="/products/{{ item.brand }}"
+            class="hover:font-semibold cursor-pointer"
+          >
+            {{ item.brand }}
+          </a>
+        </h4>
 
-    <div class="flex-shrink-0">
-        <img src="{{ item.thumbnail_url }}" alt="{{ item.name }}"
-            class="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48">
-    </div>
-    <div class="ml-4 flex flex-1 flex-col justify-between sm:ml-6">
-        <div class="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:pr-0">
-            <div>
-                <h4 class="text-xs text-amber-500 pb-1 pt-1 font-medium">
-                    <a href="/products/{{item.brand}}" class="hover:font-semibold cursor-pointer">
-                        {{ item.brand }}
-                    </a>
-                </h4>
-
-                <div class="flex justify-between">
-                    <h3 class="text-sm">
-                        <a href="/product/{{item.id}}" class="font-medium text-gray-900">{{ item.name }}</a>
-                    </h3>
-                </div>
-
-                {% if item.sale_price %}
-                    {% if item.product_type == 'Vloer' %}
-
-                    <div class="flex">
-                        <div
-                            class="bg-gray-900 w-fit rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
-                            <p class="text-sm font-semibold text-gray-100">€{{ item.sale_price }} <sup>m²</sup></p>
-                        </div>
-                        <p class="mt-2 py-2 px-4 text-sm font-base text-gray-400"><del>€{{ item.price }}
-                                </del></p>
-
-                    </div>
-                    <p class="pt-1 text-sm font-base text-gray-500">€{{ item.unit_sale_price }} per pak</p>
-                    {% else %}
-                                        <div class="flex">
-                                            <div class="bg-gray-900 w-fit rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2">
-                                                <p class="text-sm font-semibold text-gray-100">€{{ item.unit_sale_price }} {{ item.unit}}</p>
-                                            </div>
-                                            <p class="mt-2 py-2 px-4 text-sm font-base text-gray-400"><del>€{{ item.unit_price }}</del></p>
-                                        
-                                        </div>
-                    {% endif %}
-                {% else %}
-                    {% if item.product_type == 'Vloer' %}
-                        <p class="mt-2 text-sm font-medium text-gray-900">€{{ item.price }} per m²</p>
-                        <p class=" text-sm font-base text-gray-500">€{{ item.unit_price }} per pak</p>
-                    {%else%}
-                                    <p class="mt-2 text-sm font-medium text-gray-900">€{{ item.unit_price }} per {{ item.unit }}</p>
-                    {%endif%}
-
-
-                {%endif%}
-
-            </div>
-
-            <div class="mt-4 sm:mt-0 sm:pr-9">
-                <div class="relative">
-                    <input type="number" id="{{ item.id }}" name="{{ item.id }}" value="{{ item.quantity }}" min="1"
-                        max="{{ item.stock }}" step="1" onchange="updateQuantity(this, '{{ item.id }}')"
-                        class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
-                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-
-                    </div>
-                </div>
-
-
-                <div class="absolute right-0 top-0">
-                    <button type="submit" class="-m-2 inline-flex p-2 text-gray-300 hover:text-red-400">
-                        <span class="sr-only">Remove</span>
-                        <i class="fas fa-trash-alt h-5 w-5"></i> <!-- FontAwesome trashcan icon -->
-                    </button>
-                </div>
-
-
-            </div>
+        <div class="flex justify-between">
+          <h3 class="text-sm">
+            <a href="/product/{{ item.id }}" class="font-medium text-gray-900"
+              >{{ item.name }}</a
+            >
+          </h3>
         </div>
 
-        <p class="mt-4 flex space-x-2 text-sm text-gray-700 justify-between">
+        {% if item.sale_price %}
+          {% if item.product_type == 'Vloer' %}
+            <div class="flex">
+              <div
+                class="bg-gray-900 w-fit rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
+              >
+                <p class="text-sm font-semibold text-gray-100">
+                  €{{ item.sale_price }} <sup>m²</sup>
+                </p>
+              </div>
+              <p class="mt-2 py-2 px-4 text-sm font-base text-gray-400">
+                <del>€{{ item.price }} </del>
+              </p>
+            </div>
+            <p class="pt-1 text-sm font-base text-gray-500">
+              €{{ item.unit_sale_price }} per pak
+            </p>
+          {% else %}
+            <div class="flex">
+              <div
+                class="bg-gray-900 w-fit rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
+              >
+                <p class="text-sm font-semibold text-gray-100">
+                  €{{ item.unit_sale_price }} {{ item.unit }}
+                </p>
+              </div>
+              <p class="mt-2 py-2 px-4 text-sm font-base text-gray-400">
+                <del>€{{ item.unit_price }}</del>
+              </p>
+            </div>
+          {% endif %}
+        {% else %}
+          {% if item.product_type == 'Vloer' %}
+            <p class="mt-2 text-sm font-medium text-gray-900">
+              €{{ item.price }} per m²
+            </p>
+            <p class=" text-sm font-base text-gray-500">
+              €{{ item.unit_price }} per pak
+            </p>
+          {% else %}
+            <p class="mt-2 text-sm font-medium text-gray-900">
+              €{{ item.unit_price }} per {{ item.unit }}
+            </p>
+          {% endif %}
+        {% endif %}
+      </div>
 
-            <span class="text-gray-900 font-medium text-sm">
-                <i class="fas fa-check-circle text-green-500"></i> Direct leverbaar
-            </span>
-            <span class="font-medium text-gray-900 text-lg">€{{ item.totalPrice }} </span>
+      <div class="mt-4 sm:mt-0 sm:pr-9">
+        <div class="relative">
+          <input
+            type="number"
+            id="{{ item.id }}"
+            name="{{ item.id }}"
+            value="{{ item.quantity }}"
+            min="1"
+            max="{{ item.stock }}"
+            step="1"
+            onchange="updateQuantity(this, '{{ item.id }}')"
+            class="max-w-full rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+          />
+          <div
+            class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
+          ></div>
+        </div>
 
-        </p>
-        <!-- <p class="mt-4 flex space-x-2 text-sm text-gray-700  justify-between">
+        <div class="absolute right-0 top-0">
+          <button
+            type="submit"
+            class="-m-2 inline-flex p-2 text-gray-300 hover:text-red-400"
+          >
+            <span class="sr-only">Remove</span>
+            <i class="fas fa-trash-alt h-5 w-5"></i>
+            <!-- FontAwesome trashcan icon -->
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-4 flex space-x-2 text-sm text-gray-700 justify-between">
+      <span class="text-gray-900 font-medium text-sm">
+        <i class="fas fa-check-circle text-green-500"></i> Direct leverbaar
+      </span>
+      <span class="font-medium text-gray-900 text-lg"
+        >€{{ item.totalPrice }}
+      </span>
+    </p>
+    <!-- <p class="mt-4 flex space-x-2 text-sm text-gray-700  justify-between">
                     <span class="text-gray-900 font-medium text-sm">
                 <i class="fas fa-times-circle text-red-500"></i> Niet Leverbaar
             </span>
             <span class="font-medium text-gray-900 text-lg">€{{ item.totalPrice }} </span>
 
         </p> -->
-
-    </div>
+  </div>
 </li>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    function updateQuantity(input, productId) {
-        var quantity = parseInt(input.value);
-        var csrftoken = getCookie('csrftoken');
+  function updateQuantity(input, productId) {
+    var quantity = parseInt(input.value)
+    var csrftoken = getCookie('csrftoken')
 
-        $.ajax({
-            url: '/change-quantity-in-cart/',
-            method: 'POST',
-            contentType: 'application/json',
-            headers: {
-                'X-CSRFToken': csrftoken
-            },
-            data: JSON.stringify({
-                product_id: productId,
-                quantity: quantity
-            }),
-            success: function (response) {
-                console.log("Product ID: " + productId + ", Quantity updated to: " + quantity);
-                console.log("Cart updated:", response);
+    $.ajax({
+      url: '/change-quantity-in-cart/',
+      method: 'POST',
+      contentType: 'application/json',
+      headers: {
+        'X-CSRFToken': csrftoken,
+      },
+      data: JSON.stringify({
+        product_id: productId,
+        quantity: quantity,
+      }),
+      success: function (response) {
+        console.log(
+          'Product ID: ' + productId + ', Quantity updated to: ' + quantity,
+        )
+        console.log('Cart updated:', response)
 
-                location.reload();
+        location.reload()
+      },
+      error: function (xhr, status, error) {
+        console.error('Error updating cart:', error)
+      },
+    })
+  }
 
-            },
-            error: function (xhr, status, error) {
-                console.error("Error updating cart:", error);
-            }
-        });
-    }
-
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
+  function getCookie(name) {
+    var cookieValue = null
+    if (document.cookie && document.cookie !== '') {
+      var cookies = document.cookie.split(';')
+      for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim()
+        if (cookie.substring(0, name.length + 1) === name + '=') {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+          break
         }
-        return cookieValue;
+      }
     }
+    return cookieValue
+  }
 </script>
