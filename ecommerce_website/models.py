@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AnonymousUser
 from ecommerce_website.settings.webshop_config import WebShopConfig
 
+
 class AccountManager(BaseUserManager):
 
     def create_user(self, email, password=None, **extra_fields):
@@ -56,10 +57,10 @@ class Account(AbstractBaseUser):
 
     def __str__(self):
         return self.email
-    
+
     def has_perm(self, perm: str, obj: models.Model | AnonymousUser | None = ...) -> bool:
         return self.is_admin
-    
+
     def has_module_perms(self, app_label):
         return self.is_admin
 
@@ -68,30 +69,35 @@ class DeliveryMethod(models.Model):
     name = models.CharField(max_length=100, unique=True)
     price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
-    delivery_days = models.DecimalField(max_digits=2, decimal_places=0, default=9)
+    delivery_days = models.DecimalField(
+        max_digits=2, decimal_places=0, default=9)
     active = models.BooleanField(default=True)
+
 
 class Product(models.Model):
     name = models.CharField(max_length=100, db_index=True)
     unit_price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00, db_index=True)
-    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, db_index=True)
+    price = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00, db_index=True)
     thumbnail = models.ImageField(
         upload_to='product_thumbnails/', null=True, blank=True)
-    tax = models.DecimalField(max_digits=5, decimal_places=2, default=9.00, db_index=True)
+    tax = models.DecimalField(
+        max_digits=5, decimal_places=2, default=9.00, db_index=True)
     runner = models.BooleanField(default=False)
-    selling_percentage = models.DecimalField(max_digits=5, decimal_places=2, default=0.00)
-
+    selling_percentage = models.DecimalField(
+        max_digits=5, decimal_places=2, default=0.00)
 
     @property
     def unit_selling_price(self):
         print(self.unit_price)
-        selling_price = round(self.unit_price * (1 - self.selling_percentage / 100), 2)
+        selling_price = round(
+            self.unit_price * (1 - self.selling_percentage / 100), 2)
         print(selling_price)
         selling_price_with_shipping_costs = round(
             selling_price * WebShopConfig.shipping_margin(), 2)
         return selling_price_with_shipping_costs
-    
+
     @property
     def selling_price(self):
         print(self.price)
@@ -103,23 +109,20 @@ class Product(models.Model):
         selling_price_with_shipping_costs = round(
             selling_price * WebShopConfig.shipping_margin(), 2)
         return selling_price_with_shipping_costs
-    
+
     def __str__(self):
         return self.name
 
-    
     @property
     def search_string(self):
         attribute_values = self.attributes.exclude(
-        attribute_type__name='Omschrijving').values_list('value', flat=True)
+            attribute_type__name='Omschrijving').values_list('value', flat=True)
         attribute_string = ' '.join(attribute_values)
         return f"{self.name} {attribute_string}"
-    
 
     @property
     def has_product_sale(self):
         return self.productsale_set.filter(sale__active=True).exists()
-
 
     @property
     def sale_price(self):
@@ -130,9 +133,9 @@ class Product(models.Model):
             discount_percentage = active_product_sale.percentage
             sale_price = selling_price - \
                 (selling_price * discount_percentage / 100)
-            return round(sale_price, 2) 
+            return round(sale_price, 2)
         return None
-    
+
     @property
     def unit_sale_price(self):
         active_product_sale = self.productsale_set.filter(
@@ -163,7 +166,6 @@ class RelatedProduct(models.Model):
 
     def __str__(self):
         return f"Related products for {self.main_product.name}"
-
 
 
 class Sale(models.Model):
@@ -197,12 +199,12 @@ class ProductSale(models.Model):
             raise ValidationError("Begin date must be before end date")
 
 
-
 class ProductAttributeType(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
         return self.name
+
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=100)
@@ -221,7 +223,7 @@ class ProductCategory(models.Model):
         else:
             return self.name
 
-    
+
 class ProductAttribute(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='attributes', db_index=True)
@@ -231,6 +233,7 @@ class ProductAttribute(models.Model):
 
     def __str__(self):
         return f"{self.product.name} - {self.attribute_type.name} - {self.value}"
+
 
 class ProductStock(models.Model):
     product = models.OneToOneField(
@@ -249,10 +252,12 @@ class ProductImage(models.Model):
     def __str__(self):
         return f"Image for {self.product.name}"
 
+
 class Brand(models.Model):
     name = models.CharField(unique=True, max_length=100)
     image = models.ImageField(
         upload_to='brand_images/', null=True, blank=True)
+
 
 class ProductFilter(models.Model):
     name = models.CharField(max_length=100)
@@ -267,7 +272,7 @@ class ProductFilter(models.Model):
         else:
 
             return f"{self.name}"
-    
+
 
 class StoreMotivation(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -277,17 +282,18 @@ class StoreMotivation(models.Model):
     image = models.ImageField(
         upload_to='store_motivation_images/', null=True, blank=True)
 
+
 class OrderLine(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     order = models.ForeignKey(
         'Order', related_name='order_lines', on_delete=models.CASCADE, default=None)
-    unit_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    unit_price = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
     total_price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
     return_order = models.ForeignKey(
         'ReturnOrder', related_name='order_lines', on_delete=models.SET_NULL, null=True, blank=True)
-
 
 
 class Order(models.Model):
@@ -316,7 +322,7 @@ class Order(models.Model):
     order_number = models.CharField(max_length=20, unique=True)
 
     account = models.ForeignKey(
-    Account, related_name='orders', on_delete=models.CASCADE, default=None, null=True)
+        Account, related_name='orders', on_delete=models.CASCADE, default=None, null=True)
 
     total_price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
@@ -326,14 +332,16 @@ class Order(models.Model):
         max_digits=10, decimal_places=2, default=0.00)
     tax_price_high = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
-    shipping_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    shipping_price = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
     created_date = models.DateTimeField(default=timezone.now)
 
     payment_id = models.CharField(max_length=100, unique=True, null=True)
     payment_status = models.TextField(null=True)
     payment_url = models.CharField(max_length=100, unique=True, null=True)
 
-    order_status = models.TextField(default='Openstaand', choices=ORDER_STATUS_CHOICES)
+    order_status = models.TextField(
+        default='Openstaand', choices=ORDER_STATUS_CHOICES)
 
     @property
     def is_paid(self):
@@ -382,6 +390,7 @@ class ReturnOrderLine(models.Model):
     def __str__(self):
         return f'ReturnOrderLine {self.id} for ReturnOrder {self.return_order.id}'
 
+
 class Store(models.Model):
     contact_email = models.EmailField(max_length=254)
     address = models.CharField(max_length=255)
@@ -394,3 +403,17 @@ class Store(models.Model):
 
     def __str__(self):
         return self.address + self.postal_code
+
+
+class StoreRating(models.Model):
+    user = models.ForeignKey(
+        Account, on_delete=models.CASCADE, related_name='store_ratings')
+    stars = models.PositiveSmallIntegerField(
+        choices=[(i, str(i)) for i in range(6)], default=0)
+    title = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'Review - {self.stars} door {self.user}'
