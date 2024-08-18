@@ -407,7 +407,7 @@ class Store(models.Model):
 
 class StoreRating(models.Model):
     user = models.ForeignKey(
-        Account, on_delete=models.CASCADE, related_name='store_ratings')
+        Account, on_delete=models.CASCADE, related_name='store_ratings', null=True, blank=True)
     stars = models.PositiveSmallIntegerField(
         choices=[(i, str(i)) for i in range(6)], default=0)
     title = models.CharField(max_length=255, blank=True, null=True)
@@ -416,4 +416,4 @@ class StoreRating(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Review - {self.stars} door {self.user}'
+        return f'Review - {self.stars} door {self.user if self.user else "Anonieme gebruiker"}'

@@ -6,10 +6,57 @@ from random import randint, sample, choice
 from django.utils import timezone
 from django.db import transaction
 
+
 class RealSeederInterface(ABC):
     @abstractmethod
     def seed():
         pass
+
+
+class RealStoreRatingDataSeeder(RealSeederInterface):
+
+    def seed():
+        StoreRating.objects.create(
+            stars=5,
+            title="Geweldige service!",
+            description="Ik ben ontzettend tevreden over de service van deze winkel. Snelle levering en de kwaliteit van de producten is top!"
+        )
+
+        StoreRating.objects.create(
+            stars=4,
+            title="Zeer tevreden",
+            description="Goede prijs-kwaliteitverhouding en de klantenservice is erg behulpzaam. Enige verbeterpunt zou de levertijd kunnen zijn."
+        )
+
+        StoreRating.objects.create(
+            stars=3,
+            title="Prima winkel, maar...",
+            description="De vloeren zijn goedkoop en van goede kwaliteit, maar de bezorging duurde langer dan verwacht. Verder geen klachten."
+        )
+
+        StoreRating.objects.create(
+            stars=5,
+            title="Super snelle levering!",
+            description="Mijn vloer was er binnen 48 uur, zoals beloofd. Echt top! De klantenservice was ook erg vriendelijk en behulpzaam."
+        )
+
+        StoreRating.objects.create(
+            stars=2,
+            title="Matige ervaring",
+            description="Hoewel de vloeren goedkoop zijn, had ik problemen met de bezorging en het retourneren van producten. Niet helemaal tevreden."
+        )
+
+        StoreRating.objects.create(
+            stars=4,
+            title="Goedkoop en goed",
+            description="Voor deze prijs had ik niet zoveel kwaliteit verwacht. De levering was iets vertraagd, maar verder ben ik erg tevreden."
+        )
+
+        StoreRating.objects.create(
+            stars=5,
+            title="Aanrader!",
+            description="Ik zou deze winkel zeker aanraden. Uitstekende prijzen, geweldige kwaliteit, en de service is altijd vriendelijk en snel."
+        )
 
 
 class RealStoreMotivationDataSeeder(RealSeederInterface):
@@ -20,12 +67,12 @@ class RealStoreMotivationDataSeeder(RealSeederInterface):
                                        active=True,
                                        text="Is je nieuw gekochte vloer toch niet wat je zoekt? Stuur hem dan gerust kosteloos terug!",
                                        for_homepage=True)
-        
+
         StoreMotivation.objects.create(name="De beste kwaliteit vloeren",
                                        active=True,
                                        text="Ondanks de goedkope prijs van onze vloeren hebben wij het beste aanbod aan kwaliteitsvloeren. Waar wacht je nog op?",
                                        for_homepage=True)
-        
+
         StoreMotivation.objects.create(name="De goedkoopste van Nederland en België",
                                        active=True,
                                        text="Wij bieden de goedkoopste vloeren van Nederland en België. Nergens anders krijg je zulke topvloeren voor deze prijs!",
@@ -50,11 +97,12 @@ class RealProductDataSeeder(RealSeederInterface):
 class RealDeliveryMethodDataSeeder(RealSeederInterface):
 
     def seed():
-        
+
         DeliveryMethod.objects.create(name="Bezorging",
                                       price=0.00,
                                       delivery_days=3,
                                       active=True)
+
 
 class RealProductSaleSeeder(RealSeederInterface):
     @staticmethod
@@ -259,7 +307,7 @@ class RealProductFilterSeeder(RealSeederInterface):
 
                     sub_filter = product.attributes.filter(
                         attribute_type__name=category.parent_category.name)
-                    
+
                     last_filter = product.attributes.filter(
                         value=category.name)
 
@@ -270,21 +318,20 @@ class RealProductFilterSeeder(RealSeederInterface):
 
                     main_filter = product.attributes.filter(
                         value=category.parent_category.name)
-                    
+
                     sub_filter = product.attributes.filter(
                         attribute_type__name=category.name)
 
                     if len(sub_filter) > 0 and len(main_filter) > 0:
-                        product_attributes_with_category.append(product_attribute)
-
+                        product_attributes_with_category.append(
+                            product_attribute)
 
             else:
                 filters = product.attributes.filter(
                     value=category.name)
-                            
+
                 if len(filters) > 0:
                     product_attributes_with_category.append(product_attribute)
-
 
         return product_attributes_with_category
 
@@ -311,34 +358,31 @@ class RealProductFilterSeeder(RealSeederInterface):
 
                             if len(filter.product_attributes.filter(value=product_attribute.value)) == 0:
                                 product_filters[attribute_type].product_attributes.add(
-                                product_attribute)
+                                    product_attribute)
                         else:
                             product_filter = ProductFilter.objects.create(
                                 name=attribute_type, parent_category=category)
 
-                            product_filter.product_attributes.add(product_attribute)
+                            product_filter.product_attributes.add(
+                                product_attribute)
 
                             product_filters[attribute_type] = product_filter
                 else:
 
                     product_attributes_with_category = []
-                    product_attributes_with_category = RealProductFilterSeeder.filter_attributes_by_category(category, associated_attributes)
-
+                    product_attributes_with_category = RealProductFilterSeeder.filter_attributes_by_category(
+                        category, associated_attributes)
 
                     if len(product_attributes_with_category) > 0:
 
                         with transaction.atomic():
                             product_filter = ProductFilter.objects.create(
-                                            name=attribute_type.name,
-                                            parent_category=category
-                                        )
+                                name=attribute_type.name,
+                                parent_category=category
+                            )
 
                             for product_attribute in product_attributes_with_category:
                                 if attribute_type.id == product_attribute.attribute_type.id:
                                     if not product_filter.product_attributes.filter(value=product_attribute.value).exists():
                                         product_filter.product_attributes.add(
-                                                        product_attribute)
-
-
-
-
+                                            product_attribute)
