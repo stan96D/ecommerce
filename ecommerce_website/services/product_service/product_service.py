@@ -5,6 +5,7 @@ from collections import defaultdict
 from django.db.models import Exists, OuterRef
 import re
 
+
 class ProductService(ProductServiceInterface):
     @staticmethod
     def get_product_by_id(product_id):
@@ -20,14 +21,17 @@ class ProductService(ProductServiceInterface):
             return list(products)
         except Product.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_misc_products():
         try:
+            values_to_check = ["Accessoires", "Plint", "Folie"]
+
             products = Product.objects.filter(
-                attributes__value__iexact="Accessoires",
-                attributes__attribute_type__name="Producttype"
+                Q(attributes__value__in=values_to_check) &
+                Q(attributes__attribute_type__name="Producttype")
             ).distinct()
+
             return list(products)
         except Product.DoesNotExist:
             return None
@@ -38,11 +42,11 @@ class ProductService(ProductServiceInterface):
             products = Product.objects.filter(
                 Q(attributes__value__iexact=attribute) |
                 Q(name__icontains=attribute)
-            ).distinct()  
+            ).distinct()
             return list(products)
         except Product.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_runner_products():
         try:
@@ -50,7 +54,6 @@ class ProductService(ProductServiceInterface):
             return list(products)
         except Product.DoesNotExist:
             return None
-        
 
     @staticmethod
     def get_runner_products_by_attributes(attributes):
@@ -64,7 +67,6 @@ class ProductService(ProductServiceInterface):
                     filters[key].update(values)
                 else:
                     filters[key].add(value)
-
 
             products = Product.objects.filter(runner=True)
 
@@ -83,11 +85,10 @@ class ProductService(ProductServiceInterface):
                 if matches_any_attribute:
                     filtered_products.append(product)
 
-
             return filtered_products
         except Product.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_sale_products_by_attributes(attributes):
         try:
@@ -103,7 +104,7 @@ class ProductService(ProductServiceInterface):
 
             products = Product.objects.filter(
                 productsale__sale__active=True).distinct()
-            
+
             filtered_products = []
             for product in products:
                 matches_any_attribute = False
@@ -122,7 +123,7 @@ class ProductService(ProductServiceInterface):
             return filtered_products
         except Product.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_important_products_by_attributes(attributes):
         try:
@@ -167,7 +168,6 @@ class ProductService(ProductServiceInterface):
             return list(products_on_sale)
         except Product.DoesNotExist:
             return None
-        
 
     @staticmethod
     def get_important_products():
@@ -198,11 +198,10 @@ class ProductService(ProductServiceInterface):
             return unique_products
         except Product.DoesNotExist:
             return None
-        
 
     @staticmethod
     def get_products_by_attributes_and_values(attributes, category_data):
-        try:    
+        try:
 
             filters = defaultdict(set)
 
@@ -218,9 +217,9 @@ class ProductService(ProductServiceInterface):
             for attr_name, attr_values in filters.items():
 
                 attr_filter = Q(attributes__value__in=attr_values,
-                                    attributes__attribute_type__name=attr_name)
-                filtered_products = filtered_products.filter(attr_filter).distinct()
-      
+                                attributes__attribute_type__name=attr_name)
+                filtered_products = filtered_products.filter(
+                    attr_filter).distinct()
 
             categories = ProductService().return_nested_categories(category_data)
 
@@ -230,20 +229,20 @@ class ProductService(ProductServiceInterface):
 
                 if index == 2:
 
-                    attr_filter = Q(attributes__attribute_type__name=category.name)
+                    attr_filter = Q(
+                        attributes__attribute_type__name=category.name)
                     filtered_products = filtered_products.filter(
                         attr_filter).distinct()
                 else:
                     attr_filter = Q(attributes__value__in=[category.name])
                     filtered_products = filtered_products.filter(
-                                attr_filter).distinct()
+                        attr_filter).distinct()
 
-                index += 1 
+                index += 1
 
             return filtered_products
         except Product.DoesNotExist:
             return None
-        
 
     @staticmethod
     def return_nested_categories(category, returned_categories=None):
@@ -257,7 +256,6 @@ class ProductService(ProductServiceInterface):
                 category.parent_category, returned_categories)
 
         return returned_categories[::-1]
-    
 
     @staticmethod
     def get_products_by_attributes_and_search(attributes, search_string):
@@ -273,17 +271,17 @@ class ProductService(ProductServiceInterface):
                     filters[key].add(value)
 
             filtered_products = Product.objects.all()
-            
+
             for attr_name, attr_values in filters.items():
 
                 attr_filter = Q(attributes__value__in=attr_values,
-                                    attributes__attribute_type__name=attr_name)
+                                attributes__attribute_type__name=attr_name)
                 filtered_products = filtered_products.filter(
-                        attr_filter).distinct()
+                    attr_filter).distinct()
 
             filtered_products = ProductService().__filter_products_on_search__(
                 filtered_products, search_string)
-            
+
             return filtered_products
         except Product.DoesNotExist:
             return None
@@ -300,7 +298,7 @@ class ProductService(ProductServiceInterface):
                 filtered_products.append(product)
 
         return filtered_products
-    
+
     @staticmethod
     def filter_products_on_search(products, search_string):
         search_words = search_string.lower().split()
@@ -336,7 +334,7 @@ class ProductService(ProductServiceInterface):
             return list(products)
         except Product.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_all_runner_products():
         try:
@@ -344,7 +342,7 @@ class ProductService(ProductServiceInterface):
             return list(products)
         except Product.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_related_products(id):
         try:
@@ -363,4 +361,3 @@ class ProductService(ProductServiceInterface):
             return filtered_products
         except Product.DoesNotExist:
             return None
-        

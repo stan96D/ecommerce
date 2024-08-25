@@ -27,7 +27,7 @@ class ProductView:
         self.quantity = product.stock.quantity
         self.is_runner = product.runner
 
-        self.brand = attributes_dict.get('Merk', '')
+        self.brand = attributes_dict.get('Merk', 'Merkloos')
 
         if product.has_product_sale:
             self.sale_price = product.sale_price
@@ -51,6 +51,8 @@ class ProductDetailView:
         else:
             self.thumbnail_url = "/static/images/no_image_placeholder.png"
 
+        self.product_id = attributes_dict.get(
+            'Artikelnummer', attributes_dict.get('SKU', 'Geen'))
         self.images = product.images
         self.quantity = product.stock.quantity
         self.description = attributes_dict.get('Omschrijving', '')

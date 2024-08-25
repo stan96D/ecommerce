@@ -9,7 +9,7 @@ class ProductCategoryService(ProductCategoryServiceInterface):
             return ProductCategory.objects.get(id=product_category_id)
         except ProductCategory.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_product_category_by_name(product_category_name):
         try:
@@ -23,21 +23,17 @@ class ProductCategoryService(ProductCategoryServiceInterface):
             return ProductCategory.objects.all()
         except ProductCategory.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_all_active_product_categories():
         try:
             return ProductCategory.objects.filter(active=True)
         except ProductCategory.DoesNotExist:
             return None
-        
+
     @staticmethod
     def get_all_active_head_product_categories():
         try:
             return ProductCategory.objects.filter(active=True, for_homepage=True, parent_category=None)
         except ProductCategory.DoesNotExist:
             return None
-        
-
-
-

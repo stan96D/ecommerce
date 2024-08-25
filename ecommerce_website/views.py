@@ -1,4 +1,3 @@
-from ecommerce_website.services.related_products_service.related_products_service import RelatedProductService
 from django.contrib.auth.hashers import make_password
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
@@ -55,7 +54,9 @@ def sign_in(request):
 
 def home(request):
 
-    return render(request, "home.html", {'headerData': ViewServiceUtility.get_header_data(),
+    datah = ViewServiceUtility.get_header_data()
+
+    return render(request, "home.html", {'headerData': datah,
                                          'payment_methods': ViewServiceUtility.get_payment_methods(),
                                          'store_motivations': ViewServiceUtility.get_store_motivations(),
                                          'runner_products_data': ViewServiceUtility.get_runner_products(),
@@ -735,14 +736,20 @@ def products_by_attribute(request, category, subcategory, attribute):
 
 def product_detail(request, id=None):
 
-    return render(request, 'product_detail.html', {'product': ViewServiceUtility.get_product_view_by_id(id),
-                                                   'related_products': ViewServiceUtility.get_related_products(id),
-                                                   'misc_products': ViewServiceUtility.get_misc_products(),
-                                                   'headerData': ViewServiceUtility.get_header_data(),
-                                                   'payment_methods': ViewServiceUtility.get_payment_methods(),
-                                                   'brands': ViewServiceUtility.get_all_brands(),
-                                                   'alternative_products': ViewServiceUtility.get_alternative_products(id),
-                                                   'store_motivations': ViewServiceUtility.get_store_motivations()})
+    product = ViewServiceUtility.get_product_view_by_id(id)
+
+    product_data = {'product': product,
+                    'headerData': ViewServiceUtility.get_header_data(),
+                    'payment_methods': ViewServiceUtility.get_payment_methods(),
+                    'brands': ViewServiceUtility.get_all_brands(),
+                    'alternative_products': ViewServiceUtility.get_alternative_products(id),
+                    'store_motivations': ViewServiceUtility.get_store_motivations()}
+
+    if product.product_type == "Vloer":
+        misc_products = ViewServiceUtility.get_misc_products()
+        product_data['misc_products'] = misc_products
+
+    return render(request, 'product_detail.html', product_data)
 
 
 def add_to_cart(request):

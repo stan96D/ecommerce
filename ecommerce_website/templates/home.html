@@ -447,7 +447,7 @@
                 <div
                   class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0"
                 >
-                  {% for brand in brands.all %}
+                  {% for brand in brands.all|slice:":4" %}
                     <div class="group relative">
                       <div
                         class="aspect-w-1 aspect-h-1 w-full  overflow-hidden rounded-full bg-gray-200"
@@ -501,7 +501,8 @@
               <div
                 class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0"
               >
-                {% for category in category_data %}
+                {% for category in category_data|slice:"5" %}
+
                   {% if category.thumbnail %}
 
                     {% if category.name == 'Hardlopers' %}
@@ -509,29 +510,44 @@
                         href="/runners"
                         class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
                       >
+                        <span aria-hidden="true" class="absolute inset-0">
+                          <img
+                            src="{{ category.thumbnail.url }}"
+                            alt="{{ category.name }}"
+                            class="h-full w-full object-cover object-center"
+                          />
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"
+                        ></span>
+                        <span
+                          class="relative mt-auto text-center text-xl font-bold text-white"
+                          >{{ category.name }}</span
+                        >
                       </a>
                     {% else %}
                       <a
                         href="/products/{{ category.name }}"
                         class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
                       >
+                        <span aria-hidden="true" class="absolute inset-0">
+                          <img
+                            src="{{ category.thumbnail.url }}"
+                            alt="{{ category.name }}"
+                            class="h-full w-full object-cover object-center"
+                          />
+                        </span>
+                        <span
+                          aria-hidden="true"
+                          class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"
+                        ></span>
+                        <span
+                          class="relative mt-auto text-center text-xl font-bold text-white"
+                          >{{ category.name }}</span
+                        >
                       </a>
                     {% endif %}
-                    <span aria-hidden="true" class="absolute inset-0">
-                      <img
-                        src="{{ category.thumbnail.url }}"
-                        alt="{{ category.name }}"
-                        class="h-full w-full object-cover object-center"
-                      />
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      class="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-gray-800 opacity-50"
-                    ></span>
-                    <span
-                      class="relative mt-auto text-center text-xl font-bold text-white"
-                      >{{ category.name }}</span
-                    >
                   {% endif %}
                 {% endfor %}
               </div>
@@ -642,6 +658,196 @@
                     {% include 'components/store_motivation.html' %}
                   {% endif %}
                 {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="bg-white">
+          <div
+            class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32"
+          >
+            <!-- New Header with Average Rating -->
+            <div class="lg:col-span-4">
+              <h1
+                class="text-3xl font-extrabold tracking-tight text-gray-900 mb-8"
+              >
+                Dit is hoe jullie ons beoordelen
+              </h1>
+
+              <div class="flex items-center mb-8">
+                <span class="flex items-center text-yellow-400 text-4xl">
+                  ★★★★☆
+                </span>
+                <span class="ml-4 text-xl text-gray-900">4.0 out of 5</span>
+              </div>
+
+              <!-- Existing Content -->
+              <h2 class="text-2xl font-bold tracking-tight text-gray-900">
+                Klantenbeoordelingen
+              </h2>
+
+              <div class="mt-4">
+                <div class="flex items-center">
+                  <div class="flex">
+                    <span class="flex items-center text-yellow-400 text-xl">
+                      ★★★★★
+                    </span>
+                    <span class="ml-2 text-sm text-gray-900">4.0 out of 5</span>
+                  </div>
+                  <p class="ml-4 text-sm text-gray-500">
+                    (Based on 1624 reviews)
+                  </p>
+                </div>
+              </div>
+
+              <div class="mt-6 space-y-4">
+                <div class="flex items-center text-sm">
+                  <span class="w-10 font-medium text-gray-900">
+                    5 <span class="text-yellow-400">★</span>
+                  </span>
+                  <div
+                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
+                  >
+                    <div
+                      class="absolute h-3 bg-yellow-400 rounded-full"
+                      style="width: 63%;"
+                    ></div>
+                  </div>
+                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
+                    >63%</span
+                  >
+                </div>
+
+                <div class="flex items-center text-sm">
+                  <span class="w-10 font-medium text-gray-900">
+                    4 <span class="text-yellow-400">★</span>
+                  </span>
+                  <div
+                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
+                  >
+                    <div
+                      class="absolute h-3 bg-yellow-400 rounded-full"
+                      style="width: 10%;"
+                    ></div>
+                  </div>
+                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
+                    >10%</span
+                  >
+                </div>
+
+                <div class="flex items-center text-sm">
+                  <span class="w-10 font-medium text-gray-900">
+                    3 <span class="text-yellow-400">★</span>
+                  </span>
+                  <div
+                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
+                  >
+                    <div
+                      class="absolute h-3 bg-yellow-400 rounded-full"
+                      style="width: 6%;"
+                    ></div>
+                  </div>
+                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
+                    >6%</span
+                  >
+                </div>
+
+                <div class="flex items-center text-sm">
+                  <span class="w-10 font-medium text-gray-900">
+                    2 <span class="text-yellow-400">★</span>
+                  </span>
+                  <div
+                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
+                  >
+                    <div
+                      class="absolute h-3 bg-yellow-400 rounded-full"
+                      style="width: 12%;"
+                    ></div>
+                  </div>
+                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
+                    >12%</span
+                  >
+                </div>
+
+                <div class="flex items-center text-sm">
+                  <span class="w-10 font-medium text-gray-900">
+                    1 <span class="text-yellow-400">★</span>
+                  </span>
+                  <div
+                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
+                  >
+                    <div
+                      class="absolute h-3 bg-yellow-400 rounded-full"
+                      style="width: 9%;"
+                    ></div>
+                  </div>
+                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
+                    >9%</span
+                  >
+                </div>
+              </div>
+
+              <div class="mt-10">
+                <h3 class="text-lg font-medium text-gray-900">
+                  Deel je mening
+                </h3>
+                <p class="mt-1 text-sm text-gray-600">
+                  Als je bij ons een aankoop hebt gedaan en je wilt laten weten
+                  wat je ervan vond, doe dit hier!
+                </p>
+                <a
+                  href="#"
+                  class="mt-4 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 sm:w-auto"
+                >
+                  Schrijf een beoordeling
+                </a>
+              </div>
+            </div>
+
+            <div class="mt-16 lg:col-span-7 lg:col-start-6 lg:mt-0">
+              <h3 class="text-xl font-semibold text-gray-900">
+                Recente beoordelingen
+              </h3>
+
+              <div class="mt-6 space-y-8">
+                <div class="space-y-4">
+                  <div class="bg-gray-50 p-6 rounded-lg">
+                    <p class="text-sm text-gray-600">
+                      "Great product, really helped me improve my daily routine.
+                      The build quality is excellent, and it's worth every
+                      penny."
+                    </p>
+                    <div class="mt-4">
+                      <span class="text-yellow-400">★★★★☆</span>
+                      <span class="ml-2 text-sm text-gray-500">4 stars</span>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 p-6 rounded-lg">
+                    <p class="text-sm text-gray-600">
+                      "Decent product but could be better. The design is sleek,
+                      but I found some issues with the battery life."
+                    </p>
+                    <div class="mt-4">
+                      <span class="text-yellow-400">★★★☆☆</span>
+                      <span class="ml-2 text-sm text-gray-500">3 stars</span>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 p-6 rounded-lg">
+                    <p class="text-sm text-gray-600">
+                      "Not satisfied with the performance. It stopped working
+                      after a few weeks, and customer service was unhelpful."
+                    </p>
+                    <div class="mt-4">
+                      <span class="text-yellow-400">★☆☆☆☆</span>
+                      <span class="ml-2 text-sm text-gray-500">1 star</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

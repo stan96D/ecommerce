@@ -13,6 +13,13 @@ class RealSeederInterface(ABC):
         pass
 
 
+class RealAddSeederInterface(RealSeederInterface):
+
+    @abstractmethod
+    def add(json_data):
+        pass
+
+
 class RealStoreRatingDataSeeder(RealSeederInterface):
 
     def seed():
@@ -62,6 +69,7 @@ class RealStoreRatingDataSeeder(RealSeederInterface):
 class RealStoreMotivationDataSeeder(RealSeederInterface):
 
     def seed():
+        print("RealStoreMotivationDataSeeder started...")
 
         StoreMotivation.objects.create(name="Top retourservice",
                                        active=True,
@@ -83,25 +91,76 @@ class RealStoreMotivationDataSeeder(RealSeederInterface):
                                        text="Door onze geweldige bezorgdienst garanderen wij dat jij je vloer binnen maximaal twee dagen in huis hebt. Leggen maar!",
                                        for_homepage=True)
 
+        print("RealStoreMotivationDataSeeder finished...")
 
-class RealProductDataSeeder(RealSeederInterface):
+
+class RealProductDataSeeder(RealAddSeederInterface):
 
     def seed():
-        with open('ecommerce_website/db_mapper/data/finalized_data2.json', 'r') as file:
+        # with open('ecommerce_website/db_mapper/data/finalized_data2.json', 'r') as file:
+        #     json_data_peitsman = json.load(file)
+
+        # database_service = SQLImportService()
+        # database_service.import_product_data(json_data_peitsman)
+
+        with open('ecommerce_website/db_mapper/data/finalized_minimal.json', 'r', encoding='utf-8') as file:
+            json_data_ppc = json.load(file)
+
+        print("RealProductDataSeeder started...")
+
+        database_service = SQLImportService()
+        database_service.import_product_data(json_data_ppc)
+
+        print("RealProductDataSeeder finished...")
+
+    def add(json_data_file):
+
+        with open(json_data_file, 'r', encoding='utf-8') as file:
             json_data = json.load(file)
-        print(json_data)
+
+        print("RealProductDataSeeder started...")
+
         database_service = SQLImportService()
         database_service.import_product_data(json_data)
+
+        print("RealProductDataSeeder finished...")
 
 
 class RealDeliveryMethodDataSeeder(RealSeederInterface):
 
     def seed():
+        print("RealDeliveryMethodDataSeeder started...")
 
         DeliveryMethod.objects.create(name="Bezorging",
                                       price=0.00,
                                       delivery_days=3,
                                       active=True)
+
+        print("RealDeliveryMethodDataSeeder finished...")
+
+
+class RealBrandDataSeeder(RealSeederInterface):
+
+    def seed():
+
+        print("RealBrandDataSeeder started...")
+
+        Brand.objects.create(name="Beautifloor",
+                             image="brand_images/beautifloor_floor.jpg")
+
+        Brand.objects.create(name="Mflor",
+                             image="brand_images/mflor_floor.jpg")
+
+        Brand.objects.create(name="Douwes Dekker",
+                             image="brand_images/douwers_dekker_floor.jpg")
+
+        Brand.objects.create(name="OTIUM at Home",
+                             image="brand_images/otium_floor.jpg")
+
+        Brand.objects.create(name="Sense",
+                             image="brand_images/sense_floor.jpg")
+
+        print("RealBrandDataSeeder finished...")
 
 
 class RealProductSaleSeeder(RealSeederInterface):
@@ -126,10 +185,14 @@ class RealProductSaleSeeder(RealSeederInterface):
                         end_date=end_date
                     )
 
+# TODO Make this seeder generic based on current data
+
 
 class RealProductCategorySeeder(RealSeederInterface):
     @staticmethod
     def seed():
+        print("RealProductCategorySeeder started...")
+
         category_data = [
             {
                 'name': 'PVC',
@@ -140,7 +203,7 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'subcategories': [
                     {
                         'name': 'Merk',
-                        'subcategories': ['Beautifloor', 'Mflor']
+                        'subcategories': ['Douwes Dekker', 'Sense', 'OTIUM at Home', 'Beautifloor', 'Mflor']
                     },
                     {
                         'name': 'Collectie',
@@ -181,7 +244,7 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'name': 'Lamelparket',
                 'active': True,
                 'for_homepage': True,
-                'description': "Lamerlparket vloeren",
+                'description': "Lamelparket vloeren",
                 'thumbnail': 'category_thumbnails/lamelparket-category.jpg',
                 'subcategories': [
                     {
@@ -203,6 +266,28 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'active': True,
                 'for_homepage': True,
                 'description': "Klik Vinyl vloeren",
+                'thumbnail': 'category_thumbnails/klik-vinyl-category.jpg',
+                'subcategories': [
+                    {
+                        'name': 'Merk',
+                        'subcategories': ['Beautifloor', 'Mflor']
+                    },
+                    {
+                        'name': 'Collectie',
+                        'subcategories': ['Laghi', 'Citta']
+                    },
+                    {
+                        'name': 'Groef',
+                        'subcategories': ['V4 micro', 'V4', 'Geen']
+                    }
+                ]
+            },
+
+            {
+                'name': 'Accessoires',
+                'active': True,
+                'for_homepage': True,
+                'description': "Accessoires om de levensduur van je vloer te vergroten.",
                 'thumbnail': 'category_thumbnails/klik-vinyl-category.jpg',
                 'subcategories': [
                     {
@@ -252,22 +337,6 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'thumbnail': None,
                 'subcategories': []
             },
-            {
-                'name': 'Mflor',
-                'active': True,
-                'for_homepage': False,
-                'description': "",
-                'thumbnail': None,
-                'subcategories': []
-            },
-            {
-                'name': 'Beautifloor',
-                'active': True,
-                'for_homepage': False,
-                'description': "",
-                'thumbnail': None,
-                'subcategories': []
-            }
         ]
 
         for category_entry in category_data:
@@ -275,9 +344,10 @@ class RealProductCategorySeeder(RealSeederInterface):
             active = category_entry['active']
             description = category_entry['description']
             thumbnail = category_entry['thumbnail']
+            for_homepage = category_entry['for_homepage']
 
             main_category = ProductCategory.objects.create(
-                name=main_category_name, active=active, description=description, thumbnail=thumbnail)
+                name=main_category_name, active=active, description=description, thumbnail=thumbnail, for_homepage=for_homepage)
 
             for subcategory_entry in category_entry['subcategories']:
                 subcategory_name = subcategory_entry['name']
@@ -287,6 +357,8 @@ class RealProductCategorySeeder(RealSeederInterface):
                 for subsubcategory_name in subcategory_entry['subcategories']:
                     ProductCategory.objects.create(
                         name=subsubcategory_name, parent_category=subcategory, active=True)
+
+        print("RealProductCategorySeeder finished...")
 
 
 class RealProductFilterSeeder(RealSeederInterface):
@@ -337,13 +409,17 @@ class RealProductFilterSeeder(RealSeederInterface):
 
     @staticmethod
     def seed():
+        print("RealProductFilterSeeder started...")
+
         categories = ProductCategory.objects.all()
         product_attribute_types = ProductAttributeType.objects.all()
         product_filters = {}
 
         for category in categories:
-
+            print("Now in category: ", category)
             for attribute_type in product_attribute_types:
+                print("Now in attribute_type: ", attribute_type,
+                      "for category: ", category)
 
                 associated_attributes = ProductAttribute.objects.filter(
                     attribute_type=attribute_type)
@@ -386,3 +462,4 @@ class RealProductFilterSeeder(RealSeederInterface):
                                     if not product_filter.product_attributes.filter(value=product_attribute.value).exists():
                                         product_filter.product_attributes.add(
                                             product_attribute)
+        print("RealProductFilterSeeder finished...")

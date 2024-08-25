@@ -23,6 +23,9 @@ class Command(BaseCommand):
         DeliveryMethod.objects.all().delete()
         StoreMotivation.objects.all().delete()
         StoreRating.objects.all().delete()
+        Brand.objects.all().delete()
+        ReturnOrderLine.objects.all().delete()
+        ReturnOrder.objects.all().delete()
 
         # Reset primary key sequences for autoincrement fields
         with connection.cursor() as cursor:
@@ -52,8 +55,15 @@ class Command(BaseCommand):
                 "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_storemotivation';")
             cursor.execute(
                 "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_storerating';")
+            cursor.execute(
+                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_brand';")
+            cursor.execute(
+                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_returnorderline';")
+            cursor.execute(
+                "DELETE FROM sqlite_sequence WHERE name='ecommerce_website_returnorder';")
 
         # Seed initial data
+        RealBrandDataSeeder.seed()
         RealDeliveryMethodDataSeeder.seed()
         RealStoreMotivationDataSeeder.seed()
         RealProductDataSeeder.seed()

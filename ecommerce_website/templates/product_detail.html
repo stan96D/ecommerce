@@ -104,18 +104,18 @@
                   class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
                 >
                   <p class="text-lg font-semibold text-gray-100">
-                    €{{ product.unit_sale_price }} per {{ product.unit }}
+                    €{{ product.sale_price }} per {{ product.unit }}
                   </p>
                 </div>
                 <p class="mt-2 py-2 px-4 text-lg font-base text-gray-400">
-                  <del>€{{ product.unit_price }} </del>
+                  <del>€{{ product.price }} </del>
                 </p>
               </div>
             {% else %}
               <div class="mt-3">
                 <h2 class="sr-only">Product information</h2>
                 <p class="text-3xl font-medium tracking-tight text-gray-900">
-                  €{{ product.unit_price }} per {{ product.unit }}
+                  €{{ product.price }} per {{ product.unit }}
                 </p>
               </div>
             {% endif %}
@@ -140,13 +140,9 @@
             >
               Artikelnummer
             </h3>
-            {% if product.attribtues.Artikelnummer %}
-              <p class="text-gray-300 text-sm font-medium">
-                {{ product.attributes.Artikelnummer }}
-              </p>
-            {% else %}
-              <p class="text-gray-300 text-sm font-medium">Geen</p>
-            {% endif %}
+            <p class="text-gray-300 text-sm font-medium">
+              {{ product.product_id }}
+            </p>
           </div>
 
           <form
@@ -530,6 +526,8 @@
     const packsInput = document.getElementById('packs')
     const totalPriceDisplay = document.getElementById('total_price')
     const pricePerPack = '{{ product.unit_price }}'
+    const singularPrice = '{{ product.price }}'
+    const singularSalePrice = '{{ product.sale_price }}'
     const salePricePerPack = '{{ product.unit_sale_price }}'
 
     function updatePacksDisplay() {
@@ -540,13 +538,14 @@
 
       const hasSale = JSON.parse(hasSaleString.toLowerCase())
       const unit = '{{ product.unit }}'
-      let price = pricePerPack
-
-      if (hasSale) {
-        price = salePricePerPack
-      }
 
       if (surfacePerPack && unit == 'm²') {
+        let price = pricePerPack
+
+        if (hasSale) {
+          price = salePricePerPack
+        }
+
         const packs = Math.ceil(quantity / surfacePerPack)
         packsDisplay.textContent = `${packs} ${bigUnitMulti}`
         packsInput.value = packs
@@ -556,6 +555,12 @@
         totalPriceDisplay.textContent = '€' + totalPrice
         console.log(totalPriceDisplay)
       } else {
+        let price = singularPrice
+
+        if (hasSale) {
+          price = singularSalePrice
+        }
+
         console.log('undefined')
         packsInput.value = quantity
 

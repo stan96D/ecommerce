@@ -11,6 +11,7 @@ from io import BytesIO
 from django.core.files import File
 from ecommerce_website.settings.webshop_config import *
 
+
 class SQLImportService(DatabaseImportServiceInterface):
     def import_product_data(self, json):
 
@@ -28,11 +29,13 @@ class SQLImportService(DatabaseImportServiceInterface):
             try:
                 product_attribute_type = ProductAttributeType.objects.get(
                     name=type_data["name"])
-                print(f"ProductAttributeType '{product_attribute_type.name}' already exists.")
+                print(f"ProductAttributeType '{
+                      product_attribute_type.name}' already exists.")
             except ProductAttributeType.DoesNotExist:
                 product_attribute_type = ProductAttributeType.objects.create(
                     name=type_data["name"])
-                print(f"ProductAttributeType '{product_attribute_type.name}' created.")
+                print(f"ProductAttributeType '{
+                      product_attribute_type.name}' created.")
 
     def import_products(self, products):
         for product in products:
@@ -47,7 +50,7 @@ class SQLImportService(DatabaseImportServiceInterface):
         response = requests.get(image_url)
 
         config = WebShopConfig()
-        selling_percentage = config.selling_percentage
+        selling_percentage = config.shipping_margin()
 
         product = Product.objects.create(
             name=product_data["name"], price=product_data["measure_price"], unit_price=product_data["unit_price"], selling_percentage=selling_percentage)
@@ -89,7 +92,8 @@ class SQLImportService(DatabaseImportServiceInterface):
             attribute_type = ProductAttributeType.objects.get(
                 name=attribute_type_name)
         except ProductAttributeType.DoesNotExist:
-            print(f"ProductAttributeType '{attribute_type_name}' does not exist.")
+            print(f"ProductAttributeType '{
+                  attribute_type_name}' does not exist.")
         else:
             if not ProductAttribute.objects.filter(product=product, attribute_type=attribute_type, value=value).exists():
                 product_attribute = ProductAttribute.objects.create(
@@ -99,4 +103,5 @@ class SQLImportService(DatabaseImportServiceInterface):
                 )
                 print(f"ProductAttribute '{product_attribute}' created.")
             else:
-                print(f"ProductAttribute with product '{product.name}', attribute type '{attribute_type_name}', and value '{value}' already exists.")
+                print(f"ProductAttribute with product '{product.name}', attribute type '{
+                      attribute_type_name}', and value '{value}' already exists.")

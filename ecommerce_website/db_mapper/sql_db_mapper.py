@@ -8,7 +8,7 @@ class SQLDatabaseMapper(DatabaseMapperInterface):
         products = []
         attribute_types = []
         product_attributes = []
-
+        
         for product_data in products_json:
             product = product_data['Product']
             image = product_data['Thumbnail']
