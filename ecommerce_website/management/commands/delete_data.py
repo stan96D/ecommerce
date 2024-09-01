@@ -43,5 +43,6 @@ class Command(BaseCommand):
                     self.stderr.write(f"Failed to delete {
                                       file_path}. Reason: {e}")
 
+
         self.stdout.write(self.style.SUCCESS(
             'All data deleted successfully'))
