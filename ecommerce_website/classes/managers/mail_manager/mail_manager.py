@@ -370,14 +370,34 @@ class AdminMailSender:
         self.mail_manager = mail_manager
 
     def send_order_confirmation(self, order):
-
         subject = f"Orderbevestiging {order.order_number} {
             order.first_name} {order.last_name}"
 
-        order_lines_text = ""
+        # Group order lines by supplier
+        supplier_order_lines = {}
         for line in order.order_lines.all():
-            order_lines_text += f"<li>{line.product.name} (Aantal: {
-                line.quantity}, Totaalprijs: €{line.total_price})</li>"
+            supplier = line.product.supplier
+            if supplier not in supplier_order_lines:
+                supplier_order_lines[supplier] = []
+            supplier_order_lines[supplier].append(line)
+
+        # Generate the order lines sections for each supplier
+        order_lines_sections = ""
+        for supplier, lines in supplier_order_lines.items():
+            supplier_lines_text = ""
+            for line in lines:
+                supplier_lines_text += f"<li>{line.product.name} (Aantal: {
+                    line.quantity}, Totaalprijs: €{line.total_price})</li>"
+
+            order_lines_sections += f"""
+            <div class="order-details">
+                <h3>Leverancier: {supplier}</h3>
+                <ul>
+                    {supplier_lines_text}
+                </ul>
+            </div>
+            <hr>
+            """
 
         message = f"""
         <!DOCTYPE html>
@@ -427,6 +447,9 @@ class AdminMailSender:
                 .email-content .address-block p {{
                     margin: 5px 0;
                 }}
+                .order-details {{
+                    margin-top: 20px;
+                }}
                 .email-footer {{
                     margin-top: 30px;
                     font-size: 14px;
@@ -443,6 +466,11 @@ class AdminMailSender:
                 }}
                 li {{
                     margin-bottom: 10px;
+                }}
+                hr {{
+                    border: 0;
+                    border-top: 1px solid #dddddd;
+                    margin: 20px 0;
                 }}
             </style>
         </head>
@@ -463,12 +491,7 @@ class AdminMailSender:
                         <p>{order.account.country}</p>
                     </div>
 
-                    <div class="order-details">
-                        <p><strong>Orderregels:</strong></p>
-                        <ul>
-                            {order_lines_text}
-                        </ul>
-                    </div>
+                    {order_lines_sections}
                 </div>
                 <div class="email-footer">
                     <p>Met vriendelijke groet,</p>

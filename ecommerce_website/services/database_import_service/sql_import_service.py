@@ -53,7 +53,7 @@ class SQLImportService(DatabaseImportServiceInterface):
         selling_percentage = config.shipping_margin()
 
         product = Product.objects.create(
-            name=product_data["name"], price=product_data["measure_price"], unit_price=product_data["unit_price"], selling_percentage=selling_percentage)
+            name=product_data["name"], supplier=product_data["supplier"], price=product_data["measure_price"], unit_price=product_data["unit_price"], selling_percentage=selling_percentage)
 
         if response.status_code == 200:
             image_name = image_url.split('/')[-1]

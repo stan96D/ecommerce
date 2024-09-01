@@ -495,7 +495,15 @@ def confirm_order(request):
                                                                                  account.email,
                                                                                  order.order_number,
                                                                                  redirect_url)
+        rating_url = TestURLManager.create_store_rating()
 
+        ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(account.salutation,
+                                                                           account.last_name,
+                                                                           account.email,
+                                                                           rating_url)
+
+        AdminMailSender(mail_manager=HTMLMailManager()
+                        ).send_order_confirmation(order)
 
         return redirect(checkout_url)
 
