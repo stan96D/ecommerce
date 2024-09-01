@@ -1,8 +1,5 @@
 {% extends 'components/main.html' %} {% load static tailwind_tags %}
-{%
-  block
-  title
-%}
+{% block title %}
   Checkout
 {% endblock %}
 {% block content %}
@@ -58,10 +55,9 @@
                   <div
                     class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
                   >
-                    {% for delivery_method in delivery_methods %}{%
-                      include
-                      'components/delivery_method.html'
-                    %}{% endfor %}
+                    {% for delivery_method in delivery_methods %}
+                      {% include 'components/delivery_method.html' %}
+                    {% endfor %}
                   </div>
                   <p
                     id="select-delivery-method-error"

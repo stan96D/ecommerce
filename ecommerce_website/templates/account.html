@@ -12,7 +12,9 @@
       >
         Account
       </h1>
-      <p class="mt-4 text-base text-gray-500">Hoi, Stan Deckers!</p>
+      <p class="mt-4 text-base text-gray-500">
+        Hallo, {{ user.first_name }} {{ user.last_name }}!
+      </p>
 
       <!-- Move buttons inside the header -->
       <div
@@ -383,23 +385,43 @@
             </div>
           </form>
         </div>
+        <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Address Section -->
+          <label
+            class="address-label relative flex cursor-default rounded-lg border-amber-500 border bg-white p-4 shadow-sm focus:outline-none"
+          >
+            <span class="flex flex-1">
+              <span class="flex flex-col">
+                <span class="block text-sm font-medium text-gray-900">
+                  Aflever adres
+                </span>
+                <span class="mt-1 text-sm text-gray-500">
+                  {{ account.first_name }} {{ account.last_name }}<br />
+                  {{ account.address }} {{ account.house_number }}<br />
+                  {{ account.postal_code }} {{ account.city }}<br />
+                  {{ account.country }}
+                </span>
+              </span>
+            </span>
 
-        <div class="pt-10 px-4">
-          <dt class="font-medium text-gray-900">Aflever adres</dt>
-          <dd class="mt-2">
-            <address class="not-italic">
-              <span class="block"
-                >{{ account.first_name }}&nbsp;{{ account.last_name }}</span
-              >
-              <span class="block"
-                >{{ account.address }}&nbsp;{{ account.house_number }}</span
-              >
-              <span class="block"
-                >{{ account.postal_code }} {{ account.city }}</span
-              >
-              <span class="block">{{ account.country }}</span>
-            </address>
-          </dd>
+            <svg
+              class="h-5 w-5 text-amber-500 transition-colors duration-300"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+                clip-rule="evenodd"
+              />
+            </svg>
+
+            <span
+              class="pointer-events-none absolute -inset-px rounded-lg border-2 border-amber-500"
+              aria-hidden="true"
+            ></span>
+          </label>
         </div>
       </div>
     </section>

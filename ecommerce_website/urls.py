@@ -14,6 +14,10 @@ urlpatterns = [
 
     path('logout/', views.logout_user, name="logout"),
 
+    path('store_rating/', views.store_rating_view, name="store_rating"),
+    path('create_store_rating/', views.create_store_rating,
+         name="create_store_rating"),
+
     path('account/', views.account_view, name="account"),
     path('change_account_information/', views.change_account_information,
          name="change_account_information"),

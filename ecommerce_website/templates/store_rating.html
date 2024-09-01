@@ -1,0 +1,126 @@
+{% extends 'components/main.html' %}
+{% load static tailwind_tags %}
+
+{% block title %}Beoordeling opstellen{% endblock %}
+
+{% block content %}
+  {% if not can_write_review %}
+    <script>
+      window.location.href = '{% url 'home' %}'
+    </script>
+  {% else %}
+    <div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+      <div class="border-b pb-12 border-gray-200 pt-24 relative">
+        <h1
+          class="text-4xl font-bold tracking-tight text-gray-900"
+          id="header-text"
+        >
+          Beoordeling aanmaken
+        </h1>
+
+        <form method="post" action="{% url 'create_store_rating' %}">
+          {% csrf_token %}
+          <div class="space-y-12">
+            <!-- Review Details -->
+            <div class="border-b border-gray-900/10 pb-12">
+              <p class="mt-1 text-sm leading-6 text-gray-600">
+                Geef de details van je beoordeling op.
+              </p>
+
+              <div
+                class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6"
+              >
+                <!-- Title -->
+                <div class="sm:col-span-6">
+                  <label
+                    for="title"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Titel <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-2">
+                    <input
+                      type="text"
+                      name="title"
+                      id="title"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <!-- Description -->
+                <div class="col-span-full">
+                  <label
+                    for="description"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Beschrijving <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-2">
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows="4"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:text-sm sm:leading-6"
+                      required
+                    ></textarea>
+                  </div>
+                  <p class="mt-3 text-sm leading-6 text-gray-600">
+                    Geef een gedetailleerde beoordeling van je ervaring.
+                  </p>
+                </div>
+
+                <!-- Stars -->
+                <div class="sm:col-span-6">
+                  <label
+                    for="stars"
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Sterren <span class="text-amber-400 text-xl"> ★ </span>
+                    <span class="text-red-500">*</span>
+                  </label>
+                  <select
+                    id="stars"
+                    name="stars"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-amber-500 sm:max-w-xs sm:text-sm sm:leading-6"
+                    required
+                    onchange="updateStarColor(this)"
+                  >
+                    <option value="" selected disabled hidden>
+                      Selecteer een beoordeling
+                    </option>
+                    <option value="5">5</option>
+                    <option value="4">4</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1</option>
+                    <option value="0">0</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 flex items-center justify-end gap-x-6">
+            <!-- Cancel Button -->
+            <a
+              href="{% url 'home' %}"
+              class="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Annuleren
+            </a>
+
+            <!-- Submit Button -->
+            <button
+              type="submit"
+              class="rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
+            >
+              Beoordeling indienen
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

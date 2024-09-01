@@ -666,187 +666,173 @@
 
       <section>
         <div class="bg-white">
+          <!-- Centered Header with Average Rating -->
+          <div class="text-center">
+            <h2
+              class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl mt-16 mb-4"
+            >
+              Dit is hoe jullie ons beoordelen
+            </h2>
+            <div class="flex items-center justify-center">
+              <span class="flex items-center text-amber-400 text-4xl">
+                {% for i in store_rating_data.range %}
+                  {% if i <= store_rating_data.mean %}
+                    ★
+                  {% else %}
+                    ☆
+                  {% endif %}
+                {% endfor %}
+              </span>
+              <span class="ml-4 text-xl text-gray-900 font-semibold">
+                {{ store_rating_data.mean }} van de 5
+              </span>
+            </div>
+          </div>
+
+          <!-- Klantenbeoordelingen and Reviews arranged horizontally -->
           <div
-            class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8 lg:py-32"
+            class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-24"
           >
-            <!-- New Header with Average Rating -->
-            <div class="lg:col-span-4">
-              <h1
-                class="text-3xl font-extrabold tracking-tight text-gray-900 mb-8"
-              >
-                Dit is hoe jullie ons beoordelen
-              </h1>
+            <div class="lg:flex lg:space-x-8">
+              <!-- Klantenbeoordelingen Section -->
+              <div class="lg:w-1/3">
+                <h2 class="text-2xl font-bold tracking-tight text-gray-900">
+                  Klantenbeoordelingen
+                </h2>
 
-              <div class="flex items-center mb-8">
-                <span class="flex items-center text-yellow-400 text-4xl">
-                  ★★★★☆
-                </span>
-                <span class="ml-4 text-xl text-gray-900">4.0 out of 5</span>
-              </div>
-
-              <!-- Existing Content -->
-              <h2 class="text-2xl font-bold tracking-tight text-gray-900">
-                Klantenbeoordelingen
-              </h2>
-
-              <div class="mt-4">
-                <div class="flex items-center">
-                  <div class="flex">
-                    <span class="flex items-center text-yellow-400 text-xl">
-                      ★★★★★
+                <div class="mt-4">
+                  <div class="flex items-center">
+                    <div class="flex items-center text-amber-400 text-xl">
+                      <!-- Display star rating dynamically -->
+                      {% for i in store_rating_data.range %}
+                        {% if i <= store_rating_data.mean %}
+                          ★
+                        {% else %}
+                          ☆
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                    <span class="ml-2 text-sm text-gray-900 font-semibold">
+                      {{ store_rating_data.mean }} van de 5
                     </span>
-                    <span class="ml-2 text-sm text-gray-900">4.0 out of 5</span>
                   </div>
-                  <p class="ml-4 text-sm text-gray-500">
-                    (Based on 1624 reviews)
+                  <p class="text-sm text-gray-500 mt-2">
+                    (Gebaseerd op {{ store_rating_data.count }} reviews)
                   </p>
                 </div>
+
+                <div class="mt-6 space-y-4">
+                  <!-- Rating distribution bars -->
+                  {% for key, value in store_rating_data.stars.items %}
+                    <div class="flex items-center text-sm">
+                      <span class="w-12 font-medium text-base text-gray-900">
+                        {{ key }}
+                      </span>
+                      <div
+                        class="relative  w-full h-4 bg-gray-100 rounded-full"
+                      >
+                        <div
+                          class="absolute h-4 bg-gradient-to-r from-amber-200 to-amber-300 rounded-full"
+                          style="width: {{ value.percentage }}%;"
+                        ></div>
+                      </div>
+                      <span
+                        class="ml-4 text-right text-xs text-gray-900 font-semibold"
+                      >
+                        {{ value.percentage }}%
+                      </span>
+                    </div>
+                  {% endfor %}
+                </div>
+                {{ can_write }}
+                {% if user.is_authenticated %}
+                  {% if can_write_review %}
+                    <div class="mt-10">
+                      <h3 class="text-lg font-medium text-gray-900">
+                        Deel je mening
+                      </h3>
+                      <p class="mt-1 text-sm text-gray-600">
+                        Als je bij ons een aankoop hebt gedaan en je wilt laten
+                        weten wat je ervan vond, doe dit hier!
+                      </p>
+                      <a
+                        href="/store_rating"
+                        class="mt-4 inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-amber-400 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 transition duration-300"
+                      >
+                        Schrijf een beoordeling
+                      </a>
+                    </div>
+                  {% else %}
+                    <div class="mt-10">
+                      <h3 class="text-lg font-medium text-gray-900">
+                        Deel je mening
+                      </h3>
+                      <p class="mt-1 text-sm text-gray-600">
+                        Je hebt nog geen recente aankopen gedaan om een
+                        beoordeling over te geven. Dus waar wacht je op?
+                      </p>
+                      <a
+                        href="/products"
+                        class="mt-4 inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-amber-400 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 transition duration-300"
+                      >
+                        Naar assortiment
+                      </a>
+                    </div>
+                  {% endif %}
+                {% else %}
+                  <div class="mt-10">
+                    <h3 class="text-lg font-medium text-gray-900">
+                      Deel je mening
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-600">
+                      Wil je een beoordeling achterlaten? Log eerst in of maak
+                      een account aan. Je kunt ook een bestelling plaatsen om je
+                      ervaring te delen!
+                    </p>
+                    <a
+                      href="{% url 'login' %}"
+                      class="mt-4 inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-amber-400 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 transition duration-300"
+                    >
+                      Log in of maak een account aan
+                    </a>
+                  </div>
+                {% endif %}
               </div>
 
-              <div class="mt-6 space-y-4">
-                <div class="flex items-center text-sm">
-                  <span class="w-10 font-medium text-gray-900">
-                    5 <span class="text-yellow-400">★</span>
-                  </span>
-                  <div
-                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
-                  >
-                    <div
-                      class="absolute h-3 bg-yellow-400 rounded-full"
-                      style="width: 63%;"
-                    ></div>
-                  </div>
-                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
-                    >63%</span
-                  >
-                </div>
-
-                <div class="flex items-center text-sm">
-                  <span class="w-10 font-medium text-gray-900">
-                    4 <span class="text-yellow-400">★</span>
-                  </span>
-                  <div
-                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
-                  >
-                    <div
-                      class="absolute h-3 bg-yellow-400 rounded-full"
-                      style="width: 10%;"
-                    ></div>
-                  </div>
-                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
-                    >10%</span
-                  >
-                </div>
-
-                <div class="flex items-center text-sm">
-                  <span class="w-10 font-medium text-gray-900">
-                    3 <span class="text-yellow-400">★</span>
-                  </span>
-                  <div
-                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
-                  >
-                    <div
-                      class="absolute h-3 bg-yellow-400 rounded-full"
-                      style="width: 6%;"
-                    ></div>
-                  </div>
-                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
-                    >6%</span
-                  >
-                </div>
-
-                <div class="flex items-center text-sm">
-                  <span class="w-10 font-medium text-gray-900">
-                    2 <span class="text-yellow-400">★</span>
-                  </span>
-                  <div
-                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
-                  >
-                    <div
-                      class="absolute h-3 bg-yellow-400 rounded-full"
-                      style="width: 12%;"
-                    ></div>
-                  </div>
-                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
-                    >12%</span
-                  >
-                </div>
-
-                <div class="flex items-center text-sm">
-                  <span class="w-10 font-medium text-gray-900">
-                    1 <span class="text-yellow-400">★</span>
-                  </span>
-                  <div
-                    class="relative ml-3 w-full h-3 bg-gray-100 rounded-full"
-                  >
-                    <div
-                      class="absolute h-3 bg-yellow-400 rounded-full"
-                      style="width: 9%;"
-                    ></div>
-                  </div>
-                  <span class="ml-3 w-12 text-right text-sm text-gray-900"
-                    >9%</span
-                  >
-                </div>
-              </div>
-
-              <div class="mt-10">
-                <h3 class="text-lg font-medium text-gray-900">
-                  Deel je mening
+              <!-- Recent Reviews Section -->
+              <div class="lg:w-2/3 mt-16 lg:mt-0 pl-12">
+                <h3 class="text-xl font-semibold text-gray-900">
+                  Recente beoordelingen
                 </h3>
-                <p class="mt-1 text-sm text-gray-600">
-                  Als je bij ons een aankoop hebt gedaan en je wilt laten weten
-                  wat je ervan vond, doe dit hier!
-                </p>
-                <a
-                  href="#"
-                  class="mt-4 inline-flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-gray-50 sm:w-auto"
-                >
-                  Schrijf een beoordeling
-                </a>
-              </div>
-            </div>
 
-            <div class="mt-16 lg:col-span-7 lg:col-start-6 lg:mt-0">
-              <h3 class="text-xl font-semibold text-gray-900">
-                Recente beoordelingen
-              </h3>
+                <div class="mt-6 space-y-8">
+                  {% for review in store_rating_data.last %}
+                    <div
+                      class="bg-gray-50 px-6 py-4 rounded-lg border-gray-200 border "
+                    >
+                      <p class="text-base font-medium text-gray-900">
+                        {{ review.title }}
+                      </p>
+                      <p class="text-sm text-gray-600 mt-1">
+                        {{ review.description }}
+                      </p>
 
-              <div class="mt-6 space-y-8">
-                <div class="space-y-4">
-                  <div class="bg-gray-50 p-6 rounded-lg">
-                    <p class="text-sm text-gray-600">
-                      "Great product, really helped me improve my daily routine.
-                      The build quality is excellent, and it's worth every
-                      penny."
-                    </p>
-                    <div class="mt-4">
-                      <span class="text-yellow-400">★★★★☆</span>
-                      <span class="ml-2 text-sm text-gray-500">4 stars</span>
+                      <div class="mt-4">
+                        <span class="text-amber-400 text-xl">
+                          {% for i in store_rating_data.range %}
+                            {% if i <= review.stars %}
+                              ★
+                            {% else %}
+                              ☆
+                            {% endif %}
+                          {% endfor %}
+                        </span>
+                        <span class="ml-2 text-sm text-gray-400 font-normal">
+                          {{ review.stars }} sterren
+                        </span>
+                      </div>
                     </div>
-                  </div>
-
-                  <div class="bg-gray-50 p-6 rounded-lg">
-                    <p class="text-sm text-gray-600">
-                      "Decent product but could be better. The design is sleek,
-                      but I found some issues with the battery life."
-                    </p>
-                    <div class="mt-4">
-                      <span class="text-yellow-400">★★★☆☆</span>
-                      <span class="ml-2 text-sm text-gray-500">3 stars</span>
-                    </div>
-                  </div>
-
-                  <div class="bg-gray-50 p-6 rounded-lg">
-                    <p class="text-sm text-gray-600">
-                      "Not satisfied with the performance. It stopped working
-                      after a few weeks, and customer service was unhelpful."
-                    </p>
-                    <div class="mt-4">
-                      <span class="text-yellow-400">★☆☆☆☆</span>
-                      <span class="ml-2 text-sm text-gray-500">1 star</span>
-                    </div>
-                  </div>
+                  {% endfor %}
                 </div>
               </div>
             </div>

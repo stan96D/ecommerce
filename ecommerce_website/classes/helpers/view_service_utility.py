@@ -34,9 +34,24 @@ from ecommerce_website.services.view_service.delivery_method_view_service import
 from ecommerce_website.services.brand_service.brand_service import BrandService
 from ecommerce_website.services.return_service.return_service import ReturnService
 from ecommerce_website.services.view_service.return_order_view_service import ReturnOrderViewService
+from ecommerce_website.services.store_rating_service.store_rating_service import StoreRatingService
 
 
 class ViewServiceUtility:
+
+    @staticmethod
+    def get_store_rating_data():
+
+        mean = StoreRatingService.get_mean()
+
+        return {
+            "mean": mean,
+            "range": [0, 1, 2, 3, 4, 5],
+            "count": StoreRatingService.get_count(),
+            "stars": StoreRatingService.get_star_count(),
+            "last": StoreRatingService.get_last(min_rating=4)
+        }
+
     @staticmethod
     def get_header_data():
         return ProductCategoryService().get_all_active_head_product_categories()

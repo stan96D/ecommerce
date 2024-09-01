@@ -32,6 +32,8 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from ecommerce_website.classes.helpers.token_generator.token_generator import ResetPasswordTokenGenerator
 from django.contrib import messages
+from ecommerce_website.services.account_service.account_service import AccountService
+from ecommerce_website.classes.forms.store_rating_form import StoreRatingForm
 
 
 def sign_in(request):
@@ -53,10 +55,9 @@ def sign_in(request):
 
 
 def home(request):
-
-    datah = ViewServiceUtility.get_header_data()
-
-    return render(request, "home.html", {'headerData': datah,
+    return render(request, "home.html", {'headerData': ViewServiceUtility.get_header_data(),
+                                         'store_rating_data': ViewServiceUtility.get_store_rating_data(),
+                                         'can_write_review': AccountService.can_write_review(request.user.id),
                                          'payment_methods': ViewServiceUtility.get_payment_methods(),
                                          'store_motivations': ViewServiceUtility.get_store_motivations(),
                                          'runner_products_data': ViewServiceUtility.get_runner_products(),
@@ -78,6 +79,30 @@ def logout_user(request):
 def login_view(request):
 
     return render(request, "login.html")
+
+
+def store_rating_view(request):
+
+    return render(request, "store_rating.html", {'headerData': ViewServiceUtility.get_header_data(),
+                                                 'can_write_review': AccountService.can_write_review(request.user.id),
+                                                 'payment_methods': ViewServiceUtility.get_payment_methods(),
+                                                 'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                                 'brands': ViewServiceUtility.get_all_brands(),
+                                                 'messages': messages.get_messages(request)})
+
+
+def create_store_rating(request):
+
+    if request.method == "POST":
+
+        form = StoreRatingForm(request.POST)
+        if form.is_valid():
+            store_rating = form.save(commit=False)
+            store_rating.user = request.user
+            store_rating.save()
+            return redirect('home')
+        else:
+            redirect('store_rating_view')
 
 
 def new_password(request, token):
@@ -153,7 +178,7 @@ def account_view(request):
                                             'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 
-@csrf_protect
+@ csrf_protect
 def change_account_information(request):
     if request.method == 'POST':
         first_name = request.POST.get('first-name')
@@ -193,7 +218,7 @@ def change_account_information(request):
     return JsonResponse({'status': 'fail', 'message': 'Invalid request method'}, status=405)
 
 
-@csrf_protect
+@ csrf_protect
 def change_delivery_address_information(request):
     if request.method == 'POST':
         address = request.POST.get('address')
@@ -230,7 +255,7 @@ def change_delivery_address_information(request):
     return JsonResponse({'status': 'fail', 'message': 'Invalid request method'}, status=405)
 
 
-@login_required
+@ login_required
 def delete_account(request):
     if request.method == 'DELETE':
         user = request.user
@@ -811,7 +836,7 @@ def delete_cart_item(request):
         return redirect('cart')
 
 
-@csrf_exempt
+@ csrf_exempt
 def mollie_webhook(request):
     if request.method == 'POST':
         try:
@@ -839,7 +864,7 @@ def mollie_webhook(request):
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
-@csrf_exempt
+@ csrf_exempt
 def tracking_code_webhook(request):
     if request.method == 'POST':
         try:
