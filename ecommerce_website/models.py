@@ -76,6 +76,8 @@ class DeliveryMethod(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100, db_index=True)
+    supplier = models.CharField(
+        max_length=100, db_index=True, default='Unknown')
     unit_price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00, db_index=True)
     price = models.DecimalField(
