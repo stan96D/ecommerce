@@ -1,3 +1,4 @@
+from abc import ABC, abstractmethod
 from mollie.api.client import Client
 from mollie.api.error import RequestError
 from ecommerce_website.services.view_service.payment_issuer_view_service import PaymentIssuerViewService
@@ -19,7 +20,7 @@ class MollieClient(PaymentClient):
         self.api_key = api_key
         self.client = Client()
         self.client.set_api_key(api_key)
-        self.cache = Cache()  
+        self.cache = Cache()
 
     def get_payment_methods(self):
         cached_methods = self.cache.get('payment_methods')
@@ -67,7 +68,6 @@ class MollieClient(PaymentClient):
             'method': method
         }
 
-
         if issuer is not None:
             payment_data['issuer'] = issuer
         print(payment_data)
@@ -77,7 +77,7 @@ class MollieClient(PaymentClient):
     def get_payment(self, payment_id):
         payment = self.client.payments.get(payment_id)
         return payment
-    
+
     def refund_payment(self, payment_id, amount):
         try:
             refund_data = {
@@ -94,4 +94,3 @@ class MollieClient(PaymentClient):
         except RequestError as e:
             print('Error refunding payment:', e)
             raise e
-

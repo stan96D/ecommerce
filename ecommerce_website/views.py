@@ -28,12 +28,12 @@ from ecommerce_website.classes.managers.mail_manager.mail_manager import *
 from ecommerce_website.classes.managers.authentication_manager.authentication_manager import AuthenticationManager
 from ecommerce_website.classes.helpers.view_service_utility import *
 from ecommerce_website.classes.managers.repay_manager.mollie_repay_manager import MollieRepayManager
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from ecommerce_website.classes.helpers.token_generator.token_generator import ResetPasswordTokenGenerator
 from django.contrib import messages
 from ecommerce_website.services.account_service.account_service import AccountService
 from ecommerce_website.classes.forms.store_rating_form import StoreRatingForm
+from ecommerce_website.classes.managers.url_manager.url_manager import *
 
 
 def sign_in(request):
@@ -476,9 +476,9 @@ def confirm_order(request):
         order_service.delete_order()
 
         # For Mollie testing purposes
-        redirect_url = f"https://{
-            settings.NGROK_URL}/order_detail?order_id={order.id}"
-        webhook_url = f"https://{settings.NGROK_URL}/mollie_webhook/"
+        redirect_url = TestURLManager.create_redirect(order.id)
+        webhook_url = TestURLManager.create_webhook()
+
         print(payment_method, issuer_id, issuer_name, payment_name)
         payment = MollieClient().create_payment('EUR', str(
             order.total_price), order.order_number, redirect_url, webhook_url, payment_method, issuer_id)
@@ -855,6 +855,14 @@ def mollie_webhook(request):
                     new_order.last_name,
                     new_order.order_number,
                     new_order.order_lines)
+
+                rating_url = TestURLManager.create_store_rating()
+                account = request.user
+
+                ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(account.salutation,
+                                                                                   account.last_name,
+                                                                                   account.email,
+                                                                                   rating_url)
 
             return JsonResponse({'status': 'success'})
         except Exception as e:

@@ -8,6 +8,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from ecommerce_website.classes.helpers.token_generator.token_generator import ResetPasswordTokenGenerator
 
+
 class BaseMailManager(ABC):
 
     @abstractmethod
@@ -17,12 +18,12 @@ class BaseMailManager(ABC):
 
 class HTMLMailManager(BaseMailManager):
 
-    def send(self, sender_email, sender_password, recipient_email, subject, message):
+    def send(self, sender_email, sender_password, recipient_email, subject, message, timeout=0):
         try:
             smtp_server = 'smtp.gmail.com'
             smtp_port = 587
 
-            server = smtplib.SMTP(smtp_server, smtp_port)
+            server = smtplib.SMTP(smtp_server, smtp_port, timeout)
             server.starttls()
 
             server.login(sender_email, sender_password)
@@ -45,22 +46,32 @@ class HTMLMailManager(BaseMailManager):
 
 class ClientMailSender():
 
-    text = "Geachte {salutation} {last_name},\n\n Hierbij de bevestiging van uw order met ordernummer {order_number}. De status van je order is <a href='{order_url}'>hier</a> in te zien. We hopen zo snel mogelijk je order te verzorgen.\n\nMet vriendelijke groet,\n\nHet goedkopevloeren.nl team!"
-
     def __init__(self, mail_manager: BaseMailManager):
         self.sender_email = os.getenv('SENDER_EMAIL')
         self.sender_password = os.getenv('SENDER_PASSWORD')
         self.mail_manager = mail_manager
 
     def send_order_confirmation(self, salutation, last_name, recipient_email, order_number, order_url):
+        text = "Geachte {salutation} {last_name},\n\n Hierbij de bevestiging van uw order met ordernummer {order_number}. De status van je order is <a href='{order_url}'>hier</a> in te zien. We hopen zo snel mogelijk je order te verzorgen.\n\nMet vriendelijke groet,\n\nHet goedkopevloeren.nl team!"
 
         subject = "Orderbevestiging " + order_number
 
-        message = self.text.format(
+        message = text.format(
             salutation=salutation, last_name=last_name, order_number=order_number, order_url=order_url)
-        
+
         return self.mail_manager.send(self.sender_email, self.sender_password,
-                  recipient_email, subject, message)
+                                      recipient_email, subject, message)
+
+    def send_store_rating(self, salutation, last_name, recipient_email, rating_url):
+        text = "Geachte {salutation} {last_name},\n\n Graag willen wij u vragen of u tijd heeft om uw mening te delen over onze services. Het invullen hiervan duurt slechts één enkele minuut. Dit zal ons op de hoogte houden van de wensen van onze klanten en om deze zo goed mogelijk te verzorgen.\n\nU kunt de link <a href='{rating_url}'>hier</a> bezoeken. Bedankt voor jullie tijd!\n\nMet vriendelijke groet,\n\nHet goedkopevloeren.nl team!"
+
+        subject = "Uw mening wordt gevraagd"
+
+        message = text.format(
+            salutation=salutation, last_name=last_name, rating_url=rating_url)
+
+        return self.mail_manager.send(self.sender_email, self.sender_password,
+                                      recipient_email, subject, message, 15)
 
 
 class AdminMailSender():
@@ -83,7 +94,6 @@ class AdminMailSender():
         self.recipient_email = os.getenv('ADMIN_EMAIL')
         self.mail_manager = mail_manager
 
-
     def send_order_confirmation(self, first_name, last_name, order_number, order_lines):
 
         subject = "Orderbevestiging " + order_number + " " + first_name + " " + last_name
@@ -91,21 +101,20 @@ class AdminMailSender():
         order_lines_text = ""
         for line in order_lines.all():
             order_lines_text += f"{line.product.name
-                                } (Aantal: {line.quantity}, Totaalprijs: ${line.total_price})\n"
+                                   } (Aantal: {line.quantity}, Totaalprijs: ${line.total_price})\n"
 
         message = self.text.format(
             first_name=first_name,
             last_name=last_name,
             order_number=order_number,
             order_lines=order_lines_text
-)
+        )
 
         # message = self.text.format(
         #     first_name=first_name, last_name=last_name, order_number=order_number)
 
         return self.mail_manager.send(self.sender_email, self.sender_password,
-                               self.recipient_email, subject, message)
-
+                                      self.recipient_email, subject, message)
 
 
 class ForgotPasswordMailSender():
@@ -138,5 +147,3 @@ class ForgotPasswordMailSender():
 
         self.mail_manager.send(
             self.sender_email, self.sender_password, user.email, subject, message)
-
-

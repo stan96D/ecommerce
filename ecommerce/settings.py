@@ -19,6 +19,8 @@ with open('ngrok_conf.json') as config_file:
     config = json.load(config_file)
 
 NGROK_URL = config.get('NGROK_URL', 'http://localhost:8000')
+PRODUCTION_URL = "http://localhost:8000"
+
 print(NGROK_URL)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,11 +36,15 @@ SECRET_KEY = 'django-insecure-@+7l*%+0#9n=_g0)&6dnolzv3g%+llw@!f4q@h$b84f!+rl&+b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [ 'localhost',
-                  '127.0.0.1', 
-                  '*.ngrok-free.app',
-                  '*.ngrok.io',
-                  ]
+ALLOWED_HOSTS = ['localhost',
+                 '127.0.0.1',
+                 '*.ngrok-free.app',
+                 '*.ngrok.io',
+                 ]
+
+
+# Base URL for production
+
 
 if NGROK_URL:
     ALLOWED_HOSTS.append(NGROK_URL)
