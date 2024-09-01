@@ -169,6 +169,9 @@ def account_view(request):
 
     user = request.user
 
+    if (not user.is_authenticated):
+        return redirect('login')
+
     return render(request, "account.html", {'headerData': ViewServiceUtility.get_header_data(),
                                             'account': user,
                                             'payment_methods': ViewServiceUtility.get_payment_methods(),
@@ -492,6 +495,7 @@ def confirm_order(request):
                                                                                  account.email,
                                                                                  order.order_number,
                                                                                  redirect_url)
+
 
         return redirect(checkout_url)
 
@@ -850,14 +854,11 @@ def mollie_webhook(request):
                 payment_id, payment.status)
 
             if new_order.is_paid:
-                AdminMailSender(mail_manager=HTMLMailManager()).send_order_confirmation(
-                    new_order.first_name,
-                    new_order.last_name,
-                    new_order.order_number,
-                    new_order.order_lines)
+                AdminMailSender(mail_manager=HTMLMailManager()
+                                ).send_order_confirmation(new_order)
 
                 rating_url = TestURLManager.create_store_rating()
-                account = request.user
+                account = new_order.account
 
                 ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(account.salutation,
                                                                                    account.last_name,

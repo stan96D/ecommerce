@@ -5,6 +5,10 @@ from django.conf import settings
 class URLManager(ABC):
 
     @abstractmethod
+    def get_base():
+        pass
+
+    @abstractmethod
     def create_store_rating():
         pass
 
@@ -18,6 +22,18 @@ class URLManager(ABC):
 
 
 class TestURLManager(URLManager):
+
+    @staticmethod
+    def get_base():
+        return "http://localhost:8000"
+
+    @staticmethod
+    def get_contact_service():
+        return TestURLManager.get_base()  # TODO create contact service page
+
+    @staticmethod
+    def get_account():
+        return TestURLManager.get_base() + "/account"
 
     @staticmethod
     def store_rating():
@@ -34,6 +50,10 @@ class TestURLManager(URLManager):
 
 
 class RealURLManager(URLManager):
+
+    @staticmethod
+    def get_base():
+        pass
 
     @staticmethod
     def create_webhook():
