@@ -193,6 +193,50 @@ class RealProductCategorySeeder(RealSeederInterface):
     def seed():
         print("RealProductCategorySeeder started...")
 
+        with open('ecommerce_website/db_mapper/data/final_data/finalized_combined.json', 'r', encoding='utf-8') as file:
+            json_data = json.load(file)
+
+        singular_to_plural = {
+            "plint": "Plinten",
+            "ondervloer": "Ondervloeren",
+        }
+
+        MAX_VALUES = 6
+
+        grouped_products = {}
+
+        for product in json_data:
+            product_type = product.get("Type") or product.get("Producttype")
+            product_type = singular_to_plural.get(
+                product_type.lower(), product_type)
+
+            if product_type not in grouped_products:
+                grouped_products[product_type] = {
+                    "Merk": set(),
+                    "Collectie": set(),
+                    "Vloertype": set(),
+                    "Kleur": set()
+                }
+
+            if product.get("Merk"):
+                if len(grouped_products[product_type]["Merk"]) < MAX_VALUES:
+                    grouped_products[product_type]["Merk"].add(product["Merk"])
+
+            if product.get("Collectie"):
+                if len(grouped_products[product_type]["Collectie"]) < MAX_VALUES:
+                    grouped_products[product_type]["Collectie"].add(
+                        product["Collectie"])
+
+            if product.get("Vloertype"):
+                if len(grouped_products[product_type]["Vloertype"]) < MAX_VALUES:
+                    grouped_products[product_type]["Vloertype"].add(
+                        product["Vloertype"])
+
+            if product.get("Kleur"):
+                if len(grouped_products[product_type]["Kleur"]) < MAX_VALUES:
+                    grouped_products[product_type]["Kleur"].add(
+                        product["Kleur"])
+
         category_data = [
             {
                 'name': 'PVC',
@@ -201,22 +245,7 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'description': "PVC vloeren",
                 'thumbnail': 'category_thumbnails/pvc_category.webp',
                 'subcategories': [
-                    {
-                        'name': 'Merk',
-                        'subcategories': ['Douwes Dekker', 'Sense', 'OTIUM at Home', 'Beautifloor', 'Mflor']
-                    },
-                    {
-                        'name': 'Collectie',
-                        'subcategories': ['Shore', 'Fort']
-                    },
-                    {
-                        'name': 'Groef',
-                        'subcategories': ['V4 micro', 'V4', 'Geen']
-                    },
-                    {
-                        'name': 'Vloertype',
-                        'subcategories': ['Click', 'Dryback']
-                    }
+
                 ]
             },
             {
@@ -226,18 +255,7 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'description': "Laminaat vloeren",
                 'thumbnail': 'category_thumbnails/laminaat_category.jpg',
                 'subcategories': [
-                    {
-                        'name': 'Merk',
-                        'subcategories': ['Beautifloor', 'Mflor']
-                    },
-                    {
-                        'name': 'Collectie',
-                        'subcategories': ['Antwerpen', 'Anvers']
-                    },
-                    {
-                        'name': 'Groef',
-                        'subcategories': ['V4 micro', 'V4', 'Geen']
-                    }
+
                 ]
             },
             {
@@ -247,18 +265,7 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'description': "Lamelparket vloeren",
                 'thumbnail': 'category_thumbnails/lamelparket-category.jpg',
                 'subcategories': [
-                    {
-                        'name': 'Merk',
-                        'subcategories': ['Beautifloor', 'Mflor']
-                    },
-                    {
-                        'name': 'Collectie',
-                        'subcategories': ['Miami', 'Boston']
-                    },
-                    {
-                        'name': 'Groef',
-                        'subcategories': ['V4 micro', 'V4', 'Geen']
-                    }
+
                 ]
             },
             {
@@ -268,46 +275,33 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'description': "Klik Vinyl vloeren",
                 'thumbnail': 'category_thumbnails/klik-vinyl-category.jpg',
                 'subcategories': [
-                    {
-                        'name': 'Merk',
-                        'subcategories': ['Beautifloor', 'Mflor']
-                    },
-                    {
-                        'name': 'Collectie',
-                        'subcategories': ['Laghi', 'Citta']
-                    },
-                    {
-                        'name': 'Groef',
-                        'subcategories': ['V4 micro', 'V4', 'Geen']
-                    }
+
                 ]
             },
 
             {
-                'name': 'Accessoires',
+                'name': 'Plinten',
                 'active': True,
                 'for_homepage': True,
                 'description': "Accessoires om de levensduur van je vloer te vergroten.",
                 'thumbnail': 'category_thumbnails/klik-vinyl-category.jpg',
                 'subcategories': [
-                    {
-                        'name': 'Merk',
-                        'subcategories': ['Beautifloor', 'Mflor']
-                    },
-                    {
-                        'name': 'Collectie',
-                        'subcategories': ['Laghi', 'Citta']
-                    },
-                    {
-                        'name': 'Groef',
-                        'subcategories': ['V4 micro', 'V4', 'Geen']
-                    }
+
+                ]
+            },
+            {
+                'name': 'Ondervloeren',
+                'active': True,
+                'for_homepage': True,
+                'description': "Accessoires om de levensduur van je vloer te vergroten.",
+                'thumbnail': 'category_thumbnails/klik-vinyl-category.jpg',
+                'subcategories': [
                 ]
             },
             {
                 'name': 'Hardlopers',
                 'active': True,
-                'for_homepage': True,
+                'for_homepage': False,
                 'description': "De beste vloeren volgens klanten.",
                 'thumbnail': 'category_thumbnails/hardlopers_category.jpg',
                 'subcategories': [
@@ -338,6 +332,19 @@ class RealProductCategorySeeder(RealSeederInterface):
                 'subcategories': []
             },
         ]
+
+        print(grouped_products)
+        for category in category_data:
+            # Match this with 'Type' or 'Producttype'
+            category_type = category['name']
+            if category_type in grouped_products and category['for_homepage'] == True:
+                for attribute, values in grouped_products[category_type].items():
+                    if values:  # Only add if there are values
+                        category['subcategories'].append({
+                            'name': attribute,
+                            # Sort values alphabetically
+                            'subcategories': sorted(list(values))
+                        })
 
         for category_entry in category_data:
             main_category_name = category_entry['name']

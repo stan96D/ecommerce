@@ -64,5 +64,47 @@
     "Afmeting": "470.0 x 70.0 mm",
     "Pakinhoud": "64",
     "Leverancier": "PPC"
+  },
+
+  {
+    "Eenheid": "stuk",
+    "SKU": "639382",
+    "Producttype": "Plint",
+    "Afmeting": "50 x 250 mm",
+    "Lengte": "240 cm",
+    "Pakinhoud": "40",
+    "Omschrijving": "De plakplint is zelfklevend.",
+    "Thumbnail": "https://www.unilinflooring.nl/images/products/large/416947.jpg",
+    "Product": "Plakplint 240cm gefolied: AC1052, eik wit vernist",
+    "Merk": "Beautifloor",
+    "Prijs per m2": 1.92,
+    "Prijs per pak": 76.8,
+    "Leverancier": "Peitsman"
+  },
+
+  {
+    "Eenheid": "rol",
+    "SKU": "633309",
+    "Producttype": "Ondervloer",
+    "Afmeting": "100 x 1500 cm",
+    "Oppervlakte": "15 m²",
+    "Dikte": "3 mm",
+    "Breedte": "100 cm",
+    "Lengte": "1500 cm",
+    "Overlap": "20 cm",
+    "Pakinhoud": "13",
+    "Omschrijving": "Dikte: 3 mm (EN 823*) Breedte: 100 cm (excl. overlap van 20 cm, zonder tape) Geschikt voor: laminaat, meerlaags- en massieve parketvloeren",
+    "Thumbnail": "https://www.unilinflooring.nl/images/products/large/415113.jpg",
+    "Product": "PF ALU-FOAM+ 3MM (PE-Schuim) 1M X 15M (Laminaat en Parket)",
+    "Merk": "Beautifloor",
+    "Prijs per m2": 19.9,
+    "Prijs per pak": 258.7,
+
+    "Drukweerstand (CS)": "&ge:10 kPa (= 1 ton/m²) bij max. 0,5 mm indrukking (EN 826*)",
+    "Kruipweerstand (CC)": "2 kPa (EN 1606*)",
+    "Contactgeluidsreductie (IS)": "19 dB Δ:Lw onder 7 mm laminaat(EN ISO 140-8/717-2)",
+    "Warmteweerstand (R)": "0,073 m² K/W (EN 12667*)",
+    "Dampdichtheid (SD)": "sd > 100 m (EN 12086*) *gemeten volgens FprCEN/TS 16354 (ondervloeren laminaat)",
+    "Leverancier": "Peitsman"
   }
 ]

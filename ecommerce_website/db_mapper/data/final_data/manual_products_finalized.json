@@ -11,7 +11,8 @@
     "Product": "Stijlplint blok wit gelakt 12x80mm 244cm",
     "Merk": "Beautifloor",
     "Prijs per m2": 5.64,
-    "Prijs per pak": 33.84
+    "Prijs per pak": 33.84,
+    "Leverancier": "Peitsman"
   },
   {
     "Eenheid": "stuk",
@@ -25,7 +26,8 @@
     "Product": "Stijlplint Blok Witfolie 12x58x2400mm",
     "Merk": "Beautifloor",
     "Prijs per m2": 2.32,
-    "Prijs per pak": 23.2
+    "Prijs per pak": 23.2,
+    "Leverancier": "Peitsman"
   },
   {
     "Eenheid": "stuk",
@@ -39,7 +41,8 @@
     "Product": "Stijlplint Blok Witfolie 12x120x2400mm",
     "Merk": "Beautifloor",
     "Prijs per m2": 4.6,
-    "Prijs per pak": 23
+    "Prijs per pak": 23,
+    "Leverancier": "Peitsman"
   },
   {
     "Eenheid": "stuk",
@@ -53,7 +56,8 @@
     "Product": "Plakplint 240cm gefolied: AC1052, eik wit vernist",
     "Merk": "Beautifloor",
     "Prijs per m2": 1.92,
-    "Prijs per pak": 76.8
+    "Prijs per pak": 76.8,
+    "Leverancier": "Peitsman"
   },
 
   {
@@ -78,7 +82,8 @@
     "Kruipweerstand (CC)": "2 kPa (EN 1606*)",
     "Contactgeluidsreductie (IS)": "19 dB Δ:Lw onder 7 mm laminaat(EN ISO 140-8/717-2)",
     "Warmteweerstand (R)": "0,073 m² K/W (EN 12667*)",
-    "Dampdichtheid (SD)": "sd > 100 m (EN 12086*) *gemeten volgens FprCEN/TS 16354 (ondervloeren laminaat)"
+    "Dampdichtheid (SD)": "sd > 100 m (EN 12086*) *gemeten volgens FprCEN/TS 16354 (ondervloeren laminaat)",
+    "Leverancier": "Peitsman"
   },
 
   {
@@ -96,7 +101,8 @@
     "Product": "Heat-Foil 10dB",
     "Merk": "Beautifloor",
     "Prijs per m2": 57.41,
-    "Prijs per pak": 2066.76
+    "Prijs per pak": 2066.76,
+    "Leverancier": "Peitsman"
   },
 
   {
@@ -114,6 +120,7 @@
     "Product": "PF Soundblock 2,8mm, 1 meter breed x 10 meter",
     "Merk": "Beautifloor",
     "Prijs per m2": 47,
-    "Prijs per pak": 1880
+    "Prijs per pak": 1880,
+    "Leverancier": "Peitsman"
   }
 ]

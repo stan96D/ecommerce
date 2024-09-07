@@ -317,11 +317,9 @@ class ProductService(ProductServiceInterface):
     @staticmethod
     def get_products_by_search(search_string):
         try:
-
-            products = Product.objects.all()
-
-            filtered_products = ProductService().__filter_products_on_search__(
-                products, search_string)
+            # Filter and limit the products at the database level
+            filtered_products = Product.objects.filter(
+                name__icontains=search_string)[:30]
 
             return filtered_products
         except Product.DoesNotExist:
