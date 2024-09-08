@@ -4,6 +4,7 @@ from django.db.models import Q
 from collections import defaultdict
 from django.db.models import Exists, OuterRef
 import re
+from django.db.models import Prefetch
 
 
 class ProductService(ProductServiceInterface):
@@ -44,6 +45,33 @@ class ProductService(ProductServiceInterface):
                 Q(name__icontains=attribute)
             ).distinct()
             return list(products)
+        except Product.DoesNotExist:
+            return None
+
+    @staticmethod
+    def get_products_by_attributes(attributes):
+        try:
+            filters = defaultdict(set)
+
+            for key, value in attributes.items():
+                if ',' in value:
+                    values = value.split(',')
+                    filters[key].update(values)
+                else:
+                    filters[key].add(value)
+
+            filtered_products = Product.objects.all()
+
+            for attr_name, attr_values in filters.items():
+                attr_filter = Q(
+                    attributes__value__in=attr_values,
+                    attributes__attribute_type__name=attr_name
+                )
+                filtered_products = filtered_products.filter(
+                    attr_filter).distinct()
+
+            return filtered_products
+
         except Product.DoesNotExist:
             return None
 
@@ -202,9 +230,9 @@ class ProductService(ProductServiceInterface):
     @staticmethod
     def get_products_by_attributes_and_values(attributes, category_data):
         try:
-
             filters = defaultdict(set)
 
+            # Process the attributes to create filters
             for key, value in attributes.items():
                 if ',' in value:
                     values = value.split(',')
@@ -212,35 +240,50 @@ class ProductService(ProductServiceInterface):
                 else:
                     filters[key].add(value)
 
-            filtered_products = Product.objects.all()
+            # Prefetch the specific attributes
+            attributes_needed = ['Producttype', 'Eenheid', 'Merk']
+            attributes_prefetch = Prefetch(
+                'attributes',
+                queryset=ProductAttribute.objects.filter(
+                    attribute_type__name__in=attributes_needed
+                ).only('attribute_type__name', 'value'),
+                to_attr='prefetched_attributes'
+            )
 
+            # Fetch products with prefetching
+            filtered_products = Product.objects.prefetch_related(
+                attributes_prefetch)
+
+            # Filter products based on attributes
             for attr_name, attr_values in filters.items():
-
-                attr_filter = Q(attributes__value__in=attr_values,
-                                attributes__attribute_type__name=attr_name)
+                attr_filter = Q(
+                    **{'prefetched_attributes__attribute_type__name': attr_name}
+                )
                 filtered_products = filtered_products.filter(
                     attr_filter).distinct()
 
+            # Apply additional category-based filtering
             categories = ProductService().return_nested_categories(category_data)
-
             index = 1
 
             for category in categories:
-
                 if index == 2:
-
                     attr_filter = Q(
-                        attributes__attribute_type__name=category.name)
+                        **{'prefetched_attributes__attribute_type__name': category.name}
+                    )
                     filtered_products = filtered_products.filter(
                         attr_filter).distinct()
                 else:
-                    attr_filter = Q(attributes__value__in=[category.name])
+                    attr_filter = Q(
+                        **{'prefetched_attributes__value__in': [category.name]}
+                    )
                     filtered_products = filtered_products.filter(
                         attr_filter).distinct()
 
                 index += 1
 
             return filtered_products
+
         except Product.DoesNotExist:
             return None
 

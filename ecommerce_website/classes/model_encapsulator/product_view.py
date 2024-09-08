@@ -4,31 +4,32 @@ import json
 
 class ProductView:
     def __init__(self, product):
+        # Access the prefetched attributes directly
+        attributes_dict = {
+            attr.attribute_type.name: attr.value
+            for attr in getattr(product, 'prefetched_attributes', [])
+        }
 
-        attributes_dict = {}
-        for attribute in product.attributes.all():
-            attributes_dict[attribute.attribute_type.name] = attribute.value
-
+        # Basic product details
         self.id = product.id
         self.name = product.name
         self.price = product.selling_price
         self.unit_price = product.unit_selling_price
 
-        if product.thumbnail and product.thumbnail.url:
-            self.thumbnail_url = product.thumbnail.url
+        # Thumbnail handling with a fallback to a default image
+        self.thumbnail_url = product.thumbnail.url if product.thumbnail and product.thumbnail.url else "/static/images/no_image_placeholder.png"
 
-        else:
-            self.thumbnail_url = "/static/images/no_image_placeholder.png"
-
+        # Accessing attributes from the pre-fetched dictionary
         self.product_type = attributes_dict.get('Producttype', 'Vloer')
         self.unit = attributes_dict.get('Eenheid', 'm²')
+        self.brand = attributes_dict.get('Merk', 'Merkloos')
 
+        # Images and stock quantity
         self.images = product.images
         self.quantity = product.stock.quantity
         self.is_runner = product.runner
 
-        self.brand = attributes_dict.get('Merk', 'Merkloos')
-
+        # Sale prices, only assign if the product is on sale
         if product.has_product_sale:
             self.sale_price = product.sale_price
             self.unit_sale_price = product.unit_sale_price

@@ -34,6 +34,8 @@ from django.contrib import messages
 from ecommerce_website.services.account_service.account_service import AccountService
 from ecommerce_website.classes.forms.store_rating_form import StoreRatingForm
 from ecommerce_website.classes.managers.url_manager.url_manager import *
+import time
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def sign_in(request):
@@ -518,11 +520,11 @@ def products(request, category='Assortiment'):
 
     if is_filter:
         # Aanpassen
-        products = ProductService().get_important_products_by_attributes(attributes)
+        products = ProductService().get_products_by_attributes(attributes)
         if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
     else:
-        products = ProductService().get_important_products()
+        products = ProductService().get_all_products()
         if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
 
@@ -554,7 +556,7 @@ def search_products(request, category="Zoeken"):
 
     search = request.GET.get('q')
 
-    products_for_filters = ProductService.get_products_by_search(search)
+    # products_for_filters = ProductService.get_products_by_search(search)
 
     if is_filter:
         attributes.pop('q', None)
@@ -571,7 +573,7 @@ def search_products(request, category="Zoeken"):
     category_data = ProductCategoryService().get_product_category_by_name(category)
 
     filter_data = ProductFilterService(
-    ).get_products_filters_for_search(products_for_filters)
+    ).get_products_filters_for_search(products)
 
     return render(request, 'products.html', {
         'products': ViewServiceUtility.get_product_views(products),
@@ -653,34 +655,85 @@ def runner_products(request, category='Hardlopers'):
 
 
 def products_by_category(request, category):
+    # Start timing
+    start_time = time.time()
+
+    print(f"Starting 'products_by_category' for category: {category}")
+
     attributes = request.GET.copy()
 
     is_sort = ProductSorterUtility.is_sort(attributes)
+    is_paginated = ProductSorterUtility.is_paginated(attributes)
+
+    if is_paginated:
+        page = attributes.pop('page', None)[0]
+        print(f"Pagination value detected: {page}")
+    else:
+        page = 1
+
     is_filter = ProductSorterUtility.is_filter(attributes)
 
     if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
+        print(f"Sort value detected: {sort_value}")
+
+
+    is_filter = ProductSorterUtility.is_filter(attributes)
+
+
+    # Log time taken to identify filters and sorts
+    print(f"Identified sort and filter options - Time elapsed: {
+          time.time() - start_time:.4f} seconds")
 
     category_data = ProductCategoryService().get_product_category_by_name(category)
+
+    # Log time taken to retrieve category data
+    print(
+        f"Retrieved category data - Time elapsed: {time.time() - start_time:.4f} seconds")
 
     if is_filter:
         products = ProductService.get_products_by_attributes_and_values(
             attributes, category_data)
-        if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
-    else:
-        products = ProductService.get_products_by_attribute(category)
+        print(
+            f"Filtered products by attributes - Time elapsed: {time.time() - start_time:.4f} seconds")
 
         if is_sort:
             products = ProductSorter().sort_products_by(products, sort_value)
+            print(
+                f"Sorted products - Time elapsed: {time.time() - start_time:.4f} seconds")
+    else:
+        products = ProductService.get_products_by_attribute(category)
+        print(
+            f"Fetched products by category - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        if is_sort:
+            products = ProductSorter().sort_products_by(products, sort_value)
+            print(
+                f"Sorted products - Time elapsed: {time.time() - start_time:.4f} seconds")
 
     breadcrumb = [category]
 
-    filter_data = ProductFilterService().get_product_filters_by_category_name(category)
+    paginator = Paginator(products, 30)
 
-    return render(request, 'products.html', {
-        'products': ViewServiceUtility.get_product_views(products),
-        'filterData': filter_data,
+    try:
+        paginated_products = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_products = paginator.page(1)
+    except EmptyPage:
+        paginated_products = paginator.page(paginator.num_pages)
+
+    page_obj = paginator.get_page(page)
+
+    # filter_data = ProductFilterService(
+    # ).get_products_filters_by_products(products, category)
+
+    # Log time taken to generate filters
+    print(
+        f"Generated product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    response = render(request, 'products.html', {
+        'page_obj': page_obj,
+        'products': ViewServiceUtility.get_product_views(paginated_products),
         'headerData': ViewServiceUtility.get_header_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
@@ -688,6 +741,12 @@ def products_by_category(request, category):
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations()
     })
+
+    # Log time taken to render the template
+    print(
+        f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
+
+    return response
 
 
 def products_by_subcategory(request, category, subcategory):
@@ -715,8 +774,8 @@ def products_by_subcategory(request, category, subcategory):
 
     breadcrumb = [category, subcategory]
 
-    filter_data = ProductFilterService().get_nested_product_filters_by_category_name(
-        category, subcategory)
+    filter_data = ProductFilterService(
+    ).get_products_filters_by_products(products, subcategory)
 
     return render(request, 'products.html', {
         'products': ViewServiceUtility.get_product_views(products),
@@ -756,9 +815,10 @@ def products_by_attribute(request, category, subcategory, attribute):
 
     breadcrumb = [category, subcategory, attribute]
 
-    filter_data = ProductFilterService().get_double_nested_product_filters_by_category_name(
-        category, subcategory, attribute)
-
+    # filter_data = ProductFilterService().get_double_nested_product_filters_by_category_name(
+    #     category, subcategory, attribute)
+    filter_data = ProductFilterService(
+    ).get_products_filters_by_products(products, attribute)
     return render(request, 'products.html', {
         'products': ViewServiceUtility.get_product_views(products),
         'filterData': filter_data,

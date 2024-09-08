@@ -92,21 +92,17 @@ class Product(models.Model):
 
     @property
     def unit_selling_price(self):
-        print(self.unit_price)
         selling_price = round(
             self.unit_price * (1 - self.selling_percentage / 100), 2)
-        print(selling_price)
         selling_price_with_shipping_costs = round(
             selling_price * WebShopConfig.shipping_margin(), 2)
         return selling_price_with_shipping_costs
 
     @property
     def selling_price(self):
-        print(self.price)
 
         selling_price = round(
             self.price * (1 - self.selling_percentage / 100), 2)
-        print(selling_price)
 
         selling_price_with_shipping_costs = round(
             selling_price * WebShopConfig.shipping_margin(), 2)

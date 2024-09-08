@@ -144,24 +144,112 @@
             </form>
           </div>
         </aside>
-
         <section
           aria-labelledby="product-heading"
           class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
         >
           <h2 id="product-heading" class="sr-only">Products</h2>
 
-          <div class="mx-auto max-w-2xl px-4  sm:px-6 lg:max-w-7xl lg:px-8">
+          <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             <h2 class="sr-only">Products</h2>
 
             <div
-              class=" grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8"
+              class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8"
             >
               {% for product in products %}
                 {% include 'components/product_card.html' with product=product %}
               {% endfor %}
             </div>
           </div>
+          <nav
+            aria-label="Pagination"
+            class="mx-auto mt-12 px-8 flex max-w-7xl justify-between text-sm font-medium text-gray-700"
+          >
+            <!-- Previous Button -->
+            <div class="min-w-0 flex-1">
+              {% if page_obj.has_previous %}
+                <a
+                  href="javascript:void(0)"
+                  onclick="goToPage({{ page_obj.previous_page_number }})"
+                  class="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                  >Vorige</a
+                >
+              {% endif %}
+            </div>
+
+            <!-- Page Numbers -->
+            <div class="hidden space-x-2 sm:flex">
+              {% with page_obj.paginator as paginator %}
+                {% with paginator.page_range as page_range %}
+                  <!-- Show First Page -->
+                  {% if page_obj.number > 4 %}
+                    <a
+                      href="javascript:void(0)"
+                      onclick="goToPage(1)"
+                      class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                      >1</a
+                    >
+
+                    {% if page_obj.number > 5 %}
+                      <span
+                        class="inline-flex h-10 items-center px-1.5 text-gray-500"
+                        >...</span
+                      >
+                    {% endif %}
+                  {% endif %}
+
+                  <!-- Pages Around Current Page -->
+                  {% for i in page_range %}
+                    {% if i >= page_obj.number|add:'-3' and i <= page_obj.number|add:'3' %}
+                      {% if i == page_obj.number %}
+                        <span
+                          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-amber-500 bg-white ring-1 ring-amber-500"
+                          >{{ i }}</span
+                        >
+                      {% else %}
+                        <a
+                          href="javascript:void(0)"
+                          onclick="goToPage({{ i }})"
+                          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                          >{{ i }}</a
+                        >
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+
+                  <!-- Show Ellipsis and Last Page -->
+                  {% if page_obj.number < paginator.num_pages|add:'-3' %}
+                    {% if page_obj.number < paginator.num_pages|add:'-4' %}
+                      <span
+                        class="inline-flex h-10 items-center px-1.5 text-gray-500"
+                        >...</span
+                      >
+                    {% endif %}
+                    {% if paginator.num_pages != page_obj.number %}
+                      <a
+                        href="javascript:void(0)"
+                        onclick="goToPage({{ paginator.num_pages }})"
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                        >{{ paginator.num_pages }}</a
+                      >
+                    {% endif %}
+                  {% endif %}
+                {% endwith %}
+              {% endwith %}
+            </div>
+
+            <!-- Next Button -->
+            <div class="flex min-w-0 flex-1 justify-end">
+              {% if page_obj.has_next %}
+                <a
+                  href="javascript:void(0)"
+                  onclick="goToPage({{ page_obj.next_page_number }})"
+                  class="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                  >Volgende</a
+                >
+              {% endif %}
+            </div>
+          </nav>
         </section>
       </div>
     </main>
@@ -280,6 +368,52 @@
     function toggleSortMenu() {
       const sortMenu = document.getElementById('sort-menu')
       sortMenu.classList.toggle('hidden')
+    }
+
+    function goToPage(pageNumber) {
+      // Get the current URL's query string
+      const existingQueryString = window.location.search
+
+      // Create the new query string with the page parameter
+      let queryString = `page=${pageNumber}`
+
+      // Check if there are existing query parameters
+      if (existingQueryString) {
+        // If there are existing query parameters, add the new page parameter
+        // Ensure that 'page' parameter doesn't already exist in the URL
+        const pageParamIndex = existingQueryString.indexOf('page=')
+        if (pageParamIndex !== -1) {
+          // If 'page' parameter exists, replace it
+          const ampersandIndex = existingQueryString.indexOf(
+            '&',
+            pageParamIndex,
+          )
+          if (ampersandIndex !== -1) {
+            queryString =
+              existingQueryString.substring(0, pageParamIndex) +
+              queryString +
+              existingQueryString.substring(ampersandIndex)
+          } else {
+            queryString =
+              existingQueryString.substring(0, pageParamIndex) + queryString
+          }
+        } else {
+          // If 'page' parameter does not exist, append it
+          queryString =
+            existingQueryString +
+            (existingQueryString ? '&' : '?') +
+            queryString
+        }
+      } else {
+        // If there are no existing query parameters, just set the query string
+        queryString = '?' + queryString
+      }
+
+      // Construct the new URL
+      const newUrl = window.location.pathname + queryString
+
+      // Redirect to the new URL
+      window.location.href = newUrl
     }
 
     function sortBy(sortType) {

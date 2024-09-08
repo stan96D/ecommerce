@@ -97,19 +97,19 @@ class RealStoreMotivationDataSeeder(RealSeederInterface):
 class RealProductDataSeeder(RealAddSeederInterface):
 
     def seed():
-        # with open('ecommerce_website/db_mapper/data/finalized_data2.json', 'r') as file:
-        #     json_data_peitsman = json.load(file)
-
-        # database_service = SQLImportService()
-        # database_service.import_product_data(json_data_peitsman)
-
-        with open('ecommerce_website/db_mapper/data/finalized_minimal.json', 'r', encoding='utf-8') as file:
-            json_data_ppc = json.load(file)
-
-        print("RealProductDataSeeder started...")
+        with open('ecommerce_website/db_mapper/data/final_data/finalized_combined.json', 'r', encoding='utf-8') as file:
+            json_data = json.load(file)
 
         database_service = SQLImportService()
-        database_service.import_product_data(json_data_ppc)
+        database_service.import_product_data(json_data)
+
+        # with open('ecommerce_website/db_mapper/data/finalized_minimal.json', 'r', encoding='utf-8') as file:
+        #     json_data_ppc = json.load(file)
+
+        # print("RealProductDataSeeder started...")
+
+        # database_service = SQLImportService()
+        # database_service.import_product_data(json_data_ppc)
 
         print("RealProductDataSeeder finished...")
 
@@ -425,48 +425,51 @@ class RealProductFilterSeeder(RealSeederInterface):
         for category in categories:
             print("Now in category: ", category)
             for attribute_type in product_attribute_types:
-                print("Now in attribute_type: ", attribute_type,
-                      "for category: ", category)
 
-                associated_attributes = ProductAttribute.objects.filter(
-                    attribute_type=attribute_type)
+                if attribute_type.name != category.name:
 
-                if category.name == "Zoeken":
+                    print("Now in attribute_type: ", attribute_type,
+                        "for category: ", category)
 
-                    for product_attribute in associated_attributes:
+                    associated_attributes = ProductAttribute.objects.filter(
+                        attribute_type=attribute_type)
 
-                        if attribute_type in product_filters:
+                    if category.name == "Zoeken":
 
-                            filter = product_filters[attribute_type]
+                        for product_attribute in associated_attributes:
 
-                            if len(filter.product_attributes.filter(value=product_attribute.value)) == 0:
-                                product_filters[attribute_type].product_attributes.add(
+                            if attribute_type in product_filters:
+
+                                filter = product_filters[attribute_type]
+
+                                if len(filter.product_attributes.filter(value=product_attribute.value)) == 0:
+                                    product_filters[attribute_type].product_attributes.add(
+                                        product_attribute)
+                            else:
+                                product_filter = ProductFilter.objects.create(
+                                    name=attribute_type, parent_category=category)
+
+                                product_filter.product_attributes.add(
                                     product_attribute)
-                        else:
-                            product_filter = ProductFilter.objects.create(
-                                name=attribute_type, parent_category=category)
 
-                            product_filter.product_attributes.add(
-                                product_attribute)
+                                product_filters[attribute_type] = product_filter
+                    else:
 
-                            product_filters[attribute_type] = product_filter
-                else:
+                        product_attributes_with_category = []
+                        product_attributes_with_category = RealProductFilterSeeder.filter_attributes_by_category(
+                            category, associated_attributes)
 
-                    product_attributes_with_category = []
-                    product_attributes_with_category = RealProductFilterSeeder.filter_attributes_by_category(
-                        category, associated_attributes)
+                        if len(product_attributes_with_category) > 0:
 
-                    if len(product_attributes_with_category) > 0:
+                            with transaction.atomic():
+                                product_filter = ProductFilter.objects.create(
+                                    name=attribute_type.name,
+                                    parent_category=category
+                                )
 
-                        with transaction.atomic():
-                            product_filter = ProductFilter.objects.create(
-                                name=attribute_type.name,
-                                parent_category=category
-                            )
-
-                            for product_attribute in product_attributes_with_category:
-                                if attribute_type.id == product_attribute.attribute_type.id:
-                                    if not product_filter.product_attributes.filter(value=product_attribute.value).exists():
-                                        product_filter.product_attributes.add(
-                                            product_attribute)
+                                for product_attribute in product_attributes_with_category:
+                                    if attribute_type.id == product_attribute.attribute_type.id:
+                                        if not product_filter.product_attributes.filter(value=product_attribute.value).exists():
+                                            product_filter.product_attributes.add(
+                                                product_attribute)
         print("RealProductFilterSeeder finished...")

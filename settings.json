@@ -1,4 +1,0 @@
-{
-  "python.formatting.provider": "autopep8", // or "autopep8", "yapf"
-  "editor.formatOnSave": true
-}
