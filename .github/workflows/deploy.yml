@@ -4,33 +4,51 @@ on:
   push:
     branches:
       - dev
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   test_and_deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.12' 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
 
-    - name: Install dependencies
-      run: |
-        python -m venv venv
-        source venv/bin/activate
-        pip install -r requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
 
-    # - name: Run tests
-    #   run: |
-    #     source venv/bin/activate
-    #     python manage.py test
+      - name: Run tests
+        run: |
+          source venv/bin/activate
+          python manage.py test
 
-    - name: Copy files via SSH (Deploy Step Placeholder)
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY_GITHUB_ACTIONS }}
-      run: |
-        echo "This is a placeholder for the deployment step."
+      - name: Deploy to Server
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY_GITHUB_ACTIONS }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          REPO_PATH: ${{ secrets.REPO_PATH }}
+        run: |
+          # Create a temporary SSH key file
+          echo "${SSH_PRIVATE_KEY}" > /tmp/private_key
+          chmod 600 /tmp/private_key
+
+          # Execute the deployment commands over SSH
+          ssh -i /tmp/private_key -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << 'EOF'
+            cd $REPO_PATH
+            git pull origin dev
+            source /path/to/venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart your-django-service
+          EOF
+
+          # Clean up
+          rm /tmp/private_key
