@@ -20,7 +20,7 @@ jobs:
 
       - name: Run deploy script
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'bash -s' < /opt/scripts/ecommerce_test.sh
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'bash /opt/scripts/ecommerce_test.sh'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY_GITHUB_ACTIONS }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
