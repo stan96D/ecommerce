@@ -1,0 +1,10 @@
+m2 = m²
+Pakinhoud is string
+Geen komma's maar punten in de cijfer data
+
+Belangrijke properties:
+- Product
+- Dikte
+- Leverancier
+- Prijs per pak
+- Prijs per m²

@@ -13,5 +13,7 @@ class ProductFilterViewService(ViewServiceInterface):
         return productViews
 
     def get(self, item):
-        productView = ProductFilterView(item.key, item.value)
+        key, value = next(iter(item.items()))
+
+        productView = ProductFilterView(key, value)
         return productView

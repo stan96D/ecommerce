@@ -13,7 +13,7 @@ class SQLDatabaseMapper(DatabaseMapperInterface):
             product = product_data['Product']
             supplier = product_data['Leverancier']
             image = product_data['Thumbnail']
-            measure_price = product_data['Prijs per m2']
+            measure_price = product_data['Prijs per m²']
             unit_price = product_data['Prijs per pak']
 
             if 'Afbeeldingen' in product_data:
@@ -34,7 +34,7 @@ class SQLDatabaseMapper(DatabaseMapperInterface):
             for key, value in product_data.items():
 
                 not_product_or_image = key not in [
-                    'Product', 'Thumbnail', 'Prijs per m2', 'Prijs per pak', 'Afbeeldingen']
+                    'Product', 'Thumbnail', 'Prijs per m²', 'Prijs per pak', 'Afbeeldingen']
 
                 duplicate_attribute_type = any(attribute.get(
                     'name') == key for attribute in attribute_types)

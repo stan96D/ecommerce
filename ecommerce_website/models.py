@@ -239,17 +239,22 @@ class Brand(models.Model):
 
 
 class ProductFilter(models.Model):
+    TYPE_CHOICES = [
+        ('option', 'Option'),
+        ('slider', 'Slider'),
+    ]
+
     name = models.CharField(max_length=100)
-    product_attributes = models.ManyToManyField(ProductAttribute)
+    filter_type = models.CharField(
+        max_length=10, choices=TYPE_CHOICES, default='option')
+    values = models.JSONField()
     parent_category = models.ForeignKey(
         ProductCategory, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         if self.parent_category:
             return f"{self.name} (Category: {self.parent_category.name})"
-
         else:
-
             return f"{self.name}"
 
 

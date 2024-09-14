@@ -97,6 +97,8 @@ class RealStoreMotivationDataSeeder(RealSeederInterface):
 class RealProductDataSeeder(RealAddSeederInterface):
 
     def seed():
+        print("RealProductDataSeeder started...")
+
         with open('ecommerce_website/db_mapper/data/final_data/finalized_combined.json', 'r', encoding='utf-8') as file:
             json_data = json.load(file)
 
@@ -105,8 +107,6 @@ class RealProductDataSeeder(RealAddSeederInterface):
 
         # with open('ecommerce_website/db_mapper/data/finalized_minimal.json', 'r', encoding='utf-8') as file:
         #     json_data_ppc = json.load(file)
-
-        # print("RealProductDataSeeder started...")
 
         # database_service = SQLImportService()
         # database_service.import_product_data(json_data_ppc)
@@ -418,41 +418,71 @@ class RealProductFilterSeeder(RealSeederInterface):
     def seed():
         print("RealProductFilterSeeder started...")
 
+        excluded_attributes = [
+            "Afmeting",
+            "Type",
+            "SKU",
+            "Producttype",
+            "Omschrijving",
+            "Leverancier",
+            "Weekmakervrij",
+            "Garantie commercieel",
+            "Beschikbaarheid",
+            "Kant-en-klaar",
+            "Garantie huishoudelijk",
+            "Links",
+            "Garantie periode",
+            "Eenheid",
+            "Overlap",
+            "Oppervlakte",
+            "Pakinhoud"
+        ]
+
+        attributes_for_slider = [
+            "Dikte",
+            "Lengte",
+            "Breedte",
+            "Toplaagdikte",
+        ]
+
         categories = ProductCategory.objects.all()
         product_attribute_types = ProductAttributeType.objects.all()
-        product_filters = {}
 
         for category in categories:
             print("Now in category: ", category)
             for attribute_type in product_attribute_types:
 
-                if attribute_type.name != category.name:
+                if attribute_type.name != category.name and attribute_type.name not in excluded_attributes:
 
                     print("Now in attribute_type: ", attribute_type,
-                        "for category: ", category)
+                          "for category: ", category)
 
                     associated_attributes = ProductAttribute.objects.filter(
                         attribute_type=attribute_type)
 
                     if category.name == "Zoeken":
+                        values_for_filter = []
 
                         for product_attribute in associated_attributes:
 
-                            if attribute_type in product_filters:
+                            if product_attribute.value not in values_for_filter:
+                                values_for_filter.append(
+                                    product_attribute.value)
 
-                                filter = product_filters[attribute_type]
+                        filter_type = "option"
 
-                                if len(filter.product_attributes.filter(value=product_attribute.value)) == 0:
-                                    product_filters[attribute_type].product_attributes.add(
-                                        product_attribute)
-                            else:
-                                product_filter = ProductFilter.objects.create(
-                                    name=attribute_type, parent_category=category)
+                        if attribute_type.name in attributes_for_slider:
+                            filter_type = "slider"
 
-                                product_filter.product_attributes.add(
-                                    product_attribute)
+                        product_filter = ProductFilter.objects.create(
+                            name=attribute_type.name,
+                            parent_category=category,
+                            values=values_for_filter,
+                            filter_type=filter_type
+                        )
+                        print("Product filter created, with name: ",
+                              product_filter.name)
 
-                                product_filters[attribute_type] = product_filter
                     else:
 
                         product_attributes_with_category = []
@@ -462,14 +492,29 @@ class RealProductFilterSeeder(RealSeederInterface):
                         if len(product_attributes_with_category) > 0:
 
                             with transaction.atomic():
-                                product_filter = ProductFilter.objects.create(
-                                    name=attribute_type.name,
-                                    parent_category=category
-                                )
+
+                                values_for_filter = []
 
                                 for product_attribute in product_attributes_with_category:
                                     if attribute_type.id == product_attribute.attribute_type.id:
-                                        if not product_filter.product_attributes.filter(value=product_attribute.value).exists():
-                                            product_filter.product_attributes.add(
-                                                product_attribute)
+
+                                        if product_attribute.value not in values_for_filter:
+                                            values_for_filter.append(
+                                                product_attribute.value)
+
+                                filter_type = "option"
+
+                                if attribute_type.name in attributes_for_slider:
+                                    filter_type = "slider"
+
+                                product_filter = ProductFilter.objects.create(
+                                    name=attribute_type.name,
+                                    parent_category=category,
+                                    values=values_for_filter,
+                                    filter_type=filter_type
+
+                                )
+                                print("Product filter created, with name: ",
+                                      product_filter.name)
+
         print("RealProductFilterSeeder finished...")

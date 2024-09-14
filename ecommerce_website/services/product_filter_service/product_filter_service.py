@@ -25,31 +25,7 @@ class ProductFilterService(ProductFilterServiceInterface):
 
     @staticmethod
     def get_product_filters_by_category_name(product_category_name):
-        try:
-            product_filters = ProductFilter.objects.filter(
-                parent_category__name=product_category_name)
-
-            matched_filters_dict = {}
-            for filter_obj in product_filters:
-
-                for attribute in filter_obj.product_attributes.all():
-
-                    if filter_obj.name in matched_filters_dict:
-
-                        if not attribute.value in matched_filters_dict[filter_obj.name]:
-                            matched_filters_dict[filter_obj.name].append(
-                                attribute.value)
-
-                    else:
-                        matched_filters_dict[filter_obj.name] = [
-                            attribute.value]
-
-            product_filter_view_service = ProductFilterViewService()
-            product_filter_views = product_filter_view_service.generate(
-                matched_filters_dict.items())
-            return product_filter_views
-        except ProductFilter.DoesNotExist:
-            return None
+        return
 
     @staticmethod
     def get_products_filters_for_search(products):
@@ -76,7 +52,10 @@ class ProductFilterService(ProductFilterServiceInterface):
                 if filter_attribute_values:
                     all_attribute_values = [
                         value for values_list in filter_attribute_values.values() for value in values_list]
-                    matched_filters[search_filter.name] = all_attribute_values
+                    matched_filters[search_filter.name] = {
+                        "filter_type": search_filter.filter_type,
+                        "values": all_attribute_values
+                    }
 
             product_filter_view_service = ProductFilterViewService()
             product_filter_views = product_filter_view_service.generate(
@@ -86,6 +65,50 @@ class ProductFilterService(ProductFilterServiceInterface):
 
         except ProductFilter.DoesNotExist:
             return None
+
+    @staticmethod
+    def create_filter_for_price(products):
+
+        values_for_price = []
+        value_low = 0
+        value_high = 0
+
+        for product in products:
+
+            if not value_low:
+                value_low = product.selling_price
+
+            if not value_high:
+
+                value_high = product.selling_price
+
+            if product.selling_price > value_high:
+                value_high = product.selling_price
+
+            if product.selling_price < value_low:
+                value_low = product.selling_price
+
+        values_for_price.append({"min": value_low})
+        values_for_price.append({"max": value_high})
+
+        product_filter = ProductFilter(
+            name="Prijs",
+            values=values_for_price,
+        )
+
+        product_filter_view_service = ProductFilterViewService()
+
+        item = {
+            "Prijs": {
+                "values": product_filter.values,
+                "filter_type": "slider"
+            }
+        }
+
+        product_filter_view = product_filter_view_service.get(
+            item)
+
+        return product_filter_view
 
     @staticmethod
     def get_products_filters_by_products(products, category):
@@ -112,7 +135,10 @@ class ProductFilterService(ProductFilterServiceInterface):
                 if filter_attribute_values:
                     all_attribute_values = [
                         value for values_list in filter_attribute_values.values() for value in values_list]
-                    matched_filters[category_filter.name] = all_attribute_values
+                    matched_filters[category_filter.name] = {
+                        "filter_type": category_filter.filter_type,
+                        "values": all_attribute_values
+                    }
 
             product_filter_view_service = ProductFilterViewService()
             product_filter_views = product_filter_view_service.generate(
@@ -140,12 +166,16 @@ class ProductFilterService(ProductFilterServiceInterface):
                 for attribute in filter_obj.product_attributes.all():
 
                     if filter_obj.name in matched_filters_dict:
+                        matched_filters_dict[filter_obj.name].values.append(
+                            attribute.value)
+
                         matched_filters_dict[filter_obj.name].append(
                             attribute.value)
 
                     else:
-                        matched_filters_dict[filter_obj.name] = [
+                        matched_filters_dict[filter_obj.name].values = [
                             attribute.value]
+                        matched_filters_dict[filter_obj.name].filter_type = filter_obj.filter_type
 
             product_filter_view_service = ProductFilterViewService()
             product_filter_views = product_filter_view_service.generate(
@@ -172,12 +202,16 @@ class ProductFilterService(ProductFilterServiceInterface):
                 for attribute in filter_obj.product_attributes.all():
 
                     if filter_obj.name in matched_filters_dict:
+                        matched_filters_dict[filter_obj.name].values.append(
+                            attribute.value)
+
                         matched_filters_dict[filter_obj.name].append(
                             attribute.value)
 
                     else:
-                        matched_filters_dict[filter_obj.name] = [
+                        matched_filters_dict[filter_obj.name].values = [
                             attribute.value]
+                        matched_filters_dict[filter_obj.name].filter_type = filter_obj.filter_type
 
             product_filter_view_service = ProductFilterViewService()
             product_filter_views = product_filter_view_service.generate(

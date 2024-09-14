@@ -677,9 +677,7 @@ def products_by_category(request, category):
         sort_value = attributes.pop('tn_sort', None)[0]
         print(f"Sort value detected: {sort_value}")
 
-
     is_filter = ProductSorterUtility.is_filter(attributes)
-
 
     # Log time taken to identify filters and sorts
     print(f"Identified sort and filter options - Time elapsed: {
@@ -726,6 +724,8 @@ def products_by_category(request, category):
 
     # filter_data = ProductFilterService(
     # ).get_products_filters_by_products(products, category)
+    # SNELLER MAKEN
+    # filter_data.append(ProductFilterService.create_filter_for_price(products))
 
     # Log time taken to generate filters
     print(
