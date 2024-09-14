@@ -18,12 +18,13 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.DEPLOY_KEY_GITHUB_ACTIONS }}
 
-      - name: Run deploy script
+      - name: Print working directory
         run: |
-          ssh -o StrictHostKeyChecking=no -v ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'echo Connection successful'
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'pwd'
+          ssh -o StrictHostKeyChecking=no -v ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'pwd'
 
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'bash /opt/scripts/ecommerce_test.sh'
+      - name: Run deploy script with debugging
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'set -x; bash /opt/scripts/ecommerce_test.sh'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY_GITHUB_ACTIONS }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
