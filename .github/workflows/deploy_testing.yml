@@ -1,5 +1,4 @@
 name: Deploy to Server
-
 on:
   push:
     branches:
@@ -22,7 +21,8 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -v ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'echo Connection successful'
 
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'bash /opt/scripts/ecommerce_test.sh'
+          # Navigate up two directories
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'cd ..; cd ..; bash /opt/scripts/ecommerce_test.sh'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY_GITHUB_ACTIONS }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
