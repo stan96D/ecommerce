@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
 
-ENVIRONMENT = os.getenv('DJANGO_ENV', 'test')
+ENVIRONMENT = os.getenv('DJANGO_ENV', 'dev')
 SECRET_KEY = os.getenv(
     'SECRET_KEY')
 
@@ -33,7 +33,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-if ENVIRONMENT == "test":
+if ENVIRONMENT == "dev":
     with open('ngrok_conf.json') as config_file:
 
         NGROK_URL = json.load(config_file).get(
