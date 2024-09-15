@@ -10,44 +10,64 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-import environ
 from pathlib import Path
 import os
 import json
+from dotenv import load_dotenv
 
-with open('ngrok_conf.json') as config_file:
-    config = json.load(config_file)
-
-NGROK_URL = config.get('NGROK_URL', 'http://localhost:8000')
-PRODUCTION_URL = "http://localhost:8000"
-
-print(NGROK_URL)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env()
-environ.Env.read_env()
+load_dotenv(BASE_DIR / '.env')
+
+
+ENVIRONMENT = os.getenv('DJANGO_ENV', 'test')
+SECRET_KEY = os.getenv(
+    'SECRET_KEY')
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+if ENVIRONMENT == "test":
+    with open('ngrok_conf.json') as config_file:
+
+        NGROK_URL = json.load(config_file).get(
+            'NGROK_URL', 'http://localhost:8000')
+        PRODUCTION_URL = "http://localhost:8000"
+
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = True
+    ALLOWED_HOSTS = ['localhost',
+                     '127.0.0.1',
+                     '*.ngrok-free.app',
+                     '*.ngrok.io',
+                     ]
+
+    print(NGROK_URL)
+    if NGROK_URL:
+        ALLOWED_HOSTS.append(NGROK_URL)
+else:
+
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = False
+    ALLOWED_HOSTS = ['159.69.81.128',
+                     'test.goedkoopstevloerenshop.nl'
+                     ]
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+    SECURE_SSL_REDIRECT = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    X_FRAME_OPTIONS = 'DENY'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@+7l*%+0#9n=_g0)&6dnolzv3g%+llw@!f4q@h$b84f!+rl&+b'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['localhost',
-                 '127.0.0.1',
-                 '*.ngrok-free.app',
-                 '*.ngrok.io',
-                 ]
-
-
-# Base URL for production
-
-
-if NGROK_URL:
-    ALLOWED_HOSTS.append(NGROK_URL)
 
 CACHES = {
     'default': {
@@ -149,14 +169,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
