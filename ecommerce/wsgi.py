@@ -1,9 +1,15 @@
-from django.core.wsgi import get_wsgi_application
-import os
-import sys
+"""
+WSGI config for ecommerce project.
 
-# Add the project directory to the sys.path
-sys.path.append('/var/www/ecommerce_test')
+It exposes the WSGI callable as a module-level variable named ``application``.
+
+For more information on this file, see
+https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
+"""
+
+import os
+
+from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerce.settings')
 
