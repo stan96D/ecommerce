@@ -37,6 +37,8 @@ from ecommerce_website.classes.managers.url_manager.url_manager import *
 import time
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+# test comment
+
 
 def sign_in(request):
     if request.method == 'POST':
