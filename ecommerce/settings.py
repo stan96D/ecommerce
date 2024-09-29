@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import logging
 from pathlib import Path
 import os
 import json
@@ -25,14 +26,23 @@ ENVIRONMENT = os.getenv('DJANGO_ENV', 'dev')
 SECRET_KEY = os.getenv(
     'SECRET_KEY')
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# Log environment variables
+logger.info("Loaded environment variables:")
+logger.info("DJANGO_ENV: %s", ENVIRONMENT)
+logger.info("SECRET_KEY: %s", SECRET_KEY)
+# If you're using a DEBUG variable in .env
+logger.info("DEBUG: %s", os.getenv('DEBUG'))
+logger.info("DATABASE_URL: %s", os.getenv('DATABASE_URL'))  # If applicable
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 if ENVIRONMENT == "dev":
     with open('ngrok_conf.json') as config_file:
@@ -52,20 +62,14 @@ if ENVIRONMENT == "dev":
     print(NGROK_URL)
     if NGROK_URL:
         ALLOWED_HOSTS.append(NGROK_URL)
+elif ENVIRONMENT == "test":
+    BASE_URL = 'http://test.goedkoopstevloerenshop.nl'
+
+    ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl']
+
 else:
-    BASE_URL = 'test.goedkoopstevloerenshop.nl'
-
-    # SECURITY WARNING: don't run with debug turned on in production!
-    DEBUG = True
-    ALLOWED_HOSTS = ['159.69.81.128',
-                     BASE_URL
-                     ]
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-    SECURE_SSL_REDIRECT = True
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    X_FRAME_OPTIONS = 'DENY'
+    BASE_URL = 'https://goedkoopstevloerenshop.nl'
+    ALLOWED_HOSTS = ['goedkoopstevloerenshop.nl']
 
 
 # Quick-start development settings - unsuitable for production
@@ -186,3 +190,5 @@ INTERNAL_IPS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
+
+NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
