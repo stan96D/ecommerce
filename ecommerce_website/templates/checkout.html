@@ -43,6 +43,69 @@
                 <h2 class="text-lg font-medium text-gray-900 mt-8">
                   Contact informatie
                 </h2>
+
+                <div class="py-4">
+                  <label
+                    class="block text-sm font-medium leading-6 text-gray-900"
+                    >Aanhef <span class="text-red-500">*</span></label
+                  >
+                  <p class="text-sm text-gray-500">
+                    Hoe zou je graag aangesproken willen worden?
+                  </p>
+                  <fieldset class="mt-4">
+                    <legend class="sr-only">Aanhef</legend>
+                    <div
+                      class="space-y-4 sm:flex sm:items-center sm:space-x-10 sm:space-y-0"
+                    >
+                      <div class="flex items-center">
+                        <input
+                          id="salutation-meneer"
+                          name="salutation"
+                          type="radio"
+                          value="Meneer"
+                          {% if order_info.salutation == "Meneer" %}checked{% endif %}
+                          class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor"
+                        />
+                        <label
+                          for="salutation-meneer"
+                          class="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                          >Meneer</label
+                        >
+                      </div>
+                      <div class="flex items-center">
+                        <input
+                          id="salutation-mevrouw"
+                          name="salutation"
+                          type="radio"
+                          value="Mevrouw"
+                          {% if order_info.salutation == "Mevrouw" %}checked{% endif %}
+                          class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor"
+                        />
+                        <label
+                          for="salutation-mevrouw"
+                          class="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                          >Mevrouw</label
+                        >
+                      </div>
+                      <div class="flex items-center">
+                        <input
+                          id="no-salutation"
+                          name="salutation"
+                          type="radio"
+                          value="Geen van beiden"
+                          {% if order_info.salutation == "Geen van beiden" %}checked{% endif %}
+                          class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor"
+                        />
+                        <label
+                          for="no-salutation"
+                          class="ml-3 block text-sm font-medium leading-6 text-gray-900"
+                          >Geen van beiden</label
+                        >
+                      </div>
+                    </div>
+                  </fieldset>
+                </div>
+
                 <div
                   class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
                 >
@@ -238,7 +301,7 @@
                         type="text"
                         name="phone"
                         id="phone"
-                        value="{% if user.phone_number %}{{ order_info.phone_number }}{% endif %}"
+                        value="{{ order_info.phone }}"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         required
                       />

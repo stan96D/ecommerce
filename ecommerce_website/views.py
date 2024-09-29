@@ -36,8 +36,9 @@ from ecommerce_website.classes.forms.store_rating_form import StoreRatingForm
 from ecommerce_website.classes.managers.url_manager.url_manager import *
 import time
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from ecommerce_website.classes.helpers.env_loader import *
 
-# test comment
+url_manager = EncapsulatedURLManager.get_url_manager(EnvLoader.get_env())
 
 
 def sign_in(request):
@@ -346,6 +347,8 @@ def order_info(request):
                 "last_name": json_data['contact_info']['last_name'],
                 "email": json_data['contact_info']['email'],
                 "phone": json_data['contact_info']['phonenumber'],
+                "salutation": json_data['contact_info']['salutation'],
+
                 "address": json_data['billing_address_info']['address'],
                 "house_number": json_data['billing_address_info']['house_number'],
                 "city": json_data['billing_address_info']['city'],
@@ -365,6 +368,8 @@ def order_info(request):
                 "city": user.city,
                 "postal_code": user.postal_code,
                 "country": user.country,
+                "salutation": user.salutation,
+
             })
 
         else:
@@ -389,8 +394,10 @@ def order_info(request):
         postal_code = attributes.get('postal-code')
         country = attributes.get('country')
         phone = attributes.get('phone')
+        salutation = attributes.get('salutation')
 
-        contact_info = ContactInfo(first_name, last_name, email_address, phone)
+        contact_info = ContactInfo(
+            first_name, last_name, email_address, phone, salutation)
         billing_address_info = AddressInfo(
             address, house_number, city, postal_code, country)
         shipping_address_info = AddressInfo(
@@ -482,9 +489,8 @@ def confirm_order(request):
         cart_service.clear_cart()
         order_service.delete_order()
 
-        # For Mollie testing purposes
-        redirect_url = TestURLManager.create_redirect(order.id)
-        webhook_url = TestURLManager.create_webhook()
+        redirect_url = url_manager.create_redirect(order.id)
+        webhook_url = url_manager.create_webhook()
 
         print(payment_method, issuer_id, issuer_name, payment_name)
         payment = MollieClient().create_payment('EUR', str(
@@ -494,16 +500,26 @@ def confirm_order(request):
 
         checkout_url = payment['_links']['checkout']['href']
         print(payment)
-        ClientMailSender(mail_manager=HTMLMailManager()).send_order_confirmation(account.salutation,
-                                                                                 account.last_name,
-                                                                                 account.email,
+
+        if account.is_authenticated:
+            salutation = account.salutation
+            last_name = account.last_name
+            email = account.email
+        else:
+            salutation = order.salutation
+            last_name = order.last_name
+            email = order.email
+
+        ClientMailSender(mail_manager=HTMLMailManager()).send_order_confirmation(salutation,
+                                                                                 last_name,
+                                                                                 email,
                                                                                  order.order_number,
                                                                                  redirect_url)
-        rating_url = TestURLManager.create_store_rating()
+        rating_url = url_manager.store_rating()
 
-        ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(account.salutation,
-                                                                           account.last_name,
-                                                                           account.email,
+        ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(salutation,
+                                                                           last_name,
+                                                                           email,
                                                                            rating_url)
 
         AdminMailSender(mail_manager=HTMLMailManager()
@@ -910,7 +926,7 @@ def delete_cart_item(request):
         return redirect('cart')
 
 
-@ csrf_exempt
+@csrf_exempt
 def mollie_webhook(request):
     if request.method == 'POST':
         try:
@@ -927,12 +943,21 @@ def mollie_webhook(request):
                 AdminMailSender(mail_manager=HTMLMailManager()
                                 ).send_order_confirmation(new_order)
 
-                rating_url = TestURLManager.create_store_rating()
+                rating_url = url_manager.store_rating()
                 account = new_order.account
 
-                ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(account.salutation,
-                                                                                   account.last_name,
-                                                                                   account.email,
+                if account.is_authenticated:
+                    salutation = account.salutation
+                    last_name = account.last_name
+                    email = account.email
+                else:
+                    salutation = new_order.salutation
+                    last_name = new_order.last_name
+                    email = new_order.email
+
+                ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(salutation,
+                                                                                   last_name,
+                                                                                   email,
                                                                                    rating_url)
 
             return JsonResponse({'status': 'success'})

@@ -15,6 +15,7 @@ import os
 import json
 from dotenv import load_dotenv
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
@@ -52,11 +53,12 @@ if ENVIRONMENT == "dev":
     if NGROK_URL:
         ALLOWED_HOSTS.append(NGROK_URL)
 else:
+    BASE_URL = 'test.goedkoopstevloerenshop.nl'
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
     ALLOWED_HOSTS = ['159.69.81.128',
-                     'test.goedkoopstevloerenshop.nl'
+                     BASE_URL
                      ]
     STATIC_ROOT = BASE_DIR / 'staticfiles'
 

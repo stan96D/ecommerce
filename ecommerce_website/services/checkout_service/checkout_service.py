@@ -5,17 +5,18 @@ from ecommerce_website.classes.model.delivery_info import DeliveryInfo
 from ecommerce_website.classes.model.base_shopping_cart_service import ShoppingCartInterface
 from ecommerce_website.classes.managers.order_number_manager import *
 
+
 class CheckoutService:
     def create_order(self, account: AbstractBaseUser, order_info: OrderInfo, payment_info: PaymentInfo, delivery_info: DeliveryInfo, shopping_cart: ShoppingCartInterface):
-        order = self._create_order(account, 
-            order_info, payment_info, delivery_info, shopping_cart)
+        order = self._create_order(account,
+                                   order_info, payment_info, delivery_info, shopping_cart)
         self._create_order_lines(order, shopping_cart)
         return order
 
     def _create_order(self, account, order_info, payment_info, delivery_info, shopping_cart):
 
-        total_price = shopping_cart.total_price 
-        sub_price = shopping_cart.sub_total 
+        total_price = shopping_cart.total_price
+        sub_price = shopping_cart.sub_total
         tax_price_low = shopping_cart.total_tax(9)
         tax_price_high = shopping_cart.total_tax(21)
         shipping_cost = shopping_cart.shipping_price
@@ -30,7 +31,8 @@ class CheckoutService:
 
             account=account,
             order_number=order_number,
-            
+
+            salutation=order_info.contact_info.salutation,
             first_name=order_info.contact_info.first_name,
             last_name=order_info.contact_info.last_name,
             email=order_info.contact_info.email,
@@ -53,7 +55,6 @@ class CheckoutService:
             shipping_price=shipping_cost
         )
 
-
     def _create_order_lines(self, order, shopping_cart):
         for item in shopping_cart.cart_items:
             product_id = item['product_id']
@@ -70,11 +71,9 @@ class CheckoutService:
             else:
                 unit_price = product.unit_selling_price
 
-
             total_price = unit_price * quantity
 
             print(unit_price, quantity, total_price)
-
 
             OrderLine.objects.create(
                 product=product,

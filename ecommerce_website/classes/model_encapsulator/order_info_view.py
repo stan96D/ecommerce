@@ -1,6 +1,6 @@
 
 class OrderInfoView:
-    def __init__(self, first_name, last_name, email, phone, address, house_number, city, postal_code, country):
+    def __init__(self, first_name, last_name, email, phone, address, house_number, city, postal_code, country, salutation):
 
         self.first_name = first_name
         self.last_name = last_name
@@ -11,3 +11,4 @@ class OrderInfoView:
         self.city = city
         self.postal_code = postal_code
         self.country = country
+        self.salutation = salutation

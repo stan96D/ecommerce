@@ -2,6 +2,21 @@ from abc import ABC, abstractmethod
 from django.conf import settings
 
 
+class EncapsulatedURLManager():
+
+    @staticmethod
+    def get_url_manager(env):
+
+        if env == "dev":
+            return TestURLManager()
+
+        elif env == "test":
+            return RealURLManager()
+
+        elif env == "prod":
+            return RealURLManager()
+
+
 class URLManager(ABC):
 
     @abstractmethod
@@ -9,7 +24,15 @@ class URLManager(ABC):
         pass
 
     @abstractmethod
-    def create_store_rating():
+    def get_contact_service():
+        pass
+
+    @abstractmethod
+    def get_account():
+        pass
+
+    @abstractmethod
+    def store_rating():
         pass
 
     @abstractmethod
@@ -53,17 +76,24 @@ class RealURLManager(URLManager):
 
     @staticmethod
     def get_base():
-        pass
+        return f"https://{settings.BASE_URL}"
+
+    @staticmethod
+    def get_contact_service():
+        return RealURLManager.get_base()  # TODO create contact service page
+
+    @staticmethod
+    def get_account():
+        return RealURLManager.get_base() + "/account"
 
     @staticmethod
     def create_webhook():
-        return f"https://{settings.PRODUCTION_URL}/mollie_webhook/"
+        return RealURLManager.get_base() + "/mollie_webhook/"
 
     @staticmethod
     def create_redirect(order_id):
-        return f"https://{
-            settings.PRODUCTION_URL}/order_detail?order_id={order_id}"
+        return RealURLManager.get_base() + "/order_detail?order_id=" + order_id
 
     @staticmethod
     def store_rating():
-        pass
+        return RealURLManager.get_base() + "/store_rating"

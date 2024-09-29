@@ -6,6 +6,9 @@ import os
 from abc import ABC, abstractmethod
 from ecommerce_website.classes.helpers.token_generator.token_generator import ResetPasswordTokenGenerator
 from ecommerce_website.classes.managers.url_manager.url_manager import *
+from ecommerce_website.classes.helpers.env_loader import *
+
+url_manager = EncapsulatedURLManager.get_url_manager(EnvLoader.get_env())
 
 
 class BaseMailManager(ABC):
@@ -60,6 +63,10 @@ class ClientMailSender:
         self.mail_manager = mail_manager
 
     def send_order_confirmation(self, salutation, last_name, recipient_email, order_number, order_url):
+
+        if salutation == "Geen van beiden":
+            salutation = "Dhr/Mevr"
+
         # Add your logo URL here
         logo_url = "ecommerce_website/static/images/gvs_logo_text.png"
         subject = "Orderbevestiging " + order_number
@@ -191,13 +198,13 @@ class ClientMailSender:
                         <p>Je kunt altijd bij ons terecht met vragen over je bestelling.<br>
                         Onze klantenservice is maandag t/m vrijdag van 10:00 tot 17:00 geopend.<br> Mocht er iets met je bestelling aan de hand zijn, dan kun je ons mailen op {self.contact_email} met de vermelding van je bestelnummer.<br>
                         Je bestelnummer voor deze order is <strong>{order_number}</strong>.</p>
-                        <a href="{TestURLManager.get_contact_service()}" class="service-button">Naar de klantenservicepagina</a>
+                        <a href="{url_manager.get_contact_service()}" class="service-button">Naar de klantenservicepagina</a>
                     </div>
 
                     <div class="service-item">
                         <h4>Zaken regelen in je account</h4>
                         <p>Volg je order, betaal facturen of retourneer een artikel. Dit kun je allemaal binnen je account doen.</p>
-                        <a href="{TestURLManager.get_account()}" class="service-button">Naar je account</a>
+                        <a href="{url_manager.get_account()}" class="service-button">Naar je account</a>
                     </div>
                 </div>
 
@@ -217,6 +224,10 @@ class ClientMailSender:
                                       recipient_email, subject, message, image=logo_url)
 
     def send_store_rating(self, salutation, last_name, recipient_email, rating_url):
+
+        if salutation == "Geen van beiden":
+            salutation = "Dhr/Mevr"
+
         # Add your logo URL here
         logo_url = "ecommerce_website/static/images/gvs_logo_text.png"
 
@@ -337,13 +348,13 @@ class ClientMailSender:
                     <div class="service-item">
                         <h4>Heb je ons nodig?</h4>
                         <p>Je kunt altijd bij ons terecht met vragen over je bestelling of andere gerelateerde zaken.<br> Onze klantenservice is maandag t/m vrijdag van 10:00 tot 17:00 geopend.<br> Mocht er iets met je bestelling aan de hand zijn, dan kun je ons mailen op {self.contact_email}.</p>
-                        <a href={TestURLManager.get_contact_service()} class="service-button">Naar de klantenservicepagina</a>
+                        <a href={url_manager.get_contact_service()} class="service-button">Naar de klantenservicepagina</a>
                     </div>
 
                     <div class="service-item">
                         <h4>Zaken regelen in je account</h4>
                         <p>Volg je order, betaal facturen of retourneer een artikel. Dit kun je allemaal binnen je account doen.</p>
-                        <a href={TestURLManager.get_account()} class="service-button">Naar je account</a>
+                        <a href={url_manager.get_account()} class="service-button">Naar je account</a>
                     </div>
                 </div>
 
@@ -481,14 +492,12 @@ class AdminMailSender:
                     <p>Hierbij de orderbevestiging met ordernummer <strong>{order.order_number}</strong> voor <strong>{order.first_name} {order.last_name}</strong>.</p>
                 </div>
                 <div class="email-content">
-                    <p><strong>Email:</strong> {order.account.email}</p>
-                    <p><strong>Telefoonnummer:</strong> {order.account.phone_number}</p>
+                    <p><strong>Email:</strong> {order.email}</p>
+                    <p><strong>Telefoonnummer:</strong> {order.phone}</p>
 
                     <div class="address-block">
                         <p><strong>Adres:</strong></p>
-                        <p>{order.account.address} {order.account.house_number}</p>
-                        <p>{order.account.city}, {order.account.postal_code}</p>
-                        <p>{order.account.country}</p>
+                        <p>{order.shipping_address} </p>
                     </div>
 
                     {order_lines_sections}
@@ -650,13 +659,13 @@ class ForgotPasswordMailSender:
                     <div class="service-item">
                         <h4>Heb je ons nodig?</h4>
                         <p>Je kunt altijd bij ons terecht met vragen over je account of andere zaken.<br> Onze klantenservice is bereikbaar via e-mail op {self.contact_email}.<br> We zijn bereikbaar maandag tot vrijdag van 10:00 tot 17:00.</p>
-                        <a href="{TestURLManager.get_contact_service()}" class="service-button">Naar de klantenservicepagina</a>
+                        <a href="{url_manager.get_contact_service()}" class="service-button">Naar de klantenservicepagina</a>
                     </div>
 
                     <div class="service-item">
                         <h4>Zelf regelen</h4>
                         <p>Volg je bestelling, betaal facturen of retourneer artikelen door in te loggen op je account. Allemaal eenvoudig geregeld binnen je account.</p>
-                        <a href="{TestURLManager.get_account()}" class="service-button">Naar je account</a>
+                        <a href="{url_manager.get_account()}" class="service-button">Naar je account</a>
                     </div>
                 </div>
 
