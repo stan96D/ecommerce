@@ -519,7 +519,7 @@ def confirm_order(request):
         OrderService.add_payment(payment, order)
 
         checkout_url = payment['_links']['checkout']['href']
-        print(payment)
+        print(payment, checkout_url)
 
         if account.is_authenticated:
             salutation = account.salutation

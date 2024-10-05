@@ -67,9 +67,29 @@ elif ENVIRONMENT == "test":
     BASE_URL = 'http://test.goedkoopstevloerenshop.nl'
     ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl']
 
+
 else:
     BASE_URL = 'https://goedkoopstevloerenshop.nl'
     ALLOWED_HOSTS = ['goedkoopstevloerenshop.nl']
+
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'ERROR',
+                'class': 'logging.FileHandler',
+                'filename': '/var/log/django_errors.log',
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
+        },
+    }
 
 
 # Quick-start development settings - unsuitable for production
@@ -192,22 +212,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
 NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'ERROR',
-            'class': 'logging.FileHandler',
-            'filename': '/var/log/django_errors.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-    },
-}
