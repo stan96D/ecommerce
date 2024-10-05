@@ -64,6 +64,7 @@ def home(request):
 
     return render(request, "home.html", {'headerData': ViewServiceUtility.get_header_data(),
                                          'env': environment,
+                                         'store_data': ViewServiceUtility.get_current_store_data(),
                                          'store_rating_data': ViewServiceUtility.get_store_rating_data(),
                                          'can_write_review': AccountService.can_write_review(request.user.id),
                                          'payment_methods': ViewServiceUtility.get_payment_methods(),
@@ -93,7 +94,7 @@ def store_rating_view(request):
 
     return render(request, "store_rating.html", {'headerData': ViewServiceUtility.get_header_data(),
                                                  'env': environment,
-
+                                                 'store_data': ViewServiceUtility.get_current_store_data(),
                                                  'can_write_review': AccountService.can_write_review(request.user.id),
                                                  'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                  'store_motivations': ViewServiceUtility.get_store_motivations(),
@@ -170,9 +171,8 @@ def forgot_password(request):
 def registration_view(request):
 
     return render(request, "sign_up.html", {'headerData': ViewServiceUtility.get_header_data(),
-
                                             'env': environment,
-
+                                            'store_data': ViewServiceUtility.get_current_store_data(),
                                             'payment_methods': ViewServiceUtility.get_payment_methods(),
                                             'brands': ViewServiceUtility.get_all_brands(),
                                             'store_motivations': ViewServiceUtility.get_store_motivations()})
@@ -187,7 +187,7 @@ def account_view(request):
 
     return render(request, "account.html", {'headerData': ViewServiceUtility.get_header_data(),
                                             'env': environment,
-
+                                            'store_data': ViewServiceUtility.get_current_store_data(),
                                             'account': user,
                                             'payment_methods': ViewServiceUtility.get_payment_methods(),
                                             'brands': ViewServiceUtility.get_all_brands(),
@@ -303,7 +303,7 @@ def sign_up(request):
                 'form': form,
                 'headerData': ViewServiceUtility.get_header_data(),
                 'env': environment,
-
+                'store_data': ViewServiceUtility.get_current_store_data(),
                 'payment_methods': ViewServiceUtility.get_payment_methods(),
                 'brands': ViewServiceUtility.get_all_brands(),
                 'store_motivations': ViewServiceUtility.get_store_motivations()
@@ -331,7 +331,7 @@ def cart(request):
     return render(request, "cart.html", {'items': ViewServiceUtility.get_cart_items_view(request),
                                          'headerData': ViewServiceUtility.get_header_data(),
                                          'env': environment,
-
+                                         'store_data': ViewServiceUtility.get_current_store_data(),
                                          'payment_methods': ViewServiceUtility.get_payment_methods(),
                                          'brands': ViewServiceUtility.get_all_brands(),
                                          'cart': ViewServiceUtility.get_cart_view(request),
@@ -391,7 +391,7 @@ def order_info(request):
 
         return render(request, "checkout.html", {'headerData': ViewServiceUtility.get_header_data(),
                                                  'env': environment,
-
+                                                 'store_data': ViewServiceUtility.get_current_store_data(),
                                                  'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                  'brands': ViewServiceUtility.get_all_brands(),
                                                  'cart': ViewServiceUtility.get_cart_view(request),
@@ -440,7 +440,7 @@ def checkout(request):
 
             return render(request, "payment.html", {'headerData': ViewServiceUtility.get_header_data(),
                                                     'env': environment,
-
+                                                    'store_data': ViewServiceUtility.get_current_store_data(),
                                                     'cart': ViewServiceUtility.get_cart_view(request),
                                                     'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                     'brands': ViewServiceUtility.get_all_brands(),
@@ -459,7 +459,7 @@ def order_detail(request):
 
     return render(request, "order_detail.html", {'headerData': ViewServiceUtility.get_header_data(),
                                                  'env': environment,
-
+                                                 'store_data': ViewServiceUtility.get_current_store_data(),
                                                  'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                  'brands': ViewServiceUtility.get_all_brands(),
                                                  'order': ViewServiceUtility.get_order_by_id(order_id),
@@ -575,7 +575,7 @@ def products(request, category='Assortiment'):
         'filterData': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
-
+        'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
@@ -620,7 +620,7 @@ def search_products(request, category="Zoeken"):
         'filterData': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
-
+        'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
@@ -655,7 +655,7 @@ def discount_products(request, category='Kortingen'):
         'filterData': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
-
+        'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
@@ -691,7 +691,7 @@ def runner_products(request, category='Hardlopers'):
         'filterData': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
-
+        'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
@@ -782,7 +782,7 @@ def products_by_category(request, category):
         'products': ViewServiceUtility.get_product_views(paginated_products),
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
-
+        'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
@@ -830,7 +830,7 @@ def products_by_subcategory(request, category, subcategory):
         'filterData': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
-
+        'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
@@ -874,7 +874,7 @@ def products_by_attribute(request, category, subcategory, attribute):
         'filterData': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
-
+        'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
@@ -890,7 +890,7 @@ def product_detail(request, id=None):
     product_data = {'product': product,
                     'headerData': ViewServiceUtility.get_header_data(),
                     'env': environment,
-
+                    'store_data': ViewServiceUtility.get_current_store_data(),
                     'payment_methods': ViewServiceUtility.get_payment_methods(),
                     'brands': ViewServiceUtility.get_all_brands(),
                     'alternative_products': ViewServiceUtility.get_alternative_products(id),

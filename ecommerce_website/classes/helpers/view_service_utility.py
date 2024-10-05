@@ -1,43 +1,42 @@
-from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
-from ecommerce_website.services.view_service.order_info_view_service import OrderInfoViewService
 from ecommerce_website.services.product_service.product_service import ProductService
-from django.shortcuts import redirect, render
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.view_service.product_detail_view_service import ProductDetailViewService
 from ecommerce_website.services.view_service.product_view_service import ProductViewService
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.view_service.cart_item_view_service import CartItemViewService
 from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
-from ecommerce_website.services.product_filter_service.product_filter_service import ProductFilterService
-from ecommerce_website.classes.helpers.product_sorter import ProductSorter
-from ecommerce_website.classes.model.address_info import AddressInfo
-from ecommerce_website.classes.model.contact_info import ContactInfo
-from ecommerce_website.classes.model.payment_info import PaymentInfo
-from ecommerce_website.classes.model.delivery_info import DeliveryInfo
 from ecommerce_website.services.order_info_service.order_info_service import OrderInfoService
-from ecommerce_website.services.checkout_service.checkout_service import CheckoutService
 from ecommerce_website.services.order_service.order_service import OrderService
 from ecommerce_website.services.view_service.cart_view_service import CartViewService
-from django.http import JsonResponse, HttpResponseBadRequest
-import json
-from ecommerce_website.classes.forms.user_creation_form import CustomUserCreationForm
+from django.forms.models import model_to_dict
 from ecommerce_website.classes.helpers.shopping_cart_merger import *
 from ecommerce_website.services.view_service.order_item_view_service import *
 from ecommerce_website.classes.managers.payment_manager.mollie_client import *
 from ecommerce_website.classes.managers.mail_manager.mail_manager import *
 from ecommerce_website.services.store_motivation_service.store_motivation_service import StoreMotivationService
 from ecommerce_website.services.view_service.store_motivation_view_service import StoreMotivationViewService
-from ecommerce_website.classes.managers.authentication_manager.authentication_manager import AuthenticationManager
 from ecommerce_website.services.delivery_method_service.delivery_method_service import *
 from ecommerce_website.services.view_service.delivery_method_view_service import *
 from ecommerce_website.services.brand_service.brand_service import BrandService
 from ecommerce_website.services.return_service.return_service import ReturnService
 from ecommerce_website.services.view_service.return_order_view_service import ReturnOrderViewService
 from ecommerce_website.services.store_rating_service.store_rating_service import StoreRatingService
+from ecommerce_website.services.store_service.store_service import StoreService
 
 
 class ViewServiceUtility:
+
+    @staticmethod
+    def get_current_store_data():
+        store = StoreService.get_active_store()
+
+        if store:
+            # Convert the store instance to a dictionary
+            store_data = model_to_dict(store)
+            return store_data  # This will include all fields in the Store model
+        else:
+            # If no active store exists, return a message or an empty object
+            return None
 
     @staticmethod
     def get_store_rating_data():

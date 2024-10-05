@@ -387,7 +387,7 @@ class Store(models.Model):
     active = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.address + self.postal_code
+        return f"Store ID: {self.id}, Email: {self.contact_email}, Active: {self.active}"
 
 
 class StoreRating(models.Model):

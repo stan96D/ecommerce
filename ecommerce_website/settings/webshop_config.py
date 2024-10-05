@@ -34,8 +34,7 @@ class WebShopConfig:
     @staticmethod
     def opening_time_week():
         return "10:00-17:00"
-    
+
     @staticmethod
     def opening_time_weekend():
         return "Gesloten"
-

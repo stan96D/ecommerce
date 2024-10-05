@@ -27,13 +27,13 @@ class RealStoreSeeder(RealSeederInterface):
         print("RealStoreSeeder started...")
 
         Store.objects.create(
-            contact_email=WebShopConfig.contact_email,
-            address=WebShopConfig.address,
-            postal_code=WebShopConfig.postal_code,
-            vat_number=WebShopConfig.vat_number,
-            coc_number=WebShopConfig.coc_number,
-            opening_time_week=WebShopConfig.opening_time_week,
-            opening_time_weekend=WebShopConfig.opening_time_weekend,
+            contact_email=WebShopConfig.contact_email(),
+            address=WebShopConfig.address(),
+            postal_code=WebShopConfig.postal_code(),
+            vat_number=WebShopConfig.vat_number(),
+            coc_number=WebShopConfig.coc_number(),
+            opening_time_week=WebShopConfig.opening_time_week(),
+            opening_time_weekend=WebShopConfig.opening_time_weekend(),
             active=True
 
         )
