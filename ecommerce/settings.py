@@ -59,7 +59,7 @@ if ENVIRONMENT == "dev":
                      '*.ngrok.io',
                      ]
 
-    print(NGROK_URL)
+    print(NGROK_URL, "test")
     if NGROK_URL:
         ALLOWED_HOSTS.append(NGROK_URL)
 elif ENVIRONMENT == "test":
