@@ -133,7 +133,7 @@ def new_password(request, token):
             uid = urlsafe_base64_decode(uidb64).decode()
             user = Account.objects.get(pk=uid)
 
-            if default_token_generator.check_token(user, token):
+            if ResetPasswordTokenGenerator.check_token(user, token):
                 user.password = make_password(new_password1)
                 user.save()
                 return render(request, "login.html", {'success_message': "Wachtwoord succesvol veranderd."})
