@@ -62,6 +62,8 @@ if ENVIRONMENT == "dev":
     if NGROK_URL:
         ALLOWED_HOSTS.append(NGROK_URL)
 elif ENVIRONMENT == "test":
+    DEBUG = True
+
     BASE_URL = 'http://test.goedkoopstevloerenshop.nl'
     ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl']
 
@@ -190,3 +192,22 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
 NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': '/var/log/django_errors.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
