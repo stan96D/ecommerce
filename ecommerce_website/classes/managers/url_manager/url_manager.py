@@ -92,7 +92,7 @@ class RealURLManager(URLManager):
 
     @staticmethod
     def create_redirect(order_id):
-        return RealURLManager.get_base() + "/order_detail?order_id=" + order_id
+        return RealURLManager.get_base() + "/order_detail?order_id=" + str(order_id)
 
     @staticmethod
     def store_rating():
