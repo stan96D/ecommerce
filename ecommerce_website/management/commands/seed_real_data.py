@@ -71,5 +71,6 @@ class Command(BaseCommand):
         RealProductCategorySeeder.seed()
         RealProductFilterSeeder.seed()
         RealStoreRatingDataSeeder.seed()
+        RealStoreSeeder.seed()
 
         self.stdout.write(self.style.SUCCESS('Seed data successfully added'))

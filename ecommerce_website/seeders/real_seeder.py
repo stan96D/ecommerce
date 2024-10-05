@@ -5,6 +5,7 @@ from ecommerce_website.models import *
 from random import randint, sample, choice
 from django.utils import timezone
 from django.db import transaction
+from ecommerce_website.settings.webshop_config import WebShopConfig
 
 
 class RealSeederInterface(ABC):
@@ -20,9 +21,31 @@ class RealAddSeederInterface(RealSeederInterface):
         pass
 
 
+class RealStoreSeeder(RealSeederInterface):
+
+    def seed():
+        print("RealStoreSeeder started...")
+
+        Store.objects.create(
+            contact_email=WebShopConfig.contact_email,
+            address=WebShopConfig.address,
+            postal_code=WebShopConfig.postal_code,
+            vat_number=WebShopConfig.vat_number,
+            coc_number=WebShopConfig.coc_number,
+            opening_time_week=WebShopConfig.opening_time_week,
+            opening_time_weekend=WebShopConfig.opening_time_weekend,
+            active=True
+
+        )
+        print("RealStoreSeeder finished...")
+
+
 class RealStoreRatingDataSeeder(RealSeederInterface):
 
     def seed():
+
+        print("RealStoreRatingDataSeeder started...")
+
         StoreRating.objects.create(
             stars=5,
             title="Geweldige service!",
@@ -64,6 +87,8 @@ class RealStoreRatingDataSeeder(RealSeederInterface):
             title="Aanrader!",
             description="Ik zou deze winkel zeker aanraden. Uitstekende prijzen, geweldige kwaliteit, en de service is altijd vriendelijk en snel."
         )
+
+        print("RealStoreRatingDataSeeder finished...")
 
 
 class RealStoreMotivationDataSeeder(RealSeederInterface):
