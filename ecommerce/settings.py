@@ -52,6 +52,8 @@ if ENVIRONMENT == "dev":
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
+
+    BASE_URL = 'http://localhost:8000'
     ALLOWED_HOSTS = ['localhost',
                      '127.0.0.1',
                      '*.ngrok-free.app',
@@ -64,7 +66,7 @@ if ENVIRONMENT == "dev":
 elif ENVIRONMENT == "test":
     DEBUG = True
 
-    BASE_URL = 'http://test.goedkoopstevloerenshop.nl'
+    BASE_URL = 'https://test.goedkoopstevloerenshop.nl'
     ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl']
 
 

@@ -48,7 +48,7 @@ class TestURLManager(URLManager):
 
     @staticmethod
     def get_base():
-        return "http://localhost:8000"
+        return settings.BASE_URL
 
     @staticmethod
     def get_contact_service():
@@ -76,7 +76,7 @@ class RealURLManager(URLManager):
 
     @staticmethod
     def get_base():
-        return f"https://{settings.BASE_URL}"
+        return settings.BASE_URL
 
     @staticmethod
     def get_contact_service():
