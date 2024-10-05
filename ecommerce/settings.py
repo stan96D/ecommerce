@@ -49,7 +49,6 @@ if ENVIRONMENT == "dev":
 
         NGROK_URL = json.load(config_file).get(
             'NGROK_URL', 'http://localhost:8000')
-        PRODUCTION_URL = "http://localhost:8000"
 
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
@@ -59,12 +58,11 @@ if ENVIRONMENT == "dev":
                      '*.ngrok.io',
                      ]
 
-    print(NGROK_URL, "test")
+    print(NGROK_URL)
     if NGROK_URL:
         ALLOWED_HOSTS.append(NGROK_URL)
 elif ENVIRONMENT == "test":
     BASE_URL = 'http://test.goedkoopstevloerenshop.nl'
-
     ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl']
 
 else:
