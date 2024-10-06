@@ -63,16 +63,22 @@ if ENVIRONMENT == "dev":
     print(NGROK_URL)
     if NGROK_URL:
         ALLOWED_HOSTS.append(NGROK_URL)
+
+    NPM_BIN_PATH = "C:\Program Files\nodejs"
 elif ENVIRONMENT == "test":
     DEBUG = True
 
     BASE_URL = 'https://test.goedkoopstevloerenshop.nl'
     ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl']
 
+    NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
 
 else:
     BASE_URL = 'https://goedkoopstevloerenshop.nl'
     ALLOWED_HOSTS = ['goedkoopstevloerenshop.nl']
+
+    NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
+
 
     LOGGING = {
         'version': 1,
@@ -213,4 +219,3 @@ INTERNAL_IPS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
-NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
