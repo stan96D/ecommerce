@@ -161,7 +161,6 @@ cython_debug/
 
 # NGROK
 ngrok_setup.txt
-ngrok_conf.json
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
