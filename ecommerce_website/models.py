@@ -120,6 +120,7 @@ class Product(models.Model):
 
     @property
     def has_product_sale(self):
+        # Only one sale can be used
         return self.productsale_set.filter(sale__active=True).exists()
 
     @property
@@ -210,6 +211,17 @@ class ProductAttribute(models.Model):
         ProductAttributeType, on_delete=models.CASCADE, db_index=True)
     value = models.CharField(max_length=100, db_index=True)
 
+    numeric_value = models.DecimalField(
+        max_digits=20,
+        decimal_places=2,
+        db_index=True,
+        null=True,
+        blank=True,
+        default=None
+    )
+
+    additional_data = models.JSONField(default=dict, blank=True)
+
     def __str__(self):
         return f"{self.product.name} - {self.attribute_type.name} - {self.value}"
 
@@ -248,14 +260,18 @@ class ProductFilter(models.Model):
     filter_type = models.CharField(
         max_length=10, choices=TYPE_CHOICES, default='option')
     values = models.JSONField()
+    unit_value = models.CharField(
+        max_length=10, default=None,
+        null=True,
+        blank=True)
     parent_category = models.ForeignKey(
         ProductCategory, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         if self.parent_category:
-            return f"{self.name} (Category: {self.parent_category.name})"
+            return f"{self.filter_type} {self.name} (Category: {self.parent_category.name})"
         else:
-            return f"{self.name}"
+            return f"{self.filter_type} {self.name}"
 
 
 class StoreMotivation(models.Model):

@@ -6,14 +6,18 @@ class ProductFilterViewService(ViewServiceInterface):
 
     def generate(self, items):
         productViews = []
-        for key, value in items:
-            productView = ProductFilterView(key, value)
+        for item in items:
+            productView = ProductFilterView({
+                "name": item.name,
+                "values": item.values,
+                "filter_type": item.filter_type,
+                "unit": item.unit_value,
+            })
             productViews.append(productView)
 
         return productViews
 
     def get(self, item):
-        key, value = next(iter(item.items()))
 
-        productView = ProductFilterView(key, value)
+        productView = ProductFilterView(item)
         return productView

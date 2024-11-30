@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
+from decimal import Decimal
 import json
+import re
+from ecommerce_website.classes.helpers.numeric_value_normalizer import extract_lowest_and_highest
 from ecommerce_website.services.database_import_service.sql_import_service import SQLImportService
 from ecommerce_website.models import *
 from random import randint, sample, choice
@@ -443,32 +446,9 @@ class RealProductFilterSeeder(RealSeederInterface):
     def seed():
         print("RealProductFilterSeeder started...")
 
-        excluded_attributes = [
-            "Afmeting",
-            "Type",
-            "SKU",
-            "Producttype",
-            "Omschrijving",
-            "Leverancier",
-            "Weekmakervrij",
-            "Garantie commercieel",
-            "Beschikbaarheid",
-            "Kant-en-klaar",
-            "Garantie huishoudelijk",
-            "Links",
-            "Garantie periode",
-            "Eenheid",
-            "Overlap",
-            "Oppervlakte",
-            "Pakinhoud"
-        ]
+        excluded_attributes = WebShopConfig.excluded_filters()
 
-        attributes_for_slider = [
-            "Dikte",
-            "Lengte",
-            "Breedte",
-            "Toplaagdikte",
-        ]
+        attributes_for_slider = WebShopConfig.slider_filters()
 
         categories = ProductCategory.objects.all()
         product_attribute_types = ProductAttributeType.objects.all()
@@ -477,6 +457,9 @@ class RealProductFilterSeeder(RealSeederInterface):
             print("Now in category: ", category)
             for attribute_type in product_attribute_types:
 
+                is_slider = attribute_type.name in attributes_for_slider
+
+                # No excluded attributes and not same name as category
                 if attribute_type.name != category.name and attribute_type.name not in excluded_attributes:
 
                     print("Now in attribute_type: ", attribute_type,
@@ -485,12 +468,23 @@ class RealProductFilterSeeder(RealSeederInterface):
                     associated_attributes = ProductAttribute.objects.filter(
                         attribute_type=attribute_type)
 
-                    if category.name == "Zoeken":
+                    if category.name == "Zoeken" or category.name == "Assortiment":
+
                         values_for_filter = []
 
                         for product_attribute in associated_attributes:
 
-                            if product_attribute.value not in values_for_filter:
+                            if is_slider:
+                                try:
+                                    numeric_value = float(
+                                        product_attribute.numeric_value)
+                                except Exception:
+                                    numeric_value = None
+                                print("numeric", numeric_value)
+                                if numeric_value is not None:
+                                    values_for_filter.append(
+                                        numeric_value)
+                            else:
                                 values_for_filter.append(
                                     product_attribute.value)
 
@@ -519,24 +513,41 @@ class RealProductFilterSeeder(RealSeederInterface):
                             with transaction.atomic():
 
                                 values_for_filter = []
+                                unit_value = None
 
                                 for product_attribute in product_attributes_with_category:
                                     if attribute_type.id == product_attribute.attribute_type.id:
 
                                         if product_attribute.value not in values_for_filter:
-                                            values_for_filter.append(
-                                                product_attribute.value)
+
+                                            if is_slider:
+
+                                                try:
+                                                    numeric_value = float(
+                                                        product_attribute.numeric_value)
+                                                except Exception:
+                                                    numeric_value = None
+                                                print("numeric", numeric_value)
+                                                if numeric_value is not None:
+                                                    values_for_filter.append(
+                                                        numeric_value)
+                                                if unit_value is None:
+                                                    unit_value = product_attribute.additional_data["Unit"]
+                                            else:
+                                                values_for_filter.append(
+                                                    product_attribute.value)
 
                                 filter_type = "option"
 
-                                if attribute_type.name in attributes_for_slider:
+                                if is_slider:
                                     filter_type = "slider"
 
                                 product_filter = ProductFilter.objects.create(
                                     name=attribute_type.name,
                                     parent_category=category,
                                     values=values_for_filter,
-                                    filter_type=filter_type
+                                    filter_type=filter_type,
+                                    unit_value=unit_value
 
                                 )
                                 print("Product filter created, with name: ",

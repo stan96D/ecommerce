@@ -7,7 +7,7 @@ class ProductView:
         # Access the prefetched attributes directly
         attributes_dict = {
             attr.attribute_type.name: attr.value
-            for attr in getattr(product, 'prefetched_attributes', [])
+            for attr in getattr(product, 'filtered_attributes', [])
         }
 
         # Basic product details
@@ -68,7 +68,7 @@ class ProductDetailView:
             self.big_unit = "pak"
             self.big_unit_multi = "pakken"
 
-        elif self.product_type == "Ondervloer" and surface:
+        elif self.product_type == "Ondervloeren" and surface:
             self.surface = SurfaceAreaCalculator.parse_surface_area(
                 surface)
             self.big_unit = "rol"

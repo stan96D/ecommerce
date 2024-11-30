@@ -10,6 +10,9 @@ import requests
 from io import BytesIO
 from django.core.files import File
 from ecommerce_website.settings.webshop_config import *
+from ecommerce_website.classes.helpers.numeric_value_normalizer import extract_value_and_unit
+
+slider_filters = WebShopConfig.slider_filters()
 
 
 class SQLImportService(DatabaseImportServiceInterface):
@@ -96,11 +99,30 @@ class SQLImportService(DatabaseImportServiceInterface):
                   attribute_type_name}' does not exist.")
         else:
             if not ProductAttribute.objects.filter(product=product, attribute_type=attribute_type, value=value).exists():
-                product_attribute = ProductAttribute.objects.create(
-                    product=product,
-                    attribute_type=attribute_type,
-                    value=value
-                )
+                print(slider_filters, attribute_type)
+                if attribute_type.name in slider_filters:
+
+                    new_value, unit = extract_value_and_unit(value)
+                    print(new_value, unit)
+                    if not unit:
+                        print(
+                            "ProductAttribute not created error in unit conversion for additional data UNIT....")
+                        return
+
+                    product_attribute = ProductAttribute.objects.create(
+                        product=product,
+                        attribute_type=attribute_type,
+                        value=new_value,
+                        numeric_value=new_value,
+                        additional_data={"Unit": unit}
+                    )
+
+                else:
+                    product_attribute = ProductAttribute.objects.create(
+                        product=product,
+                        attribute_type=attribute_type,
+                        value=value
+                    )
                 print(f"ProductAttribute '{product_attribute}' created.")
             else:
                 print(f"ProductAttribute with product '{product.name}', attribute type '{

@@ -2,7 +2,7 @@ from django.contrib.auth.hashers import make_password
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from ecommerce_website.services.view_service.order_info_view_service import OrderInfoViewService
 from ecommerce_website.services.product_service.product_service import ProductService
 from django.shortcuts import redirect, render
@@ -10,7 +10,7 @@ from ecommerce_website.services.shopping_cart_service.shopping_cart_service impo
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
 from ecommerce_website.services.product_filter_service.product_filter_service import ProductFilterService
-from ecommerce_website.classes.helpers.product_sorter import ProductSorter, ProductSorterUtility
+from ecommerce_website.classes.helpers.product_sorter import ProductSorter, ProductSorterUtility, QueryProductSorter
 from ecommerce_website.classes.model.address_info import AddressInfo
 from ecommerce_website.classes.model.contact_info import ContactInfo
 from ecommerce_website.classes.model.payment_info import PaymentInfo
@@ -37,6 +37,7 @@ from ecommerce_website.classes.managers.url_manager.url_manager import *
 import time
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ecommerce_website.classes.helpers.env_loader import *
+from ecommerce_website.services.view_service.product_filter_service import ProductFilterViewService
 
 environment = EnvLoader.get_env()
 url_manager = EncapsulatedURLManager.get_url_manager(environment)
@@ -549,30 +550,134 @@ def confirm_order(request):
 
 
 def products(request, category='Assortiment'):
+
+    # Start timing
+    start_time = time.time()
+
+    print(f"Starting 'products_by_category' for category: {category}")
+
     attributes = request.GET.copy()
+
     is_sort = ProductSorterUtility.is_sort(attributes)
+    is_paginated = ProductSorterUtility.is_paginated(attributes)
+
+    if is_paginated:
+        page = attributes.pop('page', None)[0]
+        print(f"Pagination value detected: {page}")
+    else:
+        page = 1
+
     is_filter = ProductSorterUtility.is_filter(attributes)
 
     if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
+        print(f"Sort value detected: {sort_value}")
+
+    print(f"Checked sort and pagination flags - Time elapsed: {
+          time.time() - start_time:.4f} seconds")
+
+    category_data = ProductCategoryService().get_product_category_by_name(category)
+    print(
+        f"Retrieved category data - Time elapsed: {time.time() - start_time:.4f} seconds")
 
     if is_filter:
-        # Aanpassen
-        products = ProductService().get_products_by_attributes(attributes)
+        selected_option_filters, selected_slider_filters = ProductSorterUtility.create_filters(
+            attributes)
+        print(
+            f"Created filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        combined_filters = {}
+
+        for key, values in selected_option_filters.items():
+            combined_filters[key] = list(values)
+
+        for key, values in selected_slider_filters.items():
+            combined_filters[key] = list(values)
+
+        products = ProductService.get_filtered_products_by_value_and_category(
+            selected_option_filters, selected_slider_filters, category)
+        print(
+            f"Filtered products by attributes - Time elapsed: {time.time() - start_time:.4f} seconds")
+
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
     else:
-        products = ProductService().get_all_products()
+
+        products = ProductService.get_products_assortment()
+
+        print(
+            f"Fetched products by category - Time elapsed: {time.time() - start_time:.4f} seconds")
+
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
 
     breadcrumb = [category]
-    category_data = ProductCategoryService().get_product_category_by_name(category)
-    filter_data = ProductFilterService().get_products_filters_for_search(products)
+    paginator = Paginator(products, 30)
 
-    return render(request, 'products.html', {
-        'products': ViewServiceUtility.get_product_views(products),
-        'filterData': filter_data,
+    try:
+        paginated_products = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_products = paginator.page(1)
+    except EmptyPage:
+        paginated_products = paginator.page(paginator.num_pages)
+    print(
+        f"Paginated products - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    page_obj = paginator.get_page(page)
+
+    if is_filter:
+        filter_data = ProductFilterService.get_products_filters_by_products(
+            products, category, combined_filters)
+    else:
+        filter_data = ProductFilterService.get_product_filters_by_category(
+            category)
+    print(
+        f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if len(filter_data) > 0:
+
+        price_filter = ProductFilterService.create_filter_for_price(products)
+
+        if is_filter and price_filter.name not in combined_filters:
+            # Only add filters that have more than one value
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+        else:
+            # Always add values that are already a filter
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+
+        print(
+            f"Added price filter - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if is_filter:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data, combined_filters)
+    else:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data)
+    print(
+        f"Sorted product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    product_views = ViewServiceUtility.get_product_views(paginated_products)
+    print(
+        f"Generated product views - Time elapsed: {time.time() - start_time:.4f} seconds")
+    response = render(request, 'products.html', {
+        'page_obj': page_obj,
+        'products': product_views,
+        'filter_data': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
         'store_data': ViewServiceUtility.get_current_store_data(),
@@ -580,79 +685,280 @@ def products(request, category='Assortiment'):
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
-        'store_motivations': ViewServiceUtility.get_store_motivations()
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'product_count': len(products)
     })
+    print(
+        f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
+
+    return response
 
 
 def search_products(request, category="Zoeken"):
 
+    # Start timing
+    start_time = time.time()
+
+    print(f"Starting 'products_by_category' for category: {category}")
+
     attributes = request.GET.copy()
 
     is_sort = ProductSorterUtility.is_sort(attributes)
+    is_paginated = ProductSorterUtility.is_paginated(attributes)
+
+    # Safely pop the 'q' parameter and set a default of None
+    search = attributes.pop('q', [None])[0] if 'q' in attributes else ""
+
+    if is_paginated:
+        page = attributes.pop('page', None)[0]
+        print(f"Pagination value detected: {page}")
+    else:
+        page = 1
+
     is_filter = ProductSorterUtility.is_search_filter(attributes)
 
     if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
+        print(f"Sort value detected: {sort_value}")
 
-    search = request.GET.get('q')
-
-    # products_for_filters = ProductService.get_products_by_search(search)
-
-    if is_filter:
-        attributes.pop('q', None)
-        products = ProductService.get_products_by_attributes_and_search(
-            attributes, search)
-        if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
-    else:
-        products = ProductService.get_products_by_search(search)
-
-        if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+    print(f"Checked sort and pagination flags - Time elapsed: {
+          time.time() - start_time:.4f} seconds")
 
     category_data = ProductCategoryService().get_product_category_by_name(category)
+    print(
+        f"Retrieved category data - Time elapsed: {time.time() - start_time:.4f} seconds")
 
-    filter_data = ProductFilterService(
-    ).get_products_filters_for_search(products)
+    combined_filters = {}
 
-    return render(request, 'products.html', {
-        'products': ViewServiceUtility.get_product_views(products),
-        'filterData': filter_data,
+    if is_filter:
+        selected_option_filters, selected_slider_filters = ProductSorterUtility.create_filters(
+            attributes)
+        print(
+            f"Created filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        for key, values in selected_option_filters.items():
+            combined_filters[key] = list(values)
+
+        for key, values in selected_slider_filters.items():
+            combined_filters[key] = list(values)
+
+        products = ProductService.get_filtered_products_by_search(
+            selected_option_filters, selected_slider_filters, search)
+        print(
+            f"Filtered products by attributes - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        if is_sort:
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
+    else:
+
+        products = ProductService.get_products_by_search(search)
+
+        print(
+            f"Fetched products by category - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        if is_sort:
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
+
+    breadcrumb = [category]
+    paginator = Paginator(products, 30)
+
+    try:
+        paginated_products = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_products = paginator.page(1)
+    except EmptyPage:
+        paginated_products = paginator.page(paginator.num_pages)
+    print(
+        f"Paginated products - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    page_obj = paginator.get_page(page)
+
+    filter_data = ProductFilterService.get_products_filters_by_products(
+        products, category, combined_filters)
+
+    print(
+        f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if len(filter_data) > 0:
+
+        price_filter = ProductFilterService.create_filter_for_price(products)
+
+        if is_filter and price_filter.name not in combined_filters:
+            # Only add filters that have more than one value
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+        else:
+            # Always add values that are already a filter
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+
+        print(
+            f"Added price filter - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if is_filter:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data, combined_filters)
+    else:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data)
+    print(
+        f"Sorted product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    response = render(request, 'products.html', {
+        'page_obj': page_obj,
+        'products': ViewServiceUtility.get_product_views(paginated_products),
+        'filter_data': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
         'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
-        'store_motivations': ViewServiceUtility.get_store_motivations()
+        'breadcrumbs': breadcrumb,
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'product_count': len(products)
     })
+    print(
+        f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
+
+    return response
 
 
 def discount_products(request, category='Kortingen'):
+    # Start timing
+    start_time = time.time()
+
+    print(f"Starting 'products_by_category' for category: {category}")
+
     attributes = request.GET.copy()
+
     is_sort = ProductSorterUtility.is_sort(attributes)
+    is_paginated = ProductSorterUtility.is_paginated(attributes)
+
+    if is_paginated:
+        page = attributes.pop('page', None)[0]
+        print(f"Pagination value detected: {page}")
+    else:
+        page = 1
+
     is_filter = ProductSorterUtility.is_filter(attributes)
 
     if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
+        print(f"Sort value detected: {sort_value}")
+
+    print(f"Checked sort and pagination flags - Time elapsed: {
+          time.time() - start_time:.4f} seconds")
+
+    category_data = ProductCategoryService().get_product_category_by_name(category)
+    print(
+        f"Retrieved category data - Time elapsed: {time.time() - start_time:.4f} seconds")
+    combined_filters = {}
 
     if is_filter:
-        # Aanpassen
-        products = ProductService().get_sale_products_by_attributes(attributes)
+        selected_option_filters, selected_slider_filters = ProductSorterUtility.create_filters(
+            attributes)
+        print(
+            f"Created filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        for key, values in selected_option_filters.items():
+            combined_filters[key] = list(values)
+
+        for key, values in selected_slider_filters.items():
+            combined_filters[key] = list(values)
+
+        products = ProductService.get_filtered_products_by_value_and_category(
+            selected_option_filters, selected_slider_filters, category)
+        print(
+            f"Filtered products by attributes - Time elapsed: {time.time() - start_time:.4f} seconds")
+
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
     else:
-        products = ProductService().get_products_on_sale()
+
+        products = ProductService.get_products_on_sale()
+
+        print(
+            f"Fetched products by category - Time elapsed: {time.time() - start_time:.4f} seconds")
+
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
 
     breadcrumb = [category]
-    category_data = ProductCategoryService().get_product_category_by_name(category)
-    filter_data = ProductFilterService().get_products_filters_for_search(products)
+    paginator = Paginator(products, 30)
 
-    return render(request, 'products.html', {
-        'products': ViewServiceUtility.get_product_views(products),
-        'filterData': filter_data,
+    try:
+        paginated_products = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_products = paginator.page(1)
+    except EmptyPage:
+        paginated_products = paginator.page(paginator.num_pages)
+    print(
+        f"Paginated products - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    page_obj = paginator.get_page(page)
+
+    filter_data = ProductFilterService.get_products_filters_by_products(
+        products, "Assortiment", combined_filters)
+    print(
+        f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if len(filter_data) > 0:
+
+        price_filter = ProductFilterService.create_filter_for_price(products)
+
+        if is_filter and price_filter.name not in combined_filters:
+            # Only add filters that have more than one value
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+        else:
+            # Always add values that are already a filter
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+
+        print(
+            f"Added price filter - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if is_filter:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data, combined_filters)
+    else:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data)
+    print(
+        f"Sorted product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    product_views = ViewServiceUtility.get_product_views(paginated_products)
+    print(
+        f"Generated product views - Time elapsed: {time.time() - start_time:.4f} seconds")
+    response = render(request, 'products.html', {
+        'page_obj': page_obj,
+        'products': product_views,
+        'filter_data': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
         'store_data': ViewServiceUtility.get_current_store_data(),
@@ -660,35 +966,137 @@ def discount_products(request, category='Kortingen'):
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
-        'store_motivations': ViewServiceUtility.get_store_motivations()
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'product_count': len(products)
     })
+    print(
+        f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
+
+    return response
 
 
 def runner_products(request, category='Hardlopers'):
+    # Start timing
+    start_time = time.time()
+
+    print(f"Starting 'products_by_category' for category: {category}")
+
     attributes = request.GET.copy()
+
     is_sort = ProductSorterUtility.is_sort(attributes)
+    is_paginated = ProductSorterUtility.is_paginated(attributes)
+
+    if is_paginated:
+        page = attributes.pop('page', None)[0]
+        print(f"Pagination value detected: {page}")
+    else:
+        page = 1
+
     is_filter = ProductSorterUtility.is_filter(attributes)
 
     if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
+        print(f"Sort value detected: {sort_value}")
+
+    print(f"Checked sort and pagination flags - Time elapsed: {
+          time.time() - start_time:.4f} seconds")
+
+    category_data = ProductCategoryService().get_product_category_by_name(category)
+    print(
+        f"Retrieved category data - Time elapsed: {time.time() - start_time:.4f} seconds")
+    combined_filters = {}
 
     if is_filter:
-        # Aanpassen
-        products = ProductService().get_runner_products_by_attributes(attributes)
+        selected_option_filters, selected_slider_filters = ProductSorterUtility.create_filters(
+            attributes)
+        print(
+            f"Created filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        for key, values in selected_option_filters.items():
+            combined_filters[key] = list(values)
+
+        for key, values in selected_slider_filters.items():
+            combined_filters[key] = list(values)
+
+        products = ProductService.get_filtered_products_by_value_and_category(
+            selected_option_filters, selected_slider_filters, category)
+        print(
+            f"Filtered products by attributes - Time elapsed: {time.time() - start_time:.4f} seconds")
+
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
     else:
-        products = ProductService().get_runner_products()
+
+        products = ProductService.get_products_runners()
+
+        print(
+            f"Fetched products by category - Time elapsed: {time.time() - start_time:.4f} seconds")
+
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
 
     breadcrumb = [category]
-    category_data = ProductCategoryService().get_product_category_by_name(category)
-    filter_data = ProductFilterService().get_products_filters_for_search(products)
+    paginator = Paginator(products, 30)
 
-    return render(request, 'products.html', {
-        'products': ViewServiceUtility.get_product_views(products),
-        'filterData': filter_data,
+    try:
+        paginated_products = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_products = paginator.page(1)
+    except EmptyPage:
+        paginated_products = paginator.page(paginator.num_pages)
+    print(
+        f"Paginated products - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    page_obj = paginator.get_page(page)
+
+    filter_data = ProductFilterService.get_products_filters_by_products(
+        products, "Assortiment", combined_filters)
+    print(
+        f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if len(filter_data) > 0:
+
+        price_filter = ProductFilterService.create_filter_for_price(products)
+
+        if is_filter and price_filter.name not in combined_filters:
+            # Only add filters that have more than one value
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+        else:
+            # Always add values that are already a filter
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+        print(
+            f"Added price filter - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if is_filter:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data, combined_filters)
+    else:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data)
+    print(
+        f"Sorted product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    product_views = ViewServiceUtility.get_product_views(paginated_products)
+    print(
+        f"Generated product views - Time elapsed: {time.time() - start_time:.4f} seconds")
+    response = render(request, 'products.html', {
+        'page_obj': page_obj,
+        'products': product_views,
+        'filter_data': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
         'store_data': ViewServiceUtility.get_current_store_data(),
@@ -696,8 +1104,13 @@ def runner_products(request, category='Hardlopers'):
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
-        'store_motivations': ViewServiceUtility.get_store_motivations()
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'product_count': len(products)
     })
+    print(
+        f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
+
+    return response
 
 
 def products_by_category(request, category):
@@ -723,40 +1136,57 @@ def products_by_category(request, category):
         sort_value = attributes.pop('tn_sort', None)[0]
         print(f"Sort value detected: {sort_value}")
 
-    is_filter = ProductSorterUtility.is_filter(attributes)
-
-    # Log time taken to identify filters and sorts
-    print(f"Identified sort and filter options - Time elapsed: {
+    print(f"Checked sort and pagination flags - Time elapsed: {
           time.time() - start_time:.4f} seconds")
 
     category_data = ProductCategoryService().get_product_category_by_name(category)
-
-    # Log time taken to retrieve category data
     print(
         f"Retrieved category data - Time elapsed: {time.time() - start_time:.4f} seconds")
 
     if is_filter:
-        products = ProductService.get_products_by_attributes_and_values(
-            attributes, category_data)
+        selected_option_filters, selected_slider_filters = ProductSorterUtility.create_filters(
+            attributes)
+        print(
+            f"Created filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        combined_filters = {}
+
+        for key, values in selected_option_filters.items():
+            combined_filters[key] = list(values)
+
+        for key, values in selected_slider_filters.items():
+            combined_filters[key] = list(values)
+
+        products = ProductService.get_filtered_products_by_value_and_category(
+            selected_option_filters, selected_slider_filters, category)
         print(
             f"Filtered products by attributes - Time elapsed: {time.time() - start_time:.4f} seconds")
 
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
             print(
-                f"Sorted products - Time elapsed: {time.time() - start_time:.4f} seconds")
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
     else:
+
         products = ProductService.get_products_by_attribute(category)
+
         print(
             f"Fetched products by category - Time elapsed: {time.time() - start_time:.4f} seconds")
 
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
             print(
-                f"Sorted products - Time elapsed: {time.time() - start_time:.4f} seconds")
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
 
     breadcrumb = [category]
-
     paginator = Paginator(products, 30)
 
     try:
@@ -765,21 +1195,52 @@ def products_by_category(request, category):
         paginated_products = paginator.page(1)
     except EmptyPage:
         paginated_products = paginator.page(paginator.num_pages)
+    print(
+        f"Paginated products - Time elapsed: {time.time() - start_time:.4f} seconds")
 
     page_obj = paginator.get_page(page)
 
-    # filter_data = ProductFilterService(
-    # ).get_products_filters_by_products(products, category)
-    # SNELLER MAKEN
-    # filter_data.append(ProductFilterService.create_filter_for_price(products))
-
-    # Log time taken to generate filters
+    if is_filter:
+        filter_data = ProductFilterService.get_products_filters_by_products(
+            products, category, combined_filters)
+    else:
+        filter_data = ProductFilterService.get_product_filters_by_category(
+            category)
     print(
-        f"Generated product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+        f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
 
+    if len(filter_data) > 0:
+
+        price_filter = ProductFilterService.create_filter_for_price(products)
+
+        if is_filter and price_filter.name not in combined_filters:
+            # Only add filters that have more than one value
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+        else:
+            # Always add values that are already a filter
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+
+        print(
+            f"Added price filter - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if is_filter:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data, combined_filters)
+    else:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data)
+    print(
+        f"Sorted product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    product_views = ViewServiceUtility.get_product_views(paginated_products)
+    print(
+        f"Generated product views - Time elapsed: {time.time() - start_time:.4f} seconds")
     response = render(request, 'products.html', {
         'page_obj': page_obj,
-        'products': ViewServiceUtility.get_product_views(paginated_products),
+        'products': product_views,
+        'filter_data': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
         'store_data': ViewServiceUtility.get_current_store_data(),
@@ -787,10 +1248,9 @@ def products_by_category(request, category):
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
-        'store_motivations': ViewServiceUtility.get_store_motivations()
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'product_count': len(products)
     })
-
-    # Log time taken to render the template
     print(
         f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
 
@@ -798,36 +1258,134 @@ def products_by_category(request, category):
 
 
 def products_by_subcategory(request, category, subcategory):
+    # Start timing
+    start_time = time.time()
+
+    print(f"Starting 'products_by_category' for category: {category}")
 
     attributes = request.GET.copy()
 
     is_sort = ProductSorterUtility.is_sort(attributes)
+    is_paginated = ProductSorterUtility.is_paginated(attributes)
+
+    if is_paginated:
+        page = attributes.pop('page', None)[0]
+        print(f"Pagination value detected: {page}")
+    else:
+        page = 1
+
     is_filter = ProductSorterUtility.is_filter(attributes)
 
     if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
+        print(f"Sort value detected: {sort_value}")
+
+    print(f"Checked sort and pagination flags - Time elapsed: {
+          time.time() - start_time:.4f} seconds")
 
     category_data = ProductCategoryService().get_product_category_by_name(subcategory)
+    print(
+        f"Retrieved category data - Time elapsed: {time.time() - start_time:.4f} seconds")
 
     if is_filter:
-        products = ProductService.get_products_by_attributes_and_values(
-            attributes, category_data)
-        if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
-    else:
-        products = ProductService.get_products_by_attribute(category)
+        selected_option_filters, selected_slider_filters = ProductSorterUtility.create_filters(
+            attributes)
+        print(
+            f"Created filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        combined_filters = {}
+
+        for key, values in selected_option_filters.items():
+            combined_filters[key] = list(values)
+
+        for key, values in selected_slider_filters.items():
+            combined_filters[key] = list(values)
+
+        products = ProductService.get_filtered_products_by_value_and_category(
+            selected_option_filters, selected_slider_filters, category, subcategory)
+        print(
+            f"Filtered products by attributes - Time elapsed: {time.time() - start_time:.4f} seconds")
 
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
+    else:
+
+        products = ProductService.get_products_by_attribute_sub(
+            category, subcategory)
+
+        print(
+            f"Fetched products by category - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        if is_sort:
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
 
     breadcrumb = [category, subcategory]
+    paginator = Paginator(products, 30)
 
-    filter_data = ProductFilterService(
-    ).get_products_filters_by_products(products, subcategory)
+    try:
+        paginated_products = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_products = paginator.page(1)
+    except EmptyPage:
+        paginated_products = paginator.page(paginator.num_pages)
+    print(
+        f"Paginated products - Time elapsed: {time.time() - start_time:.4f} seconds")
 
-    return render(request, 'products.html', {
-        'products': ViewServiceUtility.get_product_views(products),
-        'filterData': filter_data,
+    page_obj = paginator.get_page(page)
+
+    if is_filter:
+        filter_data = ProductFilterService.get_products_filters_by_products(
+            products, category, combined_filters, subcategory)
+    else:
+        filter_data = ProductFilterService.get_product_filters_by_category_sub(category,
+                                                                               subcategory)
+    print(
+        f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if len(filter_data) > 0:
+
+        price_filter = ProductFilterService.create_filter_for_price(products)
+
+        if is_filter and price_filter.name not in combined_filters:
+            # Only add filters that have more than one value
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+        else:
+            # Always add values that are already a filter
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+
+        print(
+            f"Added price filter - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if is_filter:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data, combined_filters)
+    else:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data)
+    print(
+        f"Sorted product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    product_views = ViewServiceUtility.get_product_views(paginated_products)
+    print(
+        f"Generated product views - Time elapsed: {time.time() - start_time:.4f} seconds")
+    response = render(request, 'products.html', {
+        'page_obj': page_obj,
+        'products': product_views,
+        'filter_data': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
         'store_data': ViewServiceUtility.get_current_store_data(),
@@ -835,43 +1393,144 @@ def products_by_subcategory(request, category, subcategory):
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
-        'store_motivations': ViewServiceUtility.get_store_motivations()
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'product_count': len(products)
     })
+    print(
+        f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
+
+    return response
 
 
 def products_by_attribute(request, category, subcategory, attribute):
+    # Start timing
+    start_time = time.time()
+
+    print(f"Starting 'products_by_category' for category: {category}")
 
     attributes = request.GET.copy()
 
     is_sort = ProductSorterUtility.is_sort(attributes)
+    is_paginated = ProductSorterUtility.is_paginated(attributes)
+
+    if is_paginated:
+        page = attributes.pop('page', None)[0]
+        print(f"Pagination value detected: {page}")
+    else:
+        page = 1
+
     is_filter = ProductSorterUtility.is_filter(attributes)
 
     if is_sort:
         sort_value = attributes.pop('tn_sort', None)[0]
+        print(f"Sort value detected: {sort_value}")
+
+    print(f"Checked sort and pagination flags - Time elapsed: {
+          time.time() - start_time:.4f} seconds")
 
     category_data = ProductCategoryService().get_product_category_by_name(attribute)
+    print(
+        f"Retrieved category data - Time elapsed: {time.time() - start_time:.4f} seconds")
 
     if is_filter:
-        products = ProductService.get_products_by_attributes_and_values(
-            attributes, category_data)
-        if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
-    else:
-        products = ProductService.get_products_by_attribute_from_category(
-            attribute, category)
+        selected_option_filters, selected_slider_filters = ProductSorterUtility.create_filters(
+            attributes)
+        print(
+            f"Created filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        combined_filters = {}
+
+        for key, values in selected_option_filters.items():
+            combined_filters[key] = list(values)
+
+        for key, values in selected_slider_filters.items():
+            combined_filters[key] = list(values)
+
+        products = ProductService.get_filtered_products_by_value_and_category(
+            selected_option_filters, selected_slider_filters, category, subcategory, attribute)
+        print(
+            f"Filtered products by attributes - Time elapsed: {time.time() - start_time:.4f} seconds")
 
         if is_sort:
-            products = ProductSorter().sort_products_by(products, sort_value)
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
+    else:
+
+        products = ProductService.get_products_by_attribute_sub_nested(
+            category, subcategory, attribute)
+
+        print(
+            f"Fetched products by category - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        if is_sort:
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
 
     breadcrumb = [category, subcategory, attribute]
+    paginator = Paginator(products, 30)
 
-    # filter_data = ProductFilterService().get_double_nested_product_filters_by_category_name(
-    #     category, subcategory, attribute)
-    filter_data = ProductFilterService(
-    ).get_products_filters_by_products(products, attribute)
-    return render(request, 'products.html', {
-        'products': ViewServiceUtility.get_product_views(products),
-        'filterData': filter_data,
+    try:
+        paginated_products = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_products = paginator.page(1)
+    except EmptyPage:
+        paginated_products = paginator.page(paginator.num_pages)
+    print(
+        f"Paginated products - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    page_obj = paginator.get_page(page)
+
+    if is_filter:
+        filter_data = ProductFilterService.get_products_filters_by_products(
+            products, category, combined_filters, subcategory, attribute)
+    else:
+        filter_data = ProductFilterService.get_product_filters_by_category_sub_nested(category,
+                                                                                      subcategory, attribute)
+    print(
+        f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if len(filter_data) > 0:
+
+        price_filter = ProductFilterService.create_filter_for_price(products)
+
+        if is_filter and price_filter.name not in combined_filters:
+            # Only add filters that have more than one value
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+        else:
+            # Always add values that are already a filter
+            if price_filter.lowest != price_filter.highest:
+                filter_data.append(price_filter)
+
+        print(
+            f"Added price filter - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if is_filter:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data, combined_filters)
+    else:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data)
+    print(
+        f"Sorted product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    product_views = ViewServiceUtility.get_product_views(paginated_products)
+    print(
+        f"Generated product views - Time elapsed: {time.time() - start_time:.4f} seconds")
+    response = render(request, 'products.html', {
+        'page_obj': page_obj,
+        'products': product_views,
+        'filter_data': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
         'store_data': ViewServiceUtility.get_current_store_data(),
@@ -879,13 +1538,21 @@ def products_by_attribute(request, category, subcategory, attribute):
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
-        'store_motivations': ViewServiceUtility.get_store_motivations()
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'product_count': len(products)
     })
+    print(
+        f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
+
+    return response
 
 
 def product_detail(request, id=None):
 
     product = ViewServiceUtility.get_product_view_by_id(id)
+
+    if not product:
+        return render(request, '404.html')
 
     product_data = {'product': product,
                     'headerData': ViewServiceUtility.get_header_data(),

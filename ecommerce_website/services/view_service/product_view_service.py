@@ -6,19 +6,10 @@ import time
 class ProductViewService(ViewServiceInterface):
 
     def generate(self, items):
-     # Start timing
-        start_time = time.time()
-
-        print("Starting 'generate' method for generating product views")
-
         productViews = []
         for item in items:
             productView = ProductView(item)
             productViews.append(productView)
-
-        # Log time taken to generate product views
-        print(
-            f"Generated product views - Time elapsed: {time.time() - start_time:.4f} seconds")
 
         return productViews
 

@@ -1,5 +1,6 @@
 {% extends 'components/main.html' %}
 {% load static tailwind_tags %}
+{% load custom_filters %}
 
 {% block title %}Home{% endblock %}
 
@@ -18,6 +19,100 @@
   }
   ```
 -->
+  <style>
+    /* Class to hide the slider thumb (dot) */
+    .hide-slider-dot::-webkit-slider-thumb {
+      visibility: hidden; /* Hide the thumb */
+    }
+
+    .hide-slider-dot::-moz-range-thumb {
+      visibility: hidden; /* Hide the thumb for Firefox */
+    }
+
+    .hide-slider-dot::-ms-thumb {
+      visibility: hidden; /* Hide the thumb for Internet Explorer/Edge */
+    }
+
+    /* Base styles for the range slider */
+    .range-slider {
+      -webkit-appearance: none; /* Override default styles */
+      appearance: none; /* Override default styles */
+      background: #e5e7eb; /* gray-200 for the unselected area */
+      border-radius: 9999px; /* Fully rounded */
+      height: 8px; /* Height of the track */
+      outline: none; /* Remove outline */
+      transition: 0.3s ease; /* Smooth transition */
+    }
+
+    /* Track styling for WebKit browsers */
+    .range-slider::-webkit-slider-runnable-track {
+      height: 8px;
+      border-radius: 9999px; /* Fully rounded */
+      background: #e5e7eb; /* gray-200 */
+    }
+
+    /* Track styling for Mozilla browsers */
+    .range-slider::-moz-range-track {
+      height: 8px;
+      border-radius: 9999px; /* Fully rounded */
+      background: #e5e7eb; /* gray-200 */
+    }
+
+    /* Thumb styling for WebKit (Chrome, Safari) */
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; /* Remove default thumb styling */
+      appearance: none; /* Remove default thumb styling */
+      width: 16px; /* Thumb width */
+      height: 16px; /* Thumb height */
+      background-color: #f59e0b; /* amber-500 */
+      border-radius: 50%; /* Make the thumb round */
+      cursor: pointer; /* Pointer on hover */
+      margin-top: -4px; /* Center the thumb vertically */
+    }
+
+    /* Thumb styling for Firefox */
+    .range-slider::-moz-range-thumb {
+      width: 16px; /* Thumb width */
+      height: 16px; /* Thumb height */
+      background-color: #f59e0b; /* amber-500 */
+      border-radius: 50%; /* Make the thumb round */
+      cursor: pointer; /* Pointer on hover */
+    }
+
+    /* Thumb styling for Edge */
+    .range-slider::-ms-thumb {
+      width: 16px; /* Thumb width */
+      height: 16px; /* Thumb height */
+      background-color: #f59e0b; /* amber-500 */
+      border-radius: 50%; /* Make the thumb round */
+      cursor: pointer; /* Pointer on hover */
+    }
+
+    /* Fill the track area based on the slider value */
+    .range-slider:focus::-webkit-slider-runnable-track {
+      background: linear-gradient(
+        to right,
+        #f59e0b var(--value),
+        #e5e7eb var(--value)
+      ); /* amber-500 for selected area */
+    }
+
+    .range-slider:focus::-moz-range-track {
+      background: linear-gradient(
+        to right,
+        #f59e0b var(--value),
+        #e5e7eb var(--value)
+      ); /* amber-500 for selected area */
+    }
+
+    .range-slider:focus::-ms-track {
+      background: linear-gradient(
+        to right,
+        #f59e0b var(--value),
+        #e5e7eb var(--value)
+      ); /* amber-500 for selected area */
+    }
+  </style>
 
   <div class="bg-white">
     <main class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
@@ -31,8 +126,27 @@
           </p>
         {% endif %}
         <div class="pb-4 pt-10 flex justify-end gap-x-2">
-          <div id="selected-sort" class="text-sm text-gray-700 "></div>
+          <!-- Product count on the left side -->
           <div class="relative flex items-center">
+            <span class="text-sm text-amber-500">
+              {% if product_count == 1 %}
+                {{ product_count }}
+                product
+              {% else %}
+                {{ product_count }}
+                producten
+              {% endif %}
+            </span>
+          </div>
+
+          <!-- Sort selection and sort button on the right side -->
+          <div class="relative flex items-center gap-x-2">
+            <!-- Display the selected sort type (if any) -->
+            <div id="selected-sort" class="text-sm text-gray-700 hidden">
+              <!-- Sort type will be dynamically inserted here -->
+            </div>
+
+            <!-- Sort button -->
             <button
               type="button"
               class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
@@ -55,6 +169,8 @@
                 />
               </svg>
             </button>
+
+            <!-- Sort menu dropdown -->
             <div
               id="sort-menu"
               class="absolute z-10 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 hidden"
@@ -74,6 +190,18 @@
                 </button>
                 <button
                   class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  onclick="sortBy('name-highest')"
+                >
+                  Alfabetisch A-Z
+                </button>
+                <button
+                  class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                  onclick="sortBy('name-lowest')"
+                >
+                  Alfabetisch Z-A
+                </button>
+                <button
+                  class="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                   onclick="sortBy('geen')"
                 >
                   Geen
@@ -83,8 +211,19 @@
           </div>
         </div>
       </div>
+      <div class="pt-6">
+        <button
+          id="clear-filters"
+          class="text-sm text-gray-400 flex items-center gap-1 hidden"
+          onclick="clearFilters()"
+        >
+          <i class="fas fa-filter text-gray-500 pr-2"></i>
+          <!-- Font Awesome filter icon -->
+          Filter(s) verwijderen
+        </button>
+      </div>
 
-      <div class="pb-24 pt-12 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+      <div class="pb-24 pt-4 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
         <aside>
           <h2 class="sr-only">Filters</h2>
           <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
@@ -104,14 +243,26 @@
           <div class="hidden lg:block">
             <form class="space-y-5 divide-y divide-gray-200">
               {% for product_filter in filter_data %}
-                <div class="pt-5">
+                <!-- Show the first 10 filters, hide the rest inside a div with 'extra-filters' class -->
+                <div
+                  class="pt-5 {% if forloop.counter > 10 %}hidden extra-filters{% endif %}"
+                >
                   <fieldset>
                     <div>
                       <legend
                         class="text-sm font-medium text-gray-900 flex justify-between items-center cursor-pointer"
                         onclick="toggleFilter('{{ product_filter.name }}')"
                       >
-                        <span>{{ product_filter.name }}</span>
+                        <span>
+                          {{ product_filter.name }}
+                          {% if product_filter.type == "slider" %}
+                            <span
+                              id="slider-value-display-{{ product_filter.name }}"
+                              class="text-amber-500"
+                            ></span>
+                          {% endif %}
+                        </span>
+
                         <button type="button" class="focus:outline-none">
                           <i
                             id="arrow-{{ product_filter.name }}"
@@ -124,35 +275,132 @@
                     <div
                       id="{{ product_filter.name }}"
                       class="filter-container space-y-3 pt-6 hidden"
+                      type="{{ product_filter.type }}"
                     >
                       {% if product_filter.type == "option" %}
-                        {% for product_attribute in product_filter.product_attributes %}
-                          <div class="flex items-center">
-                            <input
-                              id="attr-{{ product_attribute }}"
-                              name="{{ product_filter.name }}"
-                              value="{{ product_attribute }}"
-                              type="checkbox"
-                              class="filter-checkbox h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-customColor"
-                              onclick="executeSearch()"
-                            />
-                            <label
-                              for="attr-{{ product_attribute }}"
-                              class="ml-3 text-sm text-gray-600"
-                              >{{ product_attribute }}</label
+                        {% for product_attribute in product_filter.values %}
+                          {% if forloop.counter <= 5 %}
+                            <div class="flex items-center">
+                              <input
+                                id="attr-{{ product_attribute }}"
+                                name="{{ product_filter.name }}"
+                                value="{{ product_attribute }}"
+                                type="checkbox"
+                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-customColor"
+                                onclick="executeSearch(this)"
+                              />
+                              <label
+                                for="attr-{{ product_attribute }}"
+                                class="ml-3 text-sm text-gray-600"
+                                >{{ product_attribute }}</label
+                              >
+                            </div>
+                          {% else %}
+                            <div
+                              class="flex items-center hidden extra-{{ product_filter.name }}"
                             >
-                          </div>
+                              <input
+                                id="attr-{{ product_attribute }}"
+                                name="{{ product_filter.name }}"
+                                value="{{ product_attribute }}"
+                                type="checkbox"
+                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-customColor"
+                                onclick="executeSearch(this)"
+                              />
+                              <label
+                                for="attr-{{ product_attribute }}"
+                                class="ml-3 text-sm text-gray-600"
+                                >{{ product_attribute }}</label
+                              >
+                            </div>
+                          {% endif %}
                         {% endfor %}
+
+                        {% if product_filter.values|length > 5 %}
+                          <div>
+                            <button
+                              type="button"
+                              class="text-sm text-amber-500 underline"
+                              onclick="toggleExtraFilters('{{ product_filter.name }}', this)"
+                            >
+                              Meer tonen
+                            </button>
+                          </div>
+                        {% endif %}
                       {% elif product_filter.type == "slider" %}
-                        {{ product_filter.type  }}
+                        <div>
+                          <div class="flex items-center justify-between w-full">
+                            <div
+                              id="min-value-{{ product_filter.name }}"
+                              class="flex-1 text-sm text-black-600 border border-gray-300 rounded-l-lg p-2 text-center mr-2"
+                            >
+                              {{ product_filter.lowest }}
+                              <!-- Display the lowest value -->
+                            </div>
+                            <div
+                              id="max-value-{{ product_filter.name }}"
+                              class="flex-1 text-sm text-black-600 border border-gray-300 rounded-r-lg p-2 text-center"
+                            >
+                              {{ product_filter.highest }}
+                              <!-- Display the highest value -->
+                            </div>
+                          </div>
+                          <input
+                            type="range"
+                            min="{{ product_filter.lowest|floor }}"
+                            max="{{ product_filter.highest|ceil }}"
+                            step="{{ product_filter.lowest|calculate_step:product_filter.highest }}"
+                            value="{{ product_filter.highest|ceil }}"
+                            data-filter-name="{{ product_filter.name }}"
+                            data-default-value="{{ product_filter.highest|ceil }}"
+                            data-unit="{{ product_filter.unit }}"
+                            class="w-full h-2 bg-amber-500 rounded-lg appearance-none cursor-pointer range-slider"
+                            oninput="updateSliderValue(this.value, '{{ product_filter.name }}')"
+                          />
+                          <div class="flex items-center justify-between mt-2">
+                            <div
+                              id="slider-value-{{ product_filter.name }}"
+                              class="text-sm text-gray-600 flex-1"
+                            >
+                              {% if product_filter.unit == '€' %}
+                                {{ product_filter.unit }}
+                                {{ product_filter.highest|ceil }}
+                              {% else %}
+                                {{ product_filter.highest|ceil }}
+                                {{ product_filter.unit }}
+                              {% endif %}
+                            </div>
+                            <button
+                              type="button"
+                              class="text-sm text-amber-500 underline"
+                              onclick="executeSearchSlider('{{ product_filter.name }}')"
+                            >
+                              Filter toevoegen
+                            </button>
+                          </div>
+                        </div>
                       {% endif %}
                     </div>
                   </fieldset>
                 </div>
               {% endfor %}
+
+              <!-- Show More button to reveal extra filters if there are more than 10 filters -->
+              {% if filter_data|length > 10 %}
+                <div class="pt-5">
+                  <button
+                    type="button"
+                    class="text-sm text-amber-500 underline"
+                    onclick="toggleAllFilters()"
+                  >
+                    Meer filters
+                  </button>
+                </div>
+              {% endif %}
             </form>
           </div>
         </aside>
+
         <section
           aria-labelledby="product-heading"
           class="mt-6 lg:col-span-2 lg:mt-0 xl:col-span-3"
@@ -165,9 +413,15 @@
             <div
               class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8"
             >
-              {% for product in products %}
-                {% include 'components/product_card.html' with product=product %}
-              {% endfor %}
+              {% if products|length > 0 %}
+                {% for product in products %}
+                  {% include 'components/product_card.html' with product=product %}
+                {% endfor %}
+              {% else %}
+                <div class="col-span-full text-center text-xl text-gray-500">
+                  {% include 'components/messages/empty_generic_message.html' with error_message="We hebben helaas geen producten voor u kunnen vinden. Probeer het alsjeblieft opnieuw met andere filters." %}
+                </div>
+              {% endif %}
             </div>
           </div>
           <nav
@@ -267,48 +521,84 @@
   </div>
 
   <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      initializeSortTypeDisplay()
+    // Function to uncheck all checkboxes
+    function uncheckAllCheckboxes() {
+      // Select all checkboxes with the class 'filter-checkbox'
+      const checkboxes = document.querySelectorAll('.filter-checkbox')
 
-      const currentUrl = window.location.href
-      const query = new URLSearchParams(window.location.search)
+      // Iterate over each checkbox and uncheck it
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false
+      })
+    }
 
-      const hasQueryParams = currentUrl.includes('?')
-      if (!hasQueryParams) {
-        return
-      }
-
+    function fillValuesForQuery(query) {
       const filterDivs = document.querySelectorAll('.filter-container')
       filterDivs.forEach((filterDiv) => {
         const filterName = filterDiv.id
-        const filterValues = query.getAll(filterName)
-        const isOpen = filterValues.length > 0
         const arrowIcon = document.getElementById(`arrow-${filterName}`)
+        const sliderDisplay = document.getElementById(
+          `slider-value-display-${filterName}`,
+        )
+        // Check if the filter section should be open based on query parameters
+        const isOpen = query.has(filterName) // Check if the filterName exists in the query
 
         if (isOpen) {
           filterDiv.classList.remove('hidden')
           arrowIcon.classList.remove('fa-chevron-down')
           arrowIcon.classList.add('fa-chevron-up')
+
+          if (sliderDisplay) {
+            // Check if the filter name exists in the URL's query parameters
+            const savedValue = query.get(filterName) // Directly use the filterName as query param key
+
+            if (savedValue !== null) {
+              // If a saved value exists in the query string, update the displayed value
+              sliderDisplay.innerHTML = savedValue // You can apply any formatting as needed
+            } else {
+              // If no value is found in the query string, we don't display anything (the span remains empty)
+              sliderDisplay.innerHTML = '' // This line is optional since the span is already empty by default
+            }
+          }
         } else {
           filterDiv.classList.add('hidden')
           arrowIcon.classList.remove('fa-chevron-up')
           arrowIcon.classList.add('fa-chevron-down')
         }
 
-        filterValues.forEach((filterValueString) => {
-          const filterValues = filterValueString
-            .split(',')
-            .map((value) => value.trim())
-          filterValues.forEach((filterValue) => {
-            const checkbox = document.querySelector(
-              `.filter-checkbox[name="${filterName}"][value="${filterValue}"]`,
-            )
-            if (checkbox) {
-              checkbox.checked = true
-            }
-          })
+        if (sliderDisplay) {
+        }
+
+        const filterValues = query.getAll(filterName)
+        const checkboxes = document.querySelectorAll(
+          `.filter-checkbox[name="${filterName}"]`,
+        )
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = false
         })
+
+        // Now, check the boxes that match the query parameters
+        if (!filterDiv.classList.contains('hidden') && !sliderDisplay) {
+          filterValues.forEach((filterValueString) => {
+            const filterValues = filterValueString
+              .split(',') // Split values by comma if multiple values are selected
+              .map((value) => value.trim()) // Clean up extra spaces
+            filterValues.forEach((filterValue) => {
+              // Find the checkbox corresponding to the current filter name and value
+              const checkbox = document.querySelector(
+                `.filter-checkbox[name="${filterName}"][value="${filterValue}"]`,
+              )
+              if (checkbox) {
+                checkbox.checked = true // Reset all checkboxes
+              }
+            })
+          })
+        }
       })
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initializeSortTypeDisplay()
 
       // Add click listener to document
       document.addEventListener('click', (event) => {
@@ -325,13 +615,70 @@
       })
     })
 
-    function executeSearch() {
-      const filters = getFilterCriteria()
-      const queryString = Object.keys(filters)
-        .map((key) => key + '=' + encodeURIComponent(filters[key]))
-        .join('&')
-      const newUrl = window.location.pathname + '?' + queryString
-      window.location.href = newUrl
+    function executeSearchSlider(sliderName) {
+      console.log('Slider Name:', sliderName)
+
+      // Get the slider element using the sliderName (which is the data-filter-name attribute)
+      const sliderElement = document.querySelector(
+        `input[data-filter-name="${sliderName}"]`,
+      )
+
+      // Ensure the slider element exists
+      if (sliderElement) {
+        // Get the value of the slider
+        const value = sliderElement.value
+        console.log('Slider Value:', value)
+
+        // Get the current URL and its query parameters
+        const currentUrl = new URL(window.location.href)
+        const queryParams = new URLSearchParams(currentUrl.search)
+
+        // Update or add the slider value to the query parameters
+        queryParams.set(sliderName, value) // Update or add the parameter
+
+        // Set the updated query string to the current URL
+        currentUrl.search = queryParams.toString()
+        window.location.href = currentUrl.href
+      } else {
+        console.error('Slider not found for:', sliderName)
+      }
+    }
+
+    function executeSearch(checkbox) {
+      console.log('Checkbox Name:', checkbox.name)
+
+      // Get the value of the checkbox
+      const value = checkbox.value
+      const filterName = checkbox.name
+      console.log('Checkbox Value:', value)
+
+      // Get the current URL and its query parameters
+      const currentUrl = new URL(window.location.href)
+      const queryParams = new URLSearchParams(currentUrl.search)
+
+      if (checkbox.checked) {
+        // If checkbox is checked, add its value to the query string
+        if (!queryParams.has(filterName)) {
+          queryParams.append(filterName, value) // Use append to allow multiple values for the same filter name
+        } else {
+          queryParams.set(filterName, value) // Update the value if it exists
+        }
+      } else {
+        // If checkbox is unchecked, remove its value from the query string
+        const currentValues = queryParams.getAll(filterName)
+        const newValues = currentValues.filter((val) => val !== value)
+        queryParams.delete(filterName) // Remove the filter name
+
+        // Re-add remaining values for that filter (if any) after removing the unchecked value
+        newValues.forEach((val) => queryParams.append(filterName, val))
+      }
+
+      // Set the updated query string to the current URL
+      currentUrl.search = queryParams.toString()
+
+      window.location.href = currentUrl.href
+
+      console.log('Updated URL:', currentUrl.toString())
     }
 
     function toggleFilter(filterName) {
@@ -341,7 +688,6 @@
 
       const filterStates = getFilterStates()
       filterStates[filterName] = !isOpen
-      localStorage.setItem('filterStates', JSON.stringify(filterStates))
 
       if (!isOpen) {
         arrowIcon.classList.remove('fa-chevron-down')
@@ -360,34 +706,8 @@
         const isOpen = !filterDiv.classList.contains('hidden')
         filterStates[filterName] = isOpen
       })
-
+      console.log(filterStates)
       return filterStates
-    }
-
-    function getFilterCriteria() {
-      const filters = {}
-      const checkboxes = document.querySelectorAll('.filter-checkbox:checked')
-      checkboxes.forEach(function (checkbox) {
-        const filterName = checkbox.getAttribute('name')
-        const filterValue = checkbox.value
-
-        if (!filters[filterName]) {
-          filters[filterName] = []
-        }
-        filters[filterName].push(filterValue)
-      })
-
-      const sortType = getActiveSortType()
-      if (sortType) {
-        filters['tn_sort'] = [sortType]
-      }
-
-      const currentUrlParams = new URLSearchParams(window.location.search)
-      if (currentUrlParams.has('q')) {
-        filters['q'] = currentUrlParams.get('q')
-      }
-
-      return filters
     }
 
     function toggleSortMenu() {
@@ -454,6 +774,12 @@
         case 'price-lowest':
           queryString = 'tn_sort=Prijs%20oplopend'
           break
+        case 'name-highest':
+          queryString = 'tn_sort=Alfabetisch%20A-Z'
+          break
+        case 'name-lowest':
+          queryString = 'tn_sort=Alfabetisch%20Z-A'
+          break
         case 'geen':
           queryString = ''
           break
@@ -510,7 +836,12 @@
     }
 
     function getActiveSortType() {
-      const sortTypes = ['Prijs oplopend', 'Prijs aflopend']
+      const sortTypes = [
+        'Prijs oplopend',
+        'Prijs aflopend',
+        'Alfabetisch A-Z',
+        'Alfabetisch Z-A',
+      ]
       for (const sortType of sortTypes) {
         if (isSortTypeActive(sortType)) {
           return sortType
@@ -530,7 +861,12 @@
     }
 
     function initializeSortTypeDisplay() {
-      const sortTypes = ['Prijs aflopend', 'Prijs oplopend']
+      const sortTypes = [
+        'Prijs oplopend',
+        'Prijs aflopend',
+        'Alfabetisch A-Z',
+        'Alfabetisch Z-A',
+      ]
       let isActive = false
       sortTypes.forEach((sortType) => {
         if (isSortTypeActive(sortType)) {
@@ -546,5 +882,184 @@
         sortTypeSpan.classList.remove('hidden')
       }
     }
+
+    function toggleExtraFilters(filterName, button) {
+      const extraFilters = document.querySelectorAll('.extra-' + filterName)
+      extraFilters.forEach((filter) => {
+        filter.classList.toggle('hidden')
+      })
+
+      // Change button text based on visibility
+      if (extraFilters[0].classList.contains('hidden')) {
+        button.innerText = 'Meer tonen' // Show More
+      } else {
+        button.innerText = 'Minder tonen' // Show Less
+      }
+    }
+    function toggleAllFilters() {
+      const extraFilters = document.querySelectorAll('.extra-filters')
+      extraFilters.forEach((filter) => filter.classList.toggle('hidden'))
+
+      // Toggle button text between "Show More" and "Show Less"
+      const button = event.target
+      button.textContent = button.textContent.includes('Meer filters')
+        ? 'Minder filters'
+        : 'Meer filters'
+    }
+
+    function clearFilters() {
+      // Create a new URL object based on the current URL
+      const url = new URL(window.location.href)
+
+      // Create a new URLSearchParams object to hold the new parameters
+      const newUrlParams = new URLSearchParams()
+
+      // Get all the current search parameters
+      const urlParams = new URLSearchParams(url.search)
+
+      // Add 'q' and 'tn_sort' to the new URLSearchParams object
+      if (urlParams.has('q')) {
+        newUrlParams.set('q', urlParams.get('q'))
+      }
+      if (urlParams.has('tn_sort')) {
+        newUrlParams.set('tn_sort', urlParams.get('tn_sort'))
+      }
+
+      // Update the URL with the new parameters
+      url.search = newUrlParams.toString()
+
+      // Refresh the page with the updated URL (this will remove all other filters)
+      window.location.href = url.href // Redirect to the new URL
+    }
+
+    function updateSliderValue(value, sliderName) {
+      // Update the display for the correct slider
+      const sliderElement = document.getElementById(
+        `slider-value-${sliderName}`,
+      )
+      const slider = document.querySelector(
+        `input[data-filter-name="${sliderName}"]`,
+      ) // Get the corresponding slider input
+      const unit = slider.getAttribute('data-unit') // Get the unit from the data attribute, assuming you add this to your HTML
+
+      // Format the displayed value based on the unit
+      if (unit === '€') {
+        sliderElement.textContent = `${unit} ${value}` // Display euro sign before the value
+      } else {
+        sliderElement.textContent = `${value} ${unit}` // Display unit after the value
+      }
+    }
+
+    function removeSliderFilter(filterName) {
+      console.log('Removing Filter for:', filterName)
+
+      // Get the current URL and its query parameters
+      const currentUrl = new URL(window.location.href)
+      const queryParams = new URLSearchParams(currentUrl.search)
+
+      // Remove the filter from the query parameters
+      queryParams.delete(filterName) // This removes the filter with the given name
+
+      // Update the URL with the modified query parameters
+      currentUrl.search = queryParams.toString()
+
+      // Reload the page with the updated URL
+      window.location.href = currentUrl.href
+    }
+
+    function setNotSlidableFilters() {
+      document
+        .querySelectorAll('.flex.items-center.justify-between.w-full')
+        .forEach(function (sliderContainer) {
+          const minElement = sliderContainer.querySelector('[id^="min-value-"]')
+          const maxElement = sliderContainer.querySelector('[id^="max-value-"]')
+          const filterName = minElement
+            ? minElement.id.replace('min-value-', '')
+            : null
+
+          // Find corresponding slider and buttons
+          const sliderInput = document.querySelector(
+            `input[data-filter-name="${filterName}"]`,
+          )
+          const filterButton = document.querySelector(
+            `button[onclick*="${filterName}"]`,
+          )
+
+          const sliderValueView = document.getElementById(
+            `slider-value-${filterName}`,
+          )
+
+          if (minElement && maxElement) {
+            const minValue = parseFloat(minElement.textContent.trim())
+            const maxValue = parseFloat(maxElement.textContent.trim())
+
+            if (minValue === maxValue) {
+              // Hide only the slider dot
+              if (sliderInput) {
+                sliderInput.style.pointerEvents = 'none' // Disable interaction
+                sliderInput.style.background = 'rgba(255, 193, 7, 0.5)' // Make the slider visually indicate it's inactive
+                sliderInput.classList.add('hide-slider-dot') // Add class to hide the slider thumb
+              }
+              // Replace "Filter toevoegen" with "Remove filter"
+              if (filterButton) {
+                // Check if filter is applied based on the URL
+                const urlParams = new URLSearchParams(window.location.search)
+                const filterValueFromUrl = urlParams.get(filterName)
+                console.log(filterValueFromUrl, filterName)
+
+                if (filterValueFromUrl) {
+                  filterButton.textContent = 'Filter verwijderen'
+                  filterButton.setAttribute(
+                    'onclick',
+                    `removeSliderFilter('${filterName}')`,
+                  )
+                } else {
+                  filterButton.style.display = 'none' // Hide button if filter is not applied
+                }
+              }
+              if (sliderValueView) {
+                sliderValueView.innerHTML = '' // Clear all the content inside the element
+              }
+            }
+          }
+        })
+    }
+
+    // Function to check for filters in the URL and log their values
+    function checkUrlForFilters() {
+      const urlParams = new URLSearchParams(window.location.search)
+      const filters = {}
+
+      // Iterate over all URL parameters
+      for (const [key, value] of urlParams.entries()) {
+        // Check if the key is 'q' (search query) and handle it separately
+        if (key !== 'tn_sort' && key !== 'q') {
+          // Exclude any sorting parameters (like 'tn_sort') or other irrelevant ones
+          filters[key] = decodeURIComponent(value) // Decode the value and add it to the filters object
+        }
+        console.log(key, value) // Log the key and value for debugging
+      }
+
+      // Log the filters to the console
+      if (Object.keys(filters).length > 0) {
+        document.getElementById('clear-filters').style.display = 'inline-flex'
+      } else {
+        document.getElementById('clear-filters').style.display = 'none'
+      }
+      // Reset all sliders
+      const sliders = document.querySelectorAll('input[type="range"]')
+      sliders.forEach((slider) => {
+        const defaultValue = slider.getAttribute('data-default-value') // Get the value of the data-default-value attribute
+        console.log(defaultValue)
+        slider.value = defaultValue // Reset the slider to the minimum value (or set to your default)
+      })
+      console.log(filters)
+      setNotSlidableFilters()
+
+      fillValuesForQuery(urlParams)
+    }
+
+    // Call the function to log the filters and update button visibility when the page loads
+    window.addEventListener('load', checkUrlForFilters)
   </script>
 {% endblock %}

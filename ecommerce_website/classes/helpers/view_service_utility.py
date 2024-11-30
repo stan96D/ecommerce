@@ -22,21 +22,28 @@ from ecommerce_website.services.return_service.return_service import ReturnServi
 from ecommerce_website.services.view_service.return_order_view_service import ReturnOrderViewService
 from ecommerce_website.services.store_rating_service.store_rating_service import StoreRatingService
 from ecommerce_website.services.store_service.store_service import StoreService
+from django.core.cache import cache
 
 
 class ViewServiceUtility:
 
     @staticmethod
     def get_current_store_data():
-        store = StoreService.get_active_store()
+        # Check if the store data is cached
+        store_data = cache.get('store_data')
+        if not store_data:
+            # If not found in cache, fetch the active store and convert it to a dictionary
+            store = StoreService.get_active_store()
 
-        if store:
-            # Convert the store instance to a dictionary
-            store_data = model_to_dict(store)
-            return store_data  # This will include all fields in the Store model
-        else:
-            # If no active store exists, return a message or an empty object
-            return None
+            if store:
+                # Convert the store model instance to a dictionary
+                store_data = model_to_dict(store)
+                # Cache the store data for 1 hour (3600 seconds)
+                cache.set('store_data', store_data, timeout=3600)
+            else:
+                store_data = None  # Return None if no active store is found
+
+        return store_data
 
     @staticmethod
     def get_store_rating_data():
@@ -53,7 +60,11 @@ class ViewServiceUtility:
 
     @staticmethod
     def get_header_data():
-        return ProductCategoryService().get_all_active_head_product_categories()
+        header_data = cache.get('header_data')
+        if not header_data:
+            header_data = ProductCategoryService().get_all_active_head_product_categories()
+            cache.set('header_data', header_data, timeout=3600)
+        return header_data
 
     @staticmethod
     def get_payment_methods():
@@ -63,9 +74,18 @@ class ViewServiceUtility:
 
     @staticmethod
     def get_store_motivations():
-        store_motivations_data = StoreMotivationService.get_all_active_motivations()
-        print(store_motivations_data)
-        return StoreMotivationViewService().generate(store_motivations_data)
+        # Check if the store motivations data is cached
+        store_motivations = cache.get('store_motivations')
+
+        if not store_motivations:
+            # If not in cache, fetch the data
+            store_motivations_data = StoreMotivationService.get_all_active_motivations()
+            # Generate the store motivations view data
+            store_motivations = StoreMotivationViewService().generate(store_motivations_data)
+            # Cache the result for 1 hour (3600 seconds)
+            cache.set('store_motivations', store_motivations, timeout=3600)
+
+        return store_motivations
 
     @staticmethod
     def get_active_categories():
@@ -110,8 +130,13 @@ class ViewServiceUtility:
 
     @staticmethod
     def get_product_view_by_id(id):
-        return ProductDetailViewService().get(
-            ProductService().get_product_by_id(id))
+
+        product = ProductService().get_product_by_id(id)
+
+        if not product:
+            return
+
+        return ProductDetailViewService().get(product)
 
     @staticmethod
     def get_order_info(request):
@@ -138,7 +163,13 @@ class ViewServiceUtility:
 
     @staticmethod
     def get_all_brands():
-        return BrandService.get_all_brands()
+        brands = cache.get('all_brands')  # Check if the brands data is cached
+        if not brands:
+            # If not found in cache, fetch the brands data
+            brands = BrandService.get_all_brands()
+            # Cache the brands data for 1 hour (3600 seconds)
+            cache.set('all_brands', brands, timeout=3600)
+        return brands
 
     @staticmethod
     def get_misc_products():

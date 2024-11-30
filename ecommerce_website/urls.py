@@ -49,7 +49,7 @@ urlpatterns = [
          views.products_by_subcategory, name='products_by_subcategory'),
     path('products/<str:category>/<str:subcategory>/<str:attribute>/',
          views.products_by_attribute, name='products_by_attribute'),
-    path('product/<int:id>/', views.product_detail, name='product_detail'),
+    path('product/<str:id>/', views.product_detail, name='product_detail'),
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
     path('change-quantity-in-cart/', views.change_quantity_in_cart,
          name='change_quantity_in_cart'),
