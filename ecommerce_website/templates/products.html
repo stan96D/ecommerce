@@ -419,7 +419,11 @@
                 {% endfor %}
               {% else %}
                 <div class="col-span-full text-center text-xl text-gray-500">
-                  {% include 'components/messages/empty_generic_message.html' with error_message="We hebben helaas geen producten voor u kunnen vinden. Probeer het alsjeblieft opnieuw met andere filters." %}
+                  {% if categoryData.name == "Favorieten" %}
+                    {% include 'components/messages/empty_generic_message.html' with error_message="We hebben helaas geen favorieten voor u kunnen vinden. Probeer het alsjeblieft opnieuw met andere filters of selecteer nieuwe producten als favorieten." %}
+                  {% else %}
+                    {% include 'components/messages/empty_generic_message.html' with error_message="We hebben helaas geen producten voor u kunnen vinden. Probeer het alsjeblieft opnieuw met andere filters." %}
+                  {% endif %}
                 </div>
               {% endif %}
             </div>
@@ -1033,7 +1037,7 @@
       // Iterate over all URL parameters
       for (const [key, value] of urlParams.entries()) {
         // Check if the key is 'q' (search query) and handle it separately
-        if (key !== 'tn_sort' && key !== 'q') {
+        if (key !== 'tn_sort' && key !== 'q' && key !== 'page') {
           // Exclude any sorting parameters (like 'tn_sort') or other irrelevant ones
           filters[key] = decodeURIComponent(value) // Decode the value and add it to the filters object
         }

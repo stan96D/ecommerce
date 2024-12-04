@@ -836,6 +836,172 @@ def search_products(request, category="Zoeken"):
     return response
 
 
+@csrf_exempt
+def add_to_favorites(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        product_id = data.get('product_id')
+
+        if product_id:
+            # Get the user's favorites from the cache
+            favorites = cache.get('favorites') or []
+
+            # Toggle product ID in the favorites list
+            if product_id in favorites:
+                # Remove it if it's already in the list
+                favorites.remove(product_id)
+            else:
+                favorites.append(product_id)  # Add it if it's not in the list
+
+            # Save updated favorites back to the cache
+            cache.set('favorites', favorites)
+
+            return JsonResponse({'success': True, 'favorites': favorites})
+
+    return JsonResponse({'success': False}, status=400)
+
+
+def favorite_products(request, category="Favorieten"):
+
+    # Start timing
+    start_time = time.time()
+
+    print(f"Starting 'products_by_category' for category: {category}")
+
+    attributes = request.GET.copy()
+
+    is_sort = ProductSorterUtility.is_sort(attributes)
+    is_paginated = ProductSorterUtility.is_paginated(attributes)
+
+
+    if is_paginated:
+        page = attributes.pop('page', None)[0]
+        print(f"Pagination value detected: {page}")
+    else:
+        page = 1
+
+    is_filter = ProductSorterUtility.is_search_filter(attributes)
+
+    if is_sort:
+        sort_value = attributes.pop('tn_sort', None)[0]
+        print(f"Sort value detected: {sort_value}")
+
+    print(f"Checked sort and pagination flags - Time elapsed: {
+          time.time() - start_time:.4f} seconds")
+
+    category_data = {
+        "name": "Favorieten",
+        "description": "Mijn favorieten producten."
+    }
+    print(
+        f"Retrieved category data - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    combined_filters = {}
+
+    if is_filter:
+        selected_option_filters, selected_slider_filters = ProductSorterUtility.create_filters(
+            attributes)
+        print(
+            f"Created filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        for key, values in selected_option_filters.items():
+            combined_filters[key] = list(values)
+
+        for key, values in selected_slider_filters.items():
+            combined_filters[key] = list(values)
+
+        products = ProductService.get_filtered_products_by_cache(
+            selected_option_filters, selected_slider_filters, cache)
+        print(
+            f"Filtered products by attributes - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        if is_sort:
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
+    else:
+
+        products = ProductService.get_favorite_cached_products(cache)
+
+        print(
+            f"Fetched products by category - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+        if is_sort:
+            products = QueryProductSorter.sort_by(products, sort_value)
+            print(
+                f"Sorted products by attribute - Time elapsed: {time.time() - start_time:.4f} seconds")
+        else:
+            products = QueryProductSorter.sort_default(products)
+            print(f"Applied default sorting to products - Time elapsed: {
+                  time.time() - start_time:.4f} seconds")
+
+    breadcrumb = [category]
+    paginator = Paginator(products, 30)
+
+    try:
+        paginated_products = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_products = paginator.page(1)
+    except EmptyPage:
+        paginated_products = paginator.page(paginator.num_pages)
+    print(
+        f"Paginated products - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    page_obj = paginator.get_page(page)
+
+    filter_data = ProductFilterService.get_products_filters_by_products(
+        products, "Assortiment", combined_filters)
+
+    print(
+        f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    price_filter = ProductFilterService.create_filter_for_price(products)
+
+    if is_filter and price_filter.name not in combined_filters:
+        # Only add filters that have more than one value
+        if price_filter.lowest != price_filter.highest:
+            filter_data.append(price_filter)
+    else:
+        # Always add values that are already a filter
+        if price_filter.lowest != price_filter.highest:
+            filter_data.append(price_filter)
+
+    print(
+        f"Added price filter - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    if is_filter:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data, combined_filters)
+    else:
+        filter_data = ProductFilterService.sort_product_filters_on_importance(
+            filter_data)
+    print(
+        f"Sorted product filters - Time elapsed: {time.time() - start_time:.4f} seconds")
+
+    response = render(request, 'products.html', {
+        'page_obj': page_obj,
+        'products': ViewServiceUtility.get_product_views(paginated_products),
+        'filter_data': filter_data,
+        'headerData': ViewServiceUtility.get_header_data(),
+        'env': environment,
+        'store_data': ViewServiceUtility.get_current_store_data(),
+        'payment_methods': ViewServiceUtility.get_payment_methods(),
+        'brands': ViewServiceUtility.get_all_brands(),
+        'categoryData': category_data,
+        'breadcrumbs': breadcrumb,
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'product_count': len(products)
+    })
+    print(
+        f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
+
+    return response
+
+
 def discount_products(request, category='Kortingen'):
     # Start timing
     start_time = time.time()

@@ -3,6 +3,7 @@
   class="group flex flex-col relative"
 >
   <!-- Absolute div for "Hardloper" label -->
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
 
   {% if product.is_runner %}
     <div
@@ -11,11 +12,16 @@
       <span class="text-xs font-medium px-2 py-0.5">Beste keuze</span>
     </div>
   {% endif %}
+
   <button
     class="absolute top-4 right-4 w-8 h-8 bg-gray-600 bg-opacity-50 hover:bg-gray-600 text-gray-200 rounded-full z-10 flex justify-center items-center focus:outline-none"
+    data-product-id="{{ product.id }}"
+    onclick="addToFavorites(event, this)"
   >
     <span class="text-base font-medium">
-      <i class="far fa-heart"></i>
+      <i
+        class="{% if product.favorite %}fas{% else %}far{% endif %} fa-heart"
+      ></i>
     </span>
   </button>
 
@@ -29,7 +35,7 @@
     />
   </div>
 
-  <div class="flex justify-between items-center ">
+  <div class="flex justify-between items-center">
     <div>
       <div>
         <h4 class="text-xs pt-4 text-gray-950 font-semibold ">
@@ -49,7 +55,7 @@
                   €{{ product.sale_price }} {{ product.unit }}
                 </p>
               </div>
-              <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400">
+              <p class="mt-2 py-2 px-4 text-lg font-base text-gray-400">
                 <del>€{{ product.price }} </del>
               </p>
             {% else %}
@@ -60,7 +66,7 @@
                   €{{ product.price }} {{ product.unit }}
                 </p>
               </div>
-              <p class="mt-2  py-2 px-4 text-lg font-base text-gray-400">
+              <p class="mt-2 py-2 px-4 text-lg font-base text-gray-400">
                 <del>€{{ product.price }}</del>
               </p>
             {% endif %}
@@ -87,3 +93,45 @@
     </div>
   </div>
 </a>
+
+<script>
+  function addToFavorites(event, button) {
+    // Prevent the event from propagating to the parent <a> tag
+    event.preventDefault()
+
+    // Get the CSRF token from the hidden form or any element with the csrfmiddlewaretoken value
+    const csrfToken = document.querySelector(
+      '[name="csrfmiddlewaretoken"]',
+    ).value
+
+    // Get the product ID
+    const productId = button.getAttribute('data-product-id')
+
+    // Send the request to the backend
+    fetch('/add_to_favorites/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken, // Include the CSRF token here
+      },
+      body: JSON.stringify({ product_id: productId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // Get the icon and toggle the classes for filled and empty heart
+          const icon = button.querySelector('i')
+          if (data.favorites.includes(String(productId))) {
+            // Set to filled heart (fas)
+            icon.classList.remove('far')
+            icon.classList.add('fas')
+          } else {
+            // Set to empty heart (far)
+            icon.classList.remove('fas')
+            icon.classList.add('far')
+          }
+        }
+      })
+      .catch((error) => console.error('Error:', error)) // Error handling
+  }
+</script>

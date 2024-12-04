@@ -79,7 +79,6 @@ else:
 
     NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
 
-
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -109,6 +108,7 @@ CACHES = {
         'LOCATION': 'unique-snowflake',  # A unique identifier for the cache
     }
 }
+
 
 # Application definition
 
@@ -218,4 +218,3 @@ INTERNAL_IPS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
-

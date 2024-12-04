@@ -204,6 +204,7 @@
         <!-- Favorite icon -->
         <button
           type="button"
+          onclick="openFavorites()"
           class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-white  mr-2 w-10 h-10"
         >
           <span class="sr-only">Favorite</span>
@@ -357,7 +358,7 @@
 
 <!-- Flyout panel -->
 <div
-  class="relative z-10 hidden"
+  class="relative z-50 hidden"
   aria-labelledby="slide-over-title"
   role="dialog"
   aria-modal="true"
@@ -379,7 +380,7 @@
           <div
             class="flex h-full flex-col bg-white py-6 shadow-xl overflow-y-auto"
           >
-            <div class="px-4 sm:px-6 z-100">
+            <div class="px-4 sm:px-6">
               <div class="flex items-start justify-between">
                 <h2
                   class="text-base font-semibold leading-6 text-gray-900"
@@ -757,6 +758,9 @@
 
     // Make an AJAX request to fetch the current shopping cart
     fetchShoppingCart()
+  }
+  function openFavorites() {
+    window.location.href = '/favorites'
   }
 
   function closeFlyoutPanel() {

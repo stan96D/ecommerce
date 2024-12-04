@@ -43,6 +43,10 @@ urlpatterns = [
     path('products/', views.products,
          name='products'),
 
+    path('favorites/', views.favorite_products,
+         name='favorite_products'),
+    path('add_to_favorites/', views.add_to_favorites,
+         name='add_to_favorites'),
     path('products/<str:category>/', views.products_by_category,
          name='products_by_category'),
     path('products/<str:category>/<str:subcategory>/',

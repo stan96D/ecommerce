@@ -2,6 +2,10 @@ from ecommerce_website.classes.helpers.surface_area_calculator import SurfaceAre
 import json
 
 
+# Assuming you're using Django's cache system
+from django.core.cache import cache
+
+
 class ProductView:
     def __init__(self, product):
         # Access the prefetched attributes directly
@@ -33,6 +37,21 @@ class ProductView:
         if product.has_product_sale:
             self.sale_price = product.sale_price
             self.unit_sale_price = product.unit_sale_price
+
+        # Check if the product is in the cache for favorites
+        self.favorite = self.check_if_favorite()
+
+    def check_if_favorite(self):
+        """
+        Check if the product is in the 'favorites' cache.
+        If the product is in the cache, set the favorite attribute to True,
+        otherwise set it to False.
+        """
+        favorites = cache.get(
+            'favorites') or []  # Retrieve the list of favorite product IDs from the cache
+        if str(self.id) in map(str, favorites):  # Check if the product's ID is in the favorites list
+            return True
+        return False
 
 
 class ProductDetailView:
