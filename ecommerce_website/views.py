@@ -1837,7 +1837,7 @@ def mollie_webhook(request):
         return JsonResponse({'error': 'Method not allowed'}, status=405)
 
 
-@ csrf_exempt
+@csrf_exempt
 def tracking_code_webhook(request):
     if request.method == 'POST':
         try:

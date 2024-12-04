@@ -153,17 +153,30 @@ class ProductFilterService(ProductFilterServiceInterface):
 
     @staticmethod
     def get_product_filters_by_category(category):
-
+        # Fetch all filters for the category
         category_filters = ProductFilter.objects.filter(
             parent_category__name=category)
 
-        category_filters = [
-            filter for filter in category_filters if len(filter.values) > 1
+        # Group filters by their name
+        filters_by_name = {}
+        for filter in category_filters:
+            if filter.name not in filters_by_name:
+                filters_by_name[filter.name] = filter
+            else:
+                # Combine values if filter with the same name already exists
+                filters_by_name[filter.name].values = list(
+                    set(filters_by_name[filter.name].values + filter.values)
+                )
+
+        # Only keep filters with more than one value
+        unique_category_filters = [
+            filter for filter in filters_by_name.values() if len(filter.values) > 1
         ]
 
+        # Generate views for the unique filters
         product_filter_view_service = ProductFilterViewService()
         product_filter_views = product_filter_view_service.generate(
-            category_filters)
+            unique_category_filters)
 
         return product_filter_views
 
@@ -245,6 +258,24 @@ class ProductFilterService(ProductFilterServiceInterface):
             category_query
         ).distinct()  # Use distinct() to avoid duplicate filters
 
+        # Combine filters with the same name
+        unique_filters = []
+        for filter in category_filters:
+            # Check if a filter with the same name already exists in the list
+            existing_filter = next(
+                (f for f in unique_filters if f.name == filter.name), None)
+
+            if existing_filter:
+                # Combine values if the filter with the same name exists
+                existing_filter.values = list(
+                    set(existing_filter.values + filter.values)
+                )
+            else:
+                # Add new filter if it doesn't already exist
+                unique_filters.append(filter)
+
+        category_filters = unique_filters
+
         step4_time = time.time()  # Timer for fetching category filters
 
         valid_filters = []
@@ -259,13 +290,16 @@ class ProductFilterService(ProductFilterServiceInterface):
                 available_values = product_attributes[filter_name]
 
                 if product_filter.filter_type == "slider":
-                    available_unit = product_attribute_units[filter_name].pop()
+
+                    if product_attribute_units[filter_name]:
+                        available_unit = product_attribute_units[filter_name].pop(
+                        )
 
                     values = available_values
 
                     product_filter.values = values
 
-                    if not product_filter.unit_value:
+                    if not product_filter.unit_value and available_unit:
                         product_filter.unit_value = available_unit
 
                 else:
