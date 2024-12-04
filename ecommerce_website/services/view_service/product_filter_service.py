@@ -13,7 +13,14 @@ class ProductFilterViewService(ViewServiceInterface):
                 "filter_type": item.filter_type,
                 "unit": item.unit_value,
             })
-            productViews.append(productView)
+
+            if productView.type == 'slider':
+
+                if productView.lowest != productView.highest:
+                    productViews.append(productView)
+
+            else:
+                productViews.append(productView)
 
         return productViews
 
