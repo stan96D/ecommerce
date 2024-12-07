@@ -33,6 +33,11 @@ urlpatterns = [
     path('forgot_password/', views.forgot_password, name='forgot_password'),
     path('new_password/<token>/', views.new_password, name='new_password'),
 
+    # Favorites
+    path('get-favorite-count/', views.get_favorite_count,
+         name='get_favorite_count'),
+
+
     # Returns
     path('return_create/', views.create_return, name="create_return"),
 

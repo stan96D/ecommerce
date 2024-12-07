@@ -118,6 +118,7 @@
     })
       .then((response) => response.json())
       .then((data) => {
+        updateFavoriteCount()
         if (data.success) {
           // Get the icon and toggle the classes for filled and empty heart
           const icon = button.querySelector('i')
@@ -132,6 +133,9 @@
           }
         }
       })
-      .catch((error) => console.error('Error:', error)) // Error handling
+      .catch((error) => {
+        updateFavoriteCount()
+        console.error('Error:', error)
+      }) // Error handling
   }
 </script>

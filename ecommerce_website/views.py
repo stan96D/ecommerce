@@ -1782,6 +1782,12 @@ def get_cart_count(request):
     return JsonResponse({'count': cart_count})
 
 
+def get_favorite_count(request):
+    favorites = cache.get('favorites') or []
+
+    return JsonResponse({'count': len(favorites)})
+
+
 def get_shopping_cart(request):
     cart_details = ShoppingCartService(request).to_json()
 

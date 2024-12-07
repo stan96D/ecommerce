@@ -209,6 +209,10 @@
         >
           <span class="sr-only">Favorite</span>
           <i class="far fa-heart fa-lg"></i>
+          <span
+            id="favorite-count"
+            class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-500 rounded-full w-6 h-6 hidden items-center justify-center text-white text-xs font-semibold"
+          ></span>
         </button>
 
         <!-- Store cart icon -->
@@ -223,7 +227,7 @@
           <!-- Circle indicator -->
           <span
             id="cart-count"
-            class="absolute top-0 right-0 -mt-2 -mr-2 bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold"
+            class="absolute top-0 right-0 -mt-2 -mr-2  bg-amber-500 rounded-full w-6 h-6 hidden items-center justify-center text-white text-xs font-semibold"
           ></span>
         </button>
       </div>
@@ -771,6 +775,7 @@
 
   $(document).ready(function () {
     updateCartCount()
+    updateFavoriteCount()
   })
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -780,6 +785,30 @@
     }
   })
 
+  function updateFavoriteCount() {
+    $.ajax({
+      url: '/get-favorite-count/',
+      method: 'GET',
+      success: function (data) {
+        var favoriteCount = data.count
+        console.log(favoriteCount)
+
+        const favoriteCountElement = $('#favorite-count')
+        if (favoriteCount === 0) {
+          favoriteCountElement.addClass('hidden').removeClass('flex')
+        } else {
+          favoriteCountElement
+            .text(favoriteCount)
+            .removeClass('hidden')
+            .addClass('flex')
+        }
+      },
+      error: function (error) {
+        console.log(error)
+      },
+    })
+  }
+
   function updateCartCount() {
     $.ajax({
       url: '/get-cart-count/',
@@ -788,11 +817,14 @@
         var cartCount = data.count
         console.log(cartCount)
 
-        $('#cart-count').text(cartCount)
+        const cartCountElement = $('#cart-count')
         if (cartCount === 0) {
-          $('#cart-count').hide()
+          cartCountElement.addClass('hidden').removeClass('flex')
         } else {
-          $('#cart-count').show()
+          cartCountElement
+            .text(cartCount)
+            .removeClass('hidden')
+            .addClass('flex')
         }
       },
       error: function (error) {

@@ -173,7 +173,7 @@
             <!-- Sort menu dropdown -->
             <div
               id="sort-menu"
-              class="absolute z-10 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 hidden"
+              class="absolute z-50 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 hidden"
             >
               <div class="py-1">
                 <button
@@ -332,14 +332,14 @@
                           <div class="flex items-center justify-between w-full">
                             <div
                               id="min-value-{{ product_filter.name }}"
-                              class="flex-1 text-sm text-black-600 border border-gray-300 rounded-l-lg p-2 text-center mr-2"
+                              class="flex-1 text-sm text-black-600 border border-gray-300 rounded-l-lg rounded-r-lg p-2 text-center mr-2"
                             >
                               {{ product_filter.lowest }}
                               <!-- Display the lowest value -->
                             </div>
                             <div
                               id="max-value-{{ product_filter.name }}"
-                              class="flex-1 text-sm text-black-600 border border-gray-300 rounded-r-lg p-2 text-center"
+                              class="flex-1 text-sm text-black-600 border border-gray-300 rounded-r-lg rounded-l-lg p-2 text-center"
                             >
                               {{ product_filter.highest }}
                               <!-- Display the highest value -->
@@ -372,7 +372,7 @@
                             </div>
                             <button
                               type="button"
-                              class="text-sm text-amber-500 underline"
+                              class="text-sm text-amber-500"
                               onclick="executeSearchSlider('{{ product_filter.name }}')"
                             >
                               Filter toevoegen
