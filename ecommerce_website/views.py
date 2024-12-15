@@ -1,8 +1,13 @@
+from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from ecommerce_website.classes.forms.return_form import ReturnForm
+from ecommerce_website.classes.helpers.progress_view import get_order_progress_phases
+from ecommerce_website.classes.model.cached_return_order import SessionReturnOrderService
+from ecommerce_website.services.validation_service.validation_service import ValidationService
 from ecommerce_website.services.view_service.order_info_view_service import OrderInfoViewService
 from ecommerce_website.services.product_service.product_service import ProductService
 from django.shortcuts import redirect, render
@@ -458,12 +463,17 @@ def order_detail(request):
 
     order_id = request.GET.get('order_id')
 
+    order = ViewServiceUtility.get_order_by_id(order_id)
+
+    progress_phases = get_order_progress_phases(order.order_status)
+
     return render(request, "order_detail.html", {'headerData': ViewServiceUtility.get_header_data(),
                                                  'env': environment,
                                                  'store_data': ViewServiceUtility.get_current_store_data(),
                                                  'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                  'brands': ViewServiceUtility.get_all_brands(),
-                                                 'order': ViewServiceUtility.get_order_by_id(order_id),
+                                                 'progress_phases': progress_phases,
+                                                 'order': order,
                                                  'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 
@@ -536,15 +546,6 @@ def confirm_order(request):
                                                                                  email,
                                                                                  order.order_number,
                                                                                  redirect_url)
-        rating_url = url_manager.store_rating()
-
-        ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(salutation,
-                                                                           last_name,
-                                                                           email,
-                                                                           rating_url)
-
-        AdminMailSender(mail_manager=HTMLMailManager()
-                        ).send_order_confirmation(order)
 
         return redirect(checkout_url)
 
@@ -872,7 +873,6 @@ def favorite_products(request, category="Favorieten"):
 
     is_sort = ProductSorterUtility.is_sort(attributes)
     is_paginated = ProductSorterUtility.is_paginated(attributes)
-
 
     if is_paginated:
         page = attributes.pop('page', None)[0]
@@ -1803,17 +1803,19 @@ def delete_cart_item(request):
 
 @csrf_exempt
 def mollie_webhook(request):
+    print("mollie webhook called")
     if request.method == 'POST':
         try:
-
+            print("POST executing....")
             payment_id = request.POST.get('id')
 
             payment = MollieClient().get_payment(payment_id)
             payment_id = payment.id
-
+            print("Payment fetched: ", payment, payment_id)
             new_order = OrderService.update_payment_status(
                 payment_id, payment.status)
-
+            print("New order in wehook: ", new_order,
+                  " with status: ", new_order.order_status)
             if new_order.is_paid:
                 AdminMailSender(mail_manager=HTMLMailManager()
                                 ).send_order_confirmation(new_order)
@@ -1821,7 +1823,7 @@ def mollie_webhook(request):
                 rating_url = url_manager.store_rating()
                 account = new_order.account
 
-                if account.is_authenticated:
+                if account:
                     salutation = account.salutation
                     last_name = account.last_name
                     email = account.email
@@ -1829,6 +1831,14 @@ def mollie_webhook(request):
                     salutation = new_order.salutation
                     last_name = new_order.last_name
                     email = new_order.email
+
+                redirect_url = url_manager.create_redirect(new_order.id)
+
+                ClientMailSender(mail_manager=HTMLMailManager()).send_order_payment_confirmation(salutation,
+                                                                                                 last_name,
+                                                                                                 email,
+                                                                                                 new_order.order_number,
+                                                                                                 redirect_url)
 
                 ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(salutation,
                                                                                    last_name,
@@ -1844,17 +1854,362 @@ def mollie_webhook(request):
 
 
 @csrf_exempt
-def tracking_code_webhook(request):
+def return_payment_webhook(request):
     if request.method == 'POST':
         try:
 
-            id = request.POST.get('id')
+            payment_id = request.POST.get('id')
 
-            print(id)
+            payment = MollieClient().get_payment(payment_id)
+            payment_id = payment.id
+
+            new_order = ReturnService.update_payment_status(
+                payment_id, payment.status)
+
+            if new_order.is_paid:
+                AdminMailSender(mail_manager=HTMLMailManager()
+                                ).send_return_order_confirmation(new_order)
+
+                redirect_url = url_manager.create_redirect_return(new_order.id)
+
+                account = new_order.order.account
+
+                if account:
+                    salutation = account.salutation
+                    last_name = account.last_name
+                    email = account.email
+                else:
+                    salutation = new_order.order.salutation
+                    last_name = new_order.last_name
+                    email = new_order.email_address
+
+                ClientMailSender(mail_manager=HTMLMailManager()).send_return_payment_confirmation(salutation,
+                                                                                                  last_name,
+                                                                                                  email,
+                                                                                                  new_order.order.order_number,
+                                                                                                  redirect_url)
 
             return JsonResponse({'status': 'success'})
         except Exception as e:
-            print("Error processing Tracking webhook notification:", str(e))
+            print("Error processing Mollie webhook notification:", str(e))
             return JsonResponse({'status': 'error'}, status=500)
     else:
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+
+
+def order_returnable(request):
+    if request.method == 'GET':
+        order_id = request.GET.get('order_id')
+        is_returnable = OrderService.is_order_returnable(order_id)
+
+        return JsonResponse({'is_returnable': is_returnable})
+
+
+@csrf_exempt
+def validate_return_order(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        return_products = data.get("returnProducts", {})
+
+        if not return_products:
+            return JsonResponse({"success": False, "message": "No products selected. Something went wrong fetching the data..."})
+
+        validation_passed = ValidationService.validate_return_order_lines(
+            return_products)
+
+        # If validation passes
+        if validation_passed:
+            return JsonResponse({"success": True, "message": "Validation passed"})
+        else:
+            messages.error(
+                request, "Het is niet gelukt om een retour aan te maken, check alsjeblieft de ingevulde waarden van de orderregels.")
+            return JsonResponse({"success": False, "message": "Validation not passed"})
+
+    return JsonResponse({"success": False, "message": "Invalid request method."})
+
+
+def create_return(request):
+    if request.method == 'GET':
+        order_id = request.GET.get('order_id')
+
+        if not order_id:
+            return redirect('account')
+
+        is_returnable = OrderService.is_order_returnable(order_id)
+
+        if not is_returnable:
+            redirect_url = reverse('order_detail') + f'?order_id={order_id}'
+
+            return redirect(redirect_url)
+
+        return render(request, "return_create.html", {'headerData': ViewServiceUtility.get_header_data(),
+                                                      'env': environment,
+                                                      'store_data': ViewServiceUtility.get_current_store_data(),
+                                                      'payment_methods': ViewServiceUtility.get_payment_methods(),
+                                                      'brands': ViewServiceUtility.get_all_brands(),
+                                                      'order': ViewServiceUtility.get_order_by_id_for_return(order_id),
+                                                      'store_motivations': ViewServiceUtility.get_store_motivations()})
+    elif request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+
+            return_line_data = data.get('returnProducts')
+            order_id = data.get('orderId')
+
+            return_order_service = SessionReturnOrderService(request)
+            cached_order = return_order_service.add_return_order(
+                order_id, return_line_data)
+
+            return JsonResponse({"return_id": cached_order.order_id})
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+
+
+def create_return_overview(request):
+    if request.method == 'GET':
+        return_id = request.GET.get('return_id')
+
+        if not return_id:
+            return redirect('account')
+
+        return_order_service = SessionReturnOrderService(request)
+        return_order = return_order_service.get_cached_order(return_id)
+
+        account_details = OrderService.get_account_order_details(return_id)
+
+        if "form_data" in return_order:
+            initial_data = return_order["form_data"]
+
+        else:
+            # Prefill form data from account details
+            initial_data = {
+                'return_reason': '',
+                'first_name': account_details.first_name,
+                'last_name': account_details.last_name,
+                'email_address': account_details.email,
+                'address': account_details.address,
+                'house_number': account_details.house_number,
+                'city': account_details.city,
+                'postal_code': account_details.postal_code,
+                'country': account_details.country,
+                'phone': account_details.phone,
+            }
+
+        form = ReturnForm(initial=initial_data)
+
+        return render(
+            request,
+            "return_create_detail.html",
+            {
+                'headerData': ViewServiceUtility.get_header_data(),
+                'env': environment,
+                'return_order': return_order,
+                'store_data': ViewServiceUtility.get_current_store_data(),
+                'payment_methods': ViewServiceUtility.get_payment_methods(),
+                'brands': ViewServiceUtility.get_all_brands(),
+                'store_motivations': ViewServiceUtility.get_store_motivations(),
+                'form': form,
+            },
+        )
+    elif request.method == 'POST':
+        # Retrieve return_id from POST data
+        return_id = request.POST.get('return_id')
+
+        if not return_id:
+            return redirect('account')
+
+        return_order_service = SessionReturnOrderService(request)
+        return_order = return_order_service.get_cached_order(return_id)
+
+        # Bind POST data to the form
+        form = ReturnForm(request.POST)
+
+        if form.is_valid():
+
+            is_returnable = OrderService.is_order_returnable(
+                return_order["order_id"])
+
+            if not is_returnable:
+                # General error
+                form.add_error(
+                    None, "De gekozen orderrregels zijn aangepast en niet te retourneren.")
+                render(request, 'return_create_detail.html',
+                       {
+                           'form': form,
+                           'headerData': ViewServiceUtility.get_header_data(),
+                           'env': environment,
+                           'return_order': return_order,
+                           'store_data': ViewServiceUtility.get_current_store_data(),
+                           'payment_methods': ViewServiceUtility.get_payment_methods(),
+                           'brands': ViewServiceUtility.get_all_brands(),
+                           'store_motivations': ViewServiceUtility.get_store_motivations(),
+                       })
+
+            result = return_order_service.update_form_data(
+                return_id, form.cleaned_data)
+
+            if not result:
+                # General error
+                form.add_error(
+                    None, "Er is iets misgegaan bij het aanmaken van de retour. Probeer het opnieuw")
+                render(request, 'return_create_detail.html',
+                       {
+                           'form': form,
+                           'headerData': ViewServiceUtility.get_header_data(),
+                           'env': environment,
+                           'return_order': return_order,
+                           'store_data': ViewServiceUtility.get_current_store_data(),
+                           'payment_methods': ViewServiceUtility.get_payment_methods(),
+                           'brands': ViewServiceUtility.get_all_brands(),
+                           'store_motivations': ViewServiceUtility.get_store_motivations(),
+                       })
+            else:
+
+                redirect_url = reverse('confirm_return') + \
+                    f'?return_id={return_id}'
+                return redirect(redirect_url)
+
+        else:
+            # If the form is invalid, re-render the page with error messages
+            return render(
+                request,
+                'return_create_detail.html',
+                {
+                    'form': form,
+                    'headerData': ViewServiceUtility.get_header_data(),
+                    'env': environment,
+                    'return_order': return_order,
+                    'store_data': ViewServiceUtility.get_current_store_data(),
+                    'payment_methods': ViewServiceUtility.get_payment_methods(),
+                    'brands': ViewServiceUtility.get_all_brands(),
+                    'store_motivations': ViewServiceUtility.get_store_motivations(),
+                },
+            )
+
+
+def confirm_return(request):
+    if request.method == 'GET':
+        return_id = request.GET.get('return_id')
+
+        if not return_id:
+            return redirect('account')
+
+        return_order_service = SessionReturnOrderService(request)
+        return_order = return_order_service.get_cached_order(return_id)
+
+        if not return_order:
+            return redirect('account')
+
+        if not "form_data" in return_order:
+            redirect_url = reverse('create_return_overview') + \
+                f'?return_id={return_id}'
+            return redirect(redirect_url)
+
+        return render(request, 'return_payment.html',
+                      {
+                          'headerData': ViewServiceUtility.get_header_data(),
+                          'env': environment,
+                          'return_order': return_order,
+                          'store_data': ViewServiceUtility.get_current_store_data(),
+                          'payment_methods': ViewServiceUtility.get_payment_methods(),
+                          'brands': ViewServiceUtility.get_all_brands(),
+                          'store_motivations': ViewServiceUtility.get_store_motivations(),
+                          'payment_issuers': MollieClient().get_issuers('ideal'),
+                          'delivery_methods': ViewServiceUtility.get_active_takeaway_methods(),
+                      })
+
+    elif request.method == 'POST':
+
+        return_id = request.POST.get('return_id')
+        if not return_id:
+            return redirect('account')
+        issuer_id = request.POST.get('issuer_id')
+        issuer_name = request.POST.get('issuer_name')
+        payment_method = request.POST.get('payment_method')
+        payment_name = request.POST.get('payment_name')
+        delivery_method = request.POST.get('selected_delivery_method')
+        delivery_date = request.POST.get('delivery_date')
+
+        payment_info = PaymentInfo(
+            payment_name, issuer_name, issuer_id, payment_method)
+        delivery_info = DeliveryInfo(delivery_method, delivery_date)
+
+        return_order_service = SessionReturnOrderService(request)
+        return_order = return_order_service.get_cached_order(return_id)
+
+        if not return_order:
+            return redirect('account')
+
+        created_return_order = ReturnService.create_return_order_with_lines(
+            return_order, return_order['form_data'], payment_info, delivery_info)
+
+        if not created_return_order:
+
+            return render(request, 'return_payment.html',
+                          {
+                              'headerData': ViewServiceUtility.get_header_data(),
+                              'env': environment,
+                              'return_order': return_order,
+                              'store_data': ViewServiceUtility.get_current_store_data(),
+                              'payment_methods': ViewServiceUtility.get_payment_methods(),
+                              'brands': ViewServiceUtility.get_all_brands(),
+                              'store_motivations': ViewServiceUtility.get_store_motivations(),
+                          })
+
+        redirect_url = url_manager.create_redirect_return(
+            created_return_order.id)
+        webhook_url = url_manager.create_return_webhook()
+
+        # Remove order from cache
+        return_order_service = SessionReturnOrderService(request)
+        return_order_service.clear_order(
+            return_order["order_id"])
+
+        print(payment_method, issuer_id, issuer_name, payment_name)
+        payment = MollieClient().create_payment('EUR', str(
+            created_return_order.refund_amount), created_return_order.order.order_number, redirect_url, webhook_url, payment_method, issuer_id)
+
+        ReturnService.add_payment(payment, created_return_order.id)
+
+        checkout_url = payment['_links']['checkout']['href']
+        print(payment, checkout_url)
+
+        account = request.user
+        order = created_return_order
+
+        if account.is_authenticated:
+            salutation = account.salutation
+            last_name = account.last_name
+            email = account.email
+        else:
+            salutation = order.order.salutation
+            last_name = order.last_name
+            email = order.email_address
+
+        ClientMailSender(mail_manager=HTMLMailManager()).send_return_confirmation(salutation,
+                                                                                  last_name,
+                                                                                  email,
+                                                                                  created_return_order.order.order_number,
+                                                                                  redirect_url)
+
+        return redirect(checkout_url)
+
+
+def return_detail(request):
+    if request.method == 'GET':
+        return_id = request.GET.get('return_id')
+
+        if not return_id:
+            return redirect('account')
+
+        return_order = ViewServiceUtility.get_return_order_by_id(return_id)
+        progress_phases = get_order_progress_phases(return_order.status)
+
+        return render(request, "return_detail.html", {'headerData': ViewServiceUtility.get_header_data(),
+                                                      'env': environment,
+                                                      'store_data': ViewServiceUtility.get_current_store_data(),
+                                                      'payment_methods': ViewServiceUtility.get_payment_methods(),
+                                                      'brands': ViewServiceUtility.get_all_brands(),
+                                                      'order': return_order,
+                                                      'progress_phases': progress_phases,
+                                                      'store_motivations': ViewServiceUtility.get_store_motivations()})

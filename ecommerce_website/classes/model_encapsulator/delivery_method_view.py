@@ -4,7 +4,7 @@ class DeliveryMethodView:
         self.name = delivery_method.name
         self.price = delivery_method.price
         self.days = self.create_range_string(delivery_method.delivery_days)
-        
+        self.additional_info = delivery_method.additional_info
 
     def create_range_string(self, value):
         lower_bound = max(value - 1, 0)

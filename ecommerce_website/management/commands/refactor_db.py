@@ -64,6 +64,8 @@ class Command(BaseCommand):
                 'refactor_product_attributes_for_all_products',
                 'refactor_product_filters_for_all_products',
                 'refactor_product_attributes_to_numeric_values',
+                'deliver_return_order_lines'
+                , 'deliver_order_lines'
             ]
 
             # Execute each refactor method that exists in available functions

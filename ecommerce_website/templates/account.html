@@ -27,13 +27,6 @@
         >
           Opslaan
         </button>
-        <button
-          type="button"
-          id="create-return-button"
-          class="rounded-md bg-transparent pr-3 pl-2 py-2 text-sm font-semibold text-amber-500 shadow-sm hover:text-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500 flex items-center justify-center"
-        >
-          Retour aanmaken
-        </button>
       </div>
     </div>
   </div>
@@ -452,8 +445,15 @@
         {% include 'components/messages/empty_generic_message.html' with error_message="U heeft nog geen retouren." %}
       {% endif %}
 
-      {% for return in returns %}
-        {% include 'components/order_history.html' %}
+      {% for return_order in returns %}
+        {% if not forloop.first %}
+          <div class="pt-24">
+            {% include 'components/return_order_history.html' %}
+          </div>
+        {% else %}
+          {% include 'components/return_order_history.html' %}
+        {% endif %}
+        <div></div>
       {% endfor %}
     </section>
   </div>
@@ -756,28 +756,23 @@
       // Update header text and buttons based on the selected section
       const headerText = document.getElementById('header-text')
       const saveButton = document.getElementById('save-button')
-      const createReturnButton = document.getElementById('create-return-button')
 
       switch (section) {
         case 'account':
           headerText.textContent = 'Account'
           saveButton.classList.remove('hidden')
-          createReturnButton.classList.add('hidden')
           break
         case 'adresgegevens':
           headerText.textContent = 'Adresgegevens'
           saveButton.classList.remove('hidden')
-          createReturnButton.classList.add('hidden')
           break
         case 'orders':
           headerText.textContent = 'Orders'
           saveButton.classList.add('hidden')
-          createReturnButton.classList.add('hidden')
           break
         case 'returns':
           headerText.textContent = 'Retouren'
           saveButton.classList.add('hidden')
-          createReturnButton.classList.remove('hidden')
           break
         default:
           break

@@ -20,11 +20,13 @@ class OrderItemView:
         self.shipping_address = NewLineAddressFormatter().format(order.shipping_address)
 
         self.payment_information = order.payment_information
-        self.payment_logo = MolliePaymentMethodLogoExtractor(MollieClient()).extract(order.payment_information_id)
+        self.payment_logo = MolliePaymentMethodLogoExtractor(
+            MollieClient()).extract(order.payment_information_id)
 
         if order.payment_status:
             payment_status = order.payment_status.capitalize()
-            payment_status_dutch = translate_to_dutch(payment_status)
+            payment_status_dutch = MollieClient.translate_to_dutch(
+                payment_status)
             self.payment_status = payment_status_dutch
 
         self.total_price = order.total_price
@@ -43,33 +45,56 @@ class OrderItemView:
         self.order_lines = order_lines
 
 
-def translate_to_dutch(text):
-    translation_dict = {
-        'Paid': 'Betaald',
-        'Pending': 'In afwachting',
-        'Failed': 'Mislukt',
-        'Canceled': 'Afgebroken',
-    }
-
-    return translation_dict.get(text, text)
-
 class OrderLineItemView:
     def __init__(self, order_line):
 
-        attributes_dict = {}
-        for attribute in order_line.product.attributes.all():
-            attributes_dict[attribute.attribute_type.name] = attribute.value
-        print(order_line.total_price, order_line.unit_price)
         self.id = order_line.id
         self.product_id = order_line.product.id
         self.total_price = order_line.total_price
         self.unit_price = order_line.unit_price
         self.quantity = order_line.quantity
         self.name = order_line.product.name
+        self.delivery_date = order_line.delivery_date
+        self.delivery_count = order_line.count_delivered
+        # Fetch the "Omschrijving" attribute and provide a default empty string if not found
+        description = order_line.product.attributes.filter(
+            attribute_type__name="Omschrijving"
+        ).first()
+
+        # Default to empty string if not found
+        self.description = description.value if description else ""
         if order_line.product.thumbnail and order_line.product.thumbnail.url:
             self.thumbnail_url = order_line.product.thumbnail.url
-
         else:
             self.thumbnail_url = "/static/images/no_image_placeholder.png"
-        self.description = attributes_dict['Omschrijving']
 
+        self.determineStatus(order_line)
+
+    def determineStatus(self, order_line):
+        if not self.delivery_date:
+            self.status = "Nog te leveren"
+            self.statusText = f"Nog te leveren {
+                self.delivery_count}/{self.quantity}"
+            return
+
+        if self.delivery_date:
+
+            return_quantity = order_line.accumulated_return_quantity()
+
+            if return_quantity > 0:
+                self.status = "Geretourneerd"
+
+                if return_quantity == self.quantity:
+                    self.statusText = "Volledig geretourneerd"
+                else:
+                    self.statusText = f"Deels geretourneerd {
+                        return_quantity}/{self.quantity}"
+
+            else:
+                self.status = "Geleverd"
+
+                if self.delivery_count == self.quantity:
+                    self.statusText = f"Geleverd op {self.delivery_date}"
+                else:
+                    self.statusText = f"Deels geleverd {
+                        self.delivery_count}/{self.quantity}"

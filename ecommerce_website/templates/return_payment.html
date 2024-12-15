@@ -1,0 +1,228 @@
+{% extends 'components/main.html' %} {% load static tailwind_tags %}
+{% block title %}
+  Retour betalen
+{% endblock %}
+{% block content %}
+  <!--
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+  />
+
+  <div class="bg-white">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    {% include 'components/steps_return.html' %}
+
+    <div
+      class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8"
+    >
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        Afhaling & betaling
+      </h1>
+
+      <form
+        id="confirmation-form"
+        method="POST"
+        action="{% url 'confirm_return' %}"
+        class="mt-8 space-y-6"
+      >
+        {% csrf_token %}
+        <input
+          type="hidden"
+          name="return_id"
+          value="{{ return_order.order_id }}"
+        />
+        <div
+          class="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16"
+        >
+          <section aria-labelledby="cart-heading" class="lg:col-span-7">
+            <div>
+              <div>
+                <fieldset>
+                  <legend class="text-lg font-medium text-gray-900">
+                    Afhaalmethode <span class="text-red-500">*</span>
+                  </legend>
+
+                  <div
+                    class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
+                  >
+                    {% for delivery_method in delivery_methods %}
+                      {% include 'components/delivery_method.html' %}
+                    {% endfor %}
+                  </div>
+                  <p
+                    id="select-delivery-method-error"
+                    hidden
+                    class="text-red-500 text-sm mt-1"
+                  >
+                    Selecteer een afhaalmethode.
+                  </p>
+                </fieldset>
+              </div>
+
+              <div class="mt-10 border-t border-gray-200 pt-10">
+                <h2 class="text-lg font-medium text-gray-900">
+                  Afhaaldatum <span class="text-red-500">*</span>
+                </h2>
+
+                <div class="mt-6 grid grid-cols-4 gap-x-4 gap-y-6">
+                  <div class="col-span-4">
+                    <label
+                      for="card-number"
+                      class="block text-sm font-medium text-gray-700"
+                      >Kies je gewenste datum</label
+                    >
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        id="datepicker"
+                        name="delivery_date"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      />
+                      <p
+                        id="select-delivery-date-error"
+                        hidden
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        Dit veld is verplicht.
+                      </p>
+
+                      <!-- <input type="text" id="card-number" name="card-number" autocomplete="cc-number"
+                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-10 border-t border-gray-200 pt-10">
+                <input type="hidden" name="selected_delivery_method" />
+
+                {% include 'components/payment_selection.html' %}
+              </div>
+            </div>
+          </section>
+
+          <!-- Order summary -->
+
+          <section
+            aria-labelledby="summary-heading"
+            class="mt-16 rounded-lg border border-gray-300 bg-gray-100 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
+          >
+            <h2 id="summary-heading" class="text-lg font-medium text-gray-900">
+              Retour overzicht
+            </h2>
+
+            <dl class="mt-6 space-y-4">
+              <div
+                class="flex items-center justify-between border-t border-gray-200 pt-4"
+              >
+                <dt class="text-sm text-gray-600">Verzendkosten</dt>
+                <dd class="text-sm font-medium text-gray-900">
+                  €{{ return_order.shipping_price }}
+                </dd>
+              </div>
+
+              <div
+                class="flex items-center justify-between border-t border-gray-200 pt-4"
+              >
+                <dt class="text-base font-medium text-gray-900">
+                  Retour totaal
+                </dt>
+                <dd class="text-base font-medium text-gray-900">
+                  €{{ return_order.total_price }}
+                </dd>
+              </div>
+            </dl>
+            <div class="mt-6">
+              <button
+                type="submit"
+                class="w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
+              >
+                Betalen
+              </button>
+            </div>
+          </section>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      flatpickr('#datepicker', {
+        dateFormat: 'd-m-Y',
+        minDate: 'today',
+        position: 'below',
+        disable: [
+          function (date) {
+            return date.getDay() === 0 || date.getDay() === 6
+          },
+        ],
+      })
+
+      const form = document.getElementById('confirmation-form')
+
+      form.addEventListener('submit', function (event) {
+        const errorMessageIssuer = document.getElementById(
+          'select-issuer-error',
+        )
+        const errorMessageDeliveryMethod = document.getElementById(
+          'select-delivery-method-error',
+        )
+        const errorMessageDeliveryDate = document.getElementById(
+          'select-delivery-date-error',
+        )
+
+        const selectedIssuer = issuerSelect.value
+
+        const selectedDeliveryMethodInput = form.querySelector(
+          'input[name="selected_delivery_method"]',
+        )
+        const selectedDeliveryMethod = selectedDeliveryMethodInput
+          ? selectedDeliveryMethodInput.value.trim()
+          : ''
+
+        const selectedDeliveryDateInput = form.querySelector(
+          'input[name="delivery_date"]',
+        )
+        const selectedDeliveryDate = selectedDeliveryDateInput
+          ? selectedDeliveryDateInput.value.trim()
+          : ''
+
+        if (!selectedDeliveryDate) {
+          event.preventDefault()
+          errorMessageDeliveryDate.removeAttribute('hidden')
+        } else {
+          errorMessageDeliveryDate.setAttribute('hidden', true)
+        }
+
+        if (!selectedDeliveryMethod) {
+          event.preventDefault()
+          errorMessageDeliveryMethod.removeAttribute('hidden')
+        } else {
+          errorMessageDeliveryMethod.setAttribute('hidden', true)
+        }
+
+        if (!selectedIssuer || selectedIssuer === '') {
+          event.preventDefault()
+          errorMessageIssuer.removeAttribute('hidden')
+        } else {
+          errorMessageIssuer.setAttribute('hidden')
+        }
+      })
+    })
+  </script>
+{% endblock %}

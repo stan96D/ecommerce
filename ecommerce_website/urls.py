@@ -5,8 +5,8 @@ urlpatterns = [
 
     # Webhooks
     path('mollie_webhook/', views.mollie_webhook, name="mollie_webhook"),
-    path('tracking_code_webhook/', views.tracking_code_webhook,
-         name="tracking_code_webhook"),
+    path('return_payment_webhook/',
+         views.return_payment_webhook, name="return_payment_webhook"),
 
     # Home
     path('', views.home, name="home"),
@@ -39,7 +39,15 @@ urlpatterns = [
 
 
     # Returns
+    path('return_detail/', views.return_detail, name="return_detail"),
     path('return_create/', views.create_return, name="create_return"),
+    path('confirm_return/', views.confirm_return, name="confirm_return"),
+    path('create_return_overview/',
+         views.create_return_overview, name="create_return_overview"),
+
+    path('validate-return-order/',
+         views.validate_return_order, name="validate_return_order"),
+
 
     # Order
     path('confirm_order/', views.confirm_order, name="confirm_order"),
@@ -47,6 +55,7 @@ urlpatterns = [
          name="order_detail"),
     path('repay_order/<int:order_id>/', views.repay_order, name='repay_order'),
     path('order_info/', views.order_info, name="order_info"),
+    path('order-returnable/', views.order_returnable, name="order_returnable"),
 
     # Products
     path('search/', views.search_products,

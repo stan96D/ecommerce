@@ -22,6 +22,17 @@ class MollieClient(PaymentClient):
         self.client.set_api_key(api_key)
         self.cache = Cache()
 
+    @staticmethod
+    def translate_to_dutch(text):
+        translation_dict = {
+            'Paid': 'Betaald',
+            'Pending': 'In afwachting',
+            'Failed': 'Mislukt',
+            'Canceled': 'Afgebroken',
+        }
+
+        return translation_dict.get(text, text)
+
     def get_payment_methods(self):
         cached_methods = self.cache.get('payment_methods')
         if cached_methods is not None:

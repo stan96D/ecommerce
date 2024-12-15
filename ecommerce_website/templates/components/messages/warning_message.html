@@ -16,13 +16,13 @@
     </div>
     <div class="ml-3">
       <h3 class="text-sm font-medium text-red-800">{{ message }}</h3>
-      <!-- <div class="mt-2 text-sm text-red-700">
-                <ul role="list" class="list-disc space-y-1 pl-5">
-                    {% for field, error_message in error_messages.items %}
-        <li>{{ error_message }}</li>
-      {% endfor %}
-                </ul>
-            </div> -->
+      <div class="mt-2 text-sm text-red-700">
+        <ul role="list" class="list-disc space-y-1 pl-5">
+          {% for field, error_message in error_messages.items %}
+            <li>{{ error_message }}</li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
   </div>
 </div>

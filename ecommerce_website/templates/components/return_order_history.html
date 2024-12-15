@@ -1,0 +1,92 @@
+<div aria-labelledby="order-heading">
+  <div
+    class="bg-gray-50 px-4 py-6 sm:rounded-lg sm:p-6 md:flex md:items-center md:justify-between md:space-x-6 lg:space-x-8"
+  >
+    <h2
+      id="order-heading"
+      class="text-lg font-medium text-gray-900 md:flex-shrink-0"
+    >
+      Retour
+      <a
+        href="/return_detail/?return_id={{ return_order.id }}"
+        class="text-amber-500 hover:text-customColor"
+        >{{ return_order.id }}/{{ return_order.order_number }}</a
+      >
+    </h2>
+
+    <div
+      class="space-y-5 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 md:min-w-0 md:flex-1"
+    >
+      <p class="text-sm font-medium text-gray-500">
+        Gemaakt op {{ return_order.created_date }}
+      </p>
+      <div class="flex text-sm font-medium"></div>
+    </div>
+  </div>
+
+  {% for order_line in return_order.return_order_lines %}
+    <div class="flow-root divide-y divide-gray-200">
+      <div class="py-6 sm:flex">
+        <div
+          class="flex space-x-4 sm:min-w-0 sm:flex-1 sm:space-x-6 lg:space-x-8 relative"
+        >
+          <img
+            src="{{ order_line.thumbnail_url }}"
+            alt="{{ order_line.name }}"
+            class="h-20 w-20 flex-none rounded-md object-cover object-center sm:h-48 sm:w-48"
+          />
+          <div class="min-w-0 flex-1 pt-1.5 sm:pt-0">
+            <h3 class="text-sm font-medium text-gray-900">
+              <a href="/product/{{ order_line.product_id }}"
+                >{{ order_line.name }}</a
+              >
+            </h3>
+            <h4>
+              <p class="mt-2 text-sm text-gray-500 sm:block line-clamp-1">
+                {{ order_line.description }}
+              </p>
+            </h4>
+            <p class="mt-1 font-normal text-sm text-gray-400">
+              {{ order_line.quantity }} stuk(s)
+            </p>
+            <p class="mt-1 font-medium text-gray-900">
+              €{{ order_line.total_price }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if not forloop.last %}
+    {% endif %}
+  {% endfor %}
+</div>
+<div class="border-b border-gray-200 pb-5">
+  <div class="flex justify-end items-center">
+    <div class="mt-2 pr-4 mr-4 flex flex-col items-end">
+      {% if order.order_status == "Betaald" %}
+        <p class="text-left font-normal pl-2  text-green-600 flex items-center">
+          <i class="fas fa-check-circle text-green-600 mr-1"></i
+          >{{ order.order_status }}
+        </p>
+      {% elif order.order_status == "Openstaand" %}
+        <p class="text-left font-normal pl-2  text-amber-500 flex items-center">
+          <i class="fas fa-exclamation-circle text-amber-500 mr-1"></i
+          >{{ order.order_status }}
+        </p>
+      {% elif order.order_status == "Mislukt" %}
+        <p class="text-left font-normal pl-2  text-red-600 flex items-center">
+          <i class="fas fa-times-circle text-red-600 mr-1"></i
+          >{{ return_order.status }}
+        </p>
+      {% endif %}
+    </div>
+    <div
+      class="bg-gray-900 w-fit rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-3 mt-2"
+    >
+      <p class="text-xl font-semibold text-gray-100">
+        €{{ return_order.refund_amount }}
+      </p>
+    </div>
+  </div>
+</div>

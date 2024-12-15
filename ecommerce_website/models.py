@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AnonymousUser
 from ecommerce_website.settings.webshop_config import WebShopConfig
+from django.db.models import Sum
 
 
 class AccountManager(BaseUserManager):
@@ -66,12 +67,21 @@ class Account(AbstractBaseUser):
 
 
 class DeliveryMethod(models.Model):
+    DELIVERY_TYPE_CHOICES = [
+        ('delivery', 'Delivery'),
+        ('takeaway', 'Takeaway'),
+    ]
+
     name = models.CharField(max_length=100, unique=True)
     price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
     delivery_days = models.DecimalField(
         max_digits=2, decimal_places=0, default=9)
     active = models.BooleanField(default=True)
+    delivery_type = models.CharField(
+        max_length=10, choices=DELIVERY_TYPE_CHOICES, default='delivery'
+    )
+    additional_info = models.CharField(max_length=100, null=True, blank=True)
 
 
 class Product(models.Model):
@@ -295,6 +305,26 @@ class OrderLine(models.Model):
     return_order = models.ForeignKey(
         'ReturnOrder', related_name='order_lines', on_delete=models.SET_NULL, null=True, blank=True)
 
+    delivery_date = models.DateField(
+        null=True, blank=True)
+    count_delivered = models.IntegerField(default=0, null=True, blank=True)
+
+    def __str__(self):
+        if self.order.account:
+            return f'OrderLine {self.id} for account with name {self.order.account.first_name} {self.order.account.last_name} and product {self.product.name}'
+        else:
+            return f'OrderLine {self.id} with no associated account and product {self.product.name}'
+
+    def has_return_order(self):
+        """Returns True if this OrderLine has an associated ReturnOrder."""
+        return self.return_order is not None
+
+    def accumulated_return_quantity(self):
+        """Returns the accumulated quantity of related ReturnOrderLines."""
+        return self.return_order_lines.aggregate(
+            total_quantity=Sum('quantity')
+        )['total_quantity'] or 0  # If no return order lines, return 0
+
 
 class Order(models.Model):
 
@@ -302,6 +332,7 @@ class Order(models.Model):
         ('open', 'Openstaand'),
         ('paid', 'Betaald'),
         ('delivered', 'Geleverd'),
+        ('partly', 'Deels geleverd'),
         ('failed', 'Mislukt'),
 
     ]
@@ -342,25 +373,31 @@ class Order(models.Model):
     payment_url = models.CharField(max_length=100, unique=True, null=True)
 
     order_status = models.TextField(
-        default='Openstaand', choices=ORDER_STATUS_CHOICES)
+        default='open', choices=ORDER_STATUS_CHOICES)
 
     @property
     def is_paid(self):
-        return self.order_status == 'Betaald' and self.payment_status == 'paid'
+        return self.order_status == 'paid' and self.payment_status == 'paid'
 
     @property
     def can_be_returned(self):
         return timezone.now() <= self.created_date + timedelta(days=WebShopConfig.return_days())
 
+    def __str__(self):
+        if self.account:
+            return f'Order {self.id} for account with name {self.account.first_name} {self.account.last_name}'
+        else:
+            return f'Order {self.id} with no associated account'
+
 
 class ReturnOrder(models.Model):
     RETURN_STATUS_CHOICES = [
-        ('requested', 'Requested'),
-        ('approved', 'Approved'),
-        ('rejected', 'Rejected'),
-        ('processed', 'Processed'),
-        ('pending', 'Pending'),
-        ('failed', 'Failed'),
+        ('open', 'Openstaand'),
+        ('paid', 'Betaald'),
+        ('delivered', 'Opgehaald'),
+        ('partly', 'Deels opgehaald'),
+        ('failed', 'Mislukt'),
+        ('done', 'Afgerond'),
 
     ]
 
@@ -368,12 +405,46 @@ class ReturnOrder(models.Model):
         Order, related_name='returns', on_delete=models.CASCADE)
     reason = models.TextField()
     status = models.CharField(
-        max_length=20, choices=RETURN_STATUS_CHOICES, default='requested')
-    return_date = models.DateTimeField(auto_now_add=True)
+        max_length=20, choices=RETURN_STATUS_CHOICES, default='open')
+    created_date = models.DateTimeField(default=timezone.now)
+    return_date = models.DateTimeField(
+        auto_now_add=True, null=True, blank=True)
     refund_amount = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
     shipping_amount = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
+    sub_price = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+    tax_price_low = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+    tax_price_high = models.DecimalField(
+        max_digits=10, decimal_places=2, default=0.00)
+
+    # User-related fields
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email_address = models.EmailField()
+    address = models.CharField(max_length=255)
+    house_number = models.CharField(max_length=50)
+    city = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=20)
+    country = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20)
+
+    payment_information = models.TextField()
+    payment_information_id = models.TextField(max_length=20)
+    payment_issuer = models.TextField(null=True, max_length=20)
+
+    payment_id = models.CharField(max_length=100, unique=True, null=True)
+    payment_status = models.TextField(null=True)
+    payment_url = models.CharField(max_length=100, unique=True, null=True)
+
+    deliver_date = models.DateField()
+    deliver_method = models.CharField(max_length=100)
+
+    @property
+    def is_paid(self):
+        return self.status == 'paid' and self.payment_status == 'paid'
 
     def __str__(self):
         return f'Return {self.id} for Order {self.order.id}'
@@ -387,6 +458,10 @@ class ReturnOrderLine(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     refund_amount = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00)
+
+    delivery_date = models.DateField(
+        null=True, blank=True)
+    count_delivered = models.IntegerField(default=0, null=True, blank=True)
 
     def __str__(self):
         return f'ReturnOrderLine {self.id} for ReturnOrder {self.return_order.id}'

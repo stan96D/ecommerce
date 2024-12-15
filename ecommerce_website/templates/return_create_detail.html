@@ -1,0 +1,405 @@
+{% extends 'components/main.html' %}
+{% load static tailwind_tags %}
+
+{% block title %}Retour overzicht {{ return_order.order_number }}{% endblock %}
+
+{% block content %}
+  <!--
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+  <div class="bg-white">
+    {% include 'components/steps_return.html' %}
+
+    <div
+      class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8"
+    >
+      {% if form.errors %}
+        <div class="pb-8">
+          {% include 'components/messages/warning_message.html' with message="Er zijn fouten opgetreden bij de registratie:" error_messages=form.errors %}
+        </div>
+      {% endif %}
+
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        Retour gegevens
+      </h1>
+
+      <form
+        method="POST"
+        action="{% url 'create_return_overview' %}"
+        class="mt-8 space-y-6"
+      >
+        {% csrf_token %}
+        <input
+          type="hidden"
+          name="return_id"
+          value="{{ return_order.order_id }}"
+        />
+
+        <div
+          class="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16"
+        >
+          <section aria-labelledby="cart-heading" class="lg:col-span-7">
+            <div>
+              <div class="mt-8">
+                <h2 class="text-lg font-medium text-gray-900">Retour</h2>
+                <p class="text-sm text-gray-500">
+                  Licht alsjeblieft de reden toe waarom je deze artikelen wilt
+                  retourneren.
+                </p>
+                <div class="mt-4">
+                  <label
+                    for="first_name"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Retourreden <span class="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    id="return_reason"
+                    name="return_reason"
+                    rows="4"
+                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm mt-1"
+                    placeholder="Je reden om te retourneren..."
+                    required
+                  >
+{{ form.return_reason.value }}</textarea
+                  >
+                  {% if form.return_reason.errors %}
+                    <p
+                      id="return_reason-error"
+                      class="text-red-500 text-sm mt-1"
+                    >
+                      {{ form.return_reason.errors|striptags }}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+              <div class="mt-10 border-t border-gray-200 pt-10">
+                <h2 class="text-lg font-medium text-gray-900">
+                  Contact informatie
+                </h2>
+
+                <div
+                  class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
+                >
+                  <div>
+                    <label
+                      for="first_name"
+                      class="block text-sm font-medium text-gray-700"
+                    >
+                      Voornaam <span class="text-red-500">*</span>
+                    </label>
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        id="first_name"
+                        name="first_name"
+                        value="{{ form.first_name.value }}"
+                        autocomplete="first_name"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        required
+                      />
+                    </div>
+                    {% if form.first_name.errors %}
+                      <p
+                        id="first_name-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ form.first_name.errors|striptags }}
+                      </p>
+                    {% endif %}
+                  </div>
+
+                  <div>
+                    <label
+                      for="last_name"
+                      class="block text-sm font-medium text-gray-700"
+                    >
+                      Achternaam <span class="text-red-500">*</span>
+                    </label>
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        id="last_name"
+                        name="last_name"
+                        value="{{ form.last_name.value }}"
+                        autocomplete="last_name"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        required
+                      />
+                      {% if form.last_name.errors %}
+                        <p
+                          id="last_name-error"
+                          class="text-red-500 text-sm mt-1"
+                        >
+                          {{ form.last_name.errors|striptags }}
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <label
+                    for="email_address"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    E-mailadres <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="email"
+                      id="email_address"
+                      name="email_address"
+                      value="{{ form.email_address.value }}"
+                      autocomplete="email"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                    {% if form.email_address.errors %}
+                      <p
+                        id="email_address-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ form.email_address.errors|striptags }}
+                      </p>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-10 border-t border-gray-200 pt-10">
+                <h2 class="text-lg font-medium text-gray-900">
+                  Adres informatie
+                </h2>
+
+                <div
+                  class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
+                >
+                  <div>
+                    <label
+                      for="address"
+                      class="block text-sm font-medium text-gray-700"
+                    >
+                      Adres <span class="text-red-500">*</span>
+                    </label>
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        name="address"
+                        id="address"
+                        value="{{ form.address.value }}"
+                        autocomplete="street-address"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        required
+                      />
+                      {% if form.address.errors %}
+                        <p id="address-error" class="text-red-500 text-sm mt-1">
+                          {{ form.address.errors|striptags }}
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      for="house_number"
+                      class="block text-sm font-medium text-gray-700"
+                    >
+                      Huisnummer <span class="text-red-500">*</span>
+                    </label>
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        name="house_number"
+                        id="house_number"
+                        value="{{ form.house_number.value }}"
+                        autocomplete="house_number"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        required
+                      />
+                      {% if form.house_number.errors %}
+                        <p
+                          id="house_number-error"
+                          class="text-red-500 text-sm mt-1"
+                        >
+                          {{ form.house_number.errors|striptags }}
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      for="city"
+                      class="block text-sm font-medium text-gray-700"
+                    >
+                      Plaats <span class="text-red-500">*</span>
+                    </label>
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        name="city"
+                        id="city"
+                        value="{{ form.city.value }}"
+                        autocomplete="city"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        required
+                      />
+                      {% if form.city.errors %}
+                        <p id="city-error" class="text-red-500 text-sm mt-1">
+                          {{ form.city.errors|striptags }}
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      for="postal_code"
+                      class="block text-sm font-medium text-gray-700"
+                    >
+                      Postcode <span class="text-red-500">*</span>
+                    </label>
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        name="postal_code"
+                        id="postal_code"
+                        value="{{ form.postal_code.value }}"
+                        autocomplete="postal_code"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        required
+                      />
+                      {% if form.postal_code.errors %}
+                        <p
+                          id="postal_code-error"
+                          class="text-red-500 text-sm mt-1"
+                        >
+                          {{ form.postal_code.errors|striptags }}
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      for="country"
+                      class="block text-sm font-medium text-gray-700"
+                    >
+                      Land <span class="text-red-500">*</span>
+                    </label>
+                    <div class="mt-1">
+                      <select
+                        id="country"
+                        name="country"
+                        autocomplete="country"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      >
+                        {% if form.country.value == "Nederland" %}
+                          <option value="Nederland" selected>Nederland</option>
+                        {% else %}
+                          <option value="Nederland">Nederland</option>
+                        {% endif %}
+                        {% if form.country.value == "Duitsland" %}
+                          <option value="Duitsland" selected>Duitsland</option>
+                        {% else %}
+                          <option value="Duitsland">Duitsland</option>
+                        {% endif %}
+                        {% if form.country.value == "België" %}
+                          <option value="België" selected>België</option>
+                        {% else %}
+                          <option value="België">België</option>
+                        {% endif %}
+                      </select>
+                      {% if form.country.errors %}
+                        <p id="country-error" class="text-red-500 text-sm mt-1">
+                          {{ form.country.errors|striptags }}
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  <div class="sm:col-span-2">
+                    <label
+                      for="phone"
+                      class="block text-sm font-medium text-gray-700"
+                    >
+                      Telefoonnummer <span class="text-red-500">*</span>
+                    </label>
+                    <div class="mt-1">
+                      <input
+                        type="text"
+                        name="phone"
+                        id="phone"
+                        value="{{ form.phone.value }}"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        required
+                      />
+
+                      {% if form.phone.errors %}
+                        <p id="phone-error" class="text-red-500 text-sm mt-1">
+                          {{ form.phone.errors|striptags }}
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="mt-8 w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
+            >
+              Naar betalen
+            </button>
+          </section>
+
+          <!-- Order summary -->
+          <!-- Order summary -->
+
+          <section
+            aria-labelledby="summary-heading"
+            class="mt-16 rounded-lg border border-gray-300 bg-gray-100 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8"
+          >
+            <h2 id="summary-heading" class="text-lg font-medium text-gray-900">
+              Retour overzicht
+            </h2>
+
+            <dl class="mt-6 space-y-4">
+              <div
+                class="flex items-center justify-between border-t border-gray-200 pt-4"
+              >
+                <dt class="text-sm text-gray-600">Verzendkosten</dt>
+                <dd class="text-sm font-medium text-gray-900">
+                  <span class="font-medium text-sm"
+                    >€{{ return_order.shipping_price }}</span
+                  >
+                </dd>
+              </div>
+
+              <div
+                class="flex items-center justify-between border-t border-gray-200 pt-4"
+              >
+                <dt class="text-base font-medium text-gray-900">
+                  Totaal te betalen
+                </dt>
+                <dd class="text-base font-medium text-gray-900">
+                  €{{ return_order.total_price }}
+                </dd>
+              </div>
+            </dl>
+          </section>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

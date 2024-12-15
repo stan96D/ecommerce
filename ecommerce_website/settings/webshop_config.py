@@ -4,6 +4,14 @@ from decimal import Decimal
 class WebShopConfig:
 
     @staticmethod
+    def tax_high():
+        return Decimal('21.00')
+
+    @staticmethod
+    def tax_low():
+        return Decimal('9.00')
+
+    @staticmethod
     def excluded_filters():
         return [
             "Afmeting",

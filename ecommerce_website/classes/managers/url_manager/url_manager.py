@@ -67,9 +67,18 @@ class TestURLManager(URLManager):
         return f"https://{settings.NGROK_URL}/mollie_webhook/"
 
     @staticmethod
+    def create_return_webhook():
+        return f"https://{settings.NGROK_URL}/return_payment_webhook/"
+
+    @staticmethod
     def create_redirect(order_id):
         return f"https://{
             settings.NGROK_URL}/order_detail?order_id={order_id}"
+
+    @staticmethod
+    def create_redirect_return(return_id):
+        return f"https://{
+            settings.NGROK_URL}/return_detail?return_id={return_id}"
 
 
 class RealURLManager(URLManager):
@@ -91,8 +100,16 @@ class RealURLManager(URLManager):
         return RealURLManager.get_base() + "/mollie_webhook/"
 
     @staticmethod
+    def create_return_webhook():
+        return RealURLManager.get_base() + "/return_payment_webhook/"
+
+    @staticmethod
     def create_redirect(order_id):
         return RealURLManager.get_base() + "/order_detail?order_id=" + str(order_id)
+
+    @staticmethod
+    def create_redirect_return(return_id):
+        return RealURLManager.get_base() + "/return_detail?return_id=" + str(return_id)
 
     @staticmethod
     def store_rating():

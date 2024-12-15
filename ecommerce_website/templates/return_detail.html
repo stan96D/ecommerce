@@ -1,7 +1,7 @@
 {% extends 'components/main.html' %}
 {% load static tailwind_tags %}
 
-{% block title %}Order {{ order.order_number }}{% endblock %}
+{% block title %}Retour order {{ order.order_number }}{% endblock %}
 
 {% block content %}
   <!--
@@ -12,6 +12,7 @@
   <body class="h-full">
   ```
 -->
+
   <div class="mx-auto">
     <div
       class="mx-auto w-1/2 px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl "
@@ -26,7 +27,7 @@
         </p>
       {% else %}
         <div>
-          {% if order.order_status == "paid" %}
+          {% if order.status == "paid" %}
             <p class="flex-1 text-sm font-normal text-green-600 lg:flex-none">
               <i class="fas fa-check-circle text-green-600 mr-1"></i> Betaling
               gelukt
@@ -34,29 +35,39 @@
             <p
               class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
             >
-              Bedankt voor je bestelling!
+              Bedankt voor je retouraanvraag!
             </p>
-          {% elif order.order_status == "partly" %}
+          {% elif order.status == "done" %}
+            <p class="flex-1 text-sm font-normal text-green-600 lg:flex-none">
+              <i class="fas fa-check-circle text-green-600 mr-1"></i> Retour
+              afgerond
+            </p>
+            <p
+              class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
+            >
+              Bedankt voor je retouraanvraag!
+            </p>
+          {% elif order.status == "partly" %}
             <p class="flex-1 text-sm font-normal text-amber-500 lg:flex-none">
               <i class="fas fa-check-circle text-amber-500 mr-1"></i> Producten
-              (deels) geleverd
+              (deels) opgehaald
             </p>
             <p
               class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
             >
-              Bedankt voor je bestelling!
+              Bedankt voor je retouraanvraag!
             </p>
-          {% elif order.order_status == "delivered" %}
+          {% elif order.status == "delivered" %}
             <p class="flex-1 text-sm font-normal text-green-600 lg:flex-none">
               <i class="fas fa-check-circle text-green-600 mr-1"></i> Producten
-              geleverd
+              opgehaald
             </p>
             <p
               class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
             >
-              Veel plezier met je bestelling!
+              Bedankt voor je retouraanvraag!
             </p>
-          {% elif order.order_status == "open" %}
+          {% elif order.status == "open" %}
             <p class="flex-1 text-sm font-normal text-amber-500 lg:flex-none">
               <i class="fas fa-exclamation-circle text-amber-500 mr-1"></i>
               Openstaande betaling
@@ -64,9 +75,9 @@
             <p
               class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
             >
-              Bedankt voor je bestelling!
+              Bedankt voor je retouraanvraag!
             </p>
-          {% elif order.order_status == "failed" %}
+          {% elif order.status == "failed" %}
             <p class="flex-1 text-sm font-normal text-red-600 lg:flex-none">
               <i class="fas fa-exclamation-circle text-red-600 mr-1"></i>
               Betaling mislukt
@@ -77,58 +88,54 @@
               Oeps.....
             </p>
           {% endif %}
-          {% if order.order_status == "paid" %}
+          {% if order.status == "paid" %}
             <p class="mt-2 text-base text-gray-500">
-              We waarderen uw bestelling, we zijn deze momenteel aan het
+              We waarderen uw retouraanvraag, we zijn deze momenteel aan het
               verwerken. Dus heb even geduld en dan ontvangt u binnenkort een
-              bevestiging!
+              bevestiging van onze afhaalservice!
             </p>
-          {% elif order.order_status == "partly" %}
+          {% elif order.status == "done" %}
             <p class="mt-2 pb-2 text-base text-gray-500">
-              Uw bestelling is deels geleverd. Dit betekent dat er nog producten
-              geleverd kunnen worden. Als het goed is heeft onze bezorgservice
-              hier contact met u over opgenomen. Mocht er toch nog onbedoeld een
-              probleem zijn, neem dan gerust contact met ons op. Wij regelen dit
-              voor u!
+              Deze retouraanvraag is afgerond. Dat betekent dat onze
+              afhaalservice de artikelen succesvol heeft geretourneerd en het
+              gemoeide bedrag is overgemaakt naar uw rekening. Mocht er toch nog
+              onbedoeld een probleem zijn opgetreden, neem dan gerust contact
+              met ons op.
             </p>
-          {% elif order.order_status == "delivered" %}
+          {% elif order.status == "partly" %}
             <p class="mt-2 pb-2 text-base text-gray-500">
-              Uw bestelling is succesvol afgerond! Bedankt voor uw vertrouwen in
+              Uw bestelling is deels opgehaald. Dit betekent dat er nog
+              producten opgehaald kunnen worden. Als het goed is heeft onze
+              afhaalservice hier contact met u over opgenomen. Mocht er toch nog
+              onbedoeld een probleem zijn, neem dan gerust contact met ons op.
+              Wij regelen dit voor u!
+            </p>
+          {% elif order.status == "delivered" %}
+            <p class="mt-2 pb-2 text-base text-gray-500">
+              Uw retour is succesvol opgehaald! Bedankt voor uw vertrouwen in
               ons team. Als u vragen heeft of verdere assistentie nodig heeft,
               aarzel dan niet om contact met ons op te nemen.
             </p>
-          {% elif order.order_status == "open" %}
+          {% elif order.status == "open" %}
             <p class="mt-2 pb-2 text-base text-gray-500">
-              We waarderen uw bestelling, momenteel is deze niet betaald dus
-              kunnen wij op dit moment de bestelling nog niet in orde maken.
+              We waarderen uw retouraanvraag, momenteel is deze niet betaald dus
+              kunnen wij op dit moment de aanvraag nog niet in orde maken.
             </p>
-          {% elif order.order_status == "failed" %}
+          {% elif order.status == "failed" %}
             <p class="mt-2 text-base text-gray-500">
-              Bedankt voor uw bestelling, echter is er helaas tijdens het proces
-              iets misgegaan waardoor de betaling is mislukt. Onze excuses
-              hiervoor.
+              Bedankt voor uw retouraanvraag, echter is er helaas tijdens het
+              proces iets misgegaan waardoor de betaling is mislukt. Onze
+              excuses hiervoor.
             </p>
           {% endif %}
 
-          <div class="mt-16">
-            <form method="GET" action="{% url 'create_return' %}">
-              <input type="hidden" name="order_id" value="{{ order.id }}" />
-              <button
-                type="submit"
-                id="returnButton"
-                class="ml-auto inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-amber-500 hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
-                style="display: none;"
-              >
-                Aanmelden als retour
-              </button>
-            </form>
-          </div>
+          <div class="mt-16"></div>
 
           <ul
             role="list"
             class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500"
           >
-            {% for order_line in order.order_lines %}
+            {% for order_line in order.return_order_lines %}
               <li class="flex space-x-6 py-6 relative">
                 <img
                   src="{{ order_line.thumbnail_url }}"
@@ -141,7 +148,23 @@
                       {{ order_line.name }}
                     </a>
                   </h3>
-                  <p class="text-gray-400">{{ order_line.quantity }} stuk(s)</p>
+                  <p class="text-gray-400">
+                    {{ order_line.quantity }} stuk(s)
+                    {% if order_line.returned_quantity > 0 %}
+                      {% if order_line.return_id is not None %}
+                        <a
+                          href="/return_detail/?return_id={{ order_line.return_id }}"
+                          class="text-amber-500 font-medium text-xs"
+                        >
+                          {{ order_line.returned_quantity }} geretourneerd
+                        </a>
+                      {% else %}
+                        <span class="text-amber-500 font-medium text-xs">
+                          {{ order_line.returned_quantity }} geretourneerd
+                        </span>
+                      {% endif %}
+                    {% endif %}
+                  </p>
                   <p>€{{ order_line.unit_price }} per pak</p>
                 </div>
 
@@ -157,12 +180,10 @@
                   >
                     <span class="flex items-center text-xs pr-2">
                       <!-- Simplified Icon for status with color -->
-                      {% if order_line.status == 'Nog te leveren' %}
+                      {% if order_line.status == 'Nog op te halen' %}
                         <i class="fas fa-exclamation text-amber-500"></i>
-                      {% elif order_line.status == 'Geleverd' %}
+                      {% elif order_line.status == 'Opgehaald' %}
                         <i class="fas fa-check text-green-500"></i>
-                      {% elif order_line.status == 'Geretourneerd' %}
-                        <i class="fas fa-undo-alt text-red-500"></i>
                       {% endif %}
                     </span>
 
@@ -179,43 +200,59 @@
           <dl
             class="space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500"
           >
-            <div class="flex justify-between">
-              <dt>Subtotaal</dt>
-              <dd class="text-gray-900">€{{ order.sub_price }}</dd>
-            </div>
+            {% if order.status == 'paid' %}
+              <div class="flex justify-between">
+                <dt>Subtotaal</dt>
+                <dd class="text-gray-900">€{{ order.sub_price }}</dd>
+              </div>
 
-            <div class="flex justify-between">
-              <dt>BTW 9%</dt>
-              <dd class="text-gray-900">€{{ order.tax_price_low }}</dd>
-            </div>
+              <div class="flex justify-between">
+                <dt>BTW 9%</dt>
+                <dd class="text-gray-900">€{{ order.tax_price_low }}</dd>
+              </div>
 
-            <div class="flex justify-between">
-              <dt>BTW 21%</dt>
-              <dd class="text-gray-900">€{{ order.tax_price_high }}</dd>
-            </div>
+              <div class="flex justify-between">
+                <dt>BTW 21%</dt>
+                <dd class="text-gray-900">€{{ order.tax_price_high }}</dd>
+              </div>
 
-            <div class="flex justify-between">
-              <dt>Verzendkosten</dt>
-              <dd class="text-sm font-medium text-gray-900">
-                {% if order.shipping_price == 0 %}
-                  <span class="text-green-500 font-medium text-sm">Gratis</span>
-                {% else %}
-                  €{{ order.shipping_price }}
+              <div
+                class="flex flex-col items-start border-t border-gray-200 pt-6 text-gray-900"
+              >
+                <div class="flex items-center justify-between w-full">
+                  <dt class="text-base">Totaal terug te krijgen</dt>
+                  <dd class="text-base">€{{ order.total_price }}</dd>
+                </div>
+                {% if order.status == 'paid' or order.status == 'partly' %}
+                  <p class="text-sm text-gray-500 font-normal mt-1">
+                    Onze afhaalservice neemt contact met u op!
+                  </p>
+                {% elif order.status == 'delivered' %}
+                  <p class="text-sm text-gray-500 font-normal mt-1">
+                    Uw geld wordt binnen 2 weken op uw rekening gestort.
+                  </p>
                 {% endif %}
-              </dd>
-            </div>
+              </div>
+            {% elif order.status == 'open' %}
+              <div class="flex justify-between">
+                <dt>Verzendkosten</dt>
+                <dd class="text-sm font-medium text-gray-900">
+                  €{{ order.shipping_amount }}
+                </dd>
+              </div>
 
-            <div
-              class="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900"
-            >
-              <dt class="text-base">Totaal</dt>
-              <dd class="text-base">€{{ order.total_price }}</dd>
-            </div>
+              <div
+                class="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900"
+              >
+                <dt class="text-base">Nog te betalen</dt>
+                <dd class="text-base">€{{ order.shipping_amount }}</dd>
+              </div>
+            {% endif %}
           </dl>
 
           <dl class="mt-16 grid grid-cols-2 gap-x-4 text-sm text-gray-600">
             <div>
-              <dt class="font-medium text-gray-900">Aflever adres</dt>
+              <dt class="font-medium text-gray-900">Afhaal adres</dt>
               <dd class="mt-2">
                 <address class="not-italic">
                   <span class="block"
@@ -239,14 +276,14 @@
                 <div class="flex-auto">
                   <p class="text-gray-900">{{ order.payment_information }}</p>
                   <p>{{ order.payment_status }}</p>
-                  {% if order.order_status == 'open' %}
+                  {% if order.status == 'open' %}
                     <a
                       href="{{ order.payment_url }}"
                       target="_blank"
                       class="font-normal text-blue-600 custom-link"
                       >Betaalpagina
                     </a>
-                  {% elif order.order_status == 'failed' %}
+                  {% elif order.status == 'failed' %}
                     <form
                       action="{% url 'repay_order' order.id %}"
                       method="post"
@@ -289,37 +326,4 @@
       {% endif %}
     </div>
   </div>
-  <script>
-    $(document).ready(function () {
-      // Automatically check if the order is returnable on page load
-      var orderId = '{{ order.id }}'
-      markForReturn(orderId)
-    })
-
-    function markForReturn(orderId) {
-      $.ajax({
-        url: '/order-returnable/', // Your API endpoint
-        method: 'GET',
-        data: {
-          order_id: orderId,
-        },
-        success: function (data) {
-          var isReturnable = data.is_returnable
-
-          if (isReturnable) {
-            // Show the return button and enable it
-            $('#returnButton').show().prop('disabled', false)
-          } else {
-            // Hide the return button
-            $('#returnButton').hide()
-          }
-        },
-        error: function (error) {
-          console.log(error)
-          // If there's an error, hide the button by default
-          $('#returnButton').hide()
-        },
-      })
-    }
-  </script>
 {% endblock %}

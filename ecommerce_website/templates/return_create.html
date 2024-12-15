@@ -1,0 +1,337 @@
+{% extends 'components/main.html' %}
+{% load static tailwind_tags %}
+
+{% block title %}Retour order {{ order.order_number }}{% endblock %}
+
+{% block content %}
+  <div class="mx-auto">
+    <div class="mx-auto w-1/2 px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl">
+      {% if not order %}
+        <p
+          class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
+        >
+          Geen order gevonden...
+        </p>
+      {% else %}
+        <div>
+          <!-- Status div with initial text and icon -->
+          <p
+            id="return-status"
+            class="flex-1 text-sm font-normal text-amber-500 lg:flex-none"
+          >
+            <i
+              id="return-status-icon"
+              class="fas fa-exclamation-circle text-amber-500 mr-1"
+            ></i>
+            Actie vereist
+          </p>
+
+          <!-- Updated Header -->
+          <p
+            class="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl"
+          >
+            Selecteer de producten om te retourneren
+          </p>
+
+          <!-- Updated Description -->
+          <p class="mt-2 text-base text-gray-500">
+            Soms kan een retour noodzakelijk zijn, en wij begrijpen dat dit geen
+            gemakkelijke keuze is. Ons team doet er alles aan om dit proces zo
+            soepel mogelijk te laten verlopen. Wees er wel van bewust dat een
+            retour kosten in rekening met zich neemt. Neem gerust contact met
+            ons op als je hierover vragen hebt.
+          </p>
+
+          <div class="mt-16"></div>
+          <ul
+            role="list"
+            class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500"
+          >
+            {% for order_line in order.return_order_lines %}
+              <li class="flex space-x-6 py-6">
+                <img
+                  src="{{ order_line.thumbnail_url }}"
+                  alt="{{ order_line.name }}"
+                  class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center"
+                />
+                <div class="flex-auto">
+                  <h3 class="text-gray-900">
+                    <a href="{% url 'product_detail' order_line.product_id %}">
+                      {{ order_line.name }}
+                    </a>
+                  </h3>
+                  <p class="text-gray-400">{{ order_line.quantity }} stuk(s)</p>
+                  <div class="flex items-center justify-between mt-1">
+                    <p>€{{ order_line.unit_price }} per pak</p>
+                  </div>
+                </div>
+                <div>
+                  <div class="relative">
+                    <input
+                      type="number"
+                      id="{{ order_line.id }}"
+                      name="{{ order_line.id }}"
+                      value="0"
+                      min="0"
+                      max="{{ order_line.quantity }}"
+                      step="1"
+                      onchange="updatePrices()"
+                      onkeydown="return false;"
+                      autocomplete="off"
+                      class="w-20 rounded-md border border-gray-300 py-1.5 text-base font-medium text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+                      data-unit-price="{{ order_line.unit_price }}"
+                      data-tax="{{ order_line.tax }}"
+                      data-tax-amount="{{ order_line.tax_amount }}"
+                    />
+                  </div>
+                  <p
+                    id="total-price-{{ order_line.id }}"
+                    class="flex-none font-medium text-gray-900 text-right mt-2"
+                  >
+                    €0.00
+                  </p>
+                </div>
+              </li>
+            {% endfor %}
+          </ul>
+
+          <dl
+            class="space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-500"
+          >
+            <div class="flex justify-between">
+              <dt>Subtotaal</dt>
+              <dd id="subtotal" class="text-gray-900">€0.00</dd>
+            </div>
+
+            <div class="flex justify-between">
+              <dt>BTW 9%</dt>
+              <dd id="tax-low" class="text-gray-900">€0.00</dd>
+            </div>
+
+            <div class="flex justify-between">
+              <dt>BTW 21%</dt>
+              <dd id="tax-high" class="text-gray-900">€0.00</dd>
+            </div>
+
+            <div
+              class="flex items-center justify-between border-t border-gray-200 pt-6 text-gray-900"
+            >
+              <dt class="text-base">Totaal terug te krijgen</dt>
+              <dd id="total-return" class="text-base ">€0.00</dd>
+            </div>
+          </dl>
+
+          <div class="py-6">
+            <button
+              id="complete-button"
+              disabled="true"
+              class="mt-8 w-full rounded-md  border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
+            >
+              Naar gegevens
+            </button>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <script>
+    const returnProducts = {} // Keeps track of product ID and quantity
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const completeButton = document.getElementById('complete-button')
+
+      completeButton.disabled = true
+      completeButton.classList.add('opacity-75', 'cursor-not-allowed')
+      completeButton.classList.remove('hover:bg-customColor')
+    })
+
+    document
+      .getElementById('complete-button')
+      .addEventListener('click', function () {
+        // Disable button to prevent multiple submissions
+        const completeButton = this
+        completeButton.disabled = true
+        const orderId = '{{ order.order_id }}'
+        console.log(orderId)
+        // Data to send for validation
+        const data = {
+          returnProducts: returnProducts, // The global variable tracking selected products
+          orderId: orderId,
+        }
+
+        // Perform AJAX request
+        fetch('/validate-return-order/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token if using Django
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok')
+            }
+            return response.json()
+          })
+          .then((result) => {
+            if (result.success) {
+              // After receiving the successful response, fetch data with the return information
+              fetch('/return_create/', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRFToken': getCookie('csrftoken'), // Include CSRF token
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error('Network response was not ok')
+                  }
+                  return response.json() // Assuming response is JSON and contains return_id
+                })
+                .then((responseData) => {
+                  if (responseData.return_id) {
+                    // If return_id is present, navigate to create_return_overview with the return_id
+                    const returnId = responseData.return_id
+                    window.location.href = `/create_return_overview/?return_id=${returnId}`
+                  } else {
+                    console.error('No return_id found in the response')
+                  }
+                })
+                .catch((error) => {
+                  console.error('Error in fetch request:', error)
+                })
+            } else {
+              window.location.reload()
+            }
+          })
+          .catch((error) => {
+            console.error('There was a problem with the AJAX request:', error)
+          })
+          .finally(() => {
+            // Re-enable the button
+            completeButton.disabled = false
+          })
+      })
+
+    // Helper function to get CSRF token for Django
+    function getCookie(name) {
+      let cookieValue = null
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';')
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim()
+          if (cookie.substring(0, name.length + 1) === `${name}=`) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+            break
+          }
+        }
+      }
+      return cookieValue
+    }
+
+    function updateReturnStatus() {
+      let isSelected = false
+
+      // Check if any product is selected
+      document.querySelectorAll('input[type="number"]').forEach((input) => {
+        const quantity = parseInt(input.value) || 0
+        const maxQuantity = parseInt(input.max) || 0
+
+        if (quantity > 0 && quantity <= maxQuantity) {
+          isSelected = true // At least one product is selected
+        }
+      })
+
+      // Change the status text and icon based on the selection
+      const statusElement = document.getElementById('return-status')
+      const iconElement = document.getElementById('return-status-icon')
+
+      if (isSelected) {
+        // Update status to "Retour kan gemaakt worden" with green check
+        statusElement.classList.remove('text-amber-500')
+        statusElement.classList.add('text-green-600')
+        iconElement.classList.remove('fa-exclamation-circle', 'text-amber-500')
+        iconElement.classList.add('fa-check-circle', 'text-green-600')
+        statusElement.innerHTML = `
+        <i id="return-status-icon" class="fas fa-check-circle text-green-600 mr-1"></i>
+        Retour kan gemaakt worden
+      ` // Updated text with icon
+      } else {
+        // Reset to "Actie vereist"
+        statusElement.classList.remove('text-green-600')
+        statusElement.classList.add('text-amber-500')
+        iconElement.classList.remove('fa-check-circle', 'text-green-600')
+        iconElement.classList.add('fa-exclamation-circle', 'text-amber-500')
+        statusElement.innerHTML = `
+        <i id="return-status-icon" class="fas fa-exclamation-circle text-amber-500 mr-1"></i>
+        Actie vereist
+      ` // Original text with icon
+      }
+    }
+
+    function updatePrices() {
+      let subtotal = 0
+      let taxLow = 0
+      let taxHigh = 0
+
+      document.querySelectorAll('input[type="number"]').forEach((input) => {
+        const quantity = parseInt(input.value) || 0
+        const maxQuantity = parseInt(input.max) || 0
+        const unitPrice = parseFloat(input.dataset.unitPrice) || 0
+        const tax = parseFloat(input.dataset.tax) || 0
+        const taxAmountPerUnit = parseFloat(input.dataset.taxAmount) || 0
+        console.log(unitPrice, tax, taxAmountPerUnit)
+        if (quantity > 0 && quantity <= maxQuantity) {
+          returnProducts[input.id] = quantity
+
+          const priceWithoutTax = unitPrice - taxAmountPerUnit
+
+          subtotal += quantity * priceWithoutTax
+
+          const totalTax = taxAmountPerUnit * quantity
+
+          if (tax === 9.0) {
+            taxLow += totalTax
+          } else if (tax === 21.0) {
+            taxHigh += totalTax
+          }
+
+          const totalPriceElement = document.querySelector(
+            `#total-price-${input.id}`,
+          )
+          totalPriceElement.textContent = `€${(quantity * unitPrice).toFixed(2)}`
+        } else {
+          delete returnProducts[input.id]
+        }
+      })
+
+      document.getElementById('subtotal').textContent =
+        `€${subtotal.toFixed(2)}`
+      document.getElementById('tax-low').textContent = `€${taxLow.toFixed(2)}`
+      document.getElementById('tax-high').textContent = `€${taxHigh.toFixed(2)}`
+      document.getElementById('total-return').textContent = `€${(
+        subtotal +
+        taxLow +
+        taxHigh
+      ).toFixed(2)}`
+
+      const completeButton = document.getElementById('complete-button')
+
+      // Enable/Disable button dynamically
+      if (Object.keys(returnProducts).length > 0) {
+        completeButton.disabled = false
+        completeButton.classList.remove('opacity-75', 'cursor-not-allowed')
+        completeButton.classList.add('hover:bg-customColor')
+      } else {
+        completeButton.disabled = true
+        completeButton.classList.add('opacity-75', 'cursor-not-allowed')
+        completeButton.classList.remove('hover:bg-customColor')
+      }
+
+      updateReturnStatus()
+    }
+  </script>
+{% endblock %}
