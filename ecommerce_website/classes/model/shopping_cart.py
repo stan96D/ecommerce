@@ -4,9 +4,8 @@ from decimal import Decimal
 from ecommerce_website.classes.model.base_shopping_cart_service import *
 
 
-
 class SessionShoppingCart(ShoppingCartInterface):
-    def __init__(self, request, shipping_price = 0, discount_amount = 0):
+    def __init__(self, request, shipping_price=0, discount_amount=0):
         self.session = request.session
 
         cart = self.session.get('cart')
@@ -50,7 +49,7 @@ class SessionShoppingCart(ShoppingCartInterface):
             {'product_id': product_id, 'quantity': item['quantity']}
             for product_id, item in self.cart.items()
         ]
-    
+
     @property
     def get_shipping_price(self):
         return self.shipping_price
@@ -58,7 +57,6 @@ class SessionShoppingCart(ShoppingCartInterface):
     @property
     def get_discount_amount(self):
         return self.discount_amount
-
 
     @property
     def total_price(self):
@@ -77,11 +75,11 @@ class SessionShoppingCart(ShoppingCartInterface):
         shipping_price = self.shipping_price
         discount_amount = self.discount_amount
 
-        total -= discount_amount 
+        total -= discount_amount
         total += shipping_price
         print("SHOPPINGPRICE:", shipping_price, discount_amount, total)
         return total
-    
+
     @property
     def sub_total(self):
         subtotal_amount = Decimal(0)
@@ -93,38 +91,42 @@ class SessionShoppingCart(ShoppingCartInterface):
                 else:
                     product_price = product.unit_selling_price
                 subtotal_amount += item['quantity'] * product_price
-        
-        total_tax_low = self.total_tax(9) 
-        total_tax_high = self.total_tax(21)  
+
+        total_tax_low = self.total_tax(9)
+        total_tax_high = self.total_tax(21)
 
         total_tax = total_tax_low + total_tax_high
 
         return (subtotal_amount - total_tax).quantize(Decimal('0.00'))
 
-
     def total_tax(self, tax_percentage):
         total_tax_amount = Decimal(0)
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
-            if product is not None and product.tax == tax_percentage:
-                if product.has_product_sale:
-                    product_price = product.unit_sale_price
-                else:
-                    product_price = product.unit_selling_price
-                subtotal = item['quantity'] * product_price 
-                tax_amount = subtotal * (Decimal(tax_percentage) / 100)
-                tax_amount = (subtotal * tax_percentage) /  (Decimal('100') + tax_percentage)
+            if product is not None:
+                # Determine the product price (sale or regular)
+                product_price = (
+                    product.unit_sale_price if product.has_product_sale else product.unit_selling_price
+                )
+
+                # Calculate the subtotal for the product
+                subtotal = item['quantity'] * product_price
+
+                # Calculate the tax amount based on the subtotal
+                tax_amount = subtotal * \
+                    (Decimal(tax_percentage) / (100 + tax_percentage))
 
                 total_tax_amount += tax_amount
-        return total_tax_amount.quantize(Decimal('0.00')) 
-    
+
+        # Return the total tax amount rounded to two decimal places
+        return total_tax_amount.quantize(Decimal('0.00'))
 
     def to_json(self):
         cart_data = {
-           'subtotal': float(self.sub_total),
+            'subtotal': float(self.sub_total),
             'total_price': float(self.total_price),
             'items': []
-           }
+        }
 
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
@@ -266,13 +268,12 @@ class AccountShoppingCart(ShoppingCartInterface):
                 total_tax_amount += tax_amount
         return total_tax_amount.quantize(Decimal('0.00'))
 
-
     def to_json(self):
         cart_data = {
-           'subtotal': float(self.sub_total),
+            'subtotal': float(self.sub_total),
             'total_price': float(self.total_price),
             'items': []
-           }
+        }
 
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)

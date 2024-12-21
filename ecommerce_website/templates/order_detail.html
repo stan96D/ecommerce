@@ -184,15 +184,18 @@
               <dd class="text-gray-900">€{{ order.sub_price }}</dd>
             </div>
 
-            <div class="flex justify-between">
-              <dt>BTW 9%</dt>
-              <dd class="text-gray-900">€{{ order.tax_price_low }}</dd>
-            </div>
-
-            <div class="flex justify-between">
-              <dt>BTW 21%</dt>
-              <dd class="text-gray-900">€{{ order.tax_price_high }}</dd>
-            </div>
+            {% if order.tax_price_low > 0 %}
+              <div class="flex justify-between">
+                <dt>BTW 9%</dt>
+                <dd class="text-gray-900">€{{ order.tax_price_low }}</dd>
+              </div>
+            {% endif %}
+            {% if order.tax_price_high > 0 %}
+              <div class="flex justify-between">
+                <dt>BTW 21%</dt>
+                <dd class="text-gray-900">€{{ order.tax_price_high }}</dd>
+              </div>
+            {% endif %}
 
             <div class="flex justify-between">
               <dt>Verzendkosten</dt>
@@ -221,7 +224,7 @@
                   <span class="block"
                     >{{ order.first_name }} {{ order.last_name }}</span
                   >
-                  <span class="block">{{ order.billing_address |safe }}</span>
+                  <span class="block">{{ order.shipping_address |safe }}</span>
                 </address>
               </dd>
             </div>
@@ -270,7 +273,7 @@
                   <span class="block"
                     >{{ order.first_name }} {{ order.last_name }}</span
                   >
-                  <span class="block">{{ order.shipping_address |safe }}</span>
+                  <span class="block">{{ order.billing_address |safe }}</span>
                 </address>
               </dd>
             </div>

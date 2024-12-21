@@ -24,10 +24,9 @@ class ReturnOrderView:
         self.first_name = return_order.first_name
         self.last_name = return_order.last_name
         self.billing_address = NewLineAddressFormatter().format(
-            return_order.order.billing_address)
+            return_order.billing_address)
         self.shipping_address = NewLineAddressFormatter().format(
-            return_order.order.shipping_address)
-
+            return_order.shipping_address)
         self.payment_information = return_order.payment_information
         self.payment_logo = MolliePaymentMethodLogoExtractor(
             MollieClient()).extract(return_order.payment_information_id)

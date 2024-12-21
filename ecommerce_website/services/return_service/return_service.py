@@ -1,6 +1,7 @@
 from datetime import date
 from decimal import Decimal
 from sqlite3 import Date
+from ecommerce_website.classes.model.address_info import AddressInfo
 from ecommerce_website.models import *
 from ecommerce_website.classes.managers.payment_manager.mollie_client import MollieClient
 from ecommerce_website.classes.managers.payment_manager.base_payment_manager import PaymentClient
@@ -91,6 +92,33 @@ class ReturnService():
         if not order:
             return None
 
+        address = additional_data["address"]
+        house_number = additional_data["house_number"]
+        country = additional_data["country"]
+        city = additional_data["city"]
+        postal_code = additional_data["postal_code"]
+
+        alternative_billing = additional_data["billing_toggle"] == 'true'
+
+        # Use regular address fields if alternative_billing is False
+        if not alternative_billing:
+            billing_address = address
+            billing_house_number = house_number
+            billing_country = country
+            billing_city = city
+            billing_postal_code = postal_code
+        else:
+            billing_address = additional_data["billing_address"]
+            billing_house_number = additional_data["billing_house_number"]
+            billing_country = additional_data["billing_country"]
+            billing_city = additional_data["billing_city"]
+            billing_postal_code = additional_data["billing_postal_code"]
+
+        delivery_address_info = AddressInfo(
+            address, house_number, city, postal_code, country)
+        billing_address_info = AddressInfo(
+            billing_address, billing_house_number, billing_city, billing_postal_code, billing_country)
+
         # Loop through the return line data and accumulate the order lines and refund amount
         for id, quantity_requested in return_order_data["return_line_data"].items():
             try:
@@ -142,12 +170,10 @@ class ReturnService():
                     first_name=additional_data['first_name'],
                     last_name=additional_data['last_name'],
                     email_address=additional_data['email_address'],
-                    address=additional_data['address'],
-                    house_number=additional_data['house_number'],
-                    city=additional_data['city'],
-                    postal_code=additional_data['postal_code'],
-                    country=additional_data['country'],
                     phone=additional_data['phone'],
+
+                    shipping_address=delivery_address_info.full_address,
+                    billing_address=billing_address_info.full_address,
 
                     payment_information=payment_info.payment_information,
                     payment_information_id=payment_info.payment_method_id,

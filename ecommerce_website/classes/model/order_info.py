@@ -53,7 +53,7 @@ class OrderInfo:
         order_string += f"Billing Address: {self.billing_address}\n"
         order_string += f"Delivery Address: {self.delivery_address}\n"
         return order_string
-    
+
     def to_json(self):
         order_json = {
             'contact_info': self.contact_info.serialize(),
@@ -61,4 +61,3 @@ class OrderInfo:
             'delivery_address_info': self.delivery_address_info.serialize(),
         }
         return order_json
-

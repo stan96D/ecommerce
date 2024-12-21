@@ -369,11 +369,17 @@ def order_info(request):
                 "phone": json_data['contact_info']['phonenumber'],
                 "salutation": json_data['contact_info']['salutation'],
 
-                "address": json_data['billing_address_info']['address'],
-                "house_number": json_data['billing_address_info']['house_number'],
-                "city": json_data['billing_address_info']['city'],
-                "postal_code": json_data['billing_address_info']['postal_code'],
-                "country": json_data['billing_address_info']['country']
+                "address": json_data['delivery_address_info']['address'],
+                "house_number": json_data['delivery_address_info']['house_number'],
+                "city": json_data['delivery_address_info']['city'],
+                "postal_code": json_data['delivery_address_info']['postal_code'],
+                "country": json_data['delivery_address_info']['country'],
+
+                "billing_address": json_data.get('billing_address_info', {}).get('address', ""),
+                "billing_house_number": json_data.get('billing_address_info', {}).get('house_number', ""),
+                "billing_city": json_data.get('billing_address_info', {}).get('city', ""),
+                "billing_postal_code": json_data.get('billing_address_info', {}).get('postal_code', ""),
+                "billing_country": json_data.get('billing_address_info', {}).get('country', ""),
             })
 
         elif user.is_authenticated:
@@ -389,7 +395,11 @@ def order_info(request):
                 "postal_code": user.postal_code,
                 "country": user.country,
                 "salutation": user.salutation,
-
+                "billing_address": "",
+                "billing_house_number": "",
+                "billing_city": "",
+                "billing_postal_code": "",
+                "billing_country": "",
             })
 
         else:
@@ -406,7 +416,7 @@ def order_info(request):
     elif request.method == "POST":
 
         attributes = request.POST.copy()
-
+        different_billing = attributes.get('billing_toggle')
         first_name = attributes.get('first-name')
         last_name = attributes.get('last-name')
         email_address = attributes.get('email-address')
@@ -417,11 +427,23 @@ def order_info(request):
         country = attributes.get('country')
         phone = attributes.get('phone')
         salutation = attributes.get('salutation')
+        billing_address = attributes.get('billing-address', "")
+        billing_house_number = attributes.get('billing-house-number', "")
+        billing_city = attributes.get('billing-city', "")
+        billing_postal_code = attributes.get('billing-postal-code', "")
+        billing_country = attributes.get('billing-country', "")
+
+        if different_billing == 'true':
+            billing_address = attributes.get('address')
+            billing_house_number = attributes.get('house-number')
+            billing_city = attributes.get('city')
+            billing_postal_code = attributes.get('postal-code')
+            billing_country = attributes.get('country')
 
         contact_info = ContactInfo(
             first_name, last_name, email_address, phone, salutation)
         billing_address_info = AddressInfo(
-            address, house_number, city, postal_code, country)
+            billing_address, billing_house_number, billing_city, billing_postal_code, billing_country)
         shipping_address_info = AddressInfo(
             address, house_number, city, postal_code, country)
 
@@ -1993,6 +2015,12 @@ def create_return_overview(request):
                 'postal_code': account_details.postal_code,
                 'country': account_details.country,
                 'phone': account_details.phone,
+                'billing_address': account_details.address,
+                'billing_house_number': account_details.house_number,
+                'billing_city': account_details.city,
+                'billing_postal_code': account_details.postal_code,
+                'billing_country': account_details.country,
+                'billing_toggle': 'false'
             }
 
         form = ReturnForm(initial=initial_data)

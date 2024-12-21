@@ -95,7 +95,7 @@ class Product(models.Model):
     thumbnail = models.ImageField(
         upload_to='product_thumbnails/', null=True, blank=True)
     tax = models.DecimalField(
-        max_digits=5, decimal_places=2, default=9.00, db_index=True)
+        max_digits=5, decimal_places=2, default=21, db_index=True)
     runner = models.BooleanField(default=False)
     selling_percentage = models.DecimalField(
         max_digits=5, decimal_places=2, default=0.00)
@@ -103,7 +103,7 @@ class Product(models.Model):
     @property
     def unit_selling_price(self):
         selling_price = round(
-            self.unit_price * (1 - self.selling_percentage / 100), 2)
+            self.unit_price / self.selling_percentage)
         selling_price_with_shipping_costs = round(
             selling_price * WebShopConfig.shipping_margin(), 2)
         return selling_price_with_shipping_costs
@@ -112,7 +112,7 @@ class Product(models.Model):
     def selling_price(self):
 
         selling_price = round(
-            self.price * (1 - self.selling_percentage / 100), 2)
+            self.price / self.selling_percentage)
 
         selling_price_with_shipping_costs = round(
             selling_price * WebShopConfig.shipping_margin(), 2)
@@ -424,12 +424,10 @@ class ReturnOrder(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email_address = models.EmailField()
-    address = models.CharField(max_length=255)
-    house_number = models.CharField(max_length=50)
-    city = models.CharField(max_length=100)
-    postal_code = models.CharField(max_length=20)
-    country = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
+
+    shipping_address = models.TextField()
+    billing_address = models.TextField()
 
     payment_information = models.TextField()
     payment_information_id = models.TextField(max_length=20)

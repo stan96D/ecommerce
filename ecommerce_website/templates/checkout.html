@@ -29,11 +29,19 @@
       </h1>
 
       <form
+        id="checkout-form"
         method="POST"
         action="{% url 'order_info' %}"
         class="mt-8 space-y-6"
       >
         {% csrf_token %}
+        <input
+          type="hidden"
+          name="billing-toggle"
+          id="billing-toggle-input"
+          value="{{ order_info.alternate_billing }}"
+        />
+
         <div
           class="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16"
         >
@@ -62,8 +70,8 @@
                           id="salutation-meneer"
                           name="salutation"
                           type="radio"
-                          value="Meneer"
-                          {% if order_info.salutation == "Meneer" %}checked{% endif %}
+                          value="Dhr"
+                          {% if order_info.salutation == "Dhr" %}checked{% endif %}
                           class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor"
                         />
                         <label
@@ -77,8 +85,8 @@
                           id="salutation-mevrouw"
                           name="salutation"
                           type="radio"
-                          value="Mevrouw"
-                          {% if order_info.salutation == "Mevrouw" %}checked{% endif %}
+                          value="Mevr"
+                          {% if order_info.salutation == "Mevr" %}checked{% endif %}
                           class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor"
                         />
                         <label
@@ -168,144 +176,291 @@
                     />
                   </div>
                 </div>
+                <div class="mt-4">
+                  <label
+                    for="phone"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Telefoonnummer <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="phone"
+                      id="phone"
+                      value="{{ order_info.phone }}"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                </div>
               </div>
+            </div>
 
-              <div class="mt-10 border-t border-gray-200 pt-10">
+            <div class="mt-10 border-t border-gray-200 pt-10">
+              <div class="flex justify-start">
                 <h2 class="text-lg font-medium text-gray-900">
                   Adres informatie
                 </h2>
+                <div class=" pl-4 flex items-center">
+                  <!-- Toggle Switch -->
+                  <button
+                    id="billing-toggle"
+                    type="button"
+                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                    role="switch"
+                    aria-checked="false"
+                    aria-labelledby="billing-toggle-label"
+                    onclick="toggleBilling()"
+                  >
+                    <span
+                      id="billing-toggle-thumb"
+                      aria-hidden="true"
+                      class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0"
+                    ></span>
+                  </button>
+                  <!-- Toggle Label -->
+                  <span class="ml-3 text-sm" id="billing-toggle-label">
+                    <!-- <span class="font-medium text-gray-900"
+                      >Afwijkend factuuradres?</span
+                    > -->
+                    <span class="text-gray-500">Afwijkend factuuradres?</span>
+                  </span>
+                </div>
+              </div>
 
-                <div
-                  class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
-                >
-                  <div>
-                    <label
-                      for="address"
-                      class="block text-sm font-medium text-gray-700"
-                    >
-                      Adres <span class="text-red-500">*</span>
-                    </label>
-                    <div class="mt-1">
-                      <input
-                        type="text"
-                        name="address"
-                        id="address"
-                        value="{{ order_info.address }}"
-                        autocomplete="street-address"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        required
-                      />
-                    </div>
+              <div
+                class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
+              >
+                <div>
+                  <label
+                    for="address"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Adres <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="address"
+                      id="address"
+                      value="{{ order_info.address }}"
+                      autocomplete="street-address"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
                   </div>
+                </div>
 
-                  <div>
-                    <label
-                      for="house-number"
-                      class="block text-sm font-medium text-gray-700"
-                    >
-                      Huisnummer <span class="text-red-500">*</span>
-                    </label>
-                    <div class="mt-1">
-                      <input
-                        type="text"
-                        name="house-number"
-                        id="house-number"
-                        value="{{ order_info.house_number }}"
-                        autocomplete="house-number"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        required
-                      />
-                    </div>
+                <div>
+                  <label
+                    for="house-number"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Huisnummer <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="house-number"
+                      id="house-number"
+                      value="{{ order_info.house_number }}"
+                      autocomplete="house-number"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
                   </div>
+                </div>
 
-                  <div>
-                    <label
-                      for="city"
-                      class="block text-sm font-medium text-gray-700"
-                    >
-                      Plaats <span class="text-red-500">*</span>
-                    </label>
-                    <div class="mt-1">
-                      <input
-                        type="text"
-                        name="city"
-                        id="city"
-                        value="{{ order_info.city }}"
-                        autocomplete="city"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        required
-                      />
-                    </div>
+                <div>
+                  <label
+                    for="city"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Plaats <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="city"
+                      id="city"
+                      value="{{ order_info.city }}"
+                      autocomplete="city"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
                   </div>
-                  <div>
-                    <label
-                      for="postal-code"
-                      class="block text-sm font-medium text-gray-700"
-                    >
-                      Postcode <span class="text-red-500">*</span>
-                    </label>
-                    <div class="mt-1">
-                      <input
-                        type="text"
-                        name="postal-code"
-                        id="postal-code"
-                        value="{{ order_info.postal_code }}"
-                        autocomplete="postal-code"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        required
-                      />
-                    </div>
+                </div>
+                <div>
+                  <label
+                    for="postal-code"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Postcode <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="postal-code"
+                      id="postal-code"
+                      value="{{ order_info.postal_code }}"
+                      autocomplete="postal-code"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
                   </div>
-                  <div>
-                    <label
-                      for="country"
-                      class="block text-sm font-medium text-gray-700"
+                </div>
+                <div>
+                  <label
+                    for="country"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Land <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <select
+                      id="country"
+                      name="country"
+                      autocomplete="country"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
-                      Land <span class="text-red-500">*</span>
-                    </label>
-                    <div class="mt-1">
-                      <select
-                        id="country"
-                        name="country"
-                        autocomplete="country"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                      >
-                        {% if order_info.country == "Nederland" %}
-                          <option value="Nederland" selected>Nederland</option>
-                        {% else %}
-                          <option value="Nederland">Nederland</option>
-                        {% endif %}
-                        {% if order_info.country == "Duitsland" %}
-                          <option value="Duitsland" selected>Duitsland</option>
-                        {% else %}
-                          <option value="Duitsland">Duitsland</option>
-                        {% endif %}
-                        {% if order_info.country == "België" %}
-                          <option value="België" selected>België</option>
-                        {% else %}
-                          <option value="België">België</option>
-                        {% endif %}
-                      </select>
-                    </div>
+                      {% if order_info.country == "Nederland" %}
+                        <option value="Nederland" selected>Nederland</option>
+                      {% else %}
+                        <option value="Nederland">Nederland</option>
+                      {% endif %}
+                      {% if order_info.country == "Duitsland" %}
+                        <option value="Duitsland" selected>Duitsland</option>
+                      {% else %}
+                        <option value="Duitsland">Duitsland</option>
+                      {% endif %}
+                      {% if order_info.country == "België" %}
+                        <option value="België" selected>België</option>
+                      {% else %}
+                        <option value="België">België</option>
+                      {% endif %}
+                    </select>
                   </div>
+                </div>
+              </div>
+            </div>
 
-                  <div class="sm:col-span-2">
-                    <label
-                      for="phone"
-                      class="block text-sm font-medium text-gray-700"
+            <!-- Additional Billing Address Fields (Hidden by Default) -->
+            <div
+              id="alternate-billing"
+              class="mt-10 border-t border-gray-200 pt-10 hidden"
+            >
+              <h2 class="text-lg font-medium text-gray-900">Factuuradres</h2>
+              <div
+                class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
+              >
+                <div>
+                  <label
+                    for="billing-address"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Adres <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="billing-address"
+                      id="billing-address"
+                      value="{{ order_info.billing_address }}"
+                      autocomplete="street-address"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="billing-house-number"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Huisnummer <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="billing-house-number"
+                      id="billing-house-number"
+                      value="{{ order_info.billing_house_number }}"
+                      autocomplete="house-number"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="billing-city"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Plaats <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="billing-city"
+                      id="billing-city"
+                      value="{{ order_info.billing_city }}"
+                      autocomplete="address-level2"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="billing-postal-code"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Postcode <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="billing-postal-code"
+                      id="billing-postal-code"
+                      value="{{ order_info.billing_postal_code }}"
+                      autocomplete="postal-code"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="billing-country"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Land <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <select
+                      id="billing-country"
+                      name="billing-country"
+                      autocomplete="billing-country"
+                      value="{{ order_info.billing_country }}"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
-                      Telefoonnummer <span class="text-red-500">*</span>
-                    </label>
-                    <div class="mt-1">
-                      <input
-                        type="text"
-                        name="phone"
-                        id="phone"
-                        value="{{ order_info.phone }}"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        required
-                      />
-                    </div>
+                      {% if order_info.billing_country == "Nederland" %}
+                        <option value="Nederland" selected>Nederland</option>
+                      {% else %}
+                        <option value="Nederland">Nederland</option>
+                      {% endif %}
+                      {% if order_info.billing_country == "Duitsland" %}
+                        <option value="Duitsland" selected>Duitsland</option>
+                      {% else %}
+                        <option value="Duitsland">Duitsland</option>
+                      {% endif %}
+                      {% if order_info.billing_country == "België" %}
+                        <option value="België" selected>België</option>
+                      {% else %}
+                        <option value="België">België</option>
+                      {% endif %}
+                    </select>
                   </div>
                 </div>
               </div>
@@ -337,67 +492,72 @@
                   €{{ cart.sub_price }}
                 </dd>
               </div>
-              <div
-                class="flex items-center justify-between border-t border-gray-200 pt-4"
-              >
-                <dt class="flex text-sm text-gray-600">
-                  <span>BTW 9%</span>
-                  <a
-                    href="#"
-                    class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-                  >
-                    <span class="sr-only"
-                      >Learn more about how tax is calculated</span
+              {% if cart.tax_low > 0 %}
+                <div
+                  class="flex items-center justify-between border-t border-gray-200 pt-4"
+                >
+                  <dt class="flex text-sm text-gray-600">
+                    <span>BTW 9%</span>
+                    <a
+                      href="#"
+                      class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
+                      title="Meer informatie over hoe BTW wordt berekend"
                     >
-                    <svg
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
+                      <span class="sr-only"
+                        >Meer informatie over hoe BTW wordt berekend</span
+                      >
+                      <svg
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </a>
+                  </dt>
+                  <dd class="text-sm font-medium text-gray-900">
+                    €{{ cart.tax_price_low }}
+                  </dd>
+                </div>
+              {% endif %}
+              {% if cart.tax_price_high > 0 %}
+                <div
+                  class="flex items-center justify-between border-t border-gray-200 pt-4"
+                >
+                  <dt class="flex text-sm text-gray-600">
+                    <span>BTW 21%</span>
+                    <a
+                      href="#"
+                      class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
+                      title="Meer informatie over hoe BTW wordt berekend"
                     >
-                      <path
-                        fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </a>
-                </dt>
-                <dd class="text-sm font-medium text-gray-900">
-                  €{{ cart.tax_price_low }}
-                </dd>
-              </div>
-              <div
-                class="flex items-center justify-between border-t border-gray-200 pt-4"
-              >
-                <dt class="flex text-sm text-gray-600">
-                  <span>BTW 21%</span>
-                  <a
-                    href="#"
-                    class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-                  >
-                    <span class="sr-only"
-                      >Learn more about how tax is calculated</span
-                    >
-                    <svg
-                      class="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                  </a>
-                </dt>
-                <dd class="text-sm font-medium text-gray-900">
-                  €{{ cart.tax_price_high }}
-                </dd>
-              </div>
-
+                      <span class="sr-only"
+                        >Meer informatie over hoe BTW wordt berekend</span
+                      >
+                      <svg
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM8.94 6.94a.75.75 0 11-1.061-1.061 3 3 0 112.871 5.026v.345a.75.75 0 01-1.5 0v-.5c0-.72.57-1.172 1.081-1.287A1.5 1.5 0 108.94 6.94zM10 15a1 1 0 100-2 1 1 0 000 2z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </a>
+                  </dt>
+                  <dd class="text-sm font-medium text-gray-900">
+                    €{{ cart.tax_price_high }}
+                  </dd>
+                </div>
+              {% endif %}
               <div
                 class="flex items-center justify-between border-t border-gray-200 pt-4"
               >
@@ -429,4 +589,96 @@
       </form>
     </div>
   </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Get the hidden input element
+      const billingToggleInput = document.getElementById('billing-toggle-input')
+
+      // Get its value
+      const initialBillingState = billingToggleInput.value === 'true'
+
+      // Use this value to initialize your billing toggle logic
+      initializeBillingToggle(initialBillingState)
+    })
+
+    // Function to initialize the toggle based on the initial value
+    function initializeBillingToggle(isActive) {
+      const toggle = document.getElementById('billing-toggle')
+      const thumb = document.getElementById('billing-toggle-thumb')
+      const alternateBilling = document.getElementById('alternate-billing')
+      const billingFields = alternateBilling.querySelectorAll('input')
+      const hiddenInput = document.getElementById('billing-toggle-input') // Hidden input for the toggle value
+
+      if (isActive) {
+        // Set toggle to active state
+        toggle.setAttribute('aria-checked', 'true')
+        toggle.classList.remove('bg-gray-200')
+        toggle.classList.add('bg-amber-500')
+        thumb.classList.remove('translate-x-0')
+        thumb.classList.add('translate-x-5')
+        alternateBilling.classList.remove('hidden')
+        hiddenInput.value = 'true'
+
+        // Enable input fields for form submission
+        billingFields.forEach((field) => {
+          field.disabled = false
+        })
+      } else {
+        // Set toggle to inactive state
+        toggle.setAttribute('aria-checked', 'false')
+        toggle.classList.remove('bg-amber-500')
+        toggle.classList.add('bg-gray-200')
+        thumb.classList.remove('translate-x-5')
+        thumb.classList.add('translate-x-0')
+        alternateBilling.classList.add('hidden')
+        hiddenInput.value = 'false'
+
+        // Disable input fields to exclude them from form submission
+        billingFields.forEach((field) => {
+          field.disabled = true
+        })
+      }
+    }
+
+    // Function to handle toggle changes
+    function toggleBilling() {
+      const toggle = document.getElementById('billing-toggle')
+      const thumb = document.getElementById('billing-toggle-thumb')
+      const alternateBilling = document.getElementById('alternate-billing')
+      const billingFields = alternateBilling.querySelectorAll('input')
+      const hiddenInput = document.getElementById('billing-toggle-input') // Hidden input for the toggle value
+
+      const isActive = toggle.getAttribute('aria-checked') === 'true'
+
+      if (isActive) {
+        // Switch to inactive state
+        toggle.setAttribute('aria-checked', 'false')
+        toggle.classList.remove('bg-amber-500')
+        toggle.classList.add('bg-gray-200')
+        thumb.classList.remove('translate-x-5')
+        thumb.classList.add('translate-x-0')
+        alternateBilling.classList.add('hidden')
+        hiddenInput.value = 'false'
+
+        // Disable input fields to exclude them from form submission
+        billingFields.forEach((field) => {
+          field.disabled = true
+        })
+      } else {
+        // Switch to active state
+        toggle.setAttribute('aria-checked', 'true')
+        toggle.classList.remove('bg-gray-200')
+        toggle.classList.add('bg-amber-500')
+        thumb.classList.remove('translate-x-0')
+        thumb.classList.add('translate-x-5')
+        alternateBilling.classList.remove('hidden')
+        hiddenInput.value = 'true'
+
+        // Enable input fields for form submission
+        billingFields.forEach((field) => {
+          field.disabled = false
+        })
+      }
+    }
+  </script>
 {% endblock %}

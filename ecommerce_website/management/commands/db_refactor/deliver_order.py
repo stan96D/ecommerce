@@ -24,11 +24,11 @@ class OrderInterface:
 # Initialize the data
 refactor_data = OrderInterface(
     delivery_date=date.today(),
-    order_id=24,
+    order_id=27,
     line_data=[
         OrderLineData(
-            order_line_id=31,
-            count_delivered=4
+            order_line_id=34,
+            count_delivered=1
         )
     ]
 )

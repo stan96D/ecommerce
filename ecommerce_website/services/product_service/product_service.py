@@ -936,7 +936,12 @@ class ProductService(ProductServiceInterface):
     @ staticmethod
     def get_all_runner_products():
         try:
-            products = Product.objects.filter(runner=True)
+            products = Product.objects.prefetch_related(
+
+                QueryPrefetcher.createAttributePrefetch(
+                    # Apply the custom prefetch for the filtered attributes
+                    ['Producttype', 'Eenheid', 'Merk'])
+            ).filter(runner=True)
             return list(products)
         except Product.DoesNotExist:
             return None

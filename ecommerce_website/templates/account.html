@@ -72,6 +72,14 @@
             >
               <i class="far fa-file-alt flex-shrink-0 mt-1"></i>
               <span>Orders</span>
+              <!-- Only show the badge if the count is greater than 0 -->
+              {% if orders|length > 0 %}
+                <span
+                  class="bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold ml-auto"
+                >
+                  {{ orders|length }}
+                </span>
+              {% endif %}
             </a>
           </li>
           <li>
@@ -83,6 +91,14 @@
             >
               <i class="fas fa-exchange-alt flex-shrink-0 mt-1"></i>
               <span>Retouren</span>
+              <!-- Only show the badge if the count is greater than 0 -->
+              {% if returns|length > 0 %}
+                <span
+                  class="bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold ml-auto"
+                >
+                  {{ returns|length }}
+                </span>
+              {% endif %}
             </a>
           </li>
         </ul>

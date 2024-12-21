@@ -45,7 +45,12 @@
           name="return_id"
           value="{{ return_order.order_id }}"
         />
-
+        <input
+          type="hidden"
+          name="billing_toggle"
+          id="billing-toggle-input"
+          value="{{ form.billing_toggle.value }}"
+        />
         <div
           class="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16"
         >
@@ -72,7 +77,8 @@
                     placeholder="Je reden om te retourneren..."
                     required
                   >
-{{ form.return_reason.value }}</textarea
+{{ form.return_reason.value }}
+                  </textarea
                   >
                   {% if form.return_reason.errors %}
                     <p
@@ -178,9 +184,36 @@
               </div>
 
               <div class="mt-10 border-t border-gray-200 pt-10">
-                <h2 class="text-lg font-medium text-gray-900">
-                  Adres informatie
-                </h2>
+                <div class="flex justify-start">
+                  <h2 class="text-lg font-medium text-gray-900">
+                    Adres informatie
+                  </h2>
+                  <div class=" pl-4 flex items-center">
+                    <!-- Toggle Switch -->
+                    <button
+                      id="billing-toggle"
+                      type="button"
+                      class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                      role="switch"
+                      aria-checked="false"
+                      aria-labelledby="billing-toggle-label"
+                      onclick="toggleBilling()"
+                    >
+                      <span
+                        id="billing-toggle-thumb"
+                        aria-hidden="true"
+                        class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0"
+                      ></span>
+                    </button>
+                    <!-- Toggle Label -->
+                    <span class="ml-3 text-sm" id="billing-toggle-label">
+                      <!-- <span class="font-medium text-gray-900"
+                      >Afwijkend factuuradres?</span
+                    > -->
+                      <span class="text-gray-500">Afwijkend factuuradres?</span>
+                    </span>
+                  </div>
+                </div>
 
                 <div
                   class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
@@ -355,6 +388,127 @@
               </div>
             </div>
 
+            <!-- Additional Billing Address Fields (Hidden by Default) -->
+            <div
+              id="alternate-billing"
+              class="mt-10 border-t border-gray-200 pt-10 hidden"
+            >
+              <h2 class="text-lg font-medium text-gray-900">Factuuradres</h2>
+              <div
+                class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
+              >
+                <div>
+                  <label
+                    for="billing-address"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Adres <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="billing_address"
+                      id="billing-address"
+                      value="{{ form.billing_address.value }}"
+                      autocomplete="street-address"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="billing-house-number"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Huisnummer <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="billing_house_number"
+                      id="billing-house-number"
+                      value="{{ form.billing_house_number.value }}"
+                      autocomplete="house-number"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="billing-city"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Plaats <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="billing_city"
+                      id="billing-city"
+                      value="{{ form.billing_city.value }}"
+                      autocomplete="address-level2"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="billing-postal-code"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Postcode <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="billing_postal_code"
+                      id="billing-postal-code"
+                      value="{{ form.billing_postal_code.value }}"
+                      autocomplete="postal-code"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      required
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    for="billing-country"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Land <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <select
+                      id="billing-country"
+                      name="billing_country"
+                      autocomplete="billing-country"
+                      value="{{ form.billing_country.value }}"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                    >
+                      {% if form.billing_country.value == "Nederland" %}
+                        <option value="Nederland" selected>Nederland</option>
+                      {% else %}
+                        <option value="Nederland">Nederland</option>
+                      {% endif %}
+                      {% if form.billing_country.value == "Duitsland" %}
+                        <option value="Duitsland" selected>Duitsland</option>
+                      {% else %}
+                        <option value="Duitsland">Duitsland</option>
+                      {% endif %}
+                      {% if form.billing_country.value == "België" %}
+                        <option value="België" selected>België</option>
+                      {% else %}
+                        <option value="België">België</option>
+                      {% endif %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <button
               type="submit"
               class="mt-8 w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
@@ -402,4 +556,97 @@
       </form>
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Get the hidden input element
+      const billingToggleInput = document.getElementById('billing-toggle-input')
+
+      // Get its value
+      const initialBillingState = billingToggleInput.value === 'true'
+
+      // Use this value to initialize your billing toggle logic
+      initializeBillingToggle(initialBillingState)
+    })
+
+    // Function to initialize the toggle based on the initial value
+    function initializeBillingToggle(isActive) {
+      const toggle = document.getElementById('billing-toggle')
+      const thumb = document.getElementById('billing-toggle-thumb')
+      const alternateBilling = document.getElementById('alternate-billing')
+      const billingFields = alternateBilling.querySelectorAll('input')
+      const hiddenInput = document.getElementById('billing-toggle-input') // Hidden input for the toggle value
+
+      if (isActive) {
+        // Set toggle to active state
+        toggle.setAttribute('aria-checked', 'true')
+        toggle.classList.remove('bg-gray-200')
+        toggle.classList.add('bg-amber-500')
+        thumb.classList.remove('translate-x-0')
+        thumb.classList.add('translate-x-5')
+        alternateBilling.classList.remove('hidden')
+        hiddenInput.value = 'true'
+
+        // Enable input fields for form submission
+        billingFields.forEach((field) => {
+          field.disabled = false
+        })
+      } else {
+        // Set toggle to inactive state
+        toggle.setAttribute('aria-checked', 'false')
+        toggle.classList.remove('bg-amber-500')
+        toggle.classList.add('bg-gray-200')
+        thumb.classList.remove('translate-x-5')
+        thumb.classList.add('translate-x-0')
+        alternateBilling.classList.add('hidden')
+        hiddenInput.value = 'false'
+
+        // Disable input fields to exclude them from form submission
+        billingFields.forEach((field) => {
+          field.disabled = true
+        })
+      }
+    }
+
+    // Function to handle toggle changes
+    function toggleBilling() {
+      const toggle = document.getElementById('billing-toggle')
+      const thumb = document.getElementById('billing-toggle-thumb')
+      const alternateBilling = document.getElementById('alternate-billing')
+      const billingFields = alternateBilling.querySelectorAll('input')
+      const hiddenInput = document.getElementById('billing-toggle-input') // Hidden input for the toggle value
+
+      const isActive = toggle.getAttribute('aria-checked') === 'true'
+
+      if (isActive) {
+        // Switch to inactive state
+        toggle.setAttribute('aria-checked', 'false')
+        toggle.classList.remove('bg-amber-500')
+        toggle.classList.add('bg-gray-200')
+        thumb.classList.remove('translate-x-5')
+        thumb.classList.add('translate-x-0')
+        alternateBilling.classList.add('hidden')
+        hiddenInput.value = 'false'
+
+        // Disable input fields to exclude them from form submission
+        billingFields.forEach((field) => {
+          field.disabled = true
+        })
+      } else {
+        // Switch to active state
+        toggle.setAttribute('aria-checked', 'true')
+        toggle.classList.remove('bg-gray-200')
+        toggle.classList.add('bg-amber-500')
+        thumb.classList.remove('translate-x-0')
+        thumb.classList.add('translate-x-5')
+        alternateBilling.classList.remove('hidden')
+        hiddenInput.value = 'true'
+
+        // Enable input fields for form submission
+        billingFields.forEach((field) => {
+          field.disabled = false
+        })
+      }
+    }
+  </script>
 {% endblock %}
