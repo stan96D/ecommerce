@@ -2,7 +2,7 @@
   {
     "Eenheid": "stuk",
     "SKU": "635312",
-    "Producttype": "Plinten",
+    "Producttype": "Plint",
     "Afmeting": "12 x 80 mm",
     "Lengte": "244 cm",
     "Pakinhoud": "6",
@@ -10,14 +10,14 @@
     "Thumbnail": "https://www.unilinflooring.nl/images/products/large/418533.jpg",
     "Product": "Stijlplint blok wit gelakt 12x80mm 244cm",
     "Merk": "Beautifloor",
-    "Prijs per m²": 2.68,
-    "Prijs per pak": 16.07,
+    "Prijs per m2": 5.64,
+    "Prijs per pak": 33.84,
     "Leverancier": "Peitsman"
   },
   {
     "Eenheid": "stuk",
     "SKU": "636434",
-    "Producttype": "Plinten",
+    "Producttype": "Plint",
     "Afmeting": "12 x 58 mm",
     "Lengte": "240 cm",
     "Pakinhoud": "10",
@@ -25,14 +25,14 @@
     "Thumbnail": "https://www.unilinflooring.nl/images/products/large/12x58-78963.jpg",
     "Product": "Stijlplint Blok Witfolie 12x58x2400mm",
     "Merk": "Beautifloor",
-    "Prijs per m²": 1.1,
-    "Prijs per pak": 11.02,
+    "Prijs per m2": 2.32,
+    "Prijs per pak": 23.2,
     "Leverancier": "Peitsman"
   },
   {
     "Eenheid": "stuk",
     "SKU": "637414",
-    "Producttype": "Plinten",
+    "Producttype": "Plint",
     "Afmeting": "12 x 120 mm",
     "Lengte": "240 cm",
     "Pakinhoud": "5",
@@ -40,14 +40,14 @@
     "Thumbnail": "https://www.unilinflooring.nl/images/products/large/12x120-78967.jpg",
     "Product": "Stijlplint Blok Witfolie 12x120x2400mm",
     "Merk": "Beautifloor",
-    "Prijs per m²": 2.18,
-    "Prijs per pak": 10.92,
+    "Prijs per m2": 4.6,
+    "Prijs per pak": 23,
     "Leverancier": "Peitsman"
   },
   {
     "Eenheid": "stuk",
     "SKU": "639382",
-    "Producttype": "Plinten",
+    "Producttype": "Plint",
     "Afmeting": "50 x 250 mm",
     "Lengte": "240 cm",
     "Pakinhoud": "40",
@@ -55,14 +55,15 @@
     "Thumbnail": "https://www.unilinflooring.nl/images/products/large/416947.jpg",
     "Product": "Plakplint 240cm gefolied: AC1052, eik wit vernist",
     "Merk": "Beautifloor",
-    "Prijs per m²": 0.91,
-    "Prijs per pak": 36.48,
+    "Prijs per m2": 1.92,
+    "Prijs per pak": 76.8,
     "Leverancier": "Peitsman"
   },
+
   {
     "Eenheid": "rol",
     "SKU": "633309",
-    "Producttype": "Ondervloeren",
+    "Producttype": "Ondervloer",
     "Afmeting": "100 x 1500 cm",
     "Oppervlakte": "15 m²",
     "Dikte": "3 mm",
@@ -74,8 +75,9 @@
     "Thumbnail": "https://www.unilinflooring.nl/images/products/large/415113.jpg",
     "Product": "PF ALU-FOAM+ 3MM (PE-Schuim) 1M X 15M (Laminaat en Parket)",
     "Merk": "Beautifloor",
-    "Prijs per m²": 9.45,
-    "Prijs per pak": 122.88,
+    "Prijs per m2": 19.9,
+    "Prijs per pak": 258.7,
+
     "Drukweerstand (CS)": "&ge:10 kPa (= 1 ton/m²) bij max. 0,5 mm indrukking (EN 826*)",
     "Kruipweerstand (CC)": "2 kPa (EN 1606*)",
     "Contactgeluidsreductie (IS)": "19 dB Δ:Lw onder 7 mm laminaat(EN ISO 140-8/717-2)",
@@ -83,10 +85,11 @@
     "Dampdichtheid (SD)": "sd > 100 m (EN 12086*) *gemeten volgens FprCEN/TS 16354 (ondervloeren laminaat)",
     "Leverancier": "Peitsman"
   },
+
   {
     "Eenheid": "rol",
     "SKU": "633253",
-    "Producttype": "Ondervloeren",
+    "Producttype": "Ondervloer",
     "Afmeting": "100 x 1500 cm",
     "Oppervlakte": "15 m²",
     "Dikte": "1.2 mm",
@@ -97,14 +100,15 @@
     "Thumbnail": "https://www.unilinflooring.nl/images/products/large/415175.jpg",
     "Product": "Heat-Foil 10dB",
     "Merk": "Beautifloor",
-    "Prijs per m²": 27.27,
-    "Prijs per pak": 981.71,
+    "Prijs per m2": 57.41,
+    "Prijs per pak": 2066.76,
     "Leverancier": "Peitsman"
   },
+
   {
     "Eenheid": "rol",
     "SKU": "633141",
-    "Producttype": "Ondervloeren",
+    "Producttype": "Ondervloer",
     "Afmeting": "100 x 1000 cm",
     "Oppervlakte": "10 m²",
     "Dikte": "2.8 mm",
@@ -115,8 +119,8 @@
     "Thumbnail": "https://www.unilinflooring.nl/images/products/large/415185.jpg",
     "Product": "PF Soundblock 2,8mm, 1 meter breed x 10 meter",
     "Merk": "Beautifloor",
-    "Prijs per m²": 22.32,
-    "Prijs per pak": 893.0,
+    "Prijs per m2": 47,
+    "Prijs per pak": 1880,
     "Leverancier": "Peitsman"
   },
   {
