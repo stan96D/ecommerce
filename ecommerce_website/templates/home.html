@@ -311,39 +311,116 @@
         </div>
       </div>
     </div>
+   <div class="relative">
+      <!-- Background image and overlap -->
+<div aria-hidden="true" class="absolute inset-0 hidden sm:flex sm:flex-col">
+  <div class="relative w-full flex-1 bg-gray-800">
+    <div class="absolute inset-0 overflow-hidden">
+      <!-- Make sure the image fills the container and covers the area properly -->
+      <img
+        src="{% static 'images/landing_page2.jpg' %}"
+        alt=""
+        class="h-full w-full object-cover object-center"
+      />
+    </div>
+    <!-- The dark overlay remains in place to darken the image if needed -->
+    <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
+  </div>
+  <div class="h-32 w-full bg-white md:h-40 lg:h-48"></div>
+</div>
 
-    <!-- Hero section -->
-    <div class="relative bg-gray-900">
-      <!-- Decorative image and overlay -->
 
-      <div aria-hidden="true" class="absolute inset-0 overflow-hidden">
-        <img
-          src="{% static 'images/landing_page.webp' %}"
-          alt=""
-          class="h-full w-full object-cover object-center"
-        />
-      </div>
+      <div class="relative mx-auto max-w-3xl px-4 pb-96 text-center sm:px-6 sm:pb-0 lg:px-8">
+        <!-- Background image and overlap -->
+        <div aria-hidden="true" class="absolute inset-0 flex flex-col sm:hidden">
+          <div class="relative w-full flex-1 bg-gray-800">
+            <div class="absolute inset-0 overflow-hidden">
+              <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-04-hero-full-width.jpg" alt="" class="size-full object-cover">
+            </div>
+            <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+          </div>
+          <div class="h-48 w-full bg-white"></div>
+        </div>
       <div
-        aria-hidden="true"
-        class="absolute inset-0 bg-gray-900 opacity-50"
-      ></div>
-
-      <div
-        class="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center sm:py-64 lg:px-0"
+        class="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-4 text-center sm:pt-48 sm:pb-24 lg:px-0"
       >
-        <h1 class="text-4xl font-bold tracking-tight text-white lg:text-6xl">
-          De goedkoopste vloeren
-        </h1>
-        <p class="mt-4 text-xl text-white">
-          Van PVC tot laminaat, deze zijn allemaal verkrijgbaar in ons
-          uitgebreide assortiment!
-        </p>
-        <a
-          href="/products"
-          class="mt-8 inline-block rounded-md border border-transparent bg-amber-500 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-gray-50"
-          >Bekijk assortiment</a
-        >
+<h1 class="text-5xl font-semibold tracking-tight text-white lg:text-6xl">
+  De goedkoopste vloeren
+</h1>
+<p class="mt-4 text-lg text-white opacity-90">
+  Van PVC tot laminaat, deze zijn allemaal verkrijgbaar in ons
+  uitgebreide assortiment!
+</p>
+<a
+  href="/products"
+  class="mt-8 inline-block rounded-md border border-transparent bg-orange-500 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-50"
+>Bekijk ons assortiment</a>
+
       </div>
+      </div>
+      <section aria-labelledby="collection-heading" class="relative -mt-96 sm:mt-0">
+        <h2 id="collection-heading" class="sr-only">Vloeren aanbieding</h2>
+        <div class="mx-auto grid max-w-md grid-cols-1 gap-y-6 px-4 sm:max-w-7xl sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 sm:px-6 lg:gap-x-8 lg:px-8">
+          <div class="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-[4/5] sm:h-auto">
+            <div aria-hidden="true" class="absolute inset-0 overflow-hidden rounded-lg">
+              <div class="absolute inset-0 overflow-hidden group-hover:opacity-75">
+<img src="{% static 'images/'|add:hero_data.hero1.image_path %}" alt="{{ hero_data.hero1.description }} {{ hero_data.hero1.title }}" class="size-full object-cover">
+              </div>
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"></div>
+            </div>
+            <div class="absolute inset-0 flex items-end rounded-lg p-6">
+              <div>
+                <p aria-hidden="true" class="text-sm text-white">{{hero_data.hero1.title}}</p>
+                <h3 class="mt-1 font-semibold text-white">
+                  <a href="{{hero_data.hero1.url}}">
+                    <span class="absolute inset-0"></span>
+                    {{hero_data.hero1.description}}
+                  </a>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-[4/5] sm:h-auto">
+            <div aria-hidden="true" class="absolute inset-0 overflow-hidden rounded-lg">
+              <div class="absolute inset-0 overflow-hidden group-hover:opacity-75">
+<img src="{% static 'images/'|add:hero_data.hero2.image_path %}" alt="{{ hero_data.hero2.description }} {{ hero_data.hero2.title }}" class="size-full object-cover">
+              </div>
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"></div>
+            </div>
+            <div class="absolute inset-0 flex items-end rounded-lg p-6">
+              <div>
+                <p aria-hidden="true" class="text-sm text-white">                    {{hero_data.hero2.title}}
+</p>
+                <h3 class="mt-1 font-semibold text-white">
+                  <a href="#">
+                    <span class="absolute inset-0"></span>
+                    {{hero_data.hero2.description}}
+                  </a>
+                </h3>
+              </div>
+            </div>
+          </div>
+          <div class="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-[4/5] sm:h-auto">
+            <div aria-hidden="true" class="absolute inset-0 overflow-hidden rounded-lg">
+              <div class="absolute inset-0 overflow-hidden group-hover:opacity-75">
+<img src="{% static 'images/'|add:hero_data.hero3.image_path %}" alt="{{ hero_data.hero3.description }} {{ hero_data.hero3.title }}" class="size-full object-cover">
+              </div>
+              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"></div>
+            </div>
+            <div class="absolute inset-0 flex items-end rounded-lg p-6">
+              <div>
+                <p aria-hidden="true" class="text-sm text-white">{{hero_data.hero3.title}}</p>
+                <h3 class="mt-1 font-semibold text-white">
+                  <a href="#">
+                    <span class="absolute inset-0"></span>
+                    {{hero_data.hero3.description}}
+                  </a>
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <main>
@@ -352,7 +429,7 @@
           <div class="mx-auto max-w-7xl px-4 py-24 lg:px-8 relative">
             <button
               id="nextButtonRunners"
-              class="absolute top-1/2 right-0 transform text-amber-400 -translate-y-1/2 px-4 py-2 bg-gray-50 border-gray-200 border-2  rounded-full z-10"
+              class="absolute top-1/2 right-0 transform text-orange-400 -translate-y-1/2 px-4 py-2 bg-gray-50 border-gray-200 border-2  rounded-full z-10"
             >
               <i class="fas fa-chevron-right"></i>
             </button>
@@ -366,7 +443,7 @@
               </h2>
               <a
                 href="/runners"
-                class="hidden text-sm font-medium text-amber-500 hover:text-customColor md:block"
+                class="hidden text-sm font-medium text-orange-500 hover:text-customColor md:block"
                 >Zie alles<span aria-hidden="true"> &rarr;</span></a
               >
             </div>
@@ -416,7 +493,7 @@
             </p>
             <a
               href="/discounts"
-              class="mt-6 inline-block w-full rounded-md border border-transparent bg-amber-500 px-8 py-3 font-medium text-white hover:bg-customColor sm:w-auto"
+              class="mt-6 inline-block w-full rounded-md border border-transparent bg-orange-500 px-8 py-3 font-medium text-white hover:bg-customColor sm:w-auto"
               >Zie kortingen</a
             >
           </div>

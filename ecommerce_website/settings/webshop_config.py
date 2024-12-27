@@ -4,6 +4,34 @@ from decimal import Decimal
 class WebShopConfig:
 
     @staticmethod
+    def get_hero_data():
+        return {
+            "hero1":
+            {
+                "title": "Vloeren",
+                "description": "De beste topmerken",
+                "url": "",
+                "image_path": "hero1.jpg"
+            },
+            "hero2":
+            {
+                "title": "Ondervloeren & plinten",
+                "description": "Om je vloer compleet te maken",
+                "url": "",
+
+                "image_path": "hero2.webp"
+            },
+            "hero3":
+            {
+                "title": "Kortingen",
+                "description": "Nu tijdelijk nóg goedkoper",
+                "url": "",
+
+                "image_path": "hero3.jpg"
+            },
+        }
+
+    @staticmethod
     def tax_high():
         return Decimal('21.00')
 

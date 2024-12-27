@@ -165,6 +165,7 @@ def home(request):
                                          'runner_products_data': ViewServiceUtility.get_runner_products(),
                                          'brands': ViewServiceUtility.get_all_brands(),
                                          'messages': messages.get_messages(request),
+                                         'hero_data': WebShopConfig.get_hero_data(),
                                          'category_data': ViewServiceUtility.get_active_categories()})
 
 
