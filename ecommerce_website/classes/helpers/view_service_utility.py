@@ -1,7 +1,7 @@
 from ecommerce_website.services.product_service.product_service import ProductService
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.view_service.create_return_item__view import CreateReturnItemViewService
-from ecommerce_website.services.view_service.product_detail_view_service import ProductDetailViewService
+from ecommerce_website.services.view_service.product_detail_view_service import ProductDetailViewService, ProductRelatedViewService
 from ecommerce_website.services.view_service.product_view_service import ProductViewService
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.view_service.cart_item_view_service import CartItemViewService
@@ -52,6 +52,7 @@ class ViewServiceUtility:
         mean = StoreRatingService.get_mean()
 
         return {
+            "percentage": mean * 20,
             "mean": mean,
             "range": [0, 1, 2, 3, 4, 5],
             "count": StoreRatingService.get_count(),
@@ -166,12 +167,12 @@ class ViewServiceUtility:
     def get_active_delivery_methods():
         delivery_methods = DeliveryMethodService.get_all_active_delivery_methods()
         return DeliveryMethodViewService().generate(delivery_methods)
-    
+
     @staticmethod
     def get_active_delivery_methods():
         delivery_methods = DeliveryMethodService.get_all_active_delivery_methods()
         return DeliveryMethodViewService().generate(delivery_methods)
-    
+
     @staticmethod
     def get_active_takeaway_methods():
         delivery_methods = DeliveryMethodService.get_all_active_takeaway_methods()
@@ -180,7 +181,7 @@ class ViewServiceUtility:
     @staticmethod
     def get_alternative_products(id):
         products = ProductService.get_related_products(id)
-        return ProductDetailViewService().generate(products)
+        return ProductRelatedViewService().generate(products)
 
     @staticmethod
     def get_all_brands():

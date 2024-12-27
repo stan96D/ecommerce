@@ -25,7 +25,6 @@
             >
           </h3>
         </div>
-
         {% if item.sale_price %}
           {% if item.product_type == 'Vloer' %}
             <div class="flex">
@@ -49,11 +48,11 @@
                 class="bg-gray-900 w-fit rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
               >
                 <p class="text-sm font-semibold text-gray-100">
-                  €{{ item.unit_sale_price }} {{ item.unit }}
+                  €{{ item.sale_price }} per {{ item.unit }}
                 </p>
               </div>
               <p class="mt-2 py-2 px-4 text-sm font-base text-gray-400">
-                <del>€{{ item.unit_price }}</del>
+                <del>€{{ item.price }} </del>
               </p>
             </div>
           {% endif %}
@@ -67,7 +66,10 @@
             </p>
           {% else %}
             <p class="mt-2 text-sm font-medium text-gray-900">
-              €{{ item.unit_price }} per {{ item.unit }}
+              €{{ item.price }} per {{ item.unit }}
+            </p>
+            <p class=" text-sm font-base text-gray-500">
+              €{{ item.unit_price }} per pak
             </p>
           {% endif %}
         {% endif %}

@@ -9,8 +9,8 @@
       "type": "debugpy",
       "request": "launch",
       "args": [
-        "runserver",
-        "--noreload" // Add this line to disable auto-reloading
+        "runserver"
+        // "--noreload" // Add this line to disable auto-reloading
       ],
       "django": true,
       "autoStartBrowser": false,

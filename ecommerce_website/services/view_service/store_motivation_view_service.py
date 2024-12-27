@@ -9,6 +9,7 @@ class StoreMotivationViewService(ViewServiceInterface):
 
         for item in items:
             productView = {
+                'icon': item.icon,
                 'name': item.name,
                 'text': item.text,
                 'image': item.image.url if item.image else '',
@@ -20,6 +21,7 @@ class StoreMotivationViewService(ViewServiceInterface):
 
     def get(self, item):
         productView = {
+            'icon': item.icon,
             'name': item.name,
             'text': item.text,
             'image': item.image.url if item.image else '',

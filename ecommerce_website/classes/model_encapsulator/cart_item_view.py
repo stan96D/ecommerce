@@ -29,11 +29,20 @@ class CartItemView:
 
         self.has_sale = str(product.has_product_sale).lower()
 
-        if product.has_product_sale:
+        if self.product_type == "Vloer":
 
-            self.totalPrice = quantity * product.unit_sale_price
+            if product.has_product_sale:
+
+                self.totalPrice = quantity * product.unit_sale_price
+            else:
+                self.totalPrice = quantity * product.unit_selling_price
         else:
-            self.totalPrice = quantity * product.unit_selling_price
+
+            if product.has_product_sale:
+
+                self.totalPrice = quantity * product.sale_price
+            else:
+                self.totalPrice = quantity * product.selling_price
 
         self.sale_price = product.sale_price
         self.unit_sale_price = product.unit_sale_price

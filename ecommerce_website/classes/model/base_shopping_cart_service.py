@@ -19,6 +19,10 @@ class ShoppingCartInterface(ABC):
         pass
 
     @abstractmethod
+    def quantity_in_cart(self, product_id):
+        pass
+
+    @abstractmethod
     def to_json(self):
         pass
 

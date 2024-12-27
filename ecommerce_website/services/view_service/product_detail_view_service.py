@@ -1,5 +1,5 @@
 from ecommerce_website.services.view_service.base_view_service import ViewServiceInterface
-from ecommerce_website.classes.model_encapsulator.product_view import ProductDetailView
+from ecommerce_website.classes.model_encapsulator.product_view import ProductDetailView, ProductRelatedView
 
 
 class ProductDetailViewService(ViewServiceInterface):
@@ -15,4 +15,20 @@ class ProductDetailViewService(ViewServiceInterface):
 
     def get(self, item):
         productView = ProductDetailView(item)
+        return productView
+
+
+class ProductRelatedViewService(ViewServiceInterface):
+
+    def generate(self, items):
+        productViews = []
+
+        for item in items:
+            productView = ProductRelatedView(item)
+            productViews.append(productView)
+
+        return productViews
+
+    def get(self, item):
+        productView = ProductRelatedView(item)
         return productView

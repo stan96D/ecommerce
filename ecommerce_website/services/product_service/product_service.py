@@ -39,7 +39,12 @@ class ProductService(ProductServiceInterface):
             values_to_check = ["Accessoires",
                                "Plinten", "Folie", "Ondervloeren"]
 
-            products = Product.objects.filter(
+            products = Product.objects.prefetch_related(
+
+                QueryPrefetcher.createAttributePrefetch(
+                    # Apply the custom prefetch for the filtered attributes
+                    ['Producttype', 'Eenheid', 'Merk'])
+            ).filter(
                 Q(attributes__value__in=values_to_check) &
                 Q(attributes__attribute_type__name="Producttype")
             ).distinct()
@@ -946,21 +951,28 @@ class ProductService(ProductServiceInterface):
         except Product.DoesNotExist:
             return None
 
-    @ staticmethod
+    @staticmethod
     def get_related_products(id):
         try:
             product = ProductService.get_product_by_id(id)
 
+            # Get the product's attribute of type "Collectie"
             product_attribute = product.attributes.filter(
-                attribute_type__name="Collectie").values_list('value', flat=True).first()
+                attribute_type__name="Collectie"
+            ).values_list('value', flat=True).first()
 
             if not product_attribute:
                 return Product.objects.none()
 
+            # Filter products with the same "Collectie" attribute
             attr_filter = Q(attributes__value=product_attribute,
                             attributes__attribute_type__name="Collectie")
             filtered_products = Product.objects.filter(attr_filter).distinct()
 
-            return filtered_products
+            # Sort, limit results, and load only required fields while keeping the query object
+            related_products = filtered_products.order_by(
+                'name').only('id', 'name', 'thumbnail')[:6]
+
+            return related_products
         except Product.DoesNotExist:
-            return None
+            return Product.objects.none()

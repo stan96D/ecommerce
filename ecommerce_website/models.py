@@ -288,6 +288,7 @@ class StoreMotivation(models.Model):
     name = models.CharField(max_length=100, unique=True)
     active = models.BooleanField(default=False)
     text = models.CharField(max_length=200, null=True)
+    icon = models.CharField(max_length=20, null=True, blank=True)
     for_homepage = models.BooleanField(default=True)
     image = models.ImageField(
         upload_to='store_motivation_images/', null=True, blank=True)
@@ -466,6 +467,7 @@ class ReturnOrderLine(models.Model):
 
 
 class Store(models.Model):
+    name = models.CharField(max_length=30)
     contact_email = models.EmailField(max_length=254)
     address = models.CharField(max_length=255)
     postal_code = models.CharField(max_length=20)
@@ -474,6 +476,8 @@ class Store(models.Model):
     opening_time_week = models.CharField(max_length=100)
     opening_time_weekend = models.CharField(max_length=100)
     active = models.BooleanField(default=False)
+    socials = models.JSONField(default=dict, blank=True)
+    faq = models.JSONField(default=dict, blank=True)
 
     def __str__(self):
         return f"Store ID: {self.id}, Email: {self.contact_email}, Active: {self.active}"

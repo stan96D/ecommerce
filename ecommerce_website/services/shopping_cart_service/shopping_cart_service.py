@@ -29,6 +29,9 @@ class ShoppingCartService(AbstractShoppingCartService):
     def clear_cart(self):
         self.shopping_cart.clear_cart()
 
+    def quantity_in_cart(self, product_id):
+        return self.shopping_cart.quantity_in_cart(product_id)
+
     def to_json(self):
         return self.shopping_cart.to_json()
 

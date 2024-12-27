@@ -7,6 +7,10 @@ from django.http import JsonResponse
 from ecommerce_website.classes.forms.return_form import ReturnForm
 from ecommerce_website.classes.helpers.progress_view import get_order_progress_phases
 from ecommerce_website.classes.model.cached_return_order import SessionReturnOrderService
+from ecommerce_website.services.static_view_service.abous_us_view_service import AboutUsViewService
+from ecommerce_website.services.static_view_service.contact_service import ContactService
+from ecommerce_website.services.static_view_service.payment_return_view_service import PaymentReturnViewService
+from ecommerce_website.services.static_view_service.return_view_service import ReturnViewService
 from ecommerce_website.services.validation_service.validation_service import ValidationService
 from ecommerce_website.services.view_service.order_info_view_service import OrderInfoViewService
 from ecommerce_website.services.product_service.product_service import ProductService
@@ -46,6 +50,89 @@ from ecommerce_website.services.view_service.product_filter_service import Produ
 
 environment = EnvLoader.get_env()
 url_manager = EncapsulatedURLManager.get_url_manager(environment)
+
+# static views
+
+
+def contact_service(request):
+    store_data = ViewServiceUtility.get_current_store_data()
+
+    contact_data = ContactService.get_contact_data(store_data)
+
+    return render(request, "contact_service.html", {
+        'headerData': ViewServiceUtility.get_header_data(),
+        'category': contact_data,
+        'env': environment,
+        'payment_methods': ViewServiceUtility.get_payment_methods(),
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'brands': ViewServiceUtility.get_all_brands(),
+        'messages': messages.get_messages(request),
+        'store_data': store_data,
+        'breadcrumbs': ["Klantenservice"],
+        'category_data': ViewServiceUtility.get_active_categories()
+    })
+
+
+def payment_return_service(request):
+    store_data = ViewServiceUtility.get_current_store_data()
+    payment_methods = ViewServiceUtility.get_payment_methods()
+    payment_return_data = PaymentReturnViewService.get_payment_return_data(
+        payment_methods)
+
+    return render(request, "payment_return_service.html", {
+        'headerData': ViewServiceUtility.get_header_data(),
+        'category': payment_return_data,
+        'env': environment,
+        'payment_methods': payment_methods,
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'brands': ViewServiceUtility.get_all_brands(),
+        'messages': messages.get_messages(request),
+        'store_data': store_data,
+        'breadcrumbs': ["Betaling & verzending"],
+        'category_data': ViewServiceUtility.get_active_categories()
+    })
+
+
+def return_service(request):
+    store_data = ViewServiceUtility.get_current_store_data()
+    payment_methods = ViewServiceUtility.get_payment_methods()
+    return_data = ReturnViewService.get_return_data(
+    )
+
+    return render(request, "return_service.html", {
+        'headerData': ViewServiceUtility.get_header_data(),
+        'category': return_data,
+        'env': environment,
+        'payment_methods': payment_methods,
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'brands': ViewServiceUtility.get_all_brands(),
+        'messages': messages.get_messages(request),
+        'store_data': store_data,
+        'breadcrumbs': ["Retournering"],
+        'category_data': ViewServiceUtility.get_active_categories()
+    })
+
+
+def about_us(request):
+    store_data = ViewServiceUtility.get_current_store_data()
+    payment_methods = ViewServiceUtility.get_payment_methods()
+    about_us_data = AboutUsViewService.get_about_us_data(
+    )
+
+    return render(request, "about_us.html", {
+        'headerData': ViewServiceUtility.get_header_data(),
+        'category': about_us_data,
+        'env': environment,
+        'payment_methods': payment_methods,
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'brands': ViewServiceUtility.get_all_brands(),
+        'messages': messages.get_messages(request),
+        'store_data': store_data,
+        'store_rating_data': ViewServiceUtility.get_store_rating_data(),
+
+        'breadcrumbs': ["Over ons"],
+        'category_data': ViewServiceUtility.get_active_categories()
+    })
 
 
 def sign_in(request):
@@ -1738,11 +1825,13 @@ def products_by_attribute(request, category, subcategory, attribute):
 def product_detail(request, id=None):
 
     product = ViewServiceUtility.get_product_view_by_id(id)
+    current_in_cart = ShoppingCartService(request).quantity_in_cart(product.id)
 
     if not product:
         return render(request, '404.html')
 
     product_data = {'product': product,
+                    'current_cart': current_in_cart,
                     'headerData': ViewServiceUtility.get_header_data(),
                     'env': environment,
                     'store_data': ViewServiceUtility.get_current_store_data(),

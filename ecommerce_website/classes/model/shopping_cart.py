@@ -16,6 +16,12 @@ class SessionShoppingCart(ShoppingCartInterface):
         self.shipping_price = shipping_price
         self.discount_amount = discount_amount
 
+    def quantity_in_cart(self, product_id):
+        product_id = str(product_id)
+        if product_id in self.cart:
+            return self.cart[product_id]['quantity']
+        return 0
+
     def add_item(self, product_id, quantity):
         product_id = str(product_id)
         if product_id not in self.cart:
@@ -64,10 +70,18 @@ class SessionShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                if product.has_product_sale:
-                    product_price = product.unit_sale_price
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
                 else:
-                    product_price = product.unit_selling_price
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
                 print("PRIJS", product_price)
                 subtotal = item['quantity'] * product_price
                 total += subtotal
@@ -86,10 +100,18 @@ class SessionShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                if product.has_product_sale:
-                    product_price = product.unit_sale_price
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
                 else:
-                    product_price = product.unit_selling_price
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
                 subtotal_amount += item['quantity'] * product_price
 
         total_tax_low = self.total_tax(9)
@@ -105,9 +127,18 @@ class SessionShoppingCart(ShoppingCartInterface):
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
                 # Determine the product price (sale or regular)
-                product_price = (
-                    product.unit_sale_price if product.has_product_sale else product.unit_selling_price
-                )
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
+                else:
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
 
                 # Calculate the subtotal for the product
                 subtotal = item['quantity'] * product_price
@@ -140,8 +171,18 @@ class SessionShoppingCart(ShoppingCartInterface):
             product_unit = product_unit_attr.value if product_unit_attr else 'm²'
 
             if product is not None:
-                product_price = product.unit_sale_price if product.has_product_sale else product.unit_selling_price
-
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
+                else:
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
                 if product.thumbnail and product.thumbnail.url:
                     thumbnail_url = product.thumbnail.url
                 else:
@@ -155,6 +196,7 @@ class SessionShoppingCart(ShoppingCartInterface):
                     'thumbnail': thumbnail_url,
                     'unit_sale_price': float(product.unit_sale_price) if product.has_product_sale else None,
                     'unit_price': float(product.unit_selling_price),
+                    'original_price': float(product.selling_price) if product.has_product_sale else None,
                     'price': float(product_price),
                     'quantity': item['quantity'],
                     'subtotal': float(item['quantity'] * product_price),
@@ -172,6 +214,12 @@ class AccountShoppingCart(ShoppingCartInterface):
 
         self.shipping_price = shipping_price
         self.discount_amount = discount_amount
+
+    def quantity_in_cart(self, product_id):
+        product_id = str(product_id)
+        if product_id in self.cart:
+            return self.cart[product_id]['quantity']
+        return 0
 
     def add_item(self, product_id, quantity):
         product_id = str(product_id)
@@ -220,10 +268,18 @@ class AccountShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                if product.has_product_sale:
-                    product_price = product.unit_sale_price
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
                 else:
-                    product_price = product.unit_selling_price
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
                 subtotal = item['quantity'] * product_price
                 total += subtotal
 
@@ -241,10 +297,18 @@ class AccountShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None:
-                if product.has_product_sale:
-                    product_price = product.unit_sale_price
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
                 else:
-                    product_price = product.unit_selling_price
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
                 subtotal_amount += item['quantity'] * product_price
 
         total_tax_low = self.total_tax(9)
@@ -259,10 +323,18 @@ class AccountShoppingCart(ShoppingCartInterface):
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
             if product is not None and product.tax == tax_percentage:
-                if product.has_product_sale:
-                    product_price = product.unit_sale_price
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
                 else:
-                    product_price = product.unit_selling_price
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
                 subtotal = item['quantity'] * product_price
                 tax_amount = subtotal * (Decimal(tax_percentage) / 100)
                 total_tax_amount += tax_amount
@@ -287,7 +359,18 @@ class AccountShoppingCart(ShoppingCartInterface):
             product_unit = product_unit_attr.value if product_unit_attr else 'm²'
 
             if product is not None:
-                product_price = product.unit_sale_price if product.has_product_sale else product.unit_selling_price
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
+                else:
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
 
                 if product.thumbnail and product.thumbnail.url:
                     thumbnail_url = product.thumbnail.url
@@ -302,6 +385,7 @@ class AccountShoppingCart(ShoppingCartInterface):
                     'thumbnail': thumbnail_url,
                     'unit_sale_price': float(product.unit_sale_price) if product.has_product_sale else None,
                     'unit_price': float(product.unit_selling_price),
+                    'original_price': float(product.selling_price) if product.has_product_sale else None,
                     'price': float(product_price),
                     'quantity': item['quantity'],
                     'subtotal': float(item['quantity'] * product_price),

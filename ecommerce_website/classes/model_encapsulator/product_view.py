@@ -38,6 +38,7 @@ class ProductView:
             self.sale_price = product.sale_price
             self.unit_sale_price = product.unit_sale_price
 
+        self.has_product_sale = product.has_product_sale
         # Check if the product is in the cache for favorites
         self.favorite = self.check_if_favorite()
 
@@ -52,6 +53,18 @@ class ProductView:
         if str(self.id) in map(str, favorites):  # Check if the product's ID is in the favorites list
             return True
         return False
+
+
+class ProductRelatedView:
+    def __init__(self, product):
+        self.id = product.id
+        self.name = product.name
+
+        if product.thumbnail and product.thumbnail.url:
+            self.thumbnail_url = product.thumbnail.url
+
+        else:
+            self.thumbnail_url = "/static/images/no_image_placeholder.png"
 
 
 class ProductDetailView:
@@ -139,3 +152,17 @@ class ProductDetailView:
                 {"Aanvullende Informatie":
                     product_specifications["Aanvullende Informatie"]},
             ]
+
+        self.favorite = self.check_if_favorite()
+
+    def check_if_favorite(self):
+        """
+        Check if the product is in the 'favorites' cache.
+        If the product is in the cache, set the favorite attribute to True,
+        otherwise set it to False.
+        """
+        favorites = cache.get(
+            'favorites') or []  # Retrieve the list of favorite product IDs from the cache
+        if str(self.id) in map(str, favorites):  # Check if the product's ID is in the favorites list
+            return True
+        return False

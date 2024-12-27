@@ -87,4 +87,14 @@ urlpatterns = [
          views.delete_cart_item, name='delete_cart_item'),
     path('checkout/', views.checkout, name="checkout"),
     path('navigate_checkout/', views.navigate_checkout, name="navigate_checkout"),
+
+    # Static views
+    path('contact-service/', views.contact_service, name='contact_service'),
+    path('payment-return-service/', views.payment_return_service,
+         name='payment_return_service'),
+    path('return-service/', views.return_service,
+         name='return_service'),
+    path('about-us/', views.about_us,
+         name='about_us')
+
 ]
