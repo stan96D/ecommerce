@@ -1,0 +1,100 @@
+{% extends 'components/main.html' %}
+{% load static tailwind_tags %}
+
+{% block title %}Retournering{% endblock %}
+
+{% block content %}
+  <main>
+    <div class="relative">
+      <!-- First Relief Pattern SVG - Ensure it's behind content -->
+      <svg
+        class="absolute right-0 top-0 hidden md:block md:[overflow-anchor:none] z-[-1]"
+        width="404"
+        height="384"
+        fill="none"
+        viewBox="0 0 404 384"
+        aria-hidden="true"
+      >
+        <defs>
+          <pattern
+            id="95e8f2de-6d30-4b7e-8159-f791729db21b"
+            x="0"
+            y="0"
+            width="20"
+            height="20"
+            patternUnits="userSpaceOnUse"
+          >
+            <rect
+              x="0"
+              y="0"
+              width="4"
+              height="4"
+              class="text-gray-200"
+              fill="currentColor"
+            />
+          </pattern>
+        </defs>
+        <rect
+          width="404"
+          height="384"
+          fill="url(#95e8f2de-6d30-4b7e-8159-f791729db21b)"
+        />
+      </svg>
+
+      <!-- Second Relief Pattern SVG - Also behind content -->
+      <svg
+        class="absolute bottom-10 left-0 hidden md:block md:[overflow-anchor:none] z-[-1]"
+        width="404"
+        height="384"
+        fill="none"
+        viewBox="0 0 404 384"
+        aria-hidden="true"
+      >
+        <defs>
+          <pattern
+            id="7a00fe67-0343-4a3c-8e81-c145097a3ce0"
+            x="0"
+            y="0"
+            width="20"
+            height="20"
+            patternUnits="userSpaceOnUse"
+          >
+            <rect
+              x="0"
+              y="0"
+              width="4"
+              height="4"
+              class="text-gray-200"
+              fill="currentColor"
+            />
+          </pattern>
+        </defs>
+        <rect
+          width="404"
+          height="384"
+          fill="url(#7a00fe67-0343-4a3c-8e81-c145097a3ce0)"
+        />
+      </svg>
+
+      <div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8 relative">
+        {% include 'components/default_intro_section.html' %}
+      </div>
+    </div>
+
+    <div>{% include 'components/service_section.html' %}</div>
+  </main>
+
+  <script>
+    window.addEventListener('load', function () {
+      // Check if there's a fragment identifier in the URL
+      if (window.location.hash) {
+        var targetElement = document.querySelector(window.location.hash)
+
+        // If the element is found, focus it
+        if (targetElement) {
+          targetElement.focus()
+        }
+      }
+    })
+  </script>
+{% endblock %}

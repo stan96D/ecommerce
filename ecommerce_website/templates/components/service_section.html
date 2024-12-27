@@ -1,0 +1,80 @@
+<section>
+  <div class="isolate bg-gray-50 px-6 py-6 sm:pt-16 sm:pb-16 lg:px-8">
+    <div class="mx-auto max-w-2xl sm:text-center">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        Onze service
+      </h2>
+      <p class="mt-2 text-lg leading-8 text-gray-600">
+        Problemen bij je bestelling? Geen zorgen! Wij zijn er om jou te helpen.
+      </p>
+      <div class="mx-auto mt-5 text-center">
+        <!-- Green circle icon -->
+        <i class="fas fa-circle text-green-500"></i>
+        <!-- Text -->
+        <span class="ml-1 text-sm font-medium ">Dagelijks geopend</span>
+      </div>
+    </div>
+
+    <div class="mx-auto mt-20 max-w-screen-md flex gap-x-6 pt-2">
+      <!-- Email Block -->
+      <div class="flex gap-x-6 items-start">
+        <div
+          class="flex h-10 w-10 shrink-0 mt-2 items-center justify-center rounded-lg bg-amber-500"
+        >
+          <!-- Font Awesome Email Icon -->
+          <i class="fa fa-envelope text-white text-lg"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-semibold leading-7 text-gray-900">Email</h3>
+          <a
+            href="mailto:{{ store_data.contact_email }}"
+            class="text-sm font-semibold leading-6 text-amber-500 flex items-center"
+          >
+            {{ store_data.contact_email }}
+            <span aria-hidden="true" class="ml-1">&rarr;</span>
+          </a>
+          <p class="mt-2 leading-7 text-gray-600">
+            Wij proberen jouw verzoek binnen maximaal twee werkdagen te
+            beantwoorden!
+          </p>
+        </div>
+      </div>
+
+      <!-- Availability Block -->
+      <div class="flex gap-x-6 items-start">
+        <div
+          class="flex h-10 w-10 mt-2 shrink-0 items-center justify-center rounded-lg bg-amber-500"
+        >
+          <i class="fas fa-clock text-white text-xl"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-semibold leading-7 text-gray-900">
+            Beschikbaarheid
+          </h3>
+          <a href="#" class="text-sm font-semibold leading-6 text-amber-500">
+            {{ store_data.opening_time_week }}
+          </a>
+          <p class="mt-2 leading-7 text-gray-600">
+            Onze klantenservice is alle werkdagen beschikbaar met uitzondering
+            van de feestdagen.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="perks-heading" class="sr-only">Our perks</h2>
+    <div class="mt-16">
+      <div class="mx-auto rounded-lg p-10 bg-gray-100">
+        <div
+          class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0"
+        >
+          {% for store_motivation in store_motivations %}
+            {% if store_motivation.for_homepage %}
+              {% include 'components/store_motivation.html' %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

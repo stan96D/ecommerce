@@ -1,0 +1,53 @@
+<div class="overflow-hidden bg-white px-6 py-16 lg:px-8 ">
+  <div class=" pb-12 relative">
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900">
+      {{ category.name }}
+    </h1>
+    {% if  category.description %}
+      <p class="mt-4 text-base text-gray-700">
+        {{ category.description | safe }}
+      </p>
+    {% endif %}
+  </div>
+
+  {% if category.data %}
+    <div class="bg-white py-8 sm:py-12">
+      <div class="mx-auto max-w-7xl ">
+        <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
+          <p class="text-base/7 font-semibold text-amber-500">
+            {{ category.extra }}
+          </p>
+          <h1
+            class="mt-2 text-pretty text-4xl font-semibold tracking-tight text-gray-900"
+          >
+            {{ category.header }}
+          </h1>
+          <div
+            class="mt-6 grid max-w-xl grid-cols-1 gap-8 text-base/7 text-gray-700 lg:max-w-none lg:grid-cols-2"
+          >
+            {% for data in category.data %}
+              <div
+                id="{{ data.id }}"
+                class="rounded-lg shadow-md border border-gray-200 p-8 bg-gray-50"
+              >
+                <h1
+                  class="mt-2 text-pretty text-xl font-semibold tracking-tight text-gray-900 pb-2"
+                >
+                  {{ data.title }}
+                </h1>
+
+                <p>{{ data.text | safe }}</p>
+                {% if data.additional_data %}
+                  <div class="pt-6 flex justify-start gap-x-6 md:order-2">
+                    {{ data.additional_data | safe }}
+                    <!-- Render social media links HTML here -->
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
