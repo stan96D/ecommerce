@@ -23,7 +23,7 @@
               {% for image in product.images.all %}
                 <button
                   id="tabs-1-tab-{{ forloop.counter }}"
-                  class="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-amber-400 focus:ring-offset-4"
+                  class="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 focus:outline-none focus:ring focus:ring-orange-400 focus:ring-offset-4"
                   aria-controls="tabs-1-panel-{{ forloop.counter }}"
                   role="tab"
                   type="button"
@@ -68,7 +68,7 @@
 
         <!-- Product info -->
         <div class="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-          <h4 class="text-xs pt-4 pb-1 text-amber-500 font-semibold">
+          <h4 class="text-xs pt-4 pb-1 text-orange-400 font-semibold">
             <a
               href="/products/{{ product.brand }}"
               class="hover:font-semibold cursor-pointer"
@@ -193,7 +193,7 @@
                           />
                           <span
                             aria-hidden="true"
-                            class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden peer-checked:border-2 peer-checked:border-amber-500 p-0.5"
+                            class="h-16 w-16 rounded-full border border-black border-opacity-10 overflow-hidden peer-checked:border-2 peer-checked:border-orange-400 p-0.5"
                           >
                             <img
                               src="{{ alternative_product.thumbnail_url }}"
@@ -347,7 +347,7 @@
             <div class="mt-10 flex">
               <button
                 type="submit"
-                class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-amber-500 px-8 py-3 text-base font-medium text-white hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-orange-400 px-8 py-3 text-base font-medium text-white hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
               >
                 In winkelmand
                 {% if current_cart != 0 %}

@@ -1,3 +1,5 @@
+from django.utils.timezone import now
+from datetime import date
 from datetime import timedelta
 from django.db import models
 from django.utils import timezone
@@ -161,12 +163,21 @@ class Product(models.Model):
 class Sale(models.Model):
     name = models.CharField(max_length=100)
     active = models.BooleanField(default=False)
+    description = models.CharField(max_length=100)
 
-    begin_date = models.DateField(default=timezone.now)
+    begin_date = models.DateField(default=now)
     end_date = models.DateField()
 
     def __str__(self):
         return self.name
+
+    @property
+    def days_left(self):
+        """Calculate the number of days left until the sale ends."""
+        today = date.today()
+        if self.end_date >= today:
+            return (self.end_date - today).days
+        return 0  # Return 0 if the sale has ended
 
 
 class ProductSale(models.Model):

@@ -17,11 +17,11 @@
           <!-- Status div with initial text and icon -->
           <p
             id="return-status"
-            class="flex-1 text-sm font-normal text-amber-500 lg:flex-none"
+            class="flex-1 text-sm font-normal text-orange-400 lg:flex-none"
           >
             <i
               id="return-status-icon"
-              class="fas fa-exclamation-circle text-amber-500 mr-1"
+              class="fas fa-exclamation-circle text-orange-400 mr-1"
             ></i>
             Actie vereist
           </p>
@@ -125,7 +125,7 @@
             <button
               id="complete-button"
               disabled="true"
-              class="mt-8 w-full rounded-md  border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
+              class="mt-8 w-full rounded-md  border border-transparent bg-orange-400 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
             >
               Naar gegevens
             </button>
@@ -251,9 +251,9 @@
 
       if (isSelected) {
         // Update status to "Retour kan gemaakt worden" with green check
-        statusElement.classList.remove('text-amber-500')
+        statusElement.classList.remove('text-orange-400')
         statusElement.classList.add('text-green-600')
-        iconElement.classList.remove('fa-exclamation-circle', 'text-amber-500')
+        iconElement.classList.remove('fa-exclamation-circle', 'text-orange-400')
         iconElement.classList.add('fa-check-circle', 'text-green-600')
         statusElement.innerHTML = `
         <i id="return-status-icon" class="fas fa-check-circle text-green-600 mr-1"></i>
@@ -262,11 +262,11 @@
       } else {
         // Reset to "Actie vereist"
         statusElement.classList.remove('text-green-600')
-        statusElement.classList.add('text-amber-500')
+        statusElement.classList.add('text-orange-400')
         iconElement.classList.remove('fa-check-circle', 'text-green-600')
-        iconElement.classList.add('fa-exclamation-circle', 'text-amber-500')
+        iconElement.classList.add('fa-exclamation-circle', 'text-orange-400')
         statusElement.innerHTML = `
-        <i id="return-status-icon" class="fas fa-exclamation-circle text-amber-500 mr-1"></i>
+        <i id="return-status-icon" class="fas fa-exclamation-circle text-orange-400 mr-1"></i>
         Actie vereist
       ` // Original text with icon
       }

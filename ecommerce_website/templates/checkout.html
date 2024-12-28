@@ -72,7 +72,7 @@
                           type="radio"
                           value="Dhr"
                           {% if order_info.salutation == "Dhr" %}checked{% endif %}
-                          class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor"
+                          class="h-4 w-4 border-gray-300 text-orange-400 focus:ring-customColor"
                         />
                         <label
                           for="salutation-meneer"
@@ -87,7 +87,7 @@
                           type="radio"
                           value="Mevr"
                           {% if order_info.salutation == "Mevr" %}checked{% endif %}
-                          class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor"
+                          class="h-4 w-4 border-gray-300 text-orange-400 focus:ring-customColor"
                         />
                         <label
                           for="salutation-mevrouw"
@@ -102,7 +102,7 @@
                           type="radio"
                           value="Geen van beiden"
                           {% if order_info.salutation == "Geen van beiden" %}checked{% endif %}
-                          class="h-4 w-4 border-gray-300 text-amber-500 focus:ring-customColor"
+                          class="h-4 w-4 border-gray-300 text-orange-400 focus:ring-customColor"
                         />
                         <label
                           for="no-salutation"
@@ -207,7 +207,7 @@
                   <button
                     id="billing-toggle"
                     type="button"
-                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                    class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
                     role="switch"
                     aria-checked="false"
                     aria-labelledby="billing-toggle-label"
@@ -468,7 +468,7 @@
 
             <button
               type="submit"
-              class="mt-8 w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
+              class="mt-8 w-full rounded-md border border-transparent bg-orange-400 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
             >
               Naar betalen
             </button>
@@ -613,7 +613,7 @@
         // Set toggle to active state
         toggle.setAttribute('aria-checked', 'true')
         toggle.classList.remove('bg-gray-200')
-        toggle.classList.add('bg-amber-500')
+        toggle.classList.add('bg-orange-400')
         thumb.classList.remove('translate-x-0')
         thumb.classList.add('translate-x-5')
         alternateBilling.classList.remove('hidden')
@@ -626,7 +626,7 @@
       } else {
         // Set toggle to inactive state
         toggle.setAttribute('aria-checked', 'false')
-        toggle.classList.remove('bg-amber-500')
+        toggle.classList.remove('bg-orange-400')
         toggle.classList.add('bg-gray-200')
         thumb.classList.remove('translate-x-5')
         thumb.classList.add('translate-x-0')
@@ -653,7 +653,7 @@
       if (isActive) {
         // Switch to inactive state
         toggle.setAttribute('aria-checked', 'false')
-        toggle.classList.remove('bg-amber-500')
+        toggle.classList.remove('bg-orange-400')
         toggle.classList.add('bg-gray-200')
         thumb.classList.remove('translate-x-5')
         thumb.classList.add('translate-x-0')
@@ -668,7 +668,7 @@
         // Switch to active state
         toggle.setAttribute('aria-checked', 'true')
         toggle.classList.remove('bg-gray-200')
-        toggle.classList.add('bg-amber-500')
+        toggle.classList.add('bg-orange-400')
         thumb.classList.remove('translate-x-0')
         thumb.classList.add('translate-x-5')
         alternateBilling.classList.remove('hidden')

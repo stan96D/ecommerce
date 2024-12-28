@@ -58,7 +58,7 @@
         selectedLabel.classList.remove('selected')
         selectedLabel
           .querySelector('.pointer-events-none')
-          .classList.remove('border-amber-500')
+          .classList.remove('border-orange-400')
       }
     })
 
@@ -67,20 +67,20 @@
       document.querySelector('input[name="selected_delivery_method"]').value =
         deliveryMethodName
       const svg = label.querySelector('svg')
-      svg.classList.add('text-amber-500')
+      svg.classList.add('text-orange-400')
       svg.classList.remove('text-gray-300')
       label
         .querySelector('.pointer-events-none')
-        .classList.add('border-amber-500')
+        .classList.add('border-orange-400')
     } else {
       document.querySelector('input[name="selected_delivery_method"]').value =
         ''
       const svg = label.querySelector('svg')
-      svg.classList.remove('text-amber-500')
+      svg.classList.remove('text-orange-400')
       svg.classList.add('text-gray-300')
       label
         .querySelector('.pointer-events-none')
-        .classList.remove('border-amber-500')
+        .classList.remove('border-orange-400')
     }
   }
 </script>

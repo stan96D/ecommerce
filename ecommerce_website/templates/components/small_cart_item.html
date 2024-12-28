@@ -28,7 +28,7 @@
     {% if item.product_type == "Vloer" %}
       {% if item.sale_price %}
         <div class="flex items-center mt-1 text-xs text-gray-500">
-          <span class="text-amber-500 font-semibold">Kortingsprijs:</span>
+          <span class="text-orange-400 font-semibold">Kortingsprijs:</span>
           <span class="ml-1">€{{ item.unit_sale_price }} per pak</span>
         </div>
         <p class="mt-1 text-xs text-gray-500 line-through">
@@ -40,7 +40,7 @@
     {% else %}
       {% if item.sale_price %}
         <div class="flex items-center mt-1 text-xs text-gray-500">
-          <span class="text-amber-500 font-semibold">Kortingsprijs:</span>
+          <span class="text-orange-400 font-semibold">Kortingsprijs:</span>
           <span class="ml-1">€{{ item.sale_price }} per {{ item.unit }}</span>
         </div>
         <p class="mt-1 text-xs text-gray-500 line-through">

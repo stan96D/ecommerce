@@ -48,8 +48,8 @@
               Bedankt voor je retouraanvraag!
             </p>
           {% elif order.status == "partly" %}
-            <p class="flex-1 text-sm font-normal text-amber-500 lg:flex-none">
-              <i class="fas fa-check-circle text-amber-500 mr-1"></i> Producten
+            <p class="flex-1 text-sm font-normal text-orange-400 lg:flex-none">
+              <i class="fas fa-check-circle text-orange-400 mr-1"></i> Producten
               (deels) opgehaald
             </p>
             <p
@@ -68,8 +68,8 @@
               Bedankt voor je retouraanvraag!
             </p>
           {% elif order.status == "open" %}
-            <p class="flex-1 text-sm font-normal text-amber-500 lg:flex-none">
-              <i class="fas fa-exclamation-circle text-amber-500 mr-1"></i>
+            <p class="flex-1 text-sm font-normal text-orange-400 lg:flex-none">
+              <i class="fas fa-exclamation-circle text-orange-400 mr-1"></i>
               Openstaande betaling
             </p>
             <p
@@ -154,12 +154,12 @@
                       {% if order_line.return_id is not None %}
                         <a
                           href="/return_detail/?return_id={{ order_line.return_id }}"
-                          class="text-amber-500 font-medium text-xs"
+                          class="text-orange-400 font-medium text-xs"
                         >
                           {{ order_line.returned_quantity }} geretourneerd
                         </a>
                       {% else %}
-                        <span class="text-amber-500 font-medium text-xs">
+                        <span class="text-orange-400 font-medium text-xs">
                           {{ order_line.returned_quantity }} geretourneerd
                         </span>
                       {% endif %}
@@ -181,7 +181,7 @@
                     <span class="flex items-center text-xs pr-2">
                       <!-- Simplified Icon for status with color -->
                       {% if order_line.status == 'Nog op te halen' %}
-                        <i class="fas fa-exclamation text-amber-500"></i>
+                        <i class="fas fa-exclamation text-orange-400"></i>
                       {% elif order_line.status == 'Opgehaald' %}
                         <i class="fas fa-check text-green-500"></i>
                       {% endif %}
@@ -319,7 +319,7 @@
           <div class="mt-16 border-t border-gray-200 py-6 text-right">
             <a
               href="/"
-              class="text-sm font-medium text-amber-500 hover:text-customColor"
+              class="text-sm font-medium text-orange-400 hover:text-customColor"
             >
               Verder met shoppen
               <span aria-hidden="true"> &rarr;</span>

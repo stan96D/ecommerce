@@ -27,6 +27,36 @@
         <strong>Developmentomgeving</strong>
       </div>
     {% endif %} -->
+{% if current_sale %}
+  <a href="/discounts" class="block">
+    <div
+      class="bg-black text-white py-4 px-4 text-center shadow-sm flex items-center justify-center space-x-4"
+    >
+      <!-- Font Awesome Sale Icon -->
+      <i class="fas fa-tag text-white text-xl"></i>
+      <!-- Sale icon -->
+
+      <p class="text-sm font-semibold">{{ current_sale.description }}</p>
+
+      <p class="text-sm">
+        {% if current_sale.days_left <= 7 %}
+          U heeft nog
+          <span class="font-bold"
+            >{{ current_sale.days_left }}
+            dag{{ current_sale.days_left|pluralize:"" }}</span
+          >
+          om te profiteren van deze korting!
+        {% else %}
+          Korting beschikbaar tot
+          <span class="font-bold"
+            >{{ current_sale.end_date|date:"m/d/Y" }}</span
+          >.
+        {% endif %}
+      </p>
+    </div>
+  </a>
+{% endif %}
+
 
     <div
       class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
@@ -36,7 +66,7 @@
           id="storeMotivation"
           class="flex-1 text-center text-sm font-medium text-black lg:flex-none"
         >
-          <i class="fas {{ motivation.icon }} text-orange-500 mr-1"></i>
+          <i class="fas {{ motivation.icon }} text-orange-400 mr-1"></i>
 
           {{ motivation.name }}
         </p>
@@ -54,80 +84,93 @@
           />
         </a>
       </div>
-<div class="z-0 flex flex-1 items-center justify-center px-2 sm:inset-0">
-  <div class="w-full sm:max-w-xs relative">
-<form id="searchForm" onsubmit="submitSearch(event)">
-  <label for="search" class="sr-only">Search</label>
-  <div id="search-container" class="relative rounded-md  border-gray-300 transition-all duration-200 ease-in-out">
-    <!-- Glass Icon -->
-    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-      <svg id="searchIcon"
-           class="h-5 w-5 text-gray-400 transition-all duration-200 ease-in-out"
-           viewBox="0 0 20 20"
-           fill="currentColor"
-           aria-hidden="true">
-        <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd" />
-      </svg>
-    </div>
-    <input
-      spellcheck="false"
-      id="search"
-      name="search"
-      class="block w-full rounded-md border-2 border-gray-300 py-1.5 pl-10 pr-3 text-black placeholder:text-gray-400 focus:outline-none focus:ring-0 focus:border-orange-500 focus:placeholder-transparent sm:text-sm sm:leading-6 transition-all duration-200"
-      placeholder="Zoek in assortiment..."
-      type="search"
-      onfocus="handleFocus()" onblur="handleBlur()"
-    />
-    <!-- Clear Button -->
-    <button
-      type="button"
-      id="custom-clear-button"
-      class="absolute inset-y-0 right-0 px-3 py-1.5 text-sm font-medium text-gray-500 bg-transparent hover:text-orange-500 focus:outline-none transition-all duration-200 ease-in-out"
-      onclick="clearSearchInput()"
-    >
-      <i class="fas fa-times"></i>
-    </button>
-  </div>
-</form>
+      <div class="z-0 flex flex-1 items-center justify-center px-2 sm:inset-0">
+        <div class="w-full sm:max-w-xs relative">
+          <form id="searchForm" onsubmit="submitSearch(event)">
+            <label for="search" class="sr-only">Search</label>
+            <div
+              id="search-container"
+              class="relative rounded-md  border-gray-300 transition-all duration-200 ease-in-out"
+            >
+              <!-- Glass Icon -->
+              <div
+                class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3"
+              >
+                <svg
+                  id="searchIcon"
+                  class="h-5 w-5 text-gray-400 transition-all duration-200 ease-in-out"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
+              <input
+                spellcheck="false"
+                id="search"
+                name="search"
+                class="block w-full rounded-md border-2 border-gray-300 py-1.5 pl-10 pr-3 text-black placeholder:text-gray-400 focus:outline-none focus:ring-0 focus:border-orange-500 focus:placeholder-transparent sm:text-sm sm:leading-6 transition-all duration-200"
+                placeholder="Zoek in assortiment..."
+                type="search"
+                onfocus="handleFocus()"
+                onblur="handleBlur()"
+              />
+              <!-- Clear Button -->
+              <button
+                type="button"
+                id="custom-clear-button"
+                class="absolute inset-y-0 right-0 px-3 py-1.5 text-sm font-medium text-gray-500 bg-transparent hover:text-orange-500 focus:outline-none transition-all duration-200 ease-in-out"
+                onclick="clearSearchInput()"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </form>
 
-<script>
-  function handleFocus() {
-    console.log('focused');
-    // Change the search icon color to orange
-    document.getElementById("searchIcon").classList.remove("text-gray-400");
-    document.getElementById("searchIcon").classList.add("text-orange-500");
+          <script>
+            function handleFocus() {
+              console.log('focused')
+              // Change the search icon color to orange
+              document
+                .getElementById('searchIcon')
+                .classList.remove('text-gray-400')
+              document
+                .getElementById('searchIcon')
+                .classList.add('text-orange-500')
 
-    // Add the orange border to the parent container and input
-    document.getElementById("search-container").classList.add("border-orange-500");
-    document.getElementById("search").classList.add("border-orange-500");
-  }
+              // Add the orange border to the parent container and input
+              document
+                .getElementById('search-container')
+                .classList.add('border-orange-500')
+              document
+                .getElementById('search')
+                .classList.add('border-orange-500')
+            }
 
-  function handleBlur() {
-    // Restore the search icon color to gray
-    document.getElementById("searchIcon").classList.remove("text-orange-500");
-    document.getElementById("searchIcon").classList.add("text-gray-400");
+            function handleBlur() {
+              // Restore the search icon color to gray
+              document
+                .getElementById('searchIcon')
+                .classList.remove('text-orange-500')
+              document
+                .getElementById('searchIcon')
+                .classList.add('text-gray-400')
 
-    // Remove the orange border from the parent container and input
-    document.getElementById("search-container").classList.remove("border-orange-500");
-    document.getElementById("search").classList.remove("border-orange-500");
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-
-
-
-
+              // Remove the orange border from the parent container and input
+              document
+                .getElementById('search-container')
+                .classList.remove('border-orange-500')
+              document
+                .getElementById('search')
+                .classList.remove('border-orange-500')
+            }
+          </script>
+        </div>
 
         {% if store_data and store_data.contact_email %}
           <div class="ml-4">
@@ -479,7 +522,7 @@
                 <a href="{% url 'cart' %}">
                   <button
                     type="submit"
-                    class="w-full rounded-md border border-transparent bg-orange-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
+                    class="w-full rounded-md border border-transparent bg-orange-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-50"
                   >
                     Winkelmandje
                   </button>
@@ -539,20 +582,20 @@
     if (cartData.cart.items.length === 0) {
       // Create error message container
       const errorMessageContainer = document.createElement('div')
-      errorMessageContainer.className = 'rounded-md bg-orange-50 p-4'
+      errorMessageContainer.className = 'rounded-md bg-blue-50 p-4'
 
       // Create error message content
       const errorMessageContent = `
             <div class="flex">
                 <div class="flex-shrink-0">
-                    <svg class="h-5 w-5 text-orange-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <svg class="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd"
                             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a.75.75 0 000 1.5h.253a.25.25 0 01.244.304l-.459 2.066A1.75 1.75 0 0010.747 15H11a.75.75 0 000-1.5h-.253a.25.25 0 01-.244-.304l.459-2.066A1.75 1.75 0 009.253 9H9z"
                             clip-rule="evenodd" />
                     </svg>
                 </div>
                 <div class="ml-3 flex-1 md:flex md:justify-between">
-                    <p class="text-sm text-orange-500">Uw winkelmandje is leeg</p>
+                    <p class="text-sm text-blue-500">Uw winkelmandje is leeg</p>
 
                 </div>
             </div>

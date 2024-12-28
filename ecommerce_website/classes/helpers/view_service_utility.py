@@ -1,3 +1,4 @@
+from datetime import date
 from ecommerce_website.services.product_service.product_service import ProductService
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.view_service.create_return_item__view import CreateReturnItemViewService
@@ -67,6 +68,24 @@ class ViewServiceUtility:
             header_data = ProductCategoryService().get_all_active_head_product_categories()
             cache.set('header_data', header_data, timeout=3600)
         return header_data
+    
+    @staticmethod
+    def get_current_sale_data():
+        current_sale_data = cache.get('current_sale_data')
+        if not current_sale_data:
+            current_date = date.today()
+
+            # Filter active sales where the current date is within the range
+            current_date = date.today()
+            current_sale_data = Sale.objects.filter(
+                active=True,
+                begin_date__lte=current_date,
+                end_date__gte=current_date
+            ).first()           
+
+            if current_sale_data:
+                cache.set('current_sale_data', current_sale_data, timeout=3600)
+        return current_sale_data
 
     @staticmethod
     def get_payment_methods():

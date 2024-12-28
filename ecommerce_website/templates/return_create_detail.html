@@ -193,7 +193,7 @@
                     <button
                       id="billing-toggle"
                       type="button"
-                      class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                      class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
                       role="switch"
                       aria-checked="false"
                       aria-labelledby="billing-toggle-label"
@@ -511,7 +511,7 @@
 
             <button
               type="submit"
-              class="mt-8 w-full rounded-md border border-transparent bg-amber-500 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
+              class="mt-8 w-full rounded-md border border-transparent bg-orange-400 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-customColor focus:ring-offset-2 focus:ring-offset-gray-50"
             >
               Naar betalen
             </button>
@@ -581,7 +581,7 @@
         // Set toggle to active state
         toggle.setAttribute('aria-checked', 'true')
         toggle.classList.remove('bg-gray-200')
-        toggle.classList.add('bg-amber-500')
+        toggle.classList.add('bg-orange-400')
         thumb.classList.remove('translate-x-0')
         thumb.classList.add('translate-x-5')
         alternateBilling.classList.remove('hidden')
@@ -594,7 +594,7 @@
       } else {
         // Set toggle to inactive state
         toggle.setAttribute('aria-checked', 'false')
-        toggle.classList.remove('bg-amber-500')
+        toggle.classList.remove('bg-orange-400')
         toggle.classList.add('bg-gray-200')
         thumb.classList.remove('translate-x-5')
         thumb.classList.add('translate-x-0')
@@ -621,7 +621,7 @@
       if (isActive) {
         // Switch to inactive state
         toggle.setAttribute('aria-checked', 'false')
-        toggle.classList.remove('bg-amber-500')
+        toggle.classList.remove('bg-orange-400')
         toggle.classList.add('bg-gray-200')
         thumb.classList.remove('translate-x-5')
         thumb.classList.add('translate-x-0')
@@ -636,7 +636,7 @@
         // Switch to active state
         toggle.setAttribute('aria-checked', 'true')
         toggle.classList.remove('bg-gray-200')
-        toggle.classList.add('bg-amber-500')
+        toggle.classList.add('bg-orange-400')
         thumb.classList.remove('translate-x-0')
         thumb.classList.add('translate-x-5')
         alternateBilling.classList.remove('hidden')

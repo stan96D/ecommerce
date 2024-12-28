@@ -8,7 +8,7 @@
             <div
               class="h-0.5 w-full
               {% if phase.status == 'completed' %}
-                bg-amber-500
+                bg-orange-400
               {% else %}
                 bg-gray-200
               {% endif %}
@@ -22,7 +22,7 @@
           {% if phase.status == 'completed' %}
             <!-- Completed Step -->
             <div
-              class="relative flex size-8 items-center justify-center rounded-full bg-amber-500 hover:bg-amber-900"
+              class="relative flex size-8 items-center justify-center rounded-full bg-orange-400 hover:bg-orange-900"
             >
               <svg
                 class="size-5 text-white"
@@ -41,11 +41,11 @@
           {% elif phase.status == 'current' %}
             <!-- Current Step -->
             <div
-              class="relative flex size-8 items-center justify-center rounded-full border-2 border-amber-600 bg-white"
+              class="relative flex size-8 items-center justify-center rounded-full border-2 border-orange-600 bg-white"
               aria-current="step"
             >
               <span
-                class="size-2.5 rounded-full bg-amber-500"
+                class="size-2.5 rounded-full bg-orange-400"
                 aria-hidden="true"
               ></span>
             </div>

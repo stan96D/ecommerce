@@ -9,7 +9,7 @@
       Retour
       <a
         href="/return_detail/?return_id={{ return_order.id }}"
-        class="text-amber-500 hover:text-customColor"
+        class="text-orange-400 hover:text-customColor"
         >{{ return_order.id }}/{{ return_order.order_number }}</a
       >
     </h2>
@@ -70,8 +70,10 @@
           >{{ order.order_status }}
         </p>
       {% elif order.order_status == "Openstaand" %}
-        <p class="text-left font-normal pl-2  text-amber-500 flex items-center">
-          <i class="fas fa-exclamation-circle text-amber-500 mr-1"></i
+        <p
+          class="text-left font-normal pl-2  text-orange-400 flex items-center"
+        >
+          <i class="fas fa-exclamation-circle text-orange-400 mr-1"></i
           >{{ order.order_status }}
         </p>
       {% elif order.order_status == "Mislukt" %}

@@ -64,7 +64,7 @@
       appearance: none; /* Remove default thumb styling */
       width: 16px; /* Thumb width */
       height: 16px; /* Thumb height */
-      background-color: #f59e0b; /* amber-500 */
+      background-color: #f97316; /* amber-500 */
       border-radius: 50%; /* Make the thumb round */
       cursor: pointer; /* Pointer on hover */
       margin-top: -4px; /* Center the thumb vertically */
@@ -74,7 +74,7 @@
     .range-slider::-moz-range-thumb {
       width: 16px; /* Thumb width */
       height: 16px; /* Thumb height */
-      background-color: #f59e0b; /* amber-500 */
+      background-color: #f97316; /* amber-500 */
       border-radius: 50%; /* Make the thumb round */
       cursor: pointer; /* Pointer on hover */
     }
@@ -83,7 +83,7 @@
     .range-slider::-ms-thumb {
       width: 16px; /* Thumb width */
       height: 16px; /* Thumb height */
-      background-color: #f59e0b; /* amber-500 */
+      background-color: #f97316; /* orange-500 */
       border-radius: 50%; /* Make the thumb round */
       cursor: pointer; /* Pointer on hover */
     }
@@ -92,25 +92,25 @@
     .range-slider:focus::-webkit-slider-runnable-track {
       background: linear-gradient(
         to right,
-        #f59e0b var(--value),
+        #f97316 var(--value),
         #e5e7eb var(--value)
-      ); /* amber-500 for selected area */
+      ); /* orange-500 for selected area */
     }
 
     .range-slider:focus::-moz-range-track {
       background: linear-gradient(
         to right,
-        #f59e0b var(--value),
+        #f97316 var(--value),
         #e5e7eb var(--value)
-      ); /* amber-500 for selected area */
+      ); /* orange-500 for selected area */
     }
 
     .range-slider:focus::-ms-track {
       background: linear-gradient(
         to right,
-        #f59e0b var(--value),
+        #f97316 var(--value),
         #e5e7eb var(--value)
-      ); /* amber-500 for selected area */
+      ); /* orange-500 for selected area */
     }
   </style>
 
@@ -128,7 +128,7 @@
         <div class="pb-4 pt-10 flex justify-end gap-x-2">
           <!-- Product count on the left side -->
           <div class="relative flex items-center">
-            <span class="text-sm text-amber-500">
+            <span class="text-sm text-orange-500">
               {% if product_count == 1 %}
                 {{ product_count }}
                 product
@@ -258,7 +258,7 @@
                           {% if product_filter.type == "slider" %}
                             <span
                               id="slider-value-display-{{ product_filter.name }}"
-                              class="text-amber-500"
+                              class="text-orange-500"
                             ></span>
                           {% endif %}
                         </span>
@@ -286,7 +286,7 @@
                                 name="{{ product_filter.name }}"
                                 value="{{ product_attribute }}"
                                 type="checkbox"
-                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-customColor"
+                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-customColor"
                                 onclick="executeSearch(this)"
                               />
                               <label
@@ -304,7 +304,7 @@
                                 name="{{ product_filter.name }}"
                                 value="{{ product_attribute }}"
                                 type="checkbox"
-                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-amber-500 focus:ring-customColor"
+                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-customColor"
                                 onclick="executeSearch(this)"
                               />
                               <label
@@ -320,7 +320,7 @@
                           <div>
                             <button
                               type="button"
-                              class="text-sm text-amber-500 underline"
+                              class="text-sm text-orange-500 underline"
                               onclick="toggleExtraFilters('{{ product_filter.name }}', this)"
                             >
                               Meer tonen
@@ -354,7 +354,7 @@
                             data-filter-name="{{ product_filter.name }}"
                             data-default-value="{{ product_filter.highest|ceil }}"
                             data-unit="{{ product_filter.unit }}"
-                            class="w-full h-2 bg-amber-500 rounded-lg appearance-none cursor-pointer range-slider"
+                            class="w-full h-2 bg-orange-500 rounded-lg appearance-none cursor-pointer range-slider"
                             oninput="updateSliderValue(this.value, '{{ product_filter.name }}')"
                           />
                           <div class="flex items-center justify-between mt-2">
@@ -372,7 +372,7 @@
                             </div>
                             <button
                               type="button"
-                              class="text-sm text-amber-500"
+                              class="text-sm text-orange-500"
                               onclick="executeSearchSlider('{{ product_filter.name }}')"
                             >
                               Filter toevoegen
@@ -390,7 +390,7 @@
                 <div class="pt-5">
                   <button
                     type="button"
-                    class="text-sm text-amber-500 underline"
+                    class="text-sm text-orange-500 underline"
                     onclick="toggleAllFilters()"
                   >
                     Meer filters
@@ -439,7 +439,7 @@
                   <a
                     href="javascript:void(0)"
                     onclick="goToPage({{ page_obj.previous_page_number }})"
-                    class="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                    class="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
                     >Vorige</a
                   >
                 {% endif %}
@@ -454,7 +454,7 @@
                       <a
                         href="javascript:void(0)"
                         onclick="goToPage(1)"
-                        class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
                         >1</a
                       >
 
@@ -471,14 +471,14 @@
                       {% if i >= page_obj.number|add:'-3' and i <= page_obj.number|add:'3' %}
                         {% if i == page_obj.number %}
                           <span
-                            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-amber-500 bg-white ring-1 ring-amber-500"
+                            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-orange-500 bg-white ring-1 ring-orange-500"
                             >{{ i }}</span
                           >
                         {% else %}
                           <a
                             href="javascript:void(0)"
                             onclick="goToPage({{ i }})"
-                            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
                             >{{ i }}</a
                           >
                         {% endif %}
@@ -497,7 +497,7 @@
                         <a
                           href="javascript:void(0)"
                           onclick="goToPage({{ paginator.num_pages }})"
-                          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
                           >{{ paginator.num_pages }}</a
                         >
                       {% endif %}
@@ -512,7 +512,7 @@
                   <a
                     href="javascript:void(0)"
                     onclick="goToPage({{ page_obj.next_page_number }})"
-                    class="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-amber-500"
+                    class="inline-flex h-10 items-center rounded-md border border-gray-300 bg-white px-4 hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
                     >Volgende</a
                   >
                 {% endif %}
