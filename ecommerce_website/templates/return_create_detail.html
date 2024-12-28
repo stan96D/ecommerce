@@ -73,7 +73,7 @@
                     id="return_reason"
                     name="return_reason"
                     rows="4"
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm mt-1"
+                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm mt-1"
                     placeholder="Je reden om te retourneren..."
                     required
                   >
@@ -112,7 +112,7 @@
                         name="first_name"
                         value="{{ form.first_name.value }}"
                         autocomplete="first_name"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
                     </div>
@@ -140,7 +140,7 @@
                         name="last_name"
                         value="{{ form.last_name.value }}"
                         autocomplete="last_name"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
                       {% if form.last_name.errors %}
@@ -168,7 +168,7 @@
                       name="email_address"
                       value="{{ form.email_address.value }}"
                       autocomplete="email"
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
                     {% if form.email_address.errors %}
@@ -232,7 +232,7 @@
                         id="address"
                         value="{{ form.address.value }}"
                         autocomplete="street-address"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
                       {% if form.address.errors %}
@@ -257,7 +257,7 @@
                         id="house_number"
                         value="{{ form.house_number.value }}"
                         autocomplete="house_number"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
                       {% if form.house_number.errors %}
@@ -285,7 +285,7 @@
                         id="city"
                         value="{{ form.city.value }}"
                         autocomplete="city"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
                       {% if form.city.errors %}
@@ -309,7 +309,7 @@
                         id="postal_code"
                         value="{{ form.postal_code.value }}"
                         autocomplete="postal_code"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
                       {% if form.postal_code.errors %}
@@ -334,7 +334,7 @@
                         id="country"
                         name="country"
                         autocomplete="country"
-                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                        class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:max-w-xs sm:text-sm sm:leading-6"
                       >
                         {% if form.country.value == "Nederland" %}
                           <option value="Nederland" selected>Nederland</option>
@@ -373,7 +373,7 @@
                         name="phone"
                         id="phone"
                         value="{{ form.phone.value }}"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
 
@@ -411,7 +411,7 @@
                       id="billing-address"
                       value="{{ form.billing_address.value }}"
                       autocomplete="street-address"
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
                   </div>
@@ -430,7 +430,7 @@
                       id="billing-house-number"
                       value="{{ form.billing_house_number.value }}"
                       autocomplete="house-number"
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
                   </div>
@@ -449,7 +449,7 @@
                       id="billing-city"
                       value="{{ form.billing_city.value }}"
                       autocomplete="address-level2"
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
                   </div>
@@ -468,7 +468,7 @@
                       id="billing-postal-code"
                       value="{{ form.billing_postal_code.value }}"
                       autocomplete="postal-code"
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
                   </div>
@@ -486,7 +486,7 @@
                       name="billing_country"
                       autocomplete="billing-country"
                       value="{{ form.billing_country.value }}"
-                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
                       {% if form.billing_country.value == "Nederland" %}
                         <option value="Nederland" selected>Nederland</option>
