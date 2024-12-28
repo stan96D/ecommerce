@@ -324,7 +324,7 @@
       />
     </div>
     <!-- The dark overlay remains in place to darken the image if needed -->
-    <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
+    <div class="absolute inset-0 bg-gray-100 opacity-75"></div>
   </div>
   <div class="h-32 w-full bg-white md:h-40 lg:h-48"></div>
 </div>
@@ -337,24 +337,34 @@
             <div class="absolute inset-0 overflow-hidden">
               <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-04-hero-full-width.jpg" alt="" class="size-full object-cover">
             </div>
-            <div class="absolute inset-0 bg-gray-900 opacity-50"></div>
+    <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
           </div>
           <div class="h-48 w-full bg-white"></div>
         </div>
       <div
-        class="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-4 text-center sm:pt-48 sm:pb-24 lg:px-0"
+        class="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-4 text-center sm:pt-32 sm:pb-12 lg:px-0"
       >
-<h1 class="text-5xl font-semibold tracking-tight text-white lg:text-6xl">
-  De goedkoopste vloeren
-</h1>
-<p class="mt-4 text-lg text-white opacity-90">
-  Van PVC tot laminaat, deze zijn allemaal verkrijgbaar in ons
-  uitgebreide assortiment!
-</p>
-<a
-  href="/products"
-  class="mt-8 inline-block rounded-md border border-transparent bg-orange-500 px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-50"
->Bekijk ons assortiment</a>
+<div class="text-center py-10">
+            <h2
+              id="sale-heading"
+              class="text-4xl font-bold tracking-tight text-black sm:text-5xl lg:text-6xl"
+            >
+                Dé goedkoopste vloeren
+
+            </h2>
+
+  <p class="mt-6 text-pretty text-lg font-normal text-gray-700 max-w-2xl mx-auto leading-relaxed">
+    Van PVC tot laminaat, deze zijn allemaal verkrijgbaar in ons uitgebreide assortiment! 
+    Genoeg keuze uit de beste topmerken!
+  </p>
+  <a
+    href="/products"
+    class="mt-8 inline-block rounded-md border border-transparent bg-gradient-to-r from-orange-500 to-orange-400 px-8 py-3 text-lg font-medium text-white shadow-lg hover:from-orange-600 hover:to-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500 focus:ring-offset-2"
+  >
+    Bekijk ons assortiment
+  </a>
+</div>
+
 
       </div>
       </div>
@@ -493,7 +503,7 @@
             </p>
             <a
               href="/discounts"
-              class="mt-6 inline-block w-full rounded-md border border-transparent bg-orange-500 px-8 py-3 font-medium text-white hover:bg-customColor sm:w-auto"
+              class="mt-6 inline-block w-full rounded-md border border-transparent bg-orange-500 px-8 py-3 font-medium text-white hover:bg-orange-400 sm:w-auto"
               >Zie kortingen</a
             >
           </div>
@@ -644,8 +654,9 @@
             >
               Dit is hoe jullie ons beoordelen
             </h2>
+
             <div class="flex items-center justify-center">
-              <span class="flex items-center text-amber-400 text-4xl">
+              <span class="flex items-center text-orange-400 text-4xl">
                 {% for i in store_rating_data.range %}
                   {% if i <= store_rating_data.mean %}
                     ★
@@ -658,6 +669,33 @@
                 {{ store_rating_data.mean }} van de 5
               </span>
             </div>
+
+<div class="mx-auto mt-6 justify-center text-center">
+    <div class="flex items-left justify-center mt-2 space-x-2">
+    <i class="fas fa-check text-green-500"></i>
+    <span class="text-sm font-medium text-gray-500">Wij nemen onze klantfeedback serieus</span>
+  </div>
+    <!-- Green circle icon for the second checkmark -->
+  <div class="flex items-left justify-center mt-2 space-x-2">
+    <i class="fas fa-check text-green-500"></i>
+    <span class="text-sm font-medium text-gray-500">Wij staan open voor uw feedback</span>
+  </div>
+  <!-- Green circle icon for the first checkmark -->
+  <div class="flex items-left justify-center mt-2 space-x-2">
+    <i class="fas fa-check text-green-500"></i>
+    <span class="text-sm font-medium text-gray-500">Constant aan het vernieuwen</span>
+  </div>
+
+
+
+  <!-- Green circle icon for the third checkmark -->
+
+
+  <!-- Add more checkmarks as needed -->
+</div>
+
+
+      </div>
           </div>
 
           <!-- Klantenbeoordelingen and Reviews arranged horizontally -->
@@ -673,7 +711,7 @@
 
                 <div class="mt-4">
                   <div class="flex items-center">
-                    <div class="flex items-center text-amber-400 text-xl">
+                    <div class="flex items-center text-orange-400 text-xl">
                       <!-- Display star rating dynamically -->
                       {% for i in store_rating_data.range %}
                         {% if i <= store_rating_data.mean %}
@@ -688,7 +726,7 @@
                     </span>
                   </div>
                   <p class="text-sm text-gray-500 mt-2">
-                    (Gebaseerd op {{ store_rating_data.count }} reviews)
+                    Gebaseerd op {{ store_rating_data.count }} reviews
                   </p>
                 </div>
 
@@ -703,15 +741,15 @@
                         class="relative  w-full h-4 bg-gray-100 rounded-full"
                       >
                         <div
-                          class="absolute h-4 bg-gradient-to-r from-amber-200 to-amber-300 rounded-full"
+                          class="absolute h-4 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full"
                           style="width: {{ value.percentage }}%;"
                         ></div>
                       </div>
-                      <span
-                        class="ml-4 text-right text-xs text-gray-900 font-semibold"
-                      >
-                        {{ value.percentage }}%
-                      </span>
+<span class="ml-4 text-right text-xs text-gray-900 font-semibold">
+  {{ value.percentage|floatformat:0 }}%
+</span>
+
+
                     </div>
                   {% endfor %}
                 </div>
@@ -728,7 +766,7 @@
                       </p>
                       <a
                         href="/store_rating"
-                        class="mt-4 inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-amber-400 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 transition duration-300"
+                        class="mt-4 inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-orange-400 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-400 transition duration-300"
                       >
                         Schrijf een beoordeling
                       </a>
@@ -744,7 +782,7 @@
                       </p>
                       <a
                         href="/products"
-                        class="mt-4 inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-amber-400 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 transition duration-300"
+                        class="mt-4 inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-orange-400 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-400 transition duration-300"
                       >
                         Naar assortiment
                       </a>
@@ -762,7 +800,7 @@
                     </p>
                     <a
                       href="{% url 'login' %}"
-                      class="mt-4 inline-flex items-center justify-center rounded-md border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-900 hover:bg-amber-400 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-400 transition duration-300"
+                      class="mt-4 inline-flex items-center justify-center rounded-md border border-orange-400 bg-white px-6 py-2 text-sm font-medium text-orange-500 hover:bg-orange-500 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500400 transition duration-300"
                     >
                       Log in of maak een account aan
                     </a>
@@ -779,7 +817,7 @@
                 <div class="mt-6 space-y-8">
                   {% for review in store_rating_data.last %}
                     <div
-                      class="bg-gray-50 px-6 py-4 rounded-lg border-gray-200 border "
+                class="rounded-lg shadow-md border border-gray-200 p-8 bg-gray-50"
                     >
                       <p class="text-base font-medium text-gray-900">
                         {{ review.title }}
@@ -789,7 +827,7 @@
                       </p>
 
                       <div class="mt-4">
-                        <span class="text-amber-400 text-xl">
+                        <span class="text-orange-500 text-xl">
                           {% for i in store_rating_data.range %}
                             {% if i <= review.stars %}
                               ★

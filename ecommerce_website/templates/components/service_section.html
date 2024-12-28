@@ -1,39 +1,42 @@
-<section>
-  <div class="isolate bg-gray-50 px-6 py-6 sm:pt-16 sm:pb-16 lg:px-8">
-    <div class="mx-auto max-w-2xl sm:text-center">
-      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+<section class="">
+<div class="isolate bg-gradient-to-r from-orange-600  to-orange-400 px-6 py-6 sm:pt-16 sm:pb-16 lg:px-8">
+    <div class="mx-auto max-w-2xl sm:text-center ">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl ">
         Onze service
       </h2>
-      <p class="mt-2 text-lg leading-8 text-gray-600">
+      <p class="mt-2 text-lg leading-8 text-gray-50">
         Problemen bij je bestelling? Geen zorgen! Wij zijn er om jou te helpen.
       </p>
       <div class="mx-auto mt-5 text-center">
-        <!-- Green circle icon -->
-        <i class="fas fa-circle text-green-500"></i>
-        <!-- Text -->
-        <span class="ml-1 text-sm font-medium ">Dagelijks geopend</span>
+        <div class="flex items-center justify-center space-x-2">
+          <!-- Green circle icon -->
+          <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+          <span class="text-sm font-medium text-white">Dagelijks geopend</span>
+        </div>
       </div>
     </div>
 
-    <div class="mx-auto mt-20 max-w-screen-md flex gap-x-6 pt-2">
+    <div class="mx-auto mt-20 max-w-screen-md flex flex-col sm:flex-row gap-10 pt-2">
       <!-- Email Block -->
-      <div class="flex gap-x-6 items-start">
+      <div
+        class="flex gap-x-6 items-start bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+      >
+        <!-- Enhanced Email Icon -->
         <div
-          class="flex h-10 w-10 shrink-0 mt-2 items-center justify-center rounded-lg bg-amber-500"
+          class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-orange-500 shadow-md"
         >
-          <!-- Font Awesome Email Icon -->
-          <i class="fa fa-envelope text-white text-lg"></i>
+          <i class="fa fa-envelope text-white text-xl"></i>
         </div>
         <div>
           <h3 class="text-base font-semibold leading-7 text-gray-900">Email</h3>
           <a
             href="mailto:{{ store_data.contact_email }}"
-            class="text-sm font-semibold leading-6 text-amber-500 flex items-center"
+            class="text-sm font-semibold leading-6 text-orange-500 flex items-center hover:text-orange-600 transition-colors duration-300"
           >
             {{ store_data.contact_email }}
             <span aria-hidden="true" class="ml-1">&rarr;</span>
           </a>
-          <p class="mt-2 leading-7 text-gray-600">
+          <p class="mt-2 leading-7 text-sm text-gray-500">
             Wij proberen jouw verzoek binnen maximaal twee werkdagen te
             beantwoorden!
           </p>
@@ -41,20 +44,24 @@
       </div>
 
       <!-- Availability Block -->
-      <div class="flex gap-x-6 items-start">
-        <div
-          class="flex h-10 w-10 mt-2 shrink-0 items-center justify-center rounded-lg bg-amber-500"
-        >
-          <i class="fas fa-clock text-white text-xl"></i>
-        </div>
+      <div
+        class="flex gap-x-6 items-start bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+      >
+        <!-- Enhanced Availability Icon -->
+<div
+  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-orange-500 shadow-md"
+>
+  <i class="fa fa-clock text-white text-xl"></i>
+</div>
+
         <div>
           <h3 class="text-base font-semibold leading-7 text-gray-900">
             Beschikbaarheid
           </h3>
-          <a href="#" class="text-sm font-semibold leading-6 text-amber-500">
+          <p class="text-sm font-semibold leading-6 text-orange-400">
             {{ store_data.opening_time_week }}
-          </a>
-          <p class="mt-2 leading-7 text-gray-600">
+          </p>
+          <p class="mt-2 leading-7 text-sm text-gray-500">
             Onze klantenservice is alle werkdagen beschikbaar met uitzondering
             van de feestdagen.
           </p>
@@ -64,7 +71,7 @@
 
     <h2 id="perks-heading" class="sr-only">Our perks</h2>
     <div class="mt-16">
-      <div class="mx-auto rounded-lg p-10 bg-gray-100">
+      <div class="mx-auto rounded-lg p-10 bg-gray-50">
         <div
           class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0"
         >

@@ -221,7 +221,7 @@
           <i class="far fa-heart fa-lg"></i>
           <span
             id="favorite-count"
-            class="absolute top-0 right-0 -mt-2 -mr-2 bg-orange-500 rounded-full w-6 h-6 hidden items-center justify-center text-white text-xs font-semibold"
+            class="absolute top-0 right-0 -mt-2 -mr-2 bg-green-600 rounded-full w-6 h-6 hidden items-center justify-center text-white text-xs font-semibold"
           ></span>
         </button>
 
@@ -236,7 +236,7 @@
           <!-- Circle indicator -->
           <span
             id="cart-count"
-            class="absolute top-0 right-0 -mt-2 -mr-2  bg-orange-500 rounded-full w-6 h-6 hidden items-center justify-center text-white text-xs font-semibold"
+            class="absolute top-0 right-0 -mt-2 -mr-2  bg-green-600 rounded-full w-6 h-6 hidden items-center justify-center text-white text-xs font-semibold"
           ></span>
         </button>
       </div>
@@ -640,7 +640,7 @@
           'flex items-center mt-1 text-xs text-gray-500'
 
         const discountLabel = document.createElement('span')
-        discountLabel.className = 'text-orange-500 font-semibold'
+        discountLabel.className = 'text-green-500 font-semibold'
         discountLabel.textContent = 'Kortingsprijs:'
 
         const salePrice = document.createElement('span')
@@ -697,7 +697,7 @@
         updateQuantityPanel(this, item.product_id) // Replace with actual update function
       }
       quantityInput.className =
-        'w-20 rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm'
+        'w-20 rounded-md border border-gray-300 py-1.5 text-left text-base font-medium leading-5 text-gray-700 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-1 focus:ring-orange-500 sm:text-sm'
 
       // Append quantity input to its container
       quantityContainer.appendChild(quantityInput)

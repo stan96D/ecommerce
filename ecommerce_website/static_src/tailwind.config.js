@@ -45,6 +45,8 @@ module.exports = {
     extend: {
       colors: {
         customColor: '#ffde59', // Replace this hex value with your custom color
+                gold: '#E8C547', // Hex code for gold
+
       },
     },
   },
