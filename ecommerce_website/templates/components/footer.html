@@ -9,44 +9,82 @@
         <div class="mt-20 grid grid-cols-1 gap-8 xl:col-span-2 xl:mt-0">
           <div class="md:grid md:grid-cols-3 md:gap-8">
             <div>
-              <h3 class="text-lg font-semibold leading-6 text-orange-500">Informatie</h3>
+              <h3 class="text-lg font-semibold leading-6 text-orange-500">
+                Informatie
+              </h3>
               <ul role="list" class="mt-10 space-y-4">
                 <li>
-                  <a href="#" class="text-base leading-6 text-gray-800 hover:text-orange-500">Algemene voorwaarden</a>
+                  <a
+                    href="#"
+                    class="text-base leading-6 text-gray-800 hover:text-orange-500"
+                    >Algemene voorwaarden</a
+                  >
                 </li>
                 <li>
-                  <a href="/contact-service" class="text-base leading-6 text-gray-800 hover:text-orange-500">Klantenservice</a>
+                  <a
+                    href="/contact-service"
+                    class="text-base leading-6 text-gray-800 hover:text-orange-500"
+                    >Klantenservice</a
+                  >
                 </li>
                 <li>
-                  <a href="/payment-return-service" class="text-base leading-6 text-gray-800 hover:text-orange-500">Betaling & verzending</a>
+                  <a
+                    href="/payment-return-service"
+                    class="text-base leading-6 text-gray-800 hover:text-orange-500"
+                    >Betaling & verzending</a
+                  >
                 </li>
                 <li>
-                  <a href="/return-service" class="text-base leading-6 text-gray-800 hover:text-orange-500">Retourneren</a>
+                  <a
+                    href="/return-service"
+                    class="text-base leading-6 text-gray-800 hover:text-orange-500"
+                    >Retourneren</a
+                  >
                 </li>
                 <li>
-                  <a href="/contact-service#faq" class="text-base leading-6 text-gray-800 hover:text-orange-500">Veelgestelde vragen</a>
+                  <a
+                    href="/contact-service#faq"
+                    class="text-base leading-6 text-gray-800 hover:text-orange-500"
+                    >Veelgestelde vragen</a
+                  >
                 </li>
                 <li>
-                  <a href="/about-us" class="text-base leading-6 text-gray-800 hover:text-orange-500">Over ons</a>
+                  <a
+                    href="/about-us"
+                    class="text-base leading-6 text-gray-800 hover:text-orange-500"
+                    >Over ons</a
+                  >
                 </li>
               </ul>
             </div>
             <div class="mt-10 md:mt-0">
-              <h3 class="text-lg font-semibold leading-6 text-orange-500">Vloeren</h3>
+              <h3 class="text-lg font-semibold leading-6 text-orange-500">
+                Vloeren
+              </h3>
               <ul role="list" class="mt-10 space-y-4">
                 {% for header in headerData %}
                   <li>
-                    <a href="/products/{{ header }}" class="text-base leading-6 text-gray-800 hover:text-orange-500">{{ header }}</a>
+                    <a
+                      href="/products/{{ header }}"
+                      class="text-base leading-6 text-gray-800 hover:text-orange-500"
+                      >{{ header }}</a
+                    >
                   </li>
                 {% endfor %}
               </ul>
             </div>
             <div>
-              <h3 class="text-lg font-semibold leading-6 text-orange-500">Merken</h3>
+              <h3 class="text-lg font-semibold leading-6 text-orange-500">
+                Merken
+              </h3>
               <ul role="list" class="mt-10 space-y-4">
                 {% for brand in brands %}
                   <li>
-                    <a href="/products/{{ brand.name }}" class="text-base leading-6 text-gray-800 hover:text-orange-500">{{ brand.name }}</a>
+                    <a
+                      href="/products/{{ brand.name }}"
+                      class="text-base leading-6 text-gray-800 hover:text-orange-500"
+                      >{{ brand.name }}</a
+                    >
                   </li>
                 {% endfor %}
               </ul>
@@ -55,37 +93,50 @@
         </div>
         <div>
           {% if store_data %}
-            <h3 class="text-lg font-semibold leading-6 text-orange-500">Contact</h3>
+            <h3 class="text-lg font-semibold leading-6 text-orange-500">
+              Contact
+            </h3>
             <div>
-
               <div class="pt-10 pb-2">
                 {% if store_data.contact_email %}
-                              <a
-              href="mailto:{{ store_data.contact_email }}"
-              class="inline-block rounded-full border-2 border-transparent bg-gradient-to-r from-orange-500 to-orange-400 px-6 py-2 text-sm font-medium text-white hover:from-orange-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 transform transition-all duration-300 ease-in-out hover:scale-105"
-            >
-              <i
-                class="fas fa-envelope mr-2 text-lg transition-transform duration-300 ease-in-out hover:rotate-90"
-              ></i>
-              <span
-                class="inline-block transition-all duration-300 ease-in-out hover:translate-x-1"
-                >{{ store_data.contact_email }}</span
-              >
-            </a>
+                  <a
+                    href="mailto:{{ store_data.contact_email }}"
+                    class="inline-block rounded-full border-2 border-transparent bg-gradient-to-r from-orange-500 to-orange-400 px-6 py-2 text-sm font-medium text-white hover:from-orange-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 transform transition-all duration-300 ease-in-out hover:scale-105"
+                  >
+                    <i
+                      class="fas fa-envelope mr-2 text-lg transition-transform duration-300 ease-in-out hover:rotate-90"
+                    ></i>
+                    <span
+                      class="inline-block transition-all duration-300 ease-in-out hover:translate-x-1"
+                      >{{ store_data.contact_email }}</span
+                    >
+                  </a>
                 {% endif %}
               </div>
               {% if store_data.opening_time_week or store_data.opening_time_weekend %}
                 <div class="py-4">
                   {% if store_data.opening_time_week %}
-                    <div class="text-sm font-normal text-gray-800 flex items-center">
-                      <p class="text-sm leading-6 font-medium text-gray-800">Maandag t/m vrijdag</p>
-                      <span class="text-sm font-normal text-gray-600 ml-2">{{store_data.opening_time_week}}</span>
+                    <div
+                      class="text-sm font-normal text-gray-800 flex items-center"
+                    >
+                      <p class="text-sm leading-6 font-medium text-gray-800">
+                        Maandag t/m vrijdag
+                      </p>
+                      <span class="text-sm font-normal text-gray-600 ml-2"
+                        >{{ store_data.opening_time_week }}</span
+                      >
                     </div>
                   {% endif %}
                   {% if store_data.opening_time_weekend %}
-                    <div class="text-sm font-normal text-gray-800 flex items-center">
-                      <p class="text-sm leading-6 font-medium text-gray-800">Zaterdag en zondag</p>
-                      <span class="text-sm font-normal text-gray-600 ml-2">{{store_data.opening_time_weekend}}</span>
+                    <div
+                      class="text-sm font-normal text-gray-800 flex items-center"
+                    >
+                      <p class="text-sm leading-6 font-medium text-gray-800">
+                        Zaterdag en zondag
+                      </p>
+                      <span class="text-sm font-normal text-gray-600 ml-2"
+                        >{{ store_data.opening_time_weekend }}</span
+                      >
                     </div>
                   {% endif %}
                 </div>
@@ -93,28 +144,54 @@
               {% if store_data.coc_number or store_data.vat_number %}
                 <div class="pt-2">
                   {% if store_data.coc_number %}
-                    <div class="text-sm font-normal text-gray-800 flex items-center">
-                      <p class="text-sm leading-6 font-medium text-gray-800 m-0">KVK nummer</p>
-                      <span class="text-sm font-normal text-gray-600 ml-2">{{store_data.coc_number}}</span>
+                    <div
+                      class="text-sm font-normal text-gray-800 flex items-center"
+                    >
+                      <p
+                        class="text-sm leading-6 font-medium text-gray-800 m-0"
+                      >
+                        KVK nummer
+                      </p>
+                      <span class="text-sm font-normal text-gray-600 ml-2"
+                        >{{ store_data.coc_number }}</span
+                      >
                     </div>
                   {% endif %}
                   {% if store_data.vat_number %}
-                    <div class="text-sm font-normal text-gray-800 flex items-center">
-                      <p class="text-sm leading-6 font-medium text-gray-800 m-0">BTW nummer</p>
-                      <span class="text-sm font-normal text-gray-600 ml-2">{{store_data.vat_number}}</span>
+                    <div
+                      class="text-sm font-normal text-gray-800 flex items-center"
+                    >
+                      <p
+                        class="text-sm leading-6 font-medium text-gray-800 m-0"
+                      >
+                        BTW nummer
+                      </p>
+                      <span class="text-sm font-normal text-gray-600 ml-2"
+                        >{{ store_data.vat_number }}</span
+                      >
                     </div>
                   {% endif %}
                 </div>
               {% endif %}
               {% if store_data.socials %}
                 <div class="pt-10">
-                  <h3 class="text-lg font-semibold leading-6 text-gray-500">Bekijk onze socials</h3>
+                  <h3 class="text-lg font-semibold leading-6 text-gray-500">
+                    Bekijk onze socials
+                  </h3>
                   <div class="pt-6 flex justify-start gap-x-4 md:order-2">
                     {% for platform, link in store_data.socials.items %}
-                      <a href="{{ link }}" class="hover:opacity-75" target="_blank">
+                      <a
+                        href="{{ link }}"
+                        class="hover:opacity-75"
+                        target="_blank"
+                      >
                         <span class="sr-only">{{ platform }}</span>
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-orange-500 shadow-md border border-gray-100">
-                          <i class="fab {% if platform == 'facebook' %}fa-facebook-f{% elif platform == 'instagram' %}fa-instagram{% endif %} text-white text-lg"></i>
+                        <div
+                          class="flex items-center justify-center w-10 h-10 rounded-full bg-orange-500 shadow-md border border-gray-100"
+                        >
+                          <i
+                            class="fab {% if platform == 'facebook' %}fa-facebook-f{% elif platform == 'instagram' %}fa-instagram{% endif %} text-white text-lg"
+                          ></i>
                         </div>
                       </a>
                     {% endfor %}
@@ -130,20 +207,40 @@
 
   <div class="bg-orange-500">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="border-t border-white/10 pt-4 pb-4 text-left flex items-center justify-between">
+      <div
+        class="border-t border-white/10 pt-4 pb-4 text-left flex items-center justify-between"
+      >
         <div class="flex space-x-4">
           {% for payment_method in payment_methods %}
-            <img class="max-h-24 max-w-24 mt-1" src="{{ payment_method.image_url }}" alt="{{ payment_method.id }}" />
+            <img
+              class="max-h-24 max-w-24 mt-1"
+              src="{{ payment_method.image_url }}"
+              alt="{{ payment_method.id }}"
+            />
           {% endfor %}
         </div>
         <div class="flex items-center space-x-4">
-          <a href="#" class="text-sm font-normal leading-4 text-gray-50 hover:text-gray-200">Disclaimer</a>
+          <a
+            href="#"
+            class="text-sm font-normal leading-4 text-gray-50 hover:text-gray-200"
+            >Disclaimer</a
+          >
           <span class="text-sm font-light leading-4 text-gray-500">|</span>
-          <a href="/contact-service" class="text-sm font-normal leading-4 text-gray-50 hover:text-gray-200">Klantenservice</a>
+          <a
+            href="/contact-service"
+            class="text-sm font-normal leading-4 text-gray-50 hover:text-gray-200"
+            >Klantenservice</a
+          >
           <span class="text-sm font-light leading-4 text-gray-500">|</span>
-          <a href="#" class="text-sm font-normal leading-4 text-gray-50 hover:text-gray-200">Algemene voorwaarden</a>
+          <a
+            href="#"
+            class="text-sm font-normal leading-4 text-gray-50 hover:text-gray-200"
+            >Algemene voorwaarden</a
+          >
           <span class="text-sm font-light leading-4 text-gray-500">|</span>
-          <p class="text-base font-medium leading-4 text-white">&copy; {% now "Y" %} {{ store_data.name }}</p>
+          <p class="text-base font-medium leading-4 text-white">
+            &copy; {% now "Y" %} {{ store_data.name }}
+          </p>
         </div>
       </div>
     </div>

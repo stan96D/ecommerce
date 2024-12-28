@@ -18,7 +18,7 @@
   }
   ```
 -->
-  <div class="bg-white">
+  <div class="bg-white ">
     <div
       class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8"
     >
@@ -28,6 +28,7 @@
       {% if not items %}
         <div class="mt-4">
           {% include 'components/messages/empty_cart_message.html' %}
+          <div class="h-32"></div>
         </div>
       {% endif %}
 
@@ -186,5 +187,56 @@
       </div>
     </div>
     {% include 'components/service_section.html' %}
+    {% if brands %}
+        <section
+          aria-labelledby="category-heading"
+          class="py-24 xl:mx-auto xl:max-w-7xl xl:px-8"
+        >
+          <div
+            class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
+          >
+            <h2
+              id="category-heading"
+              class="text-2xl font-bold tracking-tight text-gray-900"
+            >
+              De beste merken
+            </h2>
+          </div>
+
+          <div class="mt-10 flow-root">
+            <div class="-my-2">
+              <div
+                class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible"
+              >
+                <div
+                  class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0"
+                >
+                  {% for brand in brands.all|slice:":4" %}
+                    <div class="group relative">
+                      <div
+                        class="aspect-w-1 aspect-h-1 w-full  overflow-hidden rounded-full bg-gray-200"
+                      >
+                        <img
+                          src="/media/{{ brand.image }}"
+                          alt="{{ brand.name }}"
+                          class="h-full w-full object-cover object-center group-hover:opacity-75 rounded-full"
+                        />
+                      </div>
+                      <div class="mt-6 text-center">
+                        <h3 class="mt-1 text-lg font-semibold text-gray-900">
+                          <a href="/products/{{ brand.name }}">
+                            <span class="absolute inset-0"></span>
+                            {{ brand.name }}
+                          </a>
+                        </h3>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      {% endif %}
   </div>
 {% endblock %}

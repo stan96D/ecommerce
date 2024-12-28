@@ -6,7 +6,7 @@
     display: none;
   }
 </style>
-<header class="bg-white">
+<header class="bg-white border-b border-gray-200">
   <div class="bg-gray-100">
     <!-- {% if env == "test" %}
       <div
@@ -27,36 +27,35 @@
         <strong>Developmentomgeving</strong>
       </div>
     {% endif %} -->
-{% if current_sale %}
-  <a href="/discounts" class="block">
-    <div
-      class="bg-black text-white py-4 px-4 text-center shadow-sm flex items-center justify-center space-x-4"
-    >
-      <!-- Font Awesome Sale Icon -->
-      <i class="fas fa-tag text-white text-xl"></i>
-      <!-- Sale icon -->
+    {% if current_sale %}
+      <a href="/discounts" class="block">
+        <div
+          class="bg-black text-white py-4 px-4 text-center shadow-sm flex items-center justify-center space-x-4"
+        >
+          <!-- Font Awesome Sale Icon -->
+          <i class="fas fa-tag text-white text-xl"></i>
+          <!-- Sale icon -->
 
-      <p class="text-sm font-semibold">{{ current_sale.description }}</p>
+          <p class="text-sm font-semibold">{{ current_sale.description }}</p>
 
-      <p class="text-sm">
-        {% if current_sale.days_left <= 7 %}
-          U heeft nog
-          <span class="font-bold"
-            >{{ current_sale.days_left }}
-            dag{{ current_sale.days_left|pluralize:"" }}</span
-          >
-          om te profiteren van deze korting!
-        {% else %}
-          Korting beschikbaar tot
-          <span class="font-bold"
-            >{{ current_sale.end_date|date:"m/d/Y" }}</span
-          >.
-        {% endif %}
-      </p>
-    </div>
-  </a>
-{% endif %}
-
+          <p class="text-sm">
+            {% if current_sale.days_left <= 7 %}
+              U heeft nog
+              <span class="font-bold"
+                >{{ current_sale.days_left }}
+                dag{{ current_sale.days_left|pluralize:"" }}</span
+              >
+              om te profiteren van deze korting!
+            {% else %}
+              Korting beschikbaar tot
+              <span class="font-bold"
+                >{{ current_sale.end_date|date:"m/d/Y" }}</span
+              >.
+            {% endif %}
+          </p>
+        </div>
+      </a>
+    {% endif %}
 
     <div
       class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
@@ -73,7 +72,7 @@
       {% endfor %}
     </div>
   </div>
-  <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-300">
+  <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-200 ">
     <div class="relative flex h-32 justify-between">
       <div class="relative z-10 flex px-2 lg:px-0">
         <a href="{% url 'home' %}" class="flex flex-shrink-0 items-center">
@@ -381,7 +380,7 @@
         >Calendar</a
       >
     </div>
-    <div class="border-t border-gray-700 pb-3 pt-4">
+    <div class="border-t border-gray-700 pb-3 pt-4 ">
       <div class="flex items-center px-4">
         <div class="flex-shrink-0">
           <img
@@ -463,14 +462,14 @@
   ></div>
   <!-- Dark backdrop with 25% opacity -->
 
-  <div class="absolute inset-0 overflow-hidden">
-    <div class="absolute inset-0 overflow-hidden">
+  <div class="absolute inset-0 overflow-hidden ">
+    <div class="absolute inset-0 overflow-hidden ">
       <div
-        class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10"
+        class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 "
       >
         <div class="pointer-events-auto w-screen max-w-md">
           <div
-            class="flex h-full flex-col bg-white py-6 shadow-xl overflow-y-auto"
+            class="flex h-full flex-col bg-white py-6 shadow-xl overflow-y-auto "
           >
             <div class="px-4 sm:px-6">
               <div class="flex items-start justify-between">
