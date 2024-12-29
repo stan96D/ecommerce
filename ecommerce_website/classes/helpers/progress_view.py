@@ -1,4 +1,8 @@
 def get_order_progress_phases(current_status=None):
+
+    if current_status == 'failed':
+        current_status = 'open'
+
     # Define the phases
     phases = [
         {'name': 'Openstaand', 'status': 'open'},
@@ -40,6 +44,10 @@ def get_order_progress_phases(current_status=None):
 
 
 def get_return_progress_phases(current_status=None):
+
+    if current_status == 'failed':
+        current_status = 'open'
+
     # Define the phases
     phases = [
         {'name': 'Openstaand', 'status': 'open'},

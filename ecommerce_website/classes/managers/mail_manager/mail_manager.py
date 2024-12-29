@@ -9,6 +9,7 @@ from ecommerce_website.classes.managers.url_manager.url_manager import *
 from ecommerce_website.classes.helpers.env_loader import *
 
 url_manager = EncapsulatedURLManager.get_url_manager(EnvLoader.get_env())
+logo_url = "ecommerce_website/static/images/gvs_logo_plain_cropped.jpg"
 
 
 class BaseMailManager(ABC):
@@ -22,7 +23,7 @@ class HTMLMailManager(BaseMailManager):
 
     def send(self, sender_email, sender_password, recipient_email, subject, message, timeout=0, image=None):
         try:
-            smtp_server = 'smtp.gmail.com'
+            smtp_server = 'smtp.strato.com'
             smtp_port = 587
 
             server = smtplib.SMTP(smtp_server, smtp_port, timeout)
@@ -55,12 +56,13 @@ class HTMLMailManager(BaseMailManager):
 
 class ClientMailSender:
 
-    def __init__(self, mail_manager: BaseMailManager):
+    def __init__(self, mail_manager: BaseMailManager, store_name):
         self.contact_email = os.getenv(
-            'SENDER_EMAIL')  # TODO set to contact mail
+            'ADMIN_EMAIL')
         self.sender_email = os.getenv('SENDER_EMAIL')
         self.sender_password = os.getenv('SENDER_PASSWORD')
         self.mail_manager = mail_manager
+        self.company_name = store_name
 
     def send_return_payment_confirmation(self, salutation, last_name, recipient_email, order_number, return_order_url):
 
@@ -68,7 +70,6 @@ class ClientMailSender:
             salutation = "Dhr/Mevr"
 
         # Add your logo URL here
-        logo_url = "ecommerce_website/static/images/gvs_logo_text.png"
         subject = "Retournering voor order " + order_number + " betaald!"
         message = f"""
         <!DOCTYPE html>
@@ -114,12 +115,12 @@ class ClientMailSender:
                     text-align: center;
                 }}
                 a {{
-                    color: #FFB300; /* Amber color */
+                    color: #f97316; /* Orange color */
                     text-decoration: none;
                 }}
                 a.button {{
                     display: inline-block;
-                    background-color: #FFB300; /* Amber color */
+                    background-color: #f97316; /* Orange color */
                     color: #ffffff;
                     padding: 10px 20px;
                     border-radius: 5px;
@@ -187,7 +188,7 @@ class ClientMailSender:
                      Zij zullen zo spoedig mogelijk contact met u opnemen. Nadat uw retournering succesvol is opgehaald door onze afhaalservice, duurt het maximaal twee weken totdat uw betaling is teruggestort. Mocht u verder nog vragen hebben neem dan gerust <a href="{url_manager.get_contact_service()}">contact</a> met ons op.
                      Hopelijk heeft u snel uw bestede bedrag terug!</p>
                     <p>Met vriendelijke groet,</p>
-                    <p>Het goedkopevloeren.nl team</p>
+                    <p>Het {self.company_name} team</p>
                     <a href="{return_order_url}" class="button">Bekijk uw retournering</a>
                 </div>
 
@@ -231,7 +232,6 @@ class ClientMailSender:
             salutation = "Dhr/Mevr"
 
         # Add your logo URL here
-        logo_url = "ecommerce_website/static/images/gvs_logo_text.png"
         subject = "Retourneringsbevestiging " + order_number
         message = f"""
         <!DOCTYPE html>
@@ -277,12 +277,12 @@ class ClientMailSender:
                     text-align: center;
                 }}
                 a {{
-                    color: #FFB300; /* Amber color */
+                    color: #f97316; /* Orange color */
                     text-decoration: none;
                 }}
                 a.button {{
                     display: inline-block;
-                    background-color: #FFB300; /* Amber color */
+                    background-color: #f97316; /* Orange color */
                     color: #ffffff;
                     padding: 10px 20px;
                     border-radius: 5px;
@@ -348,7 +348,7 @@ class ClientMailSender:
                     <p>Bedankt voor uw retourneringsaanvraag!, Hierbij de bevestiging van uw retour voor de order met ordernummer <strong>{order_number}</strong>. De status van je retour order is
                     <a href="{return_order_url}">hier</a> in te zien. Zodra de verzendkosten zijn betaald, wordt uw retournering in behandeling genomen. Wij hopen dit zo spoedig mogelijk voor u te regelen.</p>
                     <p>Met vriendelijke groet,</p>
-                    <p>Het goedkopevloeren.nl team</p>
+                    <p>Het {self.company_name} team</p>
                     <a href="{return_order_url}" class="button">Bekijk uw retournering</a>
                 </div>
 
@@ -392,7 +392,6 @@ class ClientMailSender:
             salutation = "Dhr/Mevr"
 
         # Add your logo URL here
-        logo_url = "ecommerce_website/static/images/gvs_logo_text.png"
         subject = "Orderbevestiging " + order_number
         message = f"""
         <!DOCTYPE html>
@@ -438,12 +437,12 @@ class ClientMailSender:
                     text-align: center;
                 }}
                 a {{
-                    color: #FFB300; /* Amber color */
+                    color: #f97316; /* Orange color */
                     text-decoration: none;
                 }}
                 a.button {{
                     display: inline-block;
-                    background-color: #FFB300; /* Amber color */
+                    background-color: #f97316; /* Orange color */
                     color: #ffffff;
                     padding: 10px 20px;
                     border-radius: 5px;
@@ -510,7 +509,7 @@ class ClientMailSender:
                     <a href="{order_url}">hier</a> in te zien. Zodra uw bestelling is betaald, wordt uw aankoop in behandeling genomen.
                      We hopen zo spoedig mogelijk je order te verzorgen.</p>
                     <p>Met vriendelijke groet,</p>
-                    <p>Het goedkopevloeren.nl team</p>
+                    <p>Het {self.company_name} team</p>
                     <a href="{order_url}" class="button">Bekijk uw bestelling</a>
                 </div>
 
@@ -554,7 +553,6 @@ class ClientMailSender:
             salutation = "Dhr/Mevr"
 
         # Add your logo URL here
-        logo_url = "ecommerce_website/static/images/gvs_logo_text.png"
         subject = "Order " + order_number + " betaald!"
         message = f"""
         <!DOCTYPE html>
@@ -600,12 +598,12 @@ class ClientMailSender:
                     text-align: center;
                 }}
                 a {{
-                    color: #FFB300; /* Amber color */
+                    color: #f97316; /* Orange color */
                     text-decoration: none;
                 }}
                 a.button {{
                     display: inline-block;
-                    background-color: #FFB300; /* Amber color */
+                    background-color: #f97316; /* Orange color */
                     color: #ffffff;
                     padding: 10px 20px;
                     border-radius: 5px;
@@ -672,7 +670,7 @@ class ClientMailSender:
                      Zij zullen zo spoedig mogelijk contact met u opnemen. Mocht u verder nog vragen hebben neem dan gerust <a href="{url_manager.get_contact_service()}">contact</a> met ons op.
                      Hopelijk kunt u snel genieten van uw order!</p>
                     <p>Met vriendelijke groet,</p>
-                    <p>Het goedkopevloeren.nl team</p>
+                    <p>Het {self.company_name} team</p>
                     <a href="{order_url}" class="button">Bekijk uw bestelling</a>
                 </div>
 
@@ -716,7 +714,6 @@ class ClientMailSender:
             salutation = "Dhr/Mevr"
 
         # Add your logo URL here
-        logo_url = "ecommerce_website/static/images/gvs_logo_text.png"
 
         subject = "Uw mening wordt gevraagd"
         message = f"""
@@ -761,12 +758,12 @@ class ClientMailSender:
                     text-align: center;
                 }}
                 a {{
-                    color: #FFB300; /* Amber color */
+                    color: #f97316; /* Orange color */
                     text-decoration: none;
                 }}
                 a.button {{
                     display: inline-block;
-                    background-color: #FFB300; /* Amber color */
+                    background-color: #f97316; /* Orange color */
                     color: #ffffff;
                     padding: 10px 20px;
                     border-radius: 5px;
@@ -824,7 +821,7 @@ class ClientMailSender:
                     <p>Graag willen wij u vragen of u tijd heeft om uw mening te delen over onze services. Het invullen hiervan duurt slechts één enkele minuut. Dit zal ons op de hoogte houden van de wensen van onze klanten en om deze zo goed mogelijk te verzorgen.</p>
                     <p>U kunt de link <a href="{rating_url}">hier</a> bezoeken. Bedankt voor jullie tijd!</p>
                     <p>Met vriendelijke groet,</p>
-                    <p>Het goedkopevloeren.nl team</p>
+                    <p>Het {self.company_name} team</p>
                     <a href="{rating_url}" class="button">Deel uw mening</a>
                 </div>
 
@@ -861,11 +858,12 @@ class ClientMailSender:
 
 class AdminMailSender:
 
-    def __init__(self, mail_manager: BaseMailManager):
+    def __init__(self, mail_manager: BaseMailManager, store_name):
         self.sender_email = os.getenv('SENDER_EMAIL')
         self.sender_password = os.getenv('SENDER_PASSWORD')
         self.recipient_email = os.getenv('ADMIN_EMAIL')
         self.mail_manager = mail_manager
+        self.company_name = store_name
 
     def send_order_confirmation(self, order):
         subject = f"Orderbevestiging {order.order_number} {
@@ -955,7 +953,7 @@ class AdminMailSender:
                     text-align: center;
                 }}
                 a {{
-                    color: #FFB300; /* Amber kleur */
+                    color: #f97316; /* Orange kleur */
                     text-decoration: none;
                 }}
                 ul {{
@@ -994,7 +992,7 @@ class AdminMailSender:
                 </div>
                 <div class="email-footer">
                     <p>Met vriendelijke groet,</p>
-                    <p>Het goedkopevloeren.nl team!</p>
+                    <p>Het {self.company_name} team!</p>
                 </div>
             </div>
         </body>
@@ -1095,7 +1093,7 @@ class AdminMailSender:
                     text-align: center;
                 }}
                 a {{
-                    color: #FFB300; /* Amber kleur */
+                    color: #f97316; /* Orange kleur */
                     text-decoration: none;
                 }}
                 ul {{
@@ -1134,7 +1132,7 @@ class AdminMailSender:
                 </div>
                 <div class="email-footer">
                     <p>Met vriendelijke groet,</p>
-                    <p>Het goedkopevloeren.nl team!</p>
+                    <p>Het {self.company_name} team!</p>
                 </div>
             </div>
         </body>
@@ -1147,11 +1145,12 @@ class AdminMailSender:
 
 class ForgotPasswordMailSender:
 
-    def __init__(self, mail_manager: BaseMailManager):
-        self.contact_email = os.getenv('SENDER_EMAIL')
+    def __init__(self, mail_manager: BaseMailManager, store_name):
+        self.contact_email = os.getenv('ADMIN_EMAIL')
         self.sender_email = os.getenv('SENDER_EMAIL')
         self.sender_password = os.getenv('SENDER_PASSWORD')
         self.mail_manager = mail_manager
+        self.company_name = store_name
 
     def send_password_reset_email(self, user):
         # Generate the reset password URL with token
@@ -1206,12 +1205,12 @@ class ForgotPasswordMailSender:
                     text-align: center;
                 }}
                 a {{
-                    color: #FFB300; /* Amber kleur */
+                    color: #f97316; /* Orange kleur */
                     text-decoration: none;
                 }}
                 a.button {{
                     display: inline-block;
-                    background-color: #FFB300; /* Amber kleur */
+                    background-color: #f97316; /* Orange kleur */
                     color: #ffffff;
                     padding: 10px 20px;
                     border-radius: 5px;
@@ -1279,7 +1278,7 @@ class ForgotPasswordMailSender:
                                         <a href="{reset_password_confirm_url}" class="button">Wachtwoord resetten</a>
 
                     <p>Met vriendelijke groet,</p>
-                    <p>Het goedkopevloeren.nl team</p>
+                    <p>Het {self.company_name} team</p>
                 </div>
 
                 <!-- Service & Contact Section -->
@@ -1311,8 +1310,6 @@ class ForgotPasswordMailSender:
         </body>
         </html>
         """
-
-        logo_url = "ecommerce_website/static/images/gvs_logo_text.png"
 
         return self.mail_manager.send(
             self.sender_email, self.sender_password, user.email, subject, message, image=logo_url

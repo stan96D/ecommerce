@@ -40,6 +40,6 @@ class ReturnViewService:
                 "Retourneren is mogelijk binnen <strong>14 dagen</strong> na ontvangst van uw bestelling, zolang de producten ongebruikt zijn en zich in de originele verpakking bevinden. "
                 "Na het indienen van uw retourverzoek en betaling van de verzendkosten van <strong>€50</strong>, neemt onze afhaalservice contact met u op om een ophaaldatum te plannen. "
                 "Het totale proces, inclusief terugbetaling, duurt ongeveer <strong>3 weken</strong>.<br><br>"
-                "<strong>Heeft u vragen?</strong> Neem gerust <a href='/contact-service' class='font-medium text-amber-500'>contact met ons op</a>. Wij staan klaar om u te helpen!"
+                "<strong>Heeft u vragen?</strong> Neem gerust <a href='/contact-service' class='font-medium text-orange-500'>contact met ons op</a>. Wij staan klaar om u te helpen!"
             ),
         }

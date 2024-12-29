@@ -28,7 +28,7 @@ class ContactService:
                 {
                     "title": "Contact opnemen",
                     "text": f"Mocht u ergens niet uitkomen of is er iets niet duidelijk genoeg,<br>"
-                    f"dan kunt u contact met ons opnemen via het emailadres <a class='text-amber-500 font-medium' href='mailto:{
+                    f"dan kunt u contact met ons opnemen via het emailadres <a class='text-orange-500 font-medium' href='mailto:{
                         store_data['contact_email']}'>"
                     f"{store_data['contact_email']}</a>. "
                     f"Wij zijn beschikbaar voor vragen op werkdagen tussen <strong>{
@@ -40,14 +40,14 @@ class ContactService:
                 {
                     "title": "Veelgestelde vragen",
                     "text": "Soms kan het zijn dat je een vraag hebt die wij al meerdere keren hebben beantwoord en het antwoord hiervan al bekend is.<br><br>"
-                    "In elk geval is het altijd handig om onze <a href=\"#faq\" class=\"text-amber-500 font-medium\">Veelgestelde vragen</a> te raadplegen. Misschien staat uw antwoord hier al bij.<br><br>"
+                    "In elk geval is het altijd handig om onze <a href=\"#faq\" class=\"text-orange-500 font-medium\">Veelgestelde vragen</a> te raadplegen. Misschien staat uw antwoord hier al bij.<br><br>"
                     "En mocht het zo zijn dat u alsnog vragen heeft, dan zullen wij altijd ruimte maken om je hier zo goed mogelijk bij te helpen."
                 },
 
                 {
                     "title": "Sociale media",
                     "text": "Uiteraard zijn wij ook bereikbaar via sociale media.<br>"
-                    "Het is onze bedoeling om onze klanten zo veel mogelijk updates te geven over onze <a href=\"/products\" class=\"text-amber-500 font-medium\">producten</a> en actuele <a href=\"/discounts\" class=\"text-amber-500 font-medium\">aanbiedingen</a>.<br><br>"
+                    "Het is onze bedoeling om onze klanten zo veel mogelijk updates te geven over onze <a href=\"/products\" class=\"text-orange-500 font-medium\">producten</a> en actuele <a href=\"/discounts\" class=\"text-orange-500 font-medium\">aanbiedingen</a>.<br><br>"
                     "Daarnaast is het gewoon toegestaan om productgerelateerde vragen te stellen, hier proberen wij zo snel mogelijk op te reageren.<br><br>"
                     "Neem gerust een kijkje bij onze <strong>socials</strong>!",
                     "additional_data": socials_html,
@@ -59,6 +59,6 @@ class ContactService:
             "header": "Wij regelen het voor u!",
             "description": "Bij onze klantenservice staat het leveren van de best mogelijke service centraal.<br><br>"
             "Wij doen er alles aan om uw bestelling snel en zonder problemen bij u af te leveren. "
-            "Wij begrijpen dat een vlotte en betrouwbare <a class='font-medium text-amber-500' href='/payment-return-service#delivery'>levering</a> essentieel is, en daarom zetten we alles op alles om ervoor te zorgen dat u de vloeren die u besteld hebt, snel en in goede staat ontvangt.<br><br>"
+            "Wij begrijpen dat een vlotte en betrouwbare <a class='font-medium text-orange-500' href='/payment-return-service#delivery'>levering</a> essentieel is, en daarom zetten we alles op alles om ervoor te zorgen dat u de vloeren die u besteld hebt, snel en in goede staat ontvangt.<br><br>"
             "Onze service is niet alleen voor u een prioriteit, maar ook voor ons. <strong>Mocht er iets misgaan of mocht de levering langer duren dan verwacht, dan staan wij klaar om u te helpen en het probleem snel op te lossen.</strong>"
         }

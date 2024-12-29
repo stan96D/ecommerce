@@ -32,11 +32,11 @@
   </span>
 
   <svg
+    id="delivery-icon"
     class="h-5 w-5 text-gray-300"
     viewBox="0 0 20 20"
     fill="currentColor"
     aria-hidden="true"
-    id="delivery-icon"
   >
     <path
       fill-rule="evenodd"
@@ -50,6 +50,7 @@
     aria-hidden="true"
   ></span>
 </label>
+
 <script>
   function toggleDeliveryMethod(label, deliveryMethodName) {
     const selectedLabels = document.querySelectorAll('.delivery-label.selected')
@@ -59,25 +60,102 @@
         selectedLabel
           .querySelector('.pointer-events-none')
           .classList.remove('border-orange-400')
+        selectedLabel.classList.remove(
+          'bg-gradient-to-r',
+          'from-orange-600',
+          'via-orange-500',
+          'to-orange-400',
+        )
+
+        // Reset the text colors
+        const nameElement = selectedLabel.querySelector(
+          '#delivery-method-0-name',
+        )
+        const descriptionElement = selectedLabel.querySelector(
+          '#delivery-method-0-description-0',
+        )
+        const priceElement = selectedLabel.querySelector(
+          '#delivery-method-0-description-1',
+        )
+        const svgIcon = selectedLabel.querySelector('#delivery-icon')
+
+        nameElement.classList.remove('text-gray-100')
+        nameElement.classList.add('text-gray-900')
+        descriptionElement.classList.remove('text-gray-100')
+        descriptionElement.classList.add('text-gray-500')
+        priceElement.classList.remove('text-white')
+        priceElement.classList.add('text-gray-900')
+        svgIcon.classList.remove('text-gray-100')
+        svgIcon.classList.add('text-gray-300')
       }
     })
 
+    // Toggle the selected state
     label.classList.toggle('selected')
+
     if (label.classList.contains('selected')) {
+      // Apply the gradient background and text color changes when selected
       document.querySelector('input[name="selected_delivery_method"]').value =
         deliveryMethodName
-      const svg = label.querySelector('svg')
-      svg.classList.add('text-orange-400')
-      svg.classList.remove('text-gray-300')
+      label.classList.add(
+        'bg-gradient-to-r',
+        'from-orange-600',
+        'via-orange-500',
+        'to-orange-400',
+      )
+
+      // Update text colors for the selected label
+      const nameElement = label.querySelector('#delivery-method-0-name')
+      const descriptionElement = label.querySelector(
+        '#delivery-method-0-description-0',
+      )
+      const priceElement = label.querySelector(
+        '#delivery-method-0-description-1',
+      )
+      const svgIcon = label.querySelector('#delivery-icon')
+
+      nameElement.classList.remove('text-gray-900')
+      nameElement.classList.add('text-gray-100')
+      descriptionElement.classList.remove('text-gray-500')
+      descriptionElement.classList.add('text-gray-100')
+      priceElement.classList.remove('text-gray-900')
+      priceElement.classList.add('text-white')
+      svgIcon.classList.remove('text-gray-300')
+      svgIcon.classList.add('text-gray-100')
+
       label
         .querySelector('.pointer-events-none')
         .classList.add('border-orange-400')
     } else {
+      // Reset the selected label to its initial state
       document.querySelector('input[name="selected_delivery_method"]').value =
         ''
-      const svg = label.querySelector('svg')
-      svg.classList.remove('text-orange-400')
-      svg.classList.add('text-gray-300')
+      label.classList.remove(
+        'bg-gradient-to-r',
+        'from-orange-600',
+        'via-orange-500',
+        'to-orange-400',
+      )
+
+      // Reset text colors when deselected
+      const nameElement = label.querySelector('#delivery-method-0-name')
+      const descriptionElement = label.querySelector(
+        '#delivery-method-0-description-0',
+      )
+      const priceElement = label.querySelector(
+        '#delivery-method-0-description-1',
+      )
+      const svgIcon = label.querySelector('#delivery-icon')
+
+      nameElement.classList.remove('text-gray-100')
+      nameElement.classList.add('text-gray-900')
+      descriptionElement.classList.remove('text-gray-100')
+      descriptionElement.classList.add('text-gray-500')
+      priceElement.classList.remove('text-white')
+      priceElement.classList.add('text-gray-900')
+      svgIcon.classList.remove('text-gray-100')
+      svgIcon.classList.add('text-gray-300')
+
       label
         .querySelector('.pointer-events-none')
         .classList.remove('border-orange-400')

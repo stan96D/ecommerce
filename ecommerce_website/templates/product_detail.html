@@ -261,7 +261,7 @@
                       id="quantity"
                       min="1"
                       max="{{ product.quantity }}"
-                      class="mt-1 focus:ring-orange-500 focus:border-gray-300 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      class="mt-1 focus:ring-orange-500 focus:border-gray-300 block w-full  sm:text-sm border-gray-300 rounded-md"
                     />
                     <div
                       class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none"
@@ -347,7 +347,7 @@
             <div class="mt-10 flex">
               <button
                 type="submit"
-                class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-orange-400 px-8 py-3 text-base font-medium text-white hover:bg-customColor focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-orange-500 px-8 py-3 text-base font-medium text-white hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
               >
                 In winkelmand
                 {% if current_cart != 0 %}
@@ -504,6 +504,57 @@
       {% endfor %}
     </div>
     <div>{% include 'components/service_section.html' %}</div>
+    {% if brands %}
+        <section
+          aria-labelledby="category-heading"
+          class="py-24 xl:mx-auto xl:max-w-7xl xl:px-8"
+        >
+          <div
+            class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
+          >
+            <h2
+              id="category-heading"
+              class="text-2xl font-bold tracking-tight text-gray-900"
+            >
+              De beste merken
+            </h2>
+          </div>
+
+          <div class="mt-10 flow-root">
+            <div class="-my-2">
+              <div
+                class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible"
+              >
+                <div
+                  class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0"
+                >
+                  {% for brand in brands.all|slice:":4" %}
+                    <div class="group relative">
+                      <div
+                        class="aspect-w-1 aspect-h-1 w-full  overflow-hidden rounded-full bg-gray-200"
+                      >
+                        <img
+                          src="/media/{{ brand.image }}"
+                          alt="{{ brand.name }}"
+                          class="h-full w-full object-cover object-center group-hover:opacity-75 rounded-full"
+                        />
+                      </div>
+                      <div class="mt-6 text-center">
+                        <h3 class="mt-1 text-lg font-semibold text-gray-900">
+                          <a href="/products/{{ brand.name }}">
+                            <span class="absolute inset-0"></span>
+                            {{ brand.name }}
+                          </a>
+                        </h3>
+                      </div>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      {% endif %}
   </div>
   <script>
     function toggleSection(sectionNumber) {

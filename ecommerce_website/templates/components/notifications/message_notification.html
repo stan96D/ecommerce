@@ -1,14 +1,14 @@
 <div
   aria-live="assertive"
   id="notification"
-  class="pointer-events-none absolute z-10 inset-0 flex items-start px-4 py-6 sm:items-start sm:pr-32 sm:pt-52"
+  class="pointer-events-none fixed bottom-0 left-0 w-full z-10 flex items-start px-4 py-6 sm:items-start"
 >
-  <div class="flex w-full flex-col items-center space-y-4 sm:items-end">
+  <div class="flex w-full sm:w-auto justify-start sm:items-start">
     <!-- Notification panel, dynamically insert this into the live region when it needs to be displayed -->
     {% for message in messages %}
       {% if 'cart-success' not in message.tags %}
         <div
-          class="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5"
+          class="pointer-events-auto w-full sm:w-96 max-w-full overflow-hidden rounded-lg bg-gray-100 shadow-lg ring-1 ring-black ring-opacity-5"
         >
           <div class="p-4">
             <div class="flex items-start">
@@ -45,9 +45,11 @@
                   </svg>
                 {% endif %}
               </div>
+
               <div class="ml-3 w-0 flex-1 pt-0.5">
                 <p class="text-sm font-medium text-gray-900">{{ message }}</p>
               </div>
+
               <div class="ml-4 flex flex-shrink-0">
                 <button
                   type="button"

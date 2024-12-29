@@ -5,18 +5,17 @@
   onmouseout="mouseOutDropdown('{{ header.id }}')"
 >
   <div class="absolute inset-x-0 top-full text-gray-500 sm:text-sm">
+    <div class="absolute inset-0 top-full shadow" aria-hidden="true"></div>
     <div
-      class="absolute inset-0 top-full shadow"
-      aria-hidden="true"
-    ></div>
-    <div class="relative bg-gray-100">
+      class="relative bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400"
+    >
       <div class="mx-auto max-w-7xl px-8">
         <div class="grid grid-cols-4 items-start gap-x-8 gap-y-10 pb-12 pt-10">
           {% for category in header.subcategories.all %}
             <div>
               <a
                 href="/products/{{ header.name }}/{{ category.name }}"
-                class="font-medium text-gray-900"
+                class="font-bold text-gray-100 text-lg "
               >
                 {{ category.name }}
               </a>
@@ -30,7 +29,7 @@
                   <li class="mr-4">
                     <a
                       href="/products/{{ header.name }}/{{ category.name }}/{{ sub_category.name }}"
-                      class="hover:text-orange-500"
+                      class="hover:text-gray-200 text-white font-normal text-base"
                       >{{ sub_category.name }}</a
                     >
                   </li>

@@ -52,7 +52,7 @@ class TestURLManager(URLManager):
 
     @staticmethod
     def get_contact_service():
-        return TestURLManager.get_base()  # TODO create contact service page
+        return TestURLManager.get_base() + "/contact-service"
 
     @staticmethod
     def get_account():
@@ -60,7 +60,7 @@ class TestURLManager(URLManager):
 
     @staticmethod
     def store_rating():
-        return "http://localhost:8000/store_rating"
+        return f"http://{settings.NGROK_URL}/store_rating"
 
     @staticmethod
     def create_webhook():
@@ -89,7 +89,7 @@ class RealURLManager(URLManager):
 
     @staticmethod
     def get_contact_service():
-        return RealURLManager.get_base()  # TODO create contact service page
+        return RealURLManager.get_base() + "/contact-service"
 
     @staticmethod
     def get_account():

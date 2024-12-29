@@ -64,7 +64,7 @@
       appearance: none; /* Remove default thumb styling */
       width: 16px; /* Thumb width */
       height: 16px; /* Thumb height */
-      background-color: #f97316; /* amber-500 */
+      background-color: #f97316; /* orange-500 */
       border-radius: 50%; /* Make the thumb round */
       cursor: pointer; /* Pointer on hover */
       margin-top: -4px; /* Center the thumb vertically */
@@ -74,7 +74,7 @@
     .range-slider::-moz-range-thumb {
       width: 16px; /* Thumb width */
       height: 16px; /* Thumb height */
-      background-color: #f97316; /* amber-500 */
+      background-color: #f97316; /* orange-500 */
       border-radius: 50%; /* Make the thumb round */
       cursor: pointer; /* Pointer on hover */
     }
@@ -224,6 +224,16 @@
       </div>
 
       <div class="pb-24 pt-4 lg:grid lg:grid-cols-3 lg:gap-x-8 xl:grid-cols-4">
+        {% if products|length == 0 %}
+          <div class="col-span-full text-center text-xl text-gray-500">
+            {% if categoryData.name == "Favorieten" %}
+              {% include 'components/messages/empty_generic_message.html' with error_message="We hebben helaas geen favorieten voor u kunnen vinden. Probeer het alsjeblieft opnieuw met andere filters of selecteer nieuwe producten als favorieten." %}
+            {% else %}
+              {% include 'components/messages/empty_generic_message.html' with error_message="We hebben helaas geen producten voor u kunnen vinden. Probeer het alsjeblieft opnieuw met andere filters." %}
+            {% endif %}
+          </div>
+        {% endif %}
+
         <aside>
           <h2 class="sr-only">Filters</h2>
           <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
@@ -286,7 +296,7 @@
                                 name="{{ product_filter.name }}"
                                 value="{{ product_attribute }}"
                                 type="checkbox"
-                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-customColor"
+                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
                                 onclick="executeSearch(this)"
                               />
                               <label
@@ -304,7 +314,7 @@
                                 name="{{ product_filter.name }}"
                                 value="{{ product_attribute }}"
                                 type="checkbox"
-                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-customColor"
+                                class="filter-checkbox h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
                                 onclick="executeSearch(this)"
                               />
                               <label
@@ -417,14 +427,6 @@
                 {% for product in products %}
                   {% include 'components/product_card.html' with product=product %}
                 {% endfor %}
-              {% else %}
-                <div class="col-span-full text-center text-xl text-gray-500">
-                  {% if categoryData.name == "Favorieten" %}
-                    {% include 'components/messages/empty_generic_message.html' with error_message="We hebben helaas geen favorieten voor u kunnen vinden. Probeer het alsjeblieft opnieuw met andere filters of selecteer nieuwe producten als favorieten." %}
-                  {% else %}
-                    {% include 'components/messages/empty_generic_message.html' with error_message="We hebben helaas geen producten voor u kunnen vinden. Probeer het alsjeblieft opnieuw met andere filters." %}
-                  {% endif %}
-                </div>
               {% endif %}
             </div>
           </div>

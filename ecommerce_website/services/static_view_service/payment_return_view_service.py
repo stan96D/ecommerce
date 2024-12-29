@@ -24,7 +24,7 @@ class PaymentReturnViewService:
                         "Tijdens het plaatsen van uw order kunt u ook een gewenste afleverdatum aangeven.</li>"
                         "<li>Na het aanmaken van uw order kiest u een betaalmethode zoals <strong>iDEAL</strong>, <strong>creditcard</strong>, of <strong>PayPal</strong> om uw betaling veilig te voltooien.</li>"
                         "<li>Zodra uw betaling succesvol is verwerkt, wordt uw gekozen afleverdatum doorgegeven aan onze bezorgservice. Zij nemen contact met u op om te bevestigen of deze datum geschikt is, en indien nodig stemmen zij een alternatieve datum af die beter bij u past.</li>"
-                        "<li>Wanneer uw bestelling is geleverd, wordt uw order voltooid in onze webshop. Hierna is het voor u mogelijk, indien noodzakelijk, een <a href='/return-service' class='font-medium text-amber-500'> retournering</a> aan te maken voor de betreffende producten.</li>"
+                        "<li>Wanneer uw bestelling is geleverd, wordt uw order voltooid in onze webshop. Hierna is het voor u mogelijk, indien noodzakelijk, een <a href='/return-service' class='font-medium text-orange-500'> retournering</a> aan te maken voor de betreffende producten.</li>"
                         "</ol><br>"
                         "Wij zorgen ervoor dat het proces soepel verloopt en dat u altijd op de hoogte bent van de status van uw bestelling."
                     ),
@@ -62,7 +62,7 @@ class PaymentReturnViewService:
                         "Indien nodig nemen zij contact met u op om een alternatieve datum af te stemmen.<br><br>"
                         "Wij leveren uw bestelling binnen <strong>48 uur</strong> op werkdagen, overal in <strong>België</strong> en <strong>Nederland</strong>.<br><br>"
                         "Wij begrijpen hoe belangrijk het is om uw bestelling op tijd en in perfecte staat te ontvangen, en daarom besteden wij extra aandacht aan elk detail.<br><br>"
-                        "Heeft u speciale verzoeken of vragen over de levering? Neem gerust <a href='/contact-service' class='font-medium text-amber-500'>contact met ons op</a>, wij staan klaar om u te helpen."
+                        "Heeft u speciale verzoeken of vragen over de levering? Neem gerust <a href='/contact-service' class='font-medium text-orange-500'>contact met ons op</a>, wij staan klaar om u te helpen."
                     ),
                 }
             ],
@@ -71,12 +71,12 @@ class PaymentReturnViewService:
             "header": "Uw bestelling, onze zorg!",
             "description": (
                 "Wij maken het bestellen en leveren van uw vloeren eenvoudig en betrouwbaar.<br><br>"
-                "Tijdens het plaatsen van uw order kunt u direct een gewenste afleverdatum invullen. Deze wordt doorgegeven aan onze <a class='font-medium text-amber-500' href='#delivery'>bezorgservice</a>, die contact met u opneemt om de details van de levering te bevestigen.<br><br>"
+                "Tijdens het plaatsen van uw order kunt u direct een gewenste afleverdatum invullen. Deze wordt doorgegeven aan onze <a class='font-medium text-orange-500' href='#delivery'>bezorgservice</a>, die contact met u opneemt om de details van de levering te bevestigen.<br><br>"
                 "Na het plaatsen van uw order kunt u kiezen uit verschillende betaalmethoden zoals <strong>iDEAL</strong>, <strong>creditcard</strong>, of <strong>PayPal</strong>. "
                 "Uw bestelling wordt pas verwerkt nadat de betaling is voltooid.<br><br>"
                 "Bestellingen boven de <strong>€500</strong> worden gratis verzonden, terwijl voor bestellingen onder dit bedrag slechts <strong>€50</strong> aan verzendkosten wordt gerekend. "
                 "Wij leveren binnen <strong>48 uur</strong> op werkdagen, en bezorgen overal in <strong>België</strong> en <strong>Nederland</strong>. "
                 "Onze bezorgservice zorgt ervoor dat uw bestelling snel en in perfecte staat bij u wordt afgeleverd.<br><br>"
-                "<strong>Heeft u vragen over het proces?</strong> Neem gerust <a href='/contact-service' class='font-medium text-amber-500'>contact met ons op</a>!"
+                "<strong>Heeft u vragen over het proces?</strong> Neem gerust <a href='/contact-service' class='font-medium text-orange-500'>contact met ons op</a>!"
             ),
         }

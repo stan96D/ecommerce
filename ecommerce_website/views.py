@@ -85,7 +85,7 @@ def payment_return_service(request):
         'headerData': ViewServiceUtility.get_header_data(),
         'category': payment_return_data,
         'env': environment,
-                                                 'current_sale': ViewServiceUtility.get_current_sale_data(),
+        'current_sale': ViewServiceUtility.get_current_sale_data(),
 
         'payment_methods': payment_methods,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
@@ -107,7 +107,7 @@ def return_service(request):
         'headerData': ViewServiceUtility.get_header_data(),
         'category': return_data,
         'env': environment,
-                                                 'current_sale': ViewServiceUtility.get_current_sale_data(),
+        'current_sale': ViewServiceUtility.get_current_sale_data(),
 
         'payment_methods': payment_methods,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
@@ -263,7 +263,7 @@ def forgot_password(request):
             user = Account.objects.get(email=email)
 
             ForgotPasswordMailSender(
-                HTMLMailManager()).send_password_reset_email(user)
+                HTMLMailManager(), store_name=StoreService.get_active_store().name).send_password_reset_email(user)
 
             return render(request, "login.html", {'success_message': "Nieuw wachtwoord aangevraagd."})
         except Account.DoesNotExist:
@@ -410,7 +410,7 @@ def sign_up(request):
                 'form': form,
                 'headerData': ViewServiceUtility.get_header_data(),
                 'env': environment,
-                                                         'current_sale': ViewServiceUtility.get_current_sale_data(),
+                'current_sale': ViewServiceUtility.get_current_sale_data(),
 
                 'store_data': ViewServiceUtility.get_current_store_data(),
                 'payment_methods': ViewServiceUtility.get_payment_methods(),
@@ -441,7 +441,7 @@ def cart(request):
                                          'headerData': ViewServiceUtility.get_header_data(),
                                          'env': environment,
                                          'current_sale': ViewServiceUtility.get_current_sale_data(),
-
+                                         'misc_products': ViewServiceUtility.get_misc_products(),
                                          'store_data': ViewServiceUtility.get_current_store_data(),
                                          'payment_methods': ViewServiceUtility.get_payment_methods(),
                                          'brands': ViewServiceUtility.get_all_brands(),
@@ -523,7 +523,7 @@ def order_info(request):
     elif request.method == "POST":
 
         attributes = request.POST.copy()
-        different_billing = attributes.get('billing_toggle')
+        different_billing = attributes.get('billing-toggle')
         first_name = attributes.get('first-name')
         last_name = attributes.get('last-name')
         email_address = attributes.get('email-address')
@@ -540,7 +540,7 @@ def order_info(request):
         billing_postal_code = attributes.get('billing-postal-code', "")
         billing_country = attributes.get('billing-country', "")
 
-        if different_billing == 'true':
+        if different_billing == 'false':
             billing_address = attributes.get('address')
             billing_house_number = attributes.get('house-number')
             billing_city = attributes.get('city')
@@ -575,7 +575,7 @@ def checkout(request):
 
             return render(request, "payment.html", {'headerData': ViewServiceUtility.get_header_data(),
                                                     'env': environment,
-                                                                                             'current_sale': ViewServiceUtility.get_current_sale_data(),
+                                                    'current_sale': ViewServiceUtility.get_current_sale_data(),
 
                                                     'store_data': ViewServiceUtility.get_current_store_data(),
                                                     'cart': ViewServiceUtility.get_cart_view(request),
@@ -674,11 +674,11 @@ def confirm_order(request):
             last_name = order.last_name
             email = order.email
 
-        ClientMailSender(mail_manager=HTMLMailManager()).send_order_confirmation(salutation,
-                                                                                 last_name,
-                                                                                 email,
-                                                                                 order.order_number,
-                                                                                 redirect_url)
+        ClientMailSender(mail_manager=HTMLMailManager(), store_name=StoreService.get_active_store().name).send_order_confirmation(salutation,
+                                                                                                                                  last_name,
+                                                                                                                                  email,
+                                                                                                                                  order.order_number,
+                                                                                                                                  redirect_url)
 
         return redirect(checkout_url)
 
@@ -1552,7 +1552,7 @@ def products_by_category(request, category):
         'filter_data': filter_data,
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
-                                                 'current_sale': ViewServiceUtility.get_current_sale_data(),
+        'current_sale': ViewServiceUtility.get_current_sale_data(),
 
         'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
@@ -1970,7 +1970,7 @@ def mollie_webhook(request):
             print("New order in wehook: ", new_order,
                   " with status: ", new_order.order_status)
             if new_order.is_paid:
-                AdminMailSender(mail_manager=HTMLMailManager()
+                AdminMailSender(mail_manager=HTMLMailManager(), store_name=StoreService.get_active_store().name
                                 ).send_order_confirmation(new_order)
 
                 rating_url = url_manager.store_rating()
@@ -1987,16 +1987,16 @@ def mollie_webhook(request):
 
                 redirect_url = url_manager.create_redirect(new_order.id)
 
-                ClientMailSender(mail_manager=HTMLMailManager()).send_order_payment_confirmation(salutation,
-                                                                                                 last_name,
-                                                                                                 email,
-                                                                                                 new_order.order_number,
-                                                                                                 redirect_url)
+                ClientMailSender(mail_manager=HTMLMailManager(), store_name=StoreService.get_active_store().name).send_order_payment_confirmation(salutation,
+                                                                                                                                                  last_name,
+                                                                                                                                                  email,
+                                                                                                                                                  new_order.order_number,
+                                                                                                                                                  redirect_url)
 
-                ClientMailSender(mail_manager=HTMLMailManager()).send_store_rating(salutation,
-                                                                                   last_name,
-                                                                                   email,
-                                                                                   rating_url)
+                ClientMailSender(mail_manager=HTMLMailManager(), store_name=StoreService.get_active_store().name).send_store_rating(salutation,
+                                                                                                                                    last_name,
+                                                                                                                                    email,
+                                                                                                                                    rating_url)
 
             return JsonResponse({'status': 'success'})
         except Exception as e:
@@ -2020,7 +2020,7 @@ def return_payment_webhook(request):
                 payment_id, payment.status)
 
             if new_order.is_paid:
-                AdminMailSender(mail_manager=HTMLMailManager()
+                AdminMailSender(mail_manager=HTMLMailManager(), store_name=StoreService.get_active_store().name
                                 ).send_return_order_confirmation(new_order)
 
                 redirect_url = url_manager.create_redirect_return(new_order.id)
@@ -2036,11 +2036,11 @@ def return_payment_webhook(request):
                     last_name = new_order.last_name
                     email = new_order.email_address
 
-                ClientMailSender(mail_manager=HTMLMailManager()).send_return_payment_confirmation(salutation,
-                                                                                                  last_name,
-                                                                                                  email,
-                                                                                                  new_order.order.order_number,
-                                                                                                  redirect_url)
+                ClientMailSender(mail_manager=HTMLMailManager(), store_name=StoreService.get_active_store().name).send_return_payment_confirmation(salutation,
+                                                                                                                                                   last_name,
+                                                                                                                                                   email,
+                                                                                                                                                   new_order.order.order_number,
+                                                                                                                                                   redirect_url)
 
             return JsonResponse({'status': 'success'})
         except Exception as e:
@@ -2357,11 +2357,11 @@ def confirm_return(request):
             last_name = order.last_name
             email = order.email_address
 
-        ClientMailSender(mail_manager=HTMLMailManager()).send_return_confirmation(salutation,
-                                                                                  last_name,
-                                                                                  email,
-                                                                                  created_return_order.order.order_number,
-                                                                                  redirect_url)
+        ClientMailSender(mail_manager=HTMLMailManager(), store_name=StoreService.get_active_store().name).send_return_confirmation(salutation,
+                                                                                                                                   last_name,
+                                                                                                                                   email,
+                                                                                                                                   created_return_order.order.order_number,
+                                                                                                                                   redirect_url)
 
         return redirect(checkout_url)
 

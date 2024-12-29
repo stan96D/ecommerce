@@ -23,7 +23,7 @@
         <button
           type="submit"
           id="save-button"
-          class="rounded-md bg-amber-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-customColor focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-500"
+          class="rounded-md bg-orange-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
         >
           Opslaan
         </button>
@@ -46,7 +46,7 @@
               href="#"
               id="account"
               onclick="showMain('account')"
-              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500"
+              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-orange-500"
             >
               <i class="far fa-user flex-shrink-0 mt-1"></i>
               <span>Account</span>
@@ -57,7 +57,7 @@
               href="#"
               id="adresgegevens"
               onclick="showMain('adresgegevens')"
-              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500"
+              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-orange-500"
             >
               <i class="far fa-address-card flex-shrink-0 mt-1"></i>
               <span>Adresgegevens</span>
@@ -68,14 +68,14 @@
               href="#"
               id="orders"
               onclick="showMain('orders')"
-              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500"
+              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-orange-500"
             >
               <i class="far fa-file-alt flex-shrink-0 mt-1"></i>
               <span>Orders</span>
               <!-- Only show the badge if the count is greater than 0 -->
               {% if orders|length > 0 %}
                 <span
-                  class="bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold ml-auto"
+                  class="bg-orange-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold ml-auto"
                 >
                   {{ orders|length }}
                 </span>
@@ -87,14 +87,14 @@
               href="#"
               id="returns"
               onclick="showMain('returns')"
-              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-amber-500"
+              class="aside-link group flex gap-x-3 rounded-md py-2 pl-2 pr-3 text-sm leading-6 font-semibold hover:bg-gray-50 hover:text-orange-500"
             >
               <i class="fas fa-exchange-alt flex-shrink-0 mt-1"></i>
               <span>Retouren</span>
               <!-- Only show the badge if the count is greater than 0 -->
               {% if returns|length > 0 %}
                 <span
-                  class="bg-amber-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold ml-auto"
+                  class="bg-orange-500 rounded-full w-6 h-6 flex items-center justify-center text-white text-xs font-semibold ml-auto"
                 >
                   {{ returns|length }}
                 </span>
@@ -223,7 +223,7 @@
               <button
                 type="button"
                 id="delete-account-button"
-                class="rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-400"
+                class=" bg-white  text-sm font-semibold text-red-500  hover:text-red-400"
               >
                 Ja, verwijder account
               </button>
@@ -397,14 +397,14 @@
         <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
           <!-- Address Section -->
           <label
-            class="address-label relative flex cursor-default rounded-lg border-amber-500 border bg-white p-4 shadow-sm focus:outline-none"
+            class="address-label relative flex cursor-default rounded-lg border-orange-500 border bg-gradient-to-r from-orange-600  to-orange-400 p-4 shadow-sm focus:outline-none"
           >
             <span class="flex flex-1">
               <span class="flex flex-col">
-                <span class="block text-sm font-medium text-gray-900">
+                <span class="block text-sm font-medium text-white">
                   Aflever adres
                 </span>
-                <span class="mt-1 text-sm text-gray-500">
+                <span class="mt-1 text-sm text-gray-50">
                   {{ account.first_name }} {{ account.last_name }}<br />
                   {{ account.address }} {{ account.house_number }}<br />
                   {{ account.postal_code }} {{ account.city }}<br />
@@ -414,7 +414,7 @@
             </span>
 
             <svg
-              class="h-5 w-5 text-amber-500 transition-colors duration-300"
+              class="h-5 w-5 text-gray-100 transition-colors duration-300"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"
@@ -427,7 +427,7 @@
             </svg>
 
             <span
-              class="pointer-events-none absolute -inset-px rounded-lg border-2 border-amber-500"
+              class="pointer-events-none absolute -inset-px rounded-lg border-2 border-orange-400"
               aria-hidden="true"
             ></span>
           </label>
@@ -806,16 +806,16 @@
 
       // Highlight the initially selected aside item based on the saved tab
       const initialAsideLink = document.getElementById(savedTab)
-      initialAsideLink.classList.add('bg-gray-50', 'text-amber-500')
+      initialAsideLink.classList.add('bg-gray-50', 'text-orange-500')
     }
 
     // Add event listeners to handle click events and highlight the selected aside item
     document.querySelectorAll('.aside-link').forEach((link) => {
       link.addEventListener('click', function () {
         document.querySelectorAll('.aside-link').forEach((link) => {
-          link.classList.remove('bg-gray-50', 'text-amber-500')
+          link.classList.remove('bg-gray-50', 'text-orange-500')
         })
-        this.classList.add('bg-gray-50', 'text-amber-500')
+        this.classList.add('bg-gray-50', 'text-orange-500')
       })
     })
   </script>

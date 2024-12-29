@@ -1,86 +1,91 @@
 <section class="">
-<div class="isolate bg-gradient-to-r from-orange-600  to-orange-400 px-6 py-6 sm:pt-16 sm:pb-16 lg:px-8">
-    <div class="mx-auto max-w-2xl sm:text-center ">
-      <h2 class="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl ">
+  <div class="isolate bg-gray-50 px-6 py-6 sm:pt-16 sm:pb-16 lg:px-8">
+    <div class="mx-auto max-w-7xl text-center">
+      <!-- Section Title -->
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
         Onze service
       </h2>
-      <p class="mt-2 text-lg leading-8 text-gray-50">
-        Problemen bij je bestelling? Geen zorgen! Wij zijn er om jou te helpen.
+      <p class="mt-4 text-lg text-gray-800">
+        Heb je problemen met je bestelling? Geen zorgen! Wij helpen je snel
+        verder.
       </p>
-      <div class="mx-auto mt-5 text-center">
-        <div class="flex items-center justify-center space-x-2">
-          <!-- Green circle icon -->
+
+      <!-- Status Indicator -->
+      <div class="mx-auto mt-6 text-center">
+        <div class="flex justify-center items-center space-x-2">
           <div class="w-4 h-4 bg-green-500 rounded-full"></div>
-          <span class="text-sm font-medium text-white">Dagelijks geopend</span>
+          <span class="text-sm font-medium text-gray-900">
+            Dagelijks geopend
+          </span>
         </div>
       </div>
     </div>
 
-    <div class="mx-auto mt-20 max-w-screen-md flex flex-col sm:flex-row gap-10 pt-2">
-      <!-- Email Block -->
+    <!-- Contact Details & Availability Section -->
+    <div
+      class="mx-auto mt-12 max-w-screen-xl flex flex-col sm:flex-row gap-12 sm:gap-8 px-6"
+    >
+      <!-- Email Block (wider) -->
       <div
-        class="flex gap-x-6 items-start bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+        class="flex gap-6 items-center bg-gradient-to-r bg-white rounded-lg p-8 w-full sm:w-1/2"
       >
-        <!-- Enhanced Email Icon -->
+        <!-- Circle with Perfect Round Icon -->
         <div
-          class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-orange-500 shadow-md"
+          class="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-600 to-orange-400 shadow-lg"
         >
-          <i class="fa fa-envelope text-white text-xl"></i>
+          <i class="fa fa-envelope text-white text-2xl"></i>
         </div>
         <div>
-          <h3 class="text-base font-semibold leading-7 text-gray-900">Email</h3>
+          <h3 class="text-lg font-semibold text-gray-900">E-mail</h3>
           <a
             href="mailto:{{ store_data.contact_email }}"
-            class="text-sm font-semibold leading-6 text-orange-500 flex items-center hover:text-orange-600 transition-colors duration-300"
+            class="text-sm font-semibold text-orange-500 hover:text-orange-600"
           >
             {{ store_data.contact_email }}
             <span aria-hidden="true" class="ml-1">&rarr;</span>
           </a>
-          <p class="mt-2 leading-7 text-sm text-gray-500">
-            Wij proberen jouw verzoek binnen maximaal twee werkdagen te
-            beantwoorden!
+          <p class="mt-2 text-sm text-gray-500">
+            We streven ernaar om je verzoek binnen twee werkdagen te
+            beantwoorden.
           </p>
         </div>
       </div>
 
-      <!-- Availability Block -->
+      <!-- Availability Block (wider) -->
       <div
-        class="flex gap-x-6 items-start bg-gray-50 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
+        class="flex gap-6 items-center bg-gradient-to-r bg-white rounded-lg p-8 w-full sm:w-1/2"
       >
-        <!-- Enhanced Availability Icon -->
-<div
-  class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-orange-500 shadow-md"
->
-  <i class="fa fa-clock text-white text-xl"></i>
-</div>
-
+        <!-- Circle with Perfect Round Icon -->
+        <div
+          class="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-600 to-orange-400 shadow-lg"
+        >
+          <i class="fa fa-clock text-white text-2xl"></i>
+        </div>
         <div>
-          <h3 class="text-base font-semibold leading-7 text-gray-900">
-            Beschikbaarheid
-          </h3>
-          <p class="text-sm font-semibold leading-6 text-orange-400">
+          <h3 class="text-lg font-semibold text-gray-900">Beschikbaarheid</h3>
+          <p class="text-sm font-semibold text-orange-400">
             {{ store_data.opening_time_week }}
           </p>
-          <p class="mt-2 leading-7 text-sm text-gray-500">
-            Onze klantenservice is alle werkdagen beschikbaar met uitzondering
-            van de feestdagen.
+          <p class="mt-2 text-sm text-gray-500">
+            Onze klantenservice is beschikbaar op werkdagen, behalve tijdens
+            feestdagen.
           </p>
         </div>
       </div>
     </div>
 
-    <h2 id="perks-heading" class="sr-only">Our perks</h2>
-    <div class="mt-16">
-      <div class="mx-auto rounded-lg p-10 bg-gray-50">
-        <div
-          class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 lg:gap-x-8 lg:gap-y-0"
-        >
-          {% for store_motivation in store_motivations %}
-            {% if store_motivation.for_homepage %}
-              {% include 'components/store_motivation.html' %}
-            {% endif %}
-          {% endfor %}
-        </div>
+    <!-- Motivation/Perks Section -->
+    <div
+      class="mt-16 bg-gradient-to-r from-orange-600 to-orange-400 rounded-lg p-10"
+    >
+      <div
+        class="grid grid-cols-1 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        {% for store_motivation in store_motivations %}
+          {% if store_motivation.for_homepage %}
+            {% include 'components/store_motivation.html' %}
+          {% endif %}
+        {% endfor %}
       </div>
     </div>
   </div>
