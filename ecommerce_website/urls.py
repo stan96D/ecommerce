@@ -95,6 +95,9 @@ urlpatterns = [
     path('return-service/', views.return_service,
          name='return_service'),
     path('about-us/', views.about_us,
-         name='about_us')
-
+         name='about_us'),
+    path('terms-and-conditions/', views.static_html_view,
+         name='terms_and_conditions'),
+    path('disclaimer/', views.static_html_view,
+         name='disclaimer')
 ]

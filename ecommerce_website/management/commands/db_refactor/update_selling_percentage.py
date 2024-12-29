@@ -3,7 +3,7 @@ from decimal import Decimal
 from ecommerce_website.models import Product
 
 
-def update_selling_percentage(selling_percentage=Decimal('0.70')):
+def update_selling_percentage(selling_percentage=Decimal('1.30')):
     """
     Updates the selling_percentage attribute for all products in the Product model.
 

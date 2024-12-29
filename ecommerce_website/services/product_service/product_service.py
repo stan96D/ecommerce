@@ -465,28 +465,19 @@ class ProductService(ProductServiceInterface):
 
         # Step 2: If the Prijs filter is present, execute it on the filtered products
         if price_threshold is not None:
-
-            shipping_price = WebShopConfig.shipping_margin()
+            shipping_margin = WebShopConfig.shipping_margin()
 
             products_by_category = products_by_category.annotate(
                 # Calculate the modified price (price * (1 - selling_percentage / 100))
                 modified_price=ExpressionWrapper(
-                    F('price') * (1 - F('selling_percentage') / 100),
+                    F('price') * F('selling_percentage') * shipping_margin *
+                    (1 + F('tax') / 100),  # Dynamic tax rate
                     output_field=DecimalField()
                 ),
 
                 # Round the modified price
                 rounded_modified_price=Round('modified_price', 2),
 
-                # Calculate the modified price with shipping (round it too)
-                modified_price_with_shipping=ExpressionWrapper(
-                    F('rounded_modified_price') * shipping_price,
-                    output_field=DecimalField()
-                ),
-
-                # Round the modified price with shipping
-                rounded_modified_price_with_shipping=Round(
-                    'modified_price_with_shipping', 2),
 
                 # Check for active sales and calculate the sale price
                 # Annotate sale price for active sales
@@ -506,7 +497,7 @@ class ProductService(ProductServiceInterface):
                 sale_effective_price=Case(
                     When(
                         productsale__sale__active=True,
-                        then=F('rounded_modified_price_with_shipping') * \
+                        then=F('rounded_modified_price') * \
                         F('percentage')
                     ),
                     default=Value(None),  # No sale, so return None
@@ -523,7 +514,7 @@ class ProductService(ProductServiceInterface):
                         then=F('rounded_sale_effective_price')
                     ),
                     # If no sale, use the rounded modified price with shipping
-                    default=F('rounded_modified_price_with_shipping'),
+                    default=F('rounded_modified_price'),
                     output_field=DecimalField()
                 ),
 
@@ -595,28 +586,19 @@ class ProductService(ProductServiceInterface):
 
         # Step 2: If the Prijs filter is present, execute it on the filtered products
         if price_threshold is not None:
-
-            shipping_price = WebShopConfig.shipping_margin()
+            shipping_margin = WebShopConfig.shipping_margin()
 
             products_by_category = products_by_category.annotate(
                 # Calculate the modified price (price * (1 - selling_percentage / 100))
                 modified_price=ExpressionWrapper(
-                    F('price') * (1 - F('selling_percentage') / 100),
+                    F('price') * F('selling_percentage') * shipping_margin *
+                    (1 + F('tax') / 100),  # Dynamic tax rate
                     output_field=DecimalField()
                 ),
 
                 # Round the modified price
                 rounded_modified_price=Round('modified_price', 2),
 
-                # Calculate the modified price with shipping (round it too)
-                modified_price_with_shipping=ExpressionWrapper(
-                    F('rounded_modified_price') * shipping_price,
-                    output_field=DecimalField()
-                ),
-
-                # Round the modified price with shipping
-                rounded_modified_price_with_shipping=Round(
-                    'modified_price_with_shipping', 2),
 
                 # Check for active sales and calculate the sale price
                 # Annotate sale price for active sales
@@ -636,7 +618,7 @@ class ProductService(ProductServiceInterface):
                 sale_effective_price=Case(
                     When(
                         productsale__sale__active=True,
-                        then=F('rounded_modified_price_with_shipping') * \
+                        then=F('rounded_modified_price') * \
                         F('percentage')
                     ),
                     default=Value(None),  # No sale, so return None
@@ -653,7 +635,7 @@ class ProductService(ProductServiceInterface):
                         then=F('rounded_sale_effective_price')
                     ),
                     # If no sale, use the rounded modified price with shipping
-                    default=F('rounded_modified_price_with_shipping'),
+                    default=F('rounded_modified_price'),
                     output_field=DecimalField()
                 ),
 
@@ -719,28 +701,19 @@ class ProductService(ProductServiceInterface):
 
         # Step 2: If the Prijs filter is present, execute it on the filtered products
         if price_threshold is not None:
-
-            shipping_price = WebShopConfig.shipping_margin()
+            shipping_margin = WebShopConfig.shipping_margin()
 
             products_by_category = products_by_category.annotate(
                 # Calculate the modified price (price * (1 - selling_percentage / 100))
                 modified_price=ExpressionWrapper(
-                    F('price') * (1 - F('selling_percentage') / 100),
+                    F('price') * F('selling_percentage') * shipping_margin *
+                    (1 + F('tax') / 100),  # Dynamic tax rate
                     output_field=DecimalField()
                 ),
 
                 # Round the modified price
                 rounded_modified_price=Round('modified_price', 2),
 
-                # Calculate the modified price with shipping (round it too)
-                modified_price_with_shipping=ExpressionWrapper(
-                    F('rounded_modified_price') * shipping_price,
-                    output_field=DecimalField()
-                ),
-
-                # Round the modified price with shipping
-                rounded_modified_price_with_shipping=Round(
-                    'modified_price_with_shipping', 2),
 
                 # Check for active sales and calculate the sale price
                 # Annotate sale price for active sales
@@ -760,7 +733,7 @@ class ProductService(ProductServiceInterface):
                 sale_effective_price=Case(
                     When(
                         productsale__sale__active=True,
-                        then=F('rounded_modified_price_with_shipping') * \
+                        then=F('rounded_modified_price') * \
                         F('percentage')
                     ),
                     default=Value(None),  # No sale, so return None
@@ -777,7 +750,7 @@ class ProductService(ProductServiceInterface):
                         then=F('rounded_sale_effective_price')
                     ),
                     # If no sale, use the rounded modified price with shipping
-                    default=F('rounded_modified_price_with_shipping'),
+                    default=F('rounded_modified_price'),
                     output_field=DecimalField()
                 ),
 

@@ -53,7 +53,7 @@ class SQLImportService(DatabaseImportServiceInterface):
         response = requests.get(image_url)
 
         config = WebShopConfig()
-        selling_percentage = config.shipping_margin()
+        selling_percentage = config.gain_margin()
 
         product = Product.objects.create(
             name=product_data["name"], supplier=product_data["supplier"], price=product_data["measure_price"], unit_price=product_data["unit_price"], selling_percentage=selling_percentage)

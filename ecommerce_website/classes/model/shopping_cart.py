@@ -125,8 +125,7 @@ class SessionShoppingCart(ShoppingCartInterface):
         total_tax_amount = Decimal(0)
         for product_id, item in self.cart.items():
             product = ProductService.get_product_by_id(product_id)
-            if product is not None:
-                # Determine the product price (sale or regular)
+            if product is not None and product.tax == tax_percentage:
                 productType = product.attributes.filter(
                     attribute_type__name="Producttype").first() or None
                 if productType.value == "Vloer":
@@ -139,17 +138,10 @@ class SessionShoppingCart(ShoppingCartInterface):
                         product_price = product.sale_price
                     else:
                         product_price = product.selling_price
-
-                # Calculate the subtotal for the product
                 subtotal = item['quantity'] * product_price
-
-                # Calculate the tax amount based on the subtotal
-                tax_amount = subtotal * \
-                    (Decimal(tax_percentage) / (100 + tax_percentage))
-
-                total_tax_amount += tax_amount
-
-        # Return the total tax amount rounded to two decimal places
+                tax_amount = subtotal / (1 + (Decimal(tax_percentage) / 100))
+                total_tax = subtotal - tax_amount
+                total_tax_amount += total_tax
         return total_tax_amount.quantize(Decimal('0.00'))
 
     def to_json(self):
@@ -336,8 +328,9 @@ class AccountShoppingCart(ShoppingCartInterface):
                     else:
                         product_price = product.selling_price
                 subtotal = item['quantity'] * product_price
-                tax_amount = subtotal * (Decimal(tax_percentage) / 100)
-                total_tax_amount += tax_amount
+                tax_amount = subtotal / (1 + (Decimal(tax_percentage) / 100))
+                total_tax = subtotal - tax_amount
+                total_tax_amount += total_tax
         return total_tax_amount.quantize(Decimal('0.00'))
 
     def to_json(self):

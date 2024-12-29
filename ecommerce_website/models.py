@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.utils.timezone import now
 from datetime import date
 from datetime import timedelta
@@ -103,22 +104,50 @@ class Product(models.Model):
         max_digits=5, decimal_places=2, default=0.00)
 
     @property
+    def buy_price_excl_tax(self):
+        tax_multiplier = Decimal("1.00") + (self.tax / Decimal('100'))
+        return round(self.price / tax_multiplier, 2)
+
+    @property
+    def unit_buy_price_excl_tax(self):
+        tax_multiplier = Decimal("1.00") + (self.tax / Decimal('100'))
+        return round(self.unit_price / tax_multiplier, 2)
+
+    @property
     def unit_selling_price(self):
-        selling_price = round(
-            self.unit_price / self.selling_percentage)
-        selling_price_with_shipping_costs = round(
-            selling_price * WebShopConfig.shipping_margin(), 2)
-        return selling_price_with_shipping_costs
+
+        excl_tax = self.unit_buy_price_excl_tax
+
+        selling_price_excl_tax = round(
+            excl_tax * self.selling_percentage, 2)
+
+        selling_price_excl_tax_shipping = selling_price_excl_tax * \
+            WebShopConfig.shipping_margin()
+
+        tax_multiplier = Decimal("1.00") + (self.tax / Decimal('100'))
+
+        selling_price_incl_tax = round(
+            selling_price_excl_tax_shipping * tax_multiplier, 2)
+
+        return selling_price_incl_tax
 
     @property
     def selling_price(self):
 
-        selling_price = round(
-            self.price / self.selling_percentage)
+        excl_tax = self.buy_price_excl_tax
 
-        selling_price_with_shipping_costs = round(
-            selling_price * WebShopConfig.shipping_margin(), 2)
-        return selling_price_with_shipping_costs
+        selling_price_excl_tax = round(
+            excl_tax * self.selling_percentage, 2)
+
+        selling_price_excl_tax_shipping = selling_price_excl_tax * \
+            WebShopConfig.shipping_margin()
+
+        tax_multiplier = Decimal("1.00") + (self.tax / Decimal('100'))
+
+        selling_price_incl_tax = round(
+            selling_price_excl_tax_shipping * tax_multiplier, 2)
+
+        return selling_price_incl_tax
 
     def __str__(self):
         return self.name

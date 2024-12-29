@@ -54,6 +54,38 @@ url_manager = EncapsulatedURLManager.get_url_manager(environment)
 # static views
 
 
+def static_html_view(request):
+
+    store_data = ViewServiceUtility.get_current_store_data()
+
+    route_name = request.resolver_match.url_name
+
+    if route_name == 'terms_and_conditions':
+        data = WebShopConfig.terms_and_conditions()
+        category_name = "Algemene voorwaarden"
+    elif route_name == 'privacy_policy':
+        data = WebShopConfig.disclaimer()
+        category_name = "Disclaimer"
+    else:
+        data = 'Geen content om weer te geven'
+        category_name = "Geen inhoud"
+
+    return render(request, "static_html_view.html", {
+        'headerData': ViewServiceUtility.get_header_data(),
+        'env': environment,
+        'current_sale': ViewServiceUtility.get_current_sale_data(),
+        'data': data,
+        'category': {'name': category_name, 'description': store_data['name']},
+        'payment_methods': ViewServiceUtility.get_payment_methods(),
+        'store_motivations': ViewServiceUtility.get_store_motivations(),
+        'brands': ViewServiceUtility.get_all_brands(),
+        'messages': messages.get_messages(request),
+        'store_data': store_data,
+        'breadcrumbs': [category_name],
+        'category_data': ViewServiceUtility.get_active_categories()
+    })
+
+
 def contact_service(request):
     store_data = ViewServiceUtility.get_current_store_data()
 
