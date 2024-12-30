@@ -26,7 +26,7 @@ class ReturnService():
     @staticmethod
     def get_all_returns_for_user(account):
         try:
-            return ReturnOrder.objects.filter(order__account=account)
+            return ReturnOrder.objects.filter(order__account=account).order_by('-created_date')
         except ReturnOrder.DoesNotExist:
             return None
 
@@ -34,6 +34,18 @@ class ReturnService():
     def get_return_by_id(return_id):
         try:
             return ReturnOrder.objects.get(id=return_id)
+        except ReturnOrder.DoesNotExist:
+            return None
+
+    @staticmethod
+    def get_return_by_token(token, public=False):
+        try:
+            if public:
+                # Check for token and account being None
+                return ReturnOrder.objects.get(token=token, order__account=None)
+            else:
+                # Standard check for token only
+                return ReturnOrder.objects.get(token=token)
         except ReturnOrder.DoesNotExist:
             return None
 
@@ -78,6 +90,74 @@ class ReturnService():
         return_order.status = "pending"
         return_order.save()
         return return_order
+
+    @staticmethod
+    def get_return_price_data(return_order_data):
+        refund_amount = Decimal("0.00")
+        sub_price = Decimal("0.00")
+        tax_price_low = Decimal("0.00")
+        tax_price_high = Decimal("0.00")
+        order_lines = []
+
+        order = OrderService.get_order_by_id(return_order_data["order_id"])
+
+        if not order:
+            return None
+
+        # Loop through the return line data and accumulate the order lines and refund amount
+        for id, quantity_requested in return_order_data["return_line_data"].items():
+            try:
+                # Get the OrderLine instance
+                order_line = OrderLine.objects.get(id=id)
+                product = order_line.product
+
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
+                else:
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
+
+                line_price = product_price * quantity_requested
+
+                order_lines.append({"order_line": order_line, "quantity": quantity_requested,
+                                    "price": line_price})
+
+                # Calculate the refund amount for the return
+                refund_amount += line_price
+
+                is_tax_low = order_line.product.tax == WebShopConfig.tax_low()
+                is_tax_high = order_line.product.tax == WebShopConfig.tax_high()
+
+                # Calculate sub price and taxes
+                if is_tax_low:
+                    # Convert 9% to 0.09
+                    tax_low = line_price / (1 + (product.tax / 100))
+                    tax_price_low += (line_price - tax_low)
+                    sub_price += tax_low
+                elif is_tax_high:
+                    # Convert 21% to 0.21
+                    tax_high = line_price / (1 + (product.tax / 100))
+                    tax_price_high += (line_price - tax_high)
+                    sub_price += tax_high
+                else:
+                    sub_price += line_price  # No tax
+
+            except OrderLine.DoesNotExist:
+                return None  # Handle the case where the order line does not exist
+
+        return {
+            "sub_total": round(sub_price, 2),
+            "tax_price_low": round(tax_price_low, 2),
+            "tax_price_high": round(tax_price_high, 2),
+            "total_price": round(refund_amount, 2),
+        }
 
     @staticmethod
     def create_return_order_with_lines(return_order_data, additional_data, payment_info, delivery_info):
@@ -126,7 +206,20 @@ class ReturnService():
                 order_line = OrderLine.objects.get(id=id)
                 product = order_line.product
 
-                line_price = product.unit_selling_price * quantity_requested
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
+                else:
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
+
+                line_price = product_price * quantity_requested
 
                 order_lines.append({"order_line": order_line, "quantity": quantity_requested,
                                     "price": line_price})
@@ -140,14 +233,14 @@ class ReturnService():
                 # Calculate sub price and taxes
                 if is_tax_low:
                     # Convert 9% to 0.09
-                    tax_low = line_price * (product.tax / 100)
-                    tax_price_low += tax_low
-                    sub_price += line_price - tax_low
+                    tax_low = line_price / (1 + (product.tax / 100))
+                    tax_price_low += (line_price - tax_low)
+                    sub_price += tax_low
                 elif is_tax_high:
                     # Convert 21% to 0.21
-                    tax_high = line_price * (product.tax / 100)
-                    tax_price_high += tax_high
-                    sub_price += line_price - tax_high
+                    tax_high = line_price / (1 + (product.tax / 100))
+                    tax_price_high += (line_price - tax_high)
+                    sub_price += tax_high
                 else:
                     sub_price += line_price  # No tax
 

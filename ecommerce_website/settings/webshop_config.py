@@ -5,7 +5,72 @@ class WebShopConfig:
 
     @staticmethod
     def disclaimer():
-        return ""
+        return """<section>
+  <h2 style="font-weight:bold; margin-top:30px;">A. Definities</h2>
+  <p style="margin-bottom:8px;">In deze disclaimer wordt verstaan onder:</p>
+  <ul style="margin-left:20px; line-height:1.6; margin-bottom:16px;">
+    <li><strong>De eigenaar:</strong> De partij die de webshop beheert en eigenaar is van de aangeboden producten.</li>
+    <li><strong>Gebruik:</strong> Alle handelingen met betrekking tot de webshop, zoals het bekijken, kopen, retourneren of het raadplegen van inhoud op de website.</li>
+    <li><strong>Gebruiker:</strong> Jij, de bezoeker van de website die producten koopt of de webshop bezoekt.</li>
+    <li><strong>Inhoud:</strong> Alle informatie, teksten, afbeeldingen, video's, logo's en andere materialen die op de webshop beschikbaar zijn.</li>
+    <li><strong>Producten:</strong> De vloeren, accessoires en andere artikelen die worden aangeboden via de webshop.</li>
+  </ul>
+</section>
+
+<section>
+  <h2 style="font-weight:bold; margin-top:30px;">B. Toepasselijkheid</h2>
+  <p style="margin-bottom:16px;">Deze disclaimer is van toepassing op alle pagina’s en inhoud die jij op deze webshop bekijkt of gebruikt. Door de webshop te gebruiken, stem je in met de inhoud van deze disclaimer en onze voorwaarden.</p>
+</section>
+
+<section>
+  <h2 style=" font-weight:bold; margin-top:30px;">C. Zorgvuldigheid en Aansprakelijkheid</h2>
+  <p style="margin-bottom:16px;">De inhoud van deze webshop is met de grootst mogelijke zorg samengesteld. Echter, de eigenaar aanvaardt geen aansprakelijkheid voor eventuele onjuistheden, onvolledigheden, of schade die voortkomt uit verkeerd gebruik van de producten door de consument. De consument is zelf verantwoordelijk voor het juiste gebruik van de producten, en bij zelf uitgevoerde handelingen kan de eigenaar geen verantwoordelijkheid nemen voor mogelijke schade of verlies.</p>
+</section>
+
+<section>
+  <h2 style=" font-weight:bold; margin-top:30px;">D. Verwijzingen naar Externe Websites</h2>
+  <p style="margin-bottom:16px;">De eigenaar is niet verantwoordelijk voor de inhoud van externe websites waarnaar via deze webshop wordt verwezen. Het gebruik van dergelijke links is volledig op eigen risico van de gebruiker.</p>
+</section>
+
+<section>
+  <h2 style=" font-weight:bold; margin-top:30px;">E. Intellectuele Eigendomsrechten</h2>
+  <p style="margin-bottom:16px;">Alle inhoud op deze webshop, inclusief afbeeldingen, tekst, en logo’s, is beschermd door intellectuele eigendomsrechten. Ongeautoriseerd gebruik van deze inhoud kan leiden tot juridische gevolgen. Het is verboden om de inhoud van de website zonder toestemming te reproduceren, distribueren, of anderszins te gebruiken voor commerciële doeleinden.</p>
+</section>
+
+<section>
+  <h2 style=" font-weight:bold; margin-top:30px;">F. Toestemming voor Gebruik</h2>
+  <p style="margin-bottom:16px;">Het gebruik van de inhoud van deze webshop voor commerciële doeleinden vereist vooraf schriftelijke toestemming van de eigenaar. Dit geldt ook voor hergebruik of publicatie van enige gedeelten van de website.</p>
+</section>
+
+<section>
+  <h2 style="font-weight:bold; margin-top:30px;">G. Privacy en Gegevensgebruik</h2>
+  <p style="margin-bottom:16px;">De eigenaar respecteert jouw privacy. Gegevens die via de webshop worden verzameld, worden uitsluitend gebruikt voor het verwerken van bestellingen en het leveren van producten. Deze gegevens worden niet gedeeld met derden, tenzij dit nodig is voor de uitvoering van de levering. Door gebruik te maken van de webshop, stem je in met het verzamelen en verwerken van jouw gegevens voor deze doeleinden.</p>
+  <p style="margin-bottom:16px;">Onze privacybeleid bevat meer details over het verzamelen van gegevens en de manier waarop deze worden verwerkt. Wij maken enkel gebruik van de gegevens voor het leveren van producten en het beheren van jouw account.</p>
+  
+  <p style="margin-bottom:16px;">Onze webshop maakt gebruik van <strong>sessie-cookies</strong>. Deze cookies worden uitsluitend gebruikt voor noodzakelijke functies zoals:</p>
+  <ul style="margin-left:20px; line-height:1.6; margin-bottom:16px;">
+    <li><strong>Winkelwagentje:</strong> Sessie-cookies worden gebruikt om producten die je aan je winkelwagentje toevoegt te bewaren totdat je de aankoop hebt afgerond.</li>
+    <li><strong>Account:</strong> Sessie-cookies zorgen ervoor dat je ingelogd blijft tijdens je sessie, zodat je jouw account kunt beheren en aankopen kunt doen zonder telkens opnieuw in te loggen.</li>
+    <li><strong>Basisfunctionaliteit:</strong> Deze cookies zijn essentieel voor de werking van de webshop, zoals het bewaren van je keuzes tijdens je sessie en het voltooien van je bestelling.</li>
+  </ul>
+  <p style="margin-bottom:16px;">Deze sessie-cookies bevatten geen persoonlijke informatie en worden automatisch verwijderd wanneer je je browser afsluit.</p>
+</section>
+
+
+
+<section>
+  <h2 style=" font-weight:bold; margin-top:30px;">H. Herroepingsrecht en Retouren</h2>
+  <p style="margin-bottom:16px;">Volgens de wet heb je het recht om een product binnen 14 dagen na ontvangst zonder opgave van redenen te retourneren. Indien deze termijn van 14 dagen is overschreden, kunnen wij helaas geen producten meer terugnemen of retourneren. Het herroepingsrecht vervalt automatisch na het verstrijken van de termijn.</p>
+  <p style="margin-bottom:16px;">Wij raden je aan om je retouren tijdig aan te melden en te zorgen voor een snelle terugzending van het product, indien je besluit gebruik te maken van je herroepingsrecht binnen de gestelde termijn.</p>
+</section>
+
+<section>
+  <h2 style=" font-weight:bold; margin-top:30px;">I. Wijzigingen van de Disclaimer</h2>
+  <p style="margin-bottom:16px;">De eigenaar behoudt zich het recht voor deze disclaimer op elk moment te wijzigen of bij te werken. Wijzigingen worden van kracht zodra ze op de website worden geplaatst.</p>
+</section>
+
+
+"""
 
     @staticmethod
     def terms_and_conditions():
@@ -74,14 +139,14 @@ class WebShopConfig:
                         <li>Zorg ervoor dat de stofzuiger een zachte borstelmond heeft.</li>
                     </ul>
                 </li>
-                <li><strong>Fabrieksgarantie:</strong> De fabrieksgarantie geldt uitsluitend voor ongeopende pakketten.</li>
+                <li><strong>Fabrieksgarantie:</strong> De fabrieksgarantie geldt uitsluitend voor ongeopende pakketten en heeft een geldigheid van 15 jaar.</li>
             </ul>
         </li>
 
         <li><strong>7.2 Klachten:</strong>
             <ul style="margin-left: 20px; line-height: 1.6;">
-                <li>Klachten over gebreken aan producten dienen binnen een redelijke termijn na ontdekking schriftelijk en duidelijk omschreven aan de ondernemer te worden gemeld.</li>
-                <li>De ondernemer zal klachten binnen een termijn van 14 dagen afhandelen. Indien een klacht een voorzienbaar langere verwerkingstijd vraagt, wordt de consument hiervan op de hoogte gesteld.</li>
+                <li>Klachten over gebreken aan producten dienen binnen een redelijke termijn na ontdekking per mail en duidelijk omschreven aan de ondernemer te worden gemeld.</li>
+                <li>De ondernemer zal klachten binnen een termijn van 14 dagen afhandelen. Indien een klacht een voorzienbaar langere verwerkingstijd vraagt, wordt de consument hiervan op de hoogte gesteld. De ondernemer neemt contact op met de consument over een eventuele oplossing.</li>
             </ul>
         </li>
     </ul>
@@ -95,7 +160,7 @@ class WebShopConfig:
     <h2 style="margin-top: 30px; font-weight: bold;">Artikel 9. Privacy</h2>
     <ul style="margin-left: 20px; line-height: 1.6;">
         <li><strong>9.1</strong> De ondernemer respecteert de privacy van de consument en verwerkt persoonsgegevens conform de Algemene Verordening Gegevensbescherming (AVG).</li>
-        <li><strong>9.2</strong> Persoonsgegevens worden uitsluitend gebruikt voor de uitvoering van de overeenkomst en, indien toestemming is gegeven, voor marketingdoeleinden.</li>
+        <li><strong>9.2</strong> Persoonsgegevens worden uitsluitend gebruikt voor de uitvoering van de overeenkomst.</li>
     </ul>
 
     <h2 style="margin-top: 30px; font-weight: bold;">Artikel 10. Toepasselijk Recht en Geschillen</h2>
@@ -103,9 +168,22 @@ class WebShopConfig:
         <li><strong>10.1</strong> Op alle overeenkomsten tussen de ondernemer en de consument is uitsluitend Nederlands recht van toepassing.</li>
         <li><strong>10.2</strong> Geschillen worden bij voorkeur in onderling overleg opgelost. Indien dit niet mogelijk is, kan de consument het geschil voorleggen aan een bevoegde Nederlandse rechter.</li>
     </ul>
+
+    <h2 style="margin-top: 30px; font-weight: bold;">Artikel 11. Overmacht</h2>
+    <ul style="margin-left: 20px; line-height: 1.6;">
+        <li><strong>11.1</strong> De ondernemer is niet aansprakelijk voor vertragingen of het niet nakomen van verplichtingen indien dit het gevolg is van overmacht, zoals maar niet beperkt tot natuurrampen, stakingen, overheidsmaatregelen, pandemieën, technische storingen, of andere onvoorziene omstandigheden buiten de invloedssfeer van de ondernemer.</li>
+        <li><strong>11.2</strong> Indien sprake is van overmacht, heeft de ondernemer het recht om de overeenkomst op te schorten of te ontbinden zonder enige verplichting tot schadevergoeding.</li>
+        <li><strong>11.3</strong> In het geval van overmacht zal de ondernemer de consument zo snel mogelijk op de hoogte stellen en naar een redelijke oplossing streven.</li>
+    </ul>
+
+    <h2 style="margin-top: 30px; font-weight: bold;">Artikel 12. Afwezigheid bij Levering</h2>
+    <ul style="margin-left: 20px; line-height: 1.6;">
+        <li><strong>12.1</strong> Indien de consument niet aanwezig is op het afgesproken tijdstip van levering, zal de transportdienst proberen een nieuwe leverdatum te plannen.</li>
+        <li><strong>12.2</strong> Als de afwezigheid als overmacht wordt beschouwd (bijvoorbeeld door onvoorziene omstandigheden waarover de consument tijdig communiceert), wordt zonder extra kosten een nieuw levermoment afgesproken.</li>
+        <li><strong>12.3</strong> Indien de consument niet beschikbaar is zonder geldige reden, kan een boete van €50 in rekening worden gebracht voor administratieve en transportkosten.</li>
+        <li><strong>12.4</strong> De ondernemer behoudt zich het recht voor de bestelling te annuleren als meerdere leverpogingen niet slagen. In dat geval worden de kosten voor rekening van de consument gebracht.</li>
+    </ul>
 </section>
-
-
 """
 
     @staticmethod
@@ -162,27 +240,6 @@ class WebShopConfig:
         return Decimal('21.00')
 
     @staticmethod
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     def tax_low():
         return Decimal('9.00')
 

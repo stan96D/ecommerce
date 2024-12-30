@@ -1,3 +1,4 @@
+import uuid
 from decimal import Decimal
 from django.utils.timezone import now
 from datetime import date
@@ -40,7 +41,7 @@ class Account(AbstractBaseUser):
     email = models.EmailField(verbose_name="email", unique=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    phone_number = models.CharField(max_length=20, blank=True, null=True)
+    phone_number = models.CharField(max_length=20)
     salutation = models.CharField(max_length=20)
     postal_code = models.CharField(max_length=20)
     address = models.CharField(max_length=255)
@@ -416,6 +417,15 @@ class Order(models.Model):
     order_status = models.TextField(
         default='open', choices=ORDER_STATUS_CHOICES)
 
+    # Token for secure access
+    token = models.CharField(max_length=64, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # Generate a token if it doesn't already exist
+        if not self.token:
+            self.token = uuid.uuid4().hex  # Generate a unique 32-character token
+        super().save(*args, **kwargs)
+
     @property
     def is_paid(self):
         return self.order_status == 'paid' and self.payment_status == 'paid'
@@ -480,6 +490,14 @@ class ReturnOrder(models.Model):
 
     deliver_date = models.DateField()
     deliver_method = models.CharField(max_length=100)
+    # Token for secure access
+    token = models.CharField(max_length=64, unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        # Generate a token if it doesn't already exist
+        if not self.token:
+            self.token = uuid.uuid4().hex  # Generate a unique 32-character token
+        super().save(*args, **kwargs)
 
     @property
     def is_paid(self):

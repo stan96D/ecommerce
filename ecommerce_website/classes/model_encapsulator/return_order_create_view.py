@@ -23,6 +23,16 @@ class ReturnOrderLineCreateView:
         self.name = order_line.product.name
         self.tax = order_line.product.tax
 
+        productType = order_line.product.attributes.filter(
+            attribute_type__name="Producttype").first() or None
+
+        if productType.value == "Vloer":
+            self.unit = "pak"
+        else:
+            attribute = order_line.product.attributes.filter(
+                attribute_type__name="Eenheid").first()
+            self.unit = attribute.value if attribute else "product"
+
         if order_line.product.thumbnail and order_line.product.thumbnail.url:
             self.thumbnail_url = order_line.product.thumbnail.url
         else:
@@ -36,6 +46,7 @@ class ReturnOrderLineCreateView:
         Calculates the tax for the order line and rounds to two decimals.
         Formula: unit_price * (tax / 100)
         """
-        tax_amount = self.unit_price * (self.tax / Decimal('100'))
+        tax_amount = self.unit_price / (1 + (self.tax / Decimal('100')))
+        tax_leftover = self.unit_price - tax_amount
         # Round to two decimal places
-        return tax_amount.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        return tax_leftover.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)

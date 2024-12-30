@@ -68,20 +68,18 @@ class ViewServiceUtility:
             header_data = ProductCategoryService().get_all_active_head_product_categories()
             cache.set('header_data', header_data, timeout=3600)
         return header_data
-    
+
     @staticmethod
     def get_current_sale_data():
         current_sale_data = cache.get('current_sale_data')
         if not current_sale_data:
-            current_date = date.today()
-
             # Filter active sales where the current date is within the range
             current_date = date.today()
             current_sale_data = Sale.objects.filter(
                 active=True,
                 begin_date__lte=current_date,
                 end_date__gte=current_date
-            ).first()           
+            ).first()
 
             if current_sale_data:
                 cache.set('current_sale_data', current_sale_data, timeout=3600)
@@ -169,13 +167,50 @@ class ViewServiceUtility:
         return OrderItemViewService().get(order)
 
     @staticmethod
+    def get_order_by_id_authenticated(id, authenticated_user):
+        order = OrderService().get_order_by_token(id)
+
+        if not order:
+            return None
+
+        if authenticated_user.email != order.email:
+            return None
+
+        return OrderItemViewService().get(order)
+
+    @staticmethod
+    def get_order_by_id_not_authenticated(id):
+        order = OrderService().get_order_by_token(id, True)
+
+        if not order:
+            return None
+
+        return OrderItemViewService().get(order)
+
+    @staticmethod
     def get_order_by_id_for_return(id):
         order = OrderService().get_order_with_returnable_lines(id)
         return CreateReturnItemViewService().get(order)
 
     @staticmethod
     def get_return_order_by_id(id):
-        return_order = ReturnService.get_return_by_id(id)
+        return_order = ReturnService.get_return_by_token(id, True)
+
+        if not return_order:
+            return None
+
+        return ReturnOrderViewService().get(return_order)
+
+    @staticmethod
+    def get_return_order_by_id_authenticated(id, authenticated_user):
+        return_order = ReturnService.get_return_by_token(id)
+
+        if not return_order:
+            return None
+
+        if return_order.email_address != authenticated_user.email:
+            return None
+
         return ReturnOrderViewService().get(return_order)
 
     @staticmethod

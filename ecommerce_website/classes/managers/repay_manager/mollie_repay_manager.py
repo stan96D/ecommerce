@@ -13,7 +13,7 @@ class MollieRepayManager(RepayManagerInterface):
         issuer_id = order.payment_issuer
 
         # For Mollie testing purposes
-        redirect_url = f"https://{settings.NGROK_URL}/order_detail?order_id={order.id}"
+        redirect_url = f"https://{settings.NGROK_URL}/order_detail?order_id={order.token}"
         webhook_url = f"https://{settings.NGROK_URL}/mollie_webhook/"
 
         payment = MollieClient().create_payment('EUR', str(

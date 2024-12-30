@@ -153,7 +153,7 @@
                     {% if order_line.returned_quantity > 0 %}
                       {% if order_line.return_id is not None %}
                         <a
-                          href="/return_detail/?return_id={{ order_line.return_id }}"
+                          href="/return_detail/?return_id={{ order_line.token }}"
                           class="text-orange-400 font-medium text-xs"
                         >
                           {{ order_line.returned_quantity }} geretourneerd
@@ -165,7 +165,7 @@
                       {% endif %}
                     {% endif %}
                   </p>
-                  <p>€{{ order_line.unit_price }} per pak</p>
+                  <p>€{{ order_line.unit_price }} per {{ order_line.unit }}</p>
                 </div>
 
                 <!-- Price stays as is -->

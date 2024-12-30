@@ -66,19 +66,26 @@ class CheckoutService:
                 continue
 
             print("Name", product.name, "has: ", product.has_product_sale)
-            if product.has_product_sale == True:
-                unit_price = product.unit_sale_price
+
+            productType = product.attributes.filter(
+                attribute_type__name="Producttype").first() or None
+            if productType.value == "Vloer":
+                if product.has_product_sale:
+                    product_price = product.unit_sale_price
+                else:
+                    product_price = product.unit_selling_price
             else:
-                unit_price = product.unit_selling_price
+                if product.has_product_sale:
+                    product_price = product.sale_price
+                else:
+                    product_price = product.selling_price
 
-            total_price = unit_price * quantity
-
-            print(unit_price, quantity, total_price)
+            total_price = product_price * quantity
 
             OrderLine.objects.create(
                 product=product,
                 quantity=quantity,
-                unit_price=unit_price,
+                unit_price=product_price,
                 total_price=total_price,
                 order=order
             )

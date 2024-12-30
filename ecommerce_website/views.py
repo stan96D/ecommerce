@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from ecommerce_website.classes.forms.return_form import ReturnForm
-from ecommerce_website.classes.helpers.progress_view import get_order_progress_phases
+from ecommerce_website.classes.helpers.progress_view import get_order_progress_phases, get_return_progress_phases
 from ecommerce_website.classes.model.cached_return_order import SessionReturnOrderService
 from ecommerce_website.services.static_view_service.abous_us_view_service import AboutUsViewService
 from ecommerce_website.services.static_view_service.contact_service import ContactService
@@ -46,7 +46,6 @@ from ecommerce_website.classes.managers.url_manager.url_manager import *
 import time
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from ecommerce_website.classes.helpers.env_loader import *
-from ecommerce_website.services.view_service.product_filter_service import ProductFilterViewService
 
 environment = EnvLoader.get_env()
 url_manager = EncapsulatedURLManager.get_url_manager(environment)
@@ -63,7 +62,7 @@ def static_html_view(request):
     if route_name == 'terms_and_conditions':
         data = WebShopConfig.terms_and_conditions()
         category_name = "Algemene voorwaarden"
-    elif route_name == 'privacy_policy':
+    elif route_name == 'disclaimer':
         data = WebShopConfig.disclaimer()
         category_name = "Disclaimer"
     else:
@@ -75,7 +74,7 @@ def static_html_view(request):
         'env': environment,
         'current_sale': ViewServiceUtility.get_current_sale_data(),
         'data': data,
-        'category': {'name': category_name, 'description': store_data['name']},
+        'category': {'name': category_name, 'description': store_data['name'], 'email': store_data['contact_email'], 'coc': store_data['coc_number'], 'vat': store_data['vat_number']},
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'store_motivations': ViewServiceUtility.get_store_motivations(),
         'brands': ViewServiceUtility.get_all_brands(),
@@ -254,7 +253,6 @@ def create_store_rating(request):
 
 
 def new_password(request, token):
-    print(request)
     if request.method == 'GET':
 
         is_expired = ResetPasswordTokenGenerator.is_token_expired(token)
@@ -626,7 +624,22 @@ def order_detail(request):
 
     order_id = request.GET.get('order_id')
 
-    order = ViewServiceUtility.get_order_by_id(order_id)
+    account = request.user
+
+    if account.is_authenticated:
+        order = ViewServiceUtility.get_order_by_id_authenticated(
+            order_id, account)
+        if not order:
+            messages.error(
+                request, "U heeft geen toegang tot deze inhoud.")
+            return redirect('home')
+    else:
+        order = ViewServiceUtility.get_order_by_id_not_authenticated(
+            order_id)
+        if not order:
+            messages.error(
+                request, "U heeft geen toegang tot deze inhoud.")
+            return redirect('home')
 
     progress_phases = get_order_progress_phases(order.order_status)
 
@@ -685,7 +698,7 @@ def confirm_order(request):
         cart_service.clear_cart()
         order_service.delete_order()
 
-        redirect_url = url_manager.create_redirect(order.id)
+        redirect_url = url_manager.create_redirect(order.token)
         webhook_url = url_manager.create_webhook()
 
         print(payment_method, issuer_id, issuer_name, payment_name)
@@ -2123,7 +2136,12 @@ def create_return(request):
         is_returnable = OrderService.is_order_returnable(order_id)
 
         if not is_returnable:
-            redirect_url = reverse('order_detail') + f'?order_id={order_id}'
+            order = OrderService.get_order_by_id(order_id)
+            if not order:
+                messages.error(
+                    request, "U heeft geen toegang tot deze inhoud.")
+                return redirect('home')
+            redirect_url = reverse('order_detail') + f'?order_id={order.token}'
 
             return redirect(redirect_url)
 
@@ -2304,12 +2322,13 @@ def confirm_return(request):
                 f'?return_id={return_id}'
             return redirect(redirect_url)
 
+        return_order_prices = ReturnService.get_return_price_data(return_order)
         return render(request, 'return_payment.html',
                       {
                           'headerData': ViewServiceUtility.get_header_data(),
                           'env': environment,
                           'current_sale': ViewServiceUtility.get_current_sale_data(),
-
+                          'return_order_prices': return_order_prices,
                           'return_order': return_order,
                           'store_data': ViewServiceUtility.get_current_store_data(),
                           'payment_methods': ViewServiceUtility.get_payment_methods(),
@@ -2360,7 +2379,7 @@ def confirm_return(request):
                           })
 
         redirect_url = url_manager.create_redirect_return(
-            created_return_order.id)
+            created_return_order.token)
         webhook_url = url_manager.create_return_webhook()
 
         # Remove order from cache
@@ -2405,8 +2424,24 @@ def return_detail(request):
         if not return_id:
             return redirect('account')
 
-        return_order = ViewServiceUtility.get_return_order_by_id(return_id)
-        progress_phases = get_order_progress_phases(return_order.status)
+        account = request.user
+
+        if account.is_authenticated:
+            return_order = ViewServiceUtility.get_return_order_by_id_authenticated(
+                return_id, account)
+            if not return_order:
+                messages.error(
+                    request, "U heeft geen toegang tot deze inhoud.")
+                return redirect('home')
+        else:
+            return_order = ViewServiceUtility.get_return_order_by_id(return_id)
+
+            if not return_order:
+                messages.error(
+                    request, "U heeft geen toegang tot deze inhoud.")
+                return redirect('home')
+
+        progress_phases = get_return_progress_phases(return_order.status)
 
         return render(request, "return_detail.html", {'headerData': ViewServiceUtility.get_header_data(),
                                                       'env': environment,

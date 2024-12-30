@@ -4,6 +4,8 @@ from ecommerce_website.models import Order, OrderLine
 from ecommerce_website.services.order_service.base_order_service import OrderServiceInterface
 from django.db.models import F, Q, Prefetch, Sum
 from django.db.models.functions import Coalesce
+from datetime import timedelta
+from django.utils import timezone
 
 
 class OrderService(OrderServiceInterface):
@@ -11,6 +13,18 @@ class OrderService(OrderServiceInterface):
     def get_order_by_id(order_id):
         try:
             return Order.objects.get(id=order_id)
+        except Order.DoesNotExist:
+            return None
+
+    @staticmethod
+    def get_order_by_token(token, public=False):
+        try:
+            if public:
+                # Check for token and account being None
+                return Order.objects.get(token=token, account=None)
+            else:
+                # Standard check for token only
+                return Order.objects.get(token=token)
         except Order.DoesNotExist:
             return None
 
@@ -102,6 +116,14 @@ class OrderService(OrderServiceInterface):
             order = Order.objects.get(
                 id=order_id,
                 order_status__in=['delivered', 'partly'])
+
+            now = timezone.now().date()
+
+            allowed_time_window = now - timedelta(days=14)
+
+            # Check if the order's delivery_date is within the allowed time window
+            if order.deliver_date < allowed_time_window:
+                return False
             # Get all the order lines for the given order
             order_lines = OrderLine.objects.filter(order=order)
 

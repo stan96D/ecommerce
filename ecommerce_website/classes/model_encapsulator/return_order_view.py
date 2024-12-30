@@ -6,6 +6,8 @@ from ecommerce_website.classes.managers.payment_manager.mollie_client import Mol
 class ReturnOrderView:
     def __init__(self, return_order):
         self.id = return_order.id
+        self.token = return_order.token
+
         self.created_date = return_order.created_date.strftime("%A %e %B %Y")
         self.order_number = return_order.order.order_number
         self.order_id = return_order.order.id
@@ -49,6 +51,7 @@ class ReturnOrderView:
 class ReturnOrderLineView:
     def __init__(self, return_order_line):
         self.id = return_order_line.id
+        self.token = return_order_line.return_order.token
         self.order_line_id = return_order_line.order_line.id
         self.quantity = return_order_line.quantity
         self.total_price = return_order_line.refund_amount
@@ -60,6 +63,16 @@ class ReturnOrderLineView:
         description = return_order_line.order_line.product.attributes.filter(
             attribute_type__name="Omschrijving"
         ).first()
+
+        productType = return_order_line.order_line.product.attributes.filter(
+            attribute_type__name="Producttype").first() or None
+
+        if productType.value == "Vloer":
+            self.unit = "pak"
+        else:
+            attribute = return_order_line.order_line.product.attributes.filter(
+                attribute_type__name="Eenheid").first()
+            self.unit = attribute.value if attribute else "product"
 
         # Default to empty string if not found
         self.description = description.value if description else ""

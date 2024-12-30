@@ -10,6 +10,7 @@ class OrderItemView:
         # Set the locale to Dutch
         locale.setlocale(locale.LC_TIME, 'nl_NL.UTF-8')
 
+        self.token = order.token
         self.id = order.id
         self.total_price = order.total_price
         self.deliver_date = "Nog niet"
@@ -60,6 +61,16 @@ class OrderLineItemView:
         description = order_line.product.attributes.filter(
             attribute_type__name="Omschrijving"
         ).first()
+
+        productType = order_line.product.attributes.filter(
+            attribute_type__name="Producttype").first() or None
+
+        if productType.value == "Vloer":
+            self.unit = "pak"
+        else:
+            attribute = order_line.product.attributes.filter(
+                attribute_type__name="Eenheid").first()
+            self.unit = attribute.value if attribute else "product"
 
         # Default to empty string if not found
         self.description = description.value if description else ""

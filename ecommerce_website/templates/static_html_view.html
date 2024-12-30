@@ -75,21 +75,44 @@
           fill="url(#7a00fe67-0343-4a3c-8e81-c145097a3ce0)"
         />
       </svg>
-
       <div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8 relative">
-        <div class="overflow-hidden bg-white px-6 py-16 lg:px-8 ">
-          <div class=" pb-12 relative ">
+        <div class="overflow-hidden bg-white px-6 py-16 lg:px-8">
+          <div class="pb-12 relative">
             <h1 class="text-4xl font-bold tracking-tight text-gray-900">
               {{ category.name }}
             </h1>
-            {% if  category.description %}
-              <p class="mt-4 text-xl font-medium text-orange-400">
+            {% if category.description %}
+              <p class="mt-4 text-xl font-medium text-orange-400 pb-4">
                 {{ category.description | safe }}
+              </p>
+            {% endif %}
+            <!-- Additional dynamic fields -->
+            {% if category.email %}
+              <p class="mt-1 text-base font-normal text-gray-900">
+                <strong>Email:</strong>
+                <a
+                  href="mailto:{{ category.email }}"
+                  class="text-orange-400 hover:text-orange-500"
+                  >{{ category.email }}</a
+                >
+              </p>
+            {% endif %}
+            {% if category.coc %}
+              <p class="mt-1 text-base font-normal text-gray-900">
+                <strong>KVK-nummer:</strong> {{ category.coc }}
+              </p>
+            {% endif %}
+            {% if category.vat %}
+              <p class="mt-1 text-base font-normal text-gray-900">
+                <strong>BTW-nummer:</strong> {{ category.vat }}
               </p>
             {% endif %}
           </div>
 
-          <div class="bg-white ">{{ data | safe }}</div>
+          <div class="bg-white">
+            <!-- Existing data -->
+            {{ data | safe }}
+          </div>
         </div>
       </div>
     </div>
