@@ -93,7 +93,7 @@ class WebShopConfig:
     <h2 style="margin-top: 30px; font-weight: bold;">Artikel 3. Aanbod en Prijzen</h2>
     <ul style="margin-left: 20px; line-height: 1.6;">
         <li><strong>3.1</strong> Het aanbod bevat een volledige en nauwkeurige omschrijving van de producten. Kennelijke vergissingen of fouten in het aanbod binden de ondernemer niet.</li>
-        <li><strong>3.2</strong> Alle prijzen zijn inclusief btw, tenzij anders vermeld. Eventuele bezorgkosten worden apart aangegeven.</li>
+        <li id="tax"><strong>3.2</strong> Alle prijzen zijn inclusief btw, tenzij anders vermeld. Eventuele bezorgkosten worden apart aangegeven.</li>
         <li><strong>3.3 Afbeeldingen en kleuren:</strong> De afbeeldingen op de website zijn indicatief. Kleuren kunnen in werkelijkheid afwijken door instellingen van beeldschermen of lichtomstandigheden.</li>
     </ul>
 

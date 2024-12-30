@@ -119,4 +119,17 @@
 
     <div>{% include 'components/service_section.html' %}</div>
   </main>
+  <script>
+    window.addEventListener('load', function () {
+      // Check if there's a fragment identifier in the URL
+      if (window.location.hash) {
+        var targetElement = document.querySelector(window.location.hash)
+
+        // If the element is found, focus it
+        if (targetElement) {
+          targetElement.focus()
+        }
+      }
+    })
+  </script>
 {% endblock %}
