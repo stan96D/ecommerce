@@ -85,7 +85,7 @@
             {% if product.sale_price %}
               <div class="flex">
                 <div
-                  class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
+                  class="bg-green-600 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
                 >
                   <p class="text-lg font-semibold text-gray-100">
                     €{{ product.sale_price }} per {{ product.unit }}
@@ -107,7 +107,7 @@
             {% if product.unit_sale_price %}
               <div class="flex">
                 <div
-                  class="bg-gray-900 rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
+                  class="bg-green-600  rounded-tl-2xl rounded-bl-none rounded-tr-none rounded-br-2xl px-4 py-2 mt-2"
                 >
                   <p class="text-lg font-semibold text-gray-100">
                     €{{ product.sale_price }} per {{ product.unit }}
@@ -260,7 +260,7 @@
                       type="number"
                       id="quantity"
                       min="1"
-                      max="{{ product.quantity }}"
+                      max="999"
                       class="mt-1 focus:ring-orange-500 focus:border-gray-300 block w-full  sm:text-sm border-gray-300 rounded-md"
                     />
                     <div
@@ -314,7 +314,7 @@
                       type="number"
                       id="quantity"
                       min="1"
-                      max="{{ product.quantity }}"
+                      max="999"
                       class="mt-1 focus:ring-orange-500 focus:border-gray-300 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                     <div
@@ -415,10 +415,10 @@
                 <div>
                   <!-- Changed to <h2> for example, adjust as needed -->
                   <h2
-                    class="flex items-center justify-between text-left cursor-pointer"
+                    class="flex items-center justify-between text-left cursor-pointer py-2"
                     onclick="toggleSection('{{ forloop.parentloop.counter }}')"
                   >
-                    <span class="text-gray-900 text-sm font-medium"
+                    <span class="text-gray-900 text-base font-medium"
                       >{{ section_name }}</span
                     >
                     <button
@@ -462,7 +462,7 @@
                     class="prose prose-sm {% if section_visible %}hidden{% endif %} pb-6"
                   >
                     {% if section_name == "Omschrijving" %}
-                      <p class="text-gray-700 text-sm">
+                      <p class="text-gray-700 text-sm w-full">
                         {% for attribute_name, attribute_value in section_values.items %}
                           {{ attribute_value }}
                         {% endfor %}
@@ -471,12 +471,12 @@
                       <ul role="list" class="text-gray-700">
                         {% for attribute_name, attribute_value in section_values.items %}
                           <li>
-                            {{ attribute_name }}
+                            <strong>{{ attribute_name }}</strong>
                             {% if attribute_value|urlize %}
                               <a
                                 href="{{ attribute_value }}"
                                 target="_blank"
-                                class="font-semibold text-blue-600 custom-link"
+                                class="font-medium text-blue-600 custom-link"
                                 >{{ attribute_value }}
                               </a>
                             {% else %}
@@ -489,7 +489,7 @@
                       <ul role="list" class="text-gray-700">
                         {% for attribute_name, attribute_value in section_values.items %}
                           <li class="">
-                            <bold>{{ attribute_name }}</bold>
+                            <strong>{{ attribute_name }}</strong>
                             {{ attribute_value }}
                           </li>
                         {% endfor %}
@@ -505,56 +505,56 @@
     </div>
     <div>{% include 'components/service_section.html' %}</div>
     {% if brands %}
-        <section
-          aria-labelledby="category-heading"
-          class="py-24 xl:mx-auto xl:max-w-7xl xl:px-8"
+      <section
+        aria-labelledby="category-heading"
+        class="py-24 xl:mx-auto xl:max-w-7xl xl:px-8"
+      >
+        <div
+          class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
         >
-          <div
-            class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
+          <h2
+            id="category-heading"
+            class="text-2xl font-bold tracking-tight text-gray-900"
           >
-            <h2
-              id="category-heading"
-              class="text-2xl font-bold tracking-tight text-gray-900"
-            >
-              De beste merken
-            </h2>
-          </div>
+            De beste merken
+          </h2>
+        </div>
 
-          <div class="mt-10 flow-root">
-            <div class="-my-2">
+        <div class="mt-10 flow-root">
+          <div class="-my-2">
+            <div
+              class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible"
+            >
               <div
-                class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible"
+                class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0"
               >
-                <div
-                  class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0"
-                >
-                  {% for brand in brands.all|slice:":4" %}
-                    <div class="group relative">
-                      <div
-                        class="aspect-w-1 aspect-h-1 w-full  overflow-hidden rounded-full bg-gray-200"
-                      >
-                        <img
-                          src="/media/{{ brand.image }}"
-                          alt="{{ brand.name }}"
-                          class="h-full w-full object-cover object-center group-hover:opacity-75 rounded-full"
-                        />
-                      </div>
-                      <div class="mt-6 text-center">
-                        <h3 class="mt-1 text-lg font-semibold text-gray-900">
-                          <a href="/products/{{ brand.name }}">
-                            <span class="absolute inset-0"></span>
-                            {{ brand.name }}
-                          </a>
-                        </h3>
-                      </div>
+                {% for brand in brands.all|slice:":4" %}
+                  <div class="group relative">
+                    <div
+                      class="aspect-w-1 aspect-h-1 w-full  overflow-hidden rounded-full bg-gray-200"
+                    >
+                      <img
+                        src="/media/{{ brand.image }}"
+                        alt="{{ brand.name }}"
+                        class="h-full w-full object-cover object-center group-hover:opacity-75 rounded-full"
+                      />
                     </div>
-                  {% endfor %}
-                </div>
+                    <div class="mt-6 text-center">
+                      <h3 class="mt-1 text-lg font-semibold text-gray-900">
+                        <a href="/products/{{ brand.name }}">
+                          <span class="absolute inset-0"></span>
+                          {{ brand.name }}
+                        </a>
+                      </h3>
+                    </div>
+                  </div>
+                {% endfor %}
               </div>
             </div>
           </div>
-        </section>
-      {% endif %}
+        </div>
+      </section>
+    {% endif %}
   </div>
   <script>
     function toggleSection(sectionNumber) {

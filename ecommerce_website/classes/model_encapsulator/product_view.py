@@ -125,6 +125,10 @@ class ProductDetailView:
             attribute_type = attribute.attribute_type.name
             attribute_value = attribute.value
 
+            # Skip 'Leverancier' attribute
+            if attribute_type == "Leverancier":
+                continue
+
             if attribute_type in ["Afmeting", "Totale Dikte", "Pakinhoud", "Oppervlakte", "Naam", "Type", "Collectie", "Kleur", "Merk", "Vloertype"]:
                 product_specifications["Algemene Specificaties"][attribute_type] = attribute_value
             elif attribute_type in ["Omschrijving"]:
@@ -137,7 +141,21 @@ class ProductDetailView:
                     attribute_value = attribute_value.replace("'", '"')
                     links_dict = json.loads(attribute_value)
 
+                # If links_dict is a list (array) of dictionaries, process each dictionary
+                if isinstance(links_dict, list):
+                    # Create a new dictionary where each element in the list (which is a dict) is added
+                    # The key from each dictionary will be retained as the key.
+                    # We will flatten the list of dictionaries into a single dictionary.
+                    flat_dict = {}
+                    for item in links_dict:
+                        if isinstance(item, dict):  # Check if the item is a dictionary
+                            # Add each key-value pair to the flat_dict
+                            flat_dict.update(item)
+
+                    links_dict = flat_dict  # Replace links_dict with the flattened version
+
                 product_specifications["Aanvullende Informatie"] = links_dict
+
             else:
                 product_specifications["Overige Specificaties"][attribute_type] = attribute_value
 

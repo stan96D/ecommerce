@@ -733,7 +733,7 @@
       quantityInput.name = item.id // Replace with actual item ID
       quantityInput.value = item.quantity // Replace with actual quantity
       quantityInput.min = 1
-      quantityInput.max = item.stock // Replace with actual stock
+      quantityInput.max = 999
       quantityInput.step = 1
       quantityInput.onchange = function () {
         updateQuantityPanel(this, item.product_id) // Replace with actual update function

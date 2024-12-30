@@ -3,6 +3,9 @@ Pakinhoud is string
 Geen komma's maar punten in de cijfer data
 
 Belangrijke properties:
+- Producttype
+- Oppervlakte
+- Eenheid
 - Product
 - Dikte
 - Leverancier
