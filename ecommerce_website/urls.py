@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 
+
+handler404 = 'ecommerce_website.views.custom_404_view'
+
 urlpatterns = [
 
     # Webhooks

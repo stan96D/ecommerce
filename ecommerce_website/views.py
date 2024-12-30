@@ -53,6 +53,10 @@ url_manager = EncapsulatedURLManager.get_url_manager(environment)
 # static views
 
 
+def custom_404_view(request, exception):
+    return render(request, '404.html', status=404)
+
+
 def static_html_view(request):
 
     store_data = ViewServiceUtility.get_current_store_data()
