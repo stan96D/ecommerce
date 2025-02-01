@@ -175,8 +175,8 @@ class SessionShoppingCart(ShoppingCartInterface):
                         product_price = product.sale_price
                     else:
                         product_price = product.selling_price
-                if product.thumbnail and product.thumbnail.url:
-                    thumbnail_url = product.thumbnail.url
+                if product.thumbnail_url:
+                    thumbnail_url = product.thumbnail_url
                 else:
                     thumbnail_url = "/static/images/no_image_placeholder.png"
 
@@ -365,8 +365,8 @@ class AccountShoppingCart(ShoppingCartInterface):
                     else:
                         product_price = product.selling_price
 
-                if product.thumbnail and product.thumbnail.url:
-                    thumbnail_url = product.thumbnail.url
+                if product.thumbnail_url:
+                    thumbnail_url = product.thumbnail_url
                 else:
                     thumbnail_url = "/static/images/no_image_placeholder.png"
 

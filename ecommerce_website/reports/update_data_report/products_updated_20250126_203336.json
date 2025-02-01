@@ -1,0 +1,722 @@
+{
+    "products": {
+        "created": [
+            "02213",
+            {
+                "sku": "02213",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/66e13a58c63f9cc09176873d9b6b0af7/p/0/p02213_1_1.png"
+            },
+            {
+                "sku": "02213",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/ded36d60b0a2369f51a68eabdbae9f3c/p/0/p02213_1_1.png"
+            }
+        ],
+        "updated": [],
+        "failed": [],
+        "changes": [
+            {
+                "sku": "02213",
+                "field": "thumbnail",
+                "new_value": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/66e13a58c63f9cc09176873d9b6b0af7/p/0/p02213_1_1.png"
+            }
+        ],
+        "not_updated": [
+            "633141",
+            "633253",
+            "639382",
+            "637434",
+            "635312",
+            "04016",
+            "633309"
+        ],
+        "stock_updated": [
+            {
+                "sku": "02213",
+                "stock": 25
+            }
+        ],
+        "images_updated": [],
+        "images_failed": []
+    },
+    "attributes": {
+        "created": [
+            {
+                "sku": "02213",
+                "attribute": "Omschrijving",
+                "value": "Deze Dryback PVC stroken van 121,9 x 22,8 cm hebben een dikte van 2,5 mm. De stroken kunnen op 2 manieren geplaatst worden, direct verlijmd of geplakt op de PPC zelfklevende ondervloer 1,8mm voor dryback pvc (86107). Dat laatste is handig bij gehuurde ruimtes! Met een R-waarde van 0,025 m2 K/W is deze PVC vloer zeer geschikt voor vloerverwarming. Doordat hij Embossed in register is heeft hij een zeer natuurgetrouwe uitstraling."
+            },
+            {
+                "sku": "02213",
+                "attribute": "Merk",
+                "value": "Sense"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Verpakking",
+                "value": "3.34 m²"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Collectie",
+                "value": "Sense PP"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Lengte",
+                "value": "121.9",
+                "unit": "cm"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Breedte",
+                "value": "22.8",
+                "unit": "cm"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Dikte",
+                "value": "2.5",
+                "unit": "mm"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Afmeting",
+                "value": "121.9 x 22.8 cm"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Oppervlakte",
+                "value": "0.28 m²"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Toplaagdikte",
+                "value": "0.55",
+                "unit": "mm"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Geïntegreerde ondervloer",
+                "value": "Nee"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Model",
+                "value": "Plank / 1-strook"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Aantal planken per pak",
+                "value": "12"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Legwijze",
+                "value": "Verlijmd"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Warmteweerstand",
+                "value": "0.025"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Vellingkant",
+                "value": "Micro 4V"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Oppervlaktestructuur",
+                "value": "Embossed-in-register"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Verbinding",
+                "value": "Geen"
+            },
+            {
+                "sku": "02213",
+                "attribute": "REACH certifcaat",
+                "value": "Ja"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Gebruiksklasse huishoudelijk",
+                "value": "23"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Gebruiksklasse commercieel",
+                "value": "33 (AC5)"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Gebruiksklasse industrieel",
+                "value": "42"
+            },
+            {
+                "sku": "02213",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            }
+        ],
+        "updated": [],
+        "failed": [],
+        "changes": []
+    },
+    "categories": {
+        "main_categories_created": [],
+        "main_categories_updated": [
+            "PVC",
+            "PVC",
+            "PVC"
+        ],
+        "subcategories_created": [
+            "Merk",
+            "Collectie",
+            "Vloertype"
+        ],
+        "sub_subcategories_created": [
+            "Sense",
+            "Sense PP",
+            "Dryback"
+        ]
+    },
+    "filters": {
+        "created": [
+            {
+                "filter": "Merk",
+                "values": [
+                    "Sense"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    121.9
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    22.8
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "PVC"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "values": [
+                    0.55
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Dryback"
+                ]
+            },
+            {
+                "filter": "Collectie",
+                "values": [
+                    "Sense PP"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "Merkloos"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Plinten"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    80.0
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Plinten"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    80.0
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "Merkloos"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Plinten"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    80.0
+                ]
+            },
+            {
+                "filter": "Collectie",
+                "values": [
+                    "Sense PP"
+                ]
+            },
+            {
+                "filter": "Collectie",
+                "values": [
+                    "Sense PP"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    121.9
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    22.8
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "PVC"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "values": [
+                    0.55
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Dryback"
+                ]
+            },
+            {
+                "filter": "Collectie",
+                "values": [
+                    "Sense PP"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "Sense"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    121.9
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    22.8
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "PVC"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "values": [
+                    0.55
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Dryback"
+                ]
+            },
+            {
+                "filter": "Collectie",
+                "values": [
+                    "Sense PP"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "Sense"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    121.9
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    22.8
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "PVC"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "values": [
+                    0.55
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Dryback"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "Sense"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    121.9
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    22.8
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "PVC"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "values": [
+                    0.55
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Dryback"
+                ]
+            },
+            {
+                "filter": "Collectie",
+                "values": [
+                    "Sense PP"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "Sense"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    121.9
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    22.8
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "PVC"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "values": [
+                    0.55
+                ]
+            },
+            {
+                "filter": "Collectie",
+                "values": [
+                    "Sense PP"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "Sense"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    121.9
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    22.8
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "PVC"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "values": [
+                    0.55
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Dryback"
+                ]
+            },
+            {
+                "filter": "Collectie",
+                "values": [
+                    "Sense PP"
+                ]
+            }
+        ],
+        "updated": [
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "Sense"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "added_values": [
+                    "Plinten"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    121.9
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "added_values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    22.8
+                ]
+            },
+            {
+                "filter": "Type",
+                "added_values": [
+                    "PVC"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "added_values": [
+                    0.55
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    "Dryback"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "Sense"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "added_values": [
+                    "Plinten"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    121.9
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "added_values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    22.8
+                ]
+            },
+            {
+                "filter": "Type",
+                "added_values": [
+                    "PVC"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "added_values": [
+                    0.55
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    "Dryback"
+                ]
+            }
+        ]
+    }
+}

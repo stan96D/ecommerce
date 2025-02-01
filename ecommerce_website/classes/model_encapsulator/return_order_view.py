@@ -77,8 +77,8 @@ class ReturnOrderLineView:
         # Default to empty string if not found
         self.description = description.value if description else ""
 
-        if return_order_line.order_line.product.thumbnail and return_order_line.order_line.product.thumbnail.url:
-            self.thumbnail_url = return_order_line.order_line.product.thumbnail.url
+        if return_order_line.order_line.product.thumbnail_url:
+            self.thumbnail_url = return_order_line.order_line.product.thumbnail_url
         else:
             self.thumbnail_url = "/static/images/no_image_placeholder.png"
 

@@ -26,7 +26,6 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     {% include 'components/steps.html' %}
-
     <div
       class="mx-auto max-w-2xl px-4 pb-24 pt-16 sm:px-6 lg:max-w-7xl lg:px-8"
     >
@@ -47,6 +46,7 @@
           <section aria-labelledby="cart-heading" class="lg:col-span-7">
             <div>
               <div>
+                <input type="hidden" name="selected_delivery_method" />
                 <fieldset>
                   <legend class="text-lg font-medium text-gray-900">
                     Bezorgingsmethode <span class="text-red-500">*</span>
@@ -59,13 +59,11 @@
                       {% include 'components/delivery_method.html' %}
                     {% endfor %}
                   </div>
-                  <p
-                    id="select-delivery-method-error"
-                    hidden
-                    class="text-red-500 text-sm mt-1"
-                  >
-                    Selecteer een verzendmethode.
-                  </p>
+                  {% if form.selected_delivery_method.errors %}
+                    <p class="text-red-500 text-sm mt-1">
+                      {{ form.selected_delivery_method.errors.0 }}
+                    </p>
+                  {% endif %}
                 </fieldset>
               </div>
 
@@ -87,14 +85,13 @@
                         id="datepicker"
                         name="delivery_date"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                        value="{{ form.delivery_date.value|default_if_none:'' }}"
                       />
-                      <p
-                        id="select-delivery-date-error"
-                        hidden
-                        class="text-red-500 text-sm mt-1"
-                      >
-                        Dit veld is verplicht.
-                      </p>
+                      {% if form.delivery_date.errors %}
+                        <p class="text-red-500 text-sm mt-1">
+                          {{ form.delivery_date.errors.0 }}
+                        </p>
+                      {% endif %}
 
                       <!-- <input type="text" id="card-number" name="card-number" autocomplete="cc-number"
                                             class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"> -->
@@ -103,9 +100,15 @@
                 </div>
               </div>
               <div class="mt-10 border-t border-gray-200 pt-10">
-                <input type="hidden" name="selected_delivery_method" />
-
+                <legend class="text-lg font-medium text-gray-900">
+                  Betaalwijze <span class="text-red-500">*</span>
+                </legend>
                 {% include 'components/payment_selection.html' %}
+                {% if form.payment_method.errors %}
+                  <p class="text-red-500 text-sm mt-1">
+                    {{ form.payment_method.errors.0 }}
+                  </p>
+                {% endif %}
               </div>
             </div>
           </section>
@@ -138,7 +141,7 @@
                     <dt class="flex text-sm text-gray-600">
                       <span>BTW 9%</span>
                       <a
-                      href="/terms-and-conditions/#tax"
+                        href="/terms-and-conditions/#tax"
                         class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
                         title="Meer informatie over hoe BTW wordt berekend"
                       >
@@ -172,7 +175,7 @@
                     <dt class="flex text-sm text-gray-600">
                       <span>BTW 21%</span>
                       <a
-                      href="/terms-and-conditions/#tax"
+                        href="/terms-and-conditions/#tax"
                         class="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
                         title="Meer informatie over hoe BTW wordt berekend"
                       >
@@ -272,7 +275,18 @@
         position: 'below',
         disable: [
           function (date) {
-            return date.getDay() === 0 || date.getDay() === 6
+            const today = new Date()
+            const tomorrow = new Date(today)
+            tomorrow.setDate(today.getDate() + 1)
+
+            // Disable weekends
+            const isWeekend = date.getDay() === 0 || date.getDay() === 6
+
+            // Disable today and the next day
+            const isToday = date.toDateString() === today.toDateString()
+            const isTomorrow = date.toDateString() === tomorrow.toDateString()
+
+            return isWeekend || isToday || isTomorrow
           },
         ],
       })

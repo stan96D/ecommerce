@@ -5,7 +5,7 @@ from django.conf import settings
 from ecommerce_website.models import (
     Product, ProductSale, Sale, ProductAttributeType, ProductAttribute,
     ProductStock, ProductCategory, ProductFilter, Order, OrderLine,
-    DeliveryMethod, StoreMotivation, StoreRating, Brand, ReturnOrderLine, ReturnOrder
+    DeliveryMethod, StoreMotivation, StoreRating, Brand, ReturnOrderLine, ReturnOrder, Store
 )
 
 
@@ -17,7 +17,7 @@ class Command(BaseCommand):
         models_to_delete = [
             Product, ProductSale, Sale, ProductAttributeType, ProductAttribute,
             ProductStock, ProductCategory, ProductFilter, Order, OrderLine,
-            DeliveryMethod, StoreMotivation, StoreRating, Brand, ReturnOrderLine, ReturnOrder
+            DeliveryMethod, StoreMotivation, StoreRating, Brand, ReturnOrderLine, ReturnOrder, Store
         ]
 
         for model in models_to_delete:
@@ -29,19 +29,6 @@ class Command(BaseCommand):
             for table_name in table_names:
                 cursor.execute(
                     f"DELETE FROM sqlite_sequence WHERE name='{table_name}';")
-
-        # Delete product thumbnails
-        media_directory = os.path.join(
-            settings.MEDIA_ROOT, 'product_thumbnails')
-        if os.path.isdir(media_directory):
-            for filename in os.listdir(media_directory):
-                file_path = os.path.join(media_directory, filename)
-                try:
-                    if os.path.isfile(file_path):
-                        os.unlink(file_path)
-                except Exception as e:
-                    self.stderr.write(f"Failed to delete {
-                                      file_path}. Reason: {e}")
 
 
         self.stdout.write(self.style.SUCCESS(

@@ -1,0 +1,1040 @@
+{
+    "products": {
+        "created": [
+            "400100691",
+            {
+                "sku": "400100691",
+                "image": "https://www.unilinflooring.nl/images/products/large/4009084 - Beautifloor Ardennen Ciney.jpg"
+            },
+            "400064022",
+            {
+                "sku": "400064022",
+                "image": "https://www.unilinflooring.nl/images/products/large/4009080.jpg"
+            },
+            {
+                "sku": "400064022",
+                "image": "https://www.unilinflooring.nl/images/products/large/4009080_2.jpg"
+            },
+            "400100803",
+            {
+                "sku": "400100803",
+                "image": "https://www.unilinflooring.nl/images/products/large/4009085 - Beautifloor Ardennen Clervaux.jpg"
+            }
+        ],
+        "updated": [],
+        "failed": [],
+        "changes": [
+            {
+                "sku": "400100691",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/4009084 - Beautifloor Ardennen Ciney.jpg"
+            },
+            {
+                "sku": "400064022",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/4009080.jpg"
+            },
+            {
+                "sku": "400100803",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/4009085 - Beautifloor Ardennen Clervaux.jpg"
+            }
+        ],
+        "not_updated": [
+            "07805",
+            "04732",
+            "94645",
+            "01026",
+            "73544",
+            "04763",
+            "94628",
+            "71385",
+            "02138",
+            "04949",
+            "02144",
+            "04756",
+            "02147",
+            "04194",
+            "07819",
+            "94657",
+            "02168",
+            "94613",
+            "04737",
+            "04875",
+            "04849",
+            "71383",
+            "04764",
+            "02143",
+            "94626",
+            "02172",
+            "02155",
+            "04956",
+            "05252",
+            "02291",
+            "02260",
+            "94637",
+            "02258",
+            "03488",
+            "04865",
+            "02236",
+            "04592",
+            "01002",
+            "05251",
+            "73458",
+            "02208",
+            "01572",
+            "T94603",
+            "04595",
+            "94653",
+            "03487",
+            "02310",
+            "02159",
+            "04690",
+            "01324",
+            "01040",
+            "01013",
+            "07801",
+            "03813",
+            "08245",
+            "02009",
+            "04593",
+            "70473",
+            "04864",
+            "94602",
+            "04738",
+            "04878",
+            "94598",
+            "04761",
+            "02152",
+            "05037",
+            "94640",
+            "05123",
+            "07820",
+            "02210",
+            "02122",
+            "07818",
+            "01571",
+            "04030",
+            "01573",
+            "02460",
+            "04016",
+            "04692",
+            "04874",
+            "02140",
+            "02146",
+            "04591",
+            "94609",
+            "04735",
+            "01575",
+            "02154",
+            "74080",
+            "73501",
+            "94601",
+            "T94619",
+            "08244",
+            "02171",
+            "02308",
+            "09902",
+            "04727",
+            "09911",
+            "02120",
+            "02307",
+            "02247",
+            "04729",
+            "04585",
+            "02132",
+            "02293",
+            "04582",
+            "73802",
+            "94612",
+            "02221",
+            "02304",
+            "04868",
+            "05253",
+            "02220",
+            "04587",
+            "02233",
+            "02289",
+            "T94599",
+            "94605",
+            "94644",
+            "94600",
+            "94649",
+            "02151",
+            "02211",
+            "94650",
+            "04950",
+            "04877",
+            "T94623",
+            "04581",
+            "04726",
+            "74168",
+            "09905",
+            "94655",
+            "71724",
+            "94594",
+            "71674",
+            "05122",
+            "09904",
+            "04867",
+            "02309",
+            "04590",
+            "01471",
+            "02142",
+            "02241",
+            "08243",
+            "04851",
+            "71849",
+            "94652",
+            "94597",
+            "01042",
+            "04689",
+            "94610",
+            "02127",
+            "74283",
+            "02248",
+            "94604",
+            "04879",
+            "71749",
+            "07817",
+            "09907",
+            "04684",
+            "T94595",
+            "01031",
+            "05038",
+            "02251",
+            "05075",
+            "04850",
+            "04744",
+            "04685",
+            "04017",
+            "02234",
+            "02461",
+            "04728",
+            "73369",
+            "04968",
+            "04852",
+            "02015",
+            "04687",
+            "05076",
+            "04018",
+            "02176",
+            "74212",
+            "04866",
+            "04876",
+            "02115",
+            "04743",
+            "73974",
+            "02257",
+            "05068",
+            "08247",
+            "07821",
+            "02243",
+            "94624",
+            "01469",
+            "07811",
+            "03486",
+            "02213",
+            "02133",
+            "08248",
+            "04951",
+            "01470",
+            "04872",
+            "94641",
+            "04580",
+            "03489",
+            "69980",
+            "94636",
+            "04952",
+            "07816",
+            "T94635",
+            "02214",
+            "02232",
+            "02292",
+            "02287",
+            "02173",
+            "07815",
+            "02106",
+            "02169",
+            "05078",
+            "02238",
+            "01569",
+            "02139",
+            "03401",
+            "03480",
+            "94620",
+            "07813",
+            "01289",
+            "04698",
+            "02131",
+            "02111",
+            "T94615",
+            "02175",
+            "02242",
+            "02244",
+            "01024",
+            "01016",
+            "04594",
+            "04696",
+            "94629",
+            "02177",
+            "02227",
+            "04969",
+            "01574",
+            "03529",
+            "04691",
+            "04583",
+            "T94611",
+            "71386",
+            "02167",
+            "02165",
+            "94617",
+            "02301",
+            "02261",
+            "02464",
+            "02017",
+            "69816",
+            "94596",
+            "94651",
+            "94633",
+            "04693",
+            "01044",
+            "70596",
+            "02215",
+            "02141",
+            "02237",
+            "02465",
+            "02302",
+            "71699",
+            "04873",
+            "94616",
+            "04589",
+            "73673",
+            "02166",
+            "04762",
+            "04859",
+            "94656",
+            "73372",
+            "02288",
+            "02153",
+            "09912",
+            "04739",
+            "T94607",
+            "09901",
+            "02303",
+            "07809",
+            "94638",
+            "01017",
+            "01288",
+            "94642",
+            "07807",
+            "02305",
+            "07803",
+            "02117",
+            "09910",
+            "02150",
+            "04870",
+            "04760",
+            "05077",
+            "02306",
+            "74256",
+            "04694",
+            "02156",
+            "04954",
+            "02145",
+            "01036",
+            "02250",
+            "03484",
+            "74124",
+            "08242",
+            "T94627",
+            "03490",
+            "02239",
+            "02286",
+            "07804",
+            "94608",
+            "02010",
+            "07806",
+            "03483",
+            "03481",
+            "02240",
+            "04967",
+            "01475",
+            "05124",
+            "04697",
+            "94630",
+            "04686",
+            "94632",
+            "94654",
+            "04586",
+            "04953",
+            "73759",
+            "05040",
+            "01467",
+            "94622",
+            "04733",
+            "01023",
+            "04588",
+            "94606",
+            "02209",
+            "05039",
+            "02463",
+            "07808",
+            "09909",
+            "07814",
+            "04584",
+            "03482",
+            "02235",
+            "02164",
+            "09908",
+            "03491",
+            "04012",
+            "04731",
+            "08246",
+            "02160",
+            "07823",
+            "T94643",
+            "04955",
+            "01570",
+            "04682",
+            "04683",
+            "02212",
+            "04869",
+            "03516",
+            "05255",
+            "04695",
+            "02256",
+            "09903",
+            "02296",
+            "T94647",
+            "T94639",
+            "02158",
+            "09906",
+            "02126",
+            "94625",
+            "73888",
+            "05254",
+            "94614",
+            "02290",
+            "02112",
+            "01045",
+            "02226",
+            "03485",
+            "04736",
+            "94634",
+            "04742",
+            "02157",
+            "04734",
+            "02462",
+            "T94631",
+            "04863",
+            "08249",
+            "02249",
+            "02121",
+            "04745",
+            "05250",
+            "04718",
+            "94618",
+            "94646",
+            "94648",
+            "07802",
+            "71384",
+            "94621",
+            "02259",
+            "02170",
+            "05121"
+        ],
+        "stock_updated": [
+            {
+                "sku": "400100691",
+                "stock": 71
+            },
+            {
+                "sku": "400064022",
+                "stock": 64
+            },
+            {
+                "sku": "400100803",
+                "stock": 42
+            }
+        ],
+        "images_updated": [],
+        "images_failed": []
+    },
+    "attributes": {
+        "created": [
+            {
+                "sku": "400100691",
+                "attribute": "Omschrijving",
+                "value": "De Beautifloor laminaatvloeren zijn door hun clickverbinding eenvoudig zelf te leggen. De collectie heeft in totaal maar liefst tien aantrekkelijke, actuele dessins. Hierdoor is er altijd een Beautifloor laminaatvloer te vinden die past bij uw persoonlijke woonstijl."
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Verpakking",
+                "value": "2.421 m²"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Links",
+                "value": {
+                    "Installatie en leginstructie": "https://www.peitsman.nl/Download/Installatie-en-onderhoudsinstructies_Beautifloor_laminaat_algemeen_2020.pdf",
+                    "Technisch Infoblad": "https://www.peitsman.nl/Download/Technisch_infoblad_Beautifloor_7mm_Ardennen_2020.pdf",
+                    "Uitgebreide Product Informatie": "https://beautifloor.nl/collectie/laminaat"
+                }
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Type",
+                "value": "Laminaat"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Afmeting",
+                "value": "1261.0 x 192.0 cm"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Lengte",
+                "value": "1261.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Breedte",
+                "value": "192.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Oppervlakte",
+                "value": "24.21 m²"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Dikte",
+                "value": "7",
+                "unit": "mm"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Pakinhoud",
+                "value": "2"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Groef",
+                "value": "V0"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Gebruiksklasse",
+                "value": "32"
+            },
+            {
+                "sku": "400100691",
+                "attribute": "Garantie",
+                "value": "15 jaar huishoudelijk gebruik en 5 jaar commercieel gebruik"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Omschrijving",
+                "value": "De Ardennen-collectie heeft twaalf decors, variërend van wit tot antraciet eiken en van beige tot donkerbruin. De vloeren hebben een soft touch matt-afwerking. Deze vloeren zijn geschikt voor gebruik in woonkamers, slaapkamers en keukens, maar ook voor licht kantoorgebruik. De vloeren hebben een dikte van 7 mm en een afmeting van 1261 x 192 mm."
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Verpakking",
+                "value": "2.421 m²"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Links",
+                "value": {
+                    "Installatie en leginstructie": "https://www.peitsman.nl/Download/Installatie-en-onderhoudsinstructies_Beautifloor_laminaat_algemeen_2020.pdf",
+                    "Technisch Infoblad": "https://www.peitsman.nl/Download/Technisch_infoblad_Beautifloor_7mm_Ardennen_2020.pdf",
+                    "Uitgebreide Product Informatie": "https://beautifloor.nl/collectie/laminaat"
+                }
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Type",
+                "value": "Laminaat"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Afmeting",
+                "value": "1261.0 x 192.0 cm"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Lengte",
+                "value": "1261.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Breedte",
+                "value": "192.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Oppervlakte",
+                "value": "24.21 m²"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Dikte",
+                "value": "7",
+                "unit": "mm"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Pakinhoud",
+                "value": "2"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Gebruiksklasse",
+                "value": "W32(EN13329)"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Garantie",
+                "value": "15 jaar (privé gebruik)"
+            },
+            {
+                "sku": "400064022",
+                "attribute": "Vloertype",
+                "value": "Uniclic"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Omschrijving",
+                "value": "De Beautifloor laminaatvloeren zijn door hun clickverbinding eenvoudig zelf te leggen. De collectie heeft in totaal maar liefst tien aantrekkelijke, actuele dessins. Hierdoor is er altijd een Beautifloor laminaatvloer te vinden die past bij uw persoonlijke woonstijl."
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Verpakking",
+                "value": "2.421 m²"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Links",
+                "value": {
+                    "Installatie en leginstructie": "https://www.peitsman.nl/Download/Installatie-en-onderhoudsinstructies_Beautifloor_laminaat_algemeen_2020.pdf",
+                    "Technisch Infoblad": "https://www.peitsman.nl/Download/Technisch_infoblad_Beautifloor_7mm_Ardennen_2020.pdf",
+                    "Uitgebreide Product Informatie": "https://beautifloor.nl/collectie/laminaat"
+                }
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Type",
+                "value": "Laminaat"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Afmeting",
+                "value": "1261.0 x 192.0 cm"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Lengte",
+                "value": "1261.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Breedte",
+                "value": "192.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Oppervlakte",
+                "value": "24.21 m²"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Dikte",
+                "value": "7",
+                "unit": "mm"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Pakinhoud",
+                "value": "2"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Groef",
+                "value": "V0"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Gebruiksklasse",
+                "value": "32"
+            },
+            {
+                "sku": "400100803",
+                "attribute": "Garantie",
+                "value": "15 jaar huishoudelijk gebruik en 5 jaar commercieel gebruik"
+            }
+        ],
+        "updated": [],
+        "failed": [],
+        "changes": []
+    },
+    "categories": {
+        "main_categories_created": [],
+        "main_categories_updated": [
+            "Laminaat",
+            "Laminaat"
+        ],
+        "subcategories_created": [],
+        "sub_subcategories_created": [
+            "Beautifloor",
+            "Uniclic"
+        ]
+    },
+    "filters": {
+        "created": [
+            {
+                "filter": "Merk",
+                "values": [
+                    "Beautifloor"
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "Laminaat"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    1261.0,
+                    1261.0,
+                    1261.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    192.0,
+                    192.0,
+                    192.0
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    7.0,
+                    7.0,
+                    7.0
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Uniclic"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "Douwes Dekker",
+                    "OTIUM at Home",
+                    "Beautifloor"
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "Laminaat"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    126.1,
+                    1261.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    19.2,
+                    24.4,
+                    19.2,
+                    19.2,
+                    24.4,
+                    19.2,
+                    19.2,
+                    24.4,
+                    19.2,
+                    19.2,
+                    19.2,
+                    19.2,
+                    19.2,
+                    19.2,
+                    24.4,
+                    19.2,
+                    19.2,
+                    24.4,
+                    19.2,
+                    19.2,
+                    19.2,
+                    24.4,
+                    19.2,
+                    24.4,
+                    24.4,
+                    19.2,
+                    192.0
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    8.0,
+                    8.0,
+                    7.0,
+                    7.0,
+                    8.0,
+                    7.0,
+                    7.0,
+                    8.0,
+                    7.0,
+                    7.0,
+                    7.0,
+                    7.0,
+                    7.0,
+                    8.0,
+                    8.0,
+                    7.0,
+                    7.0,
+                    8.0,
+                    7.0,
+                    8.0,
+                    7.0,
+                    8.0,
+                    7.0,
+                    8.0,
+                    8.0,
+                    8.0,
+                    7.0
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Click",
+                    "Uniclic"
+                ]
+            },
+            {
+                "filter": "Collectie",
+                "values": [
+                    "Trots",
+                    "Krachtig",
+                    "Spontaan",
+                    "Silk",
+                    "Emerald",
+                    "Spice"
+                ]
+            }
+        ],
+        "updated": [
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "Beautifloor"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1261.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    192.0
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    "Uniclic"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1261.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    192.0
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    "Uniclic"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "Beautifloor"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1261.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    192.0
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "Beautifloor"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1261.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    192.0
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    "Uniclic"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "Beautifloor"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1261.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    192.0
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    "Uniclic"
+                ]
+            }
+        ]
+    }
+}

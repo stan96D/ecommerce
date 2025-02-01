@@ -180,11 +180,12 @@ class ProductService(ProductServiceInterface):
             # Split the search string into individual words
             search_words = search.split()
 
-            # Build the query to ensure all words are in either the product name or specific attributes__value
+            # Build the query to ensure all words are in either the product name, sku, or specific attributes__value
             search_query = Q()
             for word in search_words:
-                # Start with searching in the product name
-                search_query &= Q(name__icontains=word)
+                # Start with searching in the product name or sku
+                search_query &= (Q(name__icontains=word)
+                                 | Q(sku__icontains=word))
 
                 # If included_attribute_types is provided, limit the attributes search to those types
                 if search_filters:
@@ -197,9 +198,10 @@ class ProductService(ProductServiceInterface):
             products = Product.objects.prefetch_related(
                 'attributes__attribute_type',
                 QueryPrefetcher.createAttributePrefetch(
-                    ['Producttype', 'Eenheid', 'Merk'])
-
+                    ['Producttype', 'Eenheid', 'Merk']
+                )
             ).filter(search_query).distinct()
+
             return products
         except Product.DoesNotExist:
             return None
@@ -532,11 +534,11 @@ class ProductService(ProductServiceInterface):
         # Split the search string into individual words
         search_words = search.split()
 
-        # Build the query to ensure all words are in either the product name or specific attributes__value
+        # Build the query to ensure all words are in either the product name, sku, or specific attributes__value
         search_query = Q()
         for word in search_words:
-            # Start with searching in the product name
-            search_query &= Q(name__icontains=word)
+            # Search in the product name or sku
+            search_query &= (Q(name__icontains=word) | Q(sku__icontains=word))
 
             # If included_attribute_types is provided, limit the attributes search to those types
             if search_filters:
@@ -944,7 +946,7 @@ class ProductService(ProductServiceInterface):
 
             # Sort, limit results, and load only required fields while keeping the query object
             related_products = filtered_products.order_by(
-                'name').only('id', 'name', 'thumbnail')[:6]
+                'name').only('id', 'name', 'thumbnail_url')[:6]
 
             return related_products
         except Product.DoesNotExist:

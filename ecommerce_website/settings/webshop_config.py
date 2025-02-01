@@ -288,17 +288,32 @@ class WebShopConfig:
         ]
 
     @staticmethod
+    def included_filters():
+        return [
+            "Dikte",
+            "Lengte",
+            "Breedte",
+            "Toplaagdikte",
+            "Producttype",
+            "Type",
+            "Merk",
+            "Vloertype",
+            "Collectie",
+            "Kleur",
+        ]
+
+    @staticmethod
     def slider_filters():
         return [
             "Dikte",
             "Lengte",
             "Breedte",
             "Toplaagdikte",
-            "Dikte toplaag",
-            "Warmteweerstand (m²K/W)",
-            "Dikte onderlaag",
-            "Dikte tussenlaag",
-            "Slijtlaag",
+            # "Dikte toplaag",
+            # "Warmteweerstand (m²K/W)",
+            # "Dikte onderlaag",
+            # "Dikte tussenlaag",
+            # "Slijtlaag",
 
         ]
 
@@ -339,11 +354,11 @@ class WebShopConfig:
 
     @staticmethod
     def coc_number():
-        return ""
+        return "14074496"
 
     @staticmethod
     def vat_number():
-        return ""
+        return "NL910928048B01"
 
     @staticmethod
     def opening_time_week():
@@ -352,3 +367,14 @@ class WebShopConfig:
     @staticmethod
     def opening_time_weekend():
         return "Gesloten"
+
+    @staticmethod
+    def name():
+        return "goedkoopstevloerenshop"
+
+    @staticmethod
+    def socials():
+        return {
+            "facebook": "https://www.facebook.com/profile.php?id=61567918600273",
+            "instagram": "https://www.instagram.com/goedkoopstevloerenshop/"
+        }

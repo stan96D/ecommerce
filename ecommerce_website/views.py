@@ -4,6 +4,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from ecommerce_website.classes.forms.payment_form import PaymentForm
 from ecommerce_website.classes.forms.return_form import ReturnForm
 from ecommerce_website.classes.helpers.progress_view import get_order_progress_phases, get_return_progress_phases
 from ecommerce_website.classes.model.cached_return_order import SessionReturnOrderService
@@ -604,19 +605,16 @@ def checkout(request):
         order = ViewServiceUtility.get_order_info(request)
 
         if order and order.is_valid():
-
-            issuers = MollieClient().get_issuers('ideal')
-
+            form = PaymentForm()
             return render(request, "payment.html", {'headerData': ViewServiceUtility.get_header_data(),
+                                                    'form': form,
                                                     'env': environment,
                                                     'current_sale': ViewServiceUtility.get_current_sale_data(),
-
                                                     'store_data': ViewServiceUtility.get_current_store_data(),
                                                     'cart': ViewServiceUtility.get_cart_view(request),
                                                     'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                     'brands': ViewServiceUtility.get_all_brands(),
                                                     'order': order,
-                                                    'payment_issuers': issuers,
                                                     'delivery_methods': ViewServiceUtility.get_active_delivery_methods(),
                                                     'store_motivations': ViewServiceUtility.get_store_motivations()})
 
@@ -678,12 +676,28 @@ def confirm_order(request):
         if not cart_service.is_valid:
             return redirect('cart')
 
-        issuer_id = request.POST.get('issuer_id')
-        issuer_name = request.POST.get('issuer_name')
-        payment_method = request.POST.get('payment_method')
-        payment_name = request.POST.get('payment_name')
-        delivery_method = request.POST.get('selected_delivery_method')
-        delivery_date = request.POST.get('delivery_date')
+        form = PaymentForm(request.POST)
+        if not form.is_valid():
+            order = ViewServiceUtility.get_order_info(request)
+
+            return render(request, "payment.html", {'headerData': ViewServiceUtility.get_header_data(),
+                                                    'form': form,
+                                                    'env': environment,
+                                                    'current_sale': ViewServiceUtility.get_current_sale_data(),
+                                                    'store_data': ViewServiceUtility.get_current_store_data(),
+                                                    'cart': ViewServiceUtility.get_cart_view(request),
+                                                    'payment_methods': ViewServiceUtility.get_payment_methods(),
+                                                    'brands': ViewServiceUtility.get_all_brands(),
+                                                    'order': order,
+                                                    'delivery_methods': ViewServiceUtility.get_active_delivery_methods(),
+                                                    'store_motivations': ViewServiceUtility.get_store_motivations()})
+
+        issuer_id = form.cleaned_data.get('issuer_id')
+        issuer_name = form.cleaned_data.get('issuer_name')
+        payment_method = form.cleaned_data.get('payment_method')
+        payment_name = form.cleaned_data.get('payment_name')
+        delivery_method = form.cleaned_data.get('selected_delivery_method')
+        delivery_date = form.cleaned_data.get('delivery_date')
 
         order_service = OrderInfoService(request)
         order_info = order_service.get_order()

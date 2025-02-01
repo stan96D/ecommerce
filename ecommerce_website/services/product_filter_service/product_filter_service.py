@@ -426,3 +426,47 @@ class ProductFilterService(ProductFilterServiceInterface):
             return ProductFilter.objects.all()
         except ProductFilter.DoesNotExist:
             return None
+
+    @staticmethod
+    def filter_attributes_by_category(category, product_attributes):
+        product_attributes_with_category = []
+
+        for product_attribute in product_attributes:
+            product = product_attribute.product
+
+            if category.parent_category:
+
+                if category.parent_category.parent_category:
+
+                    main_filter = product.attributes.filter(
+                        value=category.parent_category.parent_category.name)
+
+                    sub_filter = product.attributes.filter(
+                        attribute_type__name=category.parent_category.name)
+
+                    last_filter = product.attributes.filter(
+                        value=category.name)
+
+                    if len(sub_filter) > 0 and len(main_filter) > 0 and len(last_filter) > 0:
+                        product_attributes_with_category.append(
+                            product_attribute)
+                else:
+
+                    main_filter = product.attributes.filter(
+                        value=category.parent_category.name)
+
+                    sub_filter = product.attributes.filter(
+                        attribute_type__name=category.name)
+
+                    if len(sub_filter) > 0 and len(main_filter) > 0:
+                        product_attributes_with_category.append(
+                            product_attribute)
+
+            else:
+                filters = product.attributes.filter(
+                    value=category.name)
+
+                if len(filters) > 0:
+                    product_attributes_with_category.append(product_attribute)
+
+        return product_attributes_with_category

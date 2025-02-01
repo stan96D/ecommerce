@@ -74,8 +74,8 @@ class OrderLineItemView:
 
         # Default to empty string if not found
         self.description = description.value if description else ""
-        if order_line.product.thumbnail and order_line.product.thumbnail.url:
-            self.thumbnail_url = order_line.product.thumbnail.url
+        if order_line.product.thumbnail_url:
+            self.thumbnail_url = order_line.product.thumbnail_url
         else:
             self.thumbnail_url = "/static/images/no_image_placeholder.png"
 

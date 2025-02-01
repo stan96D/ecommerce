@@ -1,0 +1,296 @@
+{
+    "products": {
+        "created": [
+            "04016",
+            {
+                "sku": "04016",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/66e13a58c63f9cc09176873d9b6b0af7/0/4/04016_3.png"
+            },
+            {
+                "sku": "04016",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/ded36d60b0a2369f51a68eabdbae9f3c/0/4/04016_3.png"
+            },
+            {
+                "sku": "04016",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/ded36d60b0a2369f51a68eabdbae9f3c/0/4/04016_2_1.png"
+            },
+            {
+                "sku": "04016",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/03111ea32e7a15c6c7b56b97ccfcee90/0/4/04016_3.png"
+            },
+            {
+                "sku": "04016",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/03111ea32e7a15c6c7b56b97ccfcee90/0/4/04016_2_1.png"
+            }
+        ],
+        "updated": [],
+        "failed": [],
+        "changes": [
+            {
+                "sku": "04016",
+                "field": "thumbnail",
+                "new_value": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/66e13a58c63f9cc09176873d9b6b0af7/0/4/04016_3.png"
+            }
+        ],
+        "not_updated": [
+            "639382",
+            "633253",
+            "635312",
+            "637434",
+            "633141",
+            "633309"
+        ],
+        "stock_updated": [
+            {
+                "sku": "04016",
+                "stock": 100
+            }
+        ],
+        "images_updated": [],
+        "images_failed": []
+    },
+    "attributes": {
+        "created": [
+            {
+                "sku": "04016",
+                "attribute": "Omschrijving",
+                "value": "Otium at Home hout visgraat Luna is een tweelaags eikenhouten parketvloer met een formaat van 470 x 70 x 9,6 mm. De vloer is afgewerkt met een ultramatte laklaag, wat zorgt voor een onbehandelde uitstraling en tegelijkertijd bescherming biedt tegen slijtage en vuil.De eikenhouten toplaag heeft een dikte van 2,5 mm, terwijl de HDF-onderlaag zorgt voor uitstekende thermische geleidbaarheid, waardoor de vloer zeer geschikt is voor vloerverwarming. De solide mes- en groefverbinding maakt installatie eenvoudig en zorgt voor een naadloze aansluiting van de planken. Voor optimale prestaties dient de vloer volledig verlijmd te worden met een polymeer-, silaan- of PU-lijm. Wij raden aan om na de oplevering van een Bauwerk vloer die voorzien is van een B-Protect-afwerking, deze te voorzien vanBauwerk Care Eco onderhoud (04500)."
+            },
+            {
+                "sku": "04016",
+                "attribute": "Merk",
+                "value": "OTIUM at Home"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Verpakking",
+                "value": "2.11 m²"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Type",
+                "value": "2-laags parket"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Lengte",
+                "value": "470.0",
+                "unit": "mm"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Breedte",
+                "value": "70.0",
+                "unit": "mm"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Dikte",
+                "value": "9.6",
+                "unit": "mm"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Afmeting",
+                "value": "470.0 x 70.0 mm"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Oppervlakte",
+                "value": "0.03 m²"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Beschikbaarheid",
+                "value": "Gebruik voor de ultramatte laklaag oppervlakken altijd Bauwerk Care Eco voor het eerste onderhoud (artikel: 04500)."
+            },
+            {
+                "sku": "04016",
+                "attribute": "Materiaal",
+                "value": "Eiken"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Toplaagdikte",
+                "value": "2.5",
+                "unit": "mm"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Sortering",
+                "value": "Rustiek 15"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Bewerking",
+                "value": "Geschuurd"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Afwerking",
+                "value": "B-Protect"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Model",
+                "value": "Visgraat"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Aantal planken per pak",
+                "value": "64"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Legwijze",
+                "value": "Verlijmd"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Warmteweerstand",
+                "value": "0.066"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Vellingkant",
+                "value": "Geen"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Verbinding",
+                "value": "Mes en groef"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Garantie huishoudelijk",
+                "value": "10 jaar"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Vloertype",
+                "value": "Click"
+            }
+        ],
+        "updated": [],
+        "failed": [],
+        "changes": []
+    },
+    "categories": {
+        "main_categories_created": [],
+        "main_categories_updated": [],
+        "subcategories_created": [],
+        "sub_subcategories_created": []
+    },
+    "filters": {
+        "created": [
+            {
+                "filter": "Type",
+                "values": [
+                    "2-laags parket"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Click"
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "2-laags parket"
+                ]
+            },
+            {
+                "filter": "Toplaagdikte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Click"
+                ]
+            }
+        ],
+        "updated": [
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "OTIUM at Home"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "added_values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    470.0
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "added_values": [
+                    9.6
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    70.0
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "OTIUM at Home"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "added_values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    470.0
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "added_values": [
+                    9.6
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    70.0
+                ]
+            }
+        ]
+    }
+}

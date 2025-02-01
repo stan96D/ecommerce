@@ -21,7 +21,7 @@ class ProductView:
         self.unit_price = product.unit_selling_price
 
         # Thumbnail handling with a fallback to a default image
-        self.thumbnail_url = product.thumbnail.url if product.thumbnail and product.thumbnail.url else "/static/images/no_image_placeholder.png"
+        self.thumbnail_url = product.thumbnail_url if product.thumbnail_url else "/static/images/no_image_placeholder.png"
 
         # Accessing attributes from the pre-fetched dictionary
         self.product_type = attributes_dict.get('Producttype', 'Vloer')
@@ -60,8 +60,8 @@ class ProductRelatedView:
         self.id = product.id
         self.name = product.name
 
-        if product.thumbnail and product.thumbnail.url:
-            self.thumbnail_url = product.thumbnail.url
+        if product.thumbnail_url:
+            self.thumbnail_url = product.thumbnail_url
 
         else:
             self.thumbnail_url = "/static/images/no_image_placeholder.png"
@@ -78,21 +78,20 @@ class ProductDetailView:
         self.unit_price = product.unit_selling_price
         self.price = product.selling_price
 
-        if product.thumbnail and product.thumbnail.url:
-            self.thumbnail_url = product.thumbnail.url
+        if product.thumbnail_url:
+            self.thumbnail_url = product.thumbnail_url
 
         else:
             self.thumbnail_url = "/static/images/no_image_placeholder.png"
 
-        self.product_id = attributes_dict.get(
-            'Artikelnummer', attributes_dict.get('SKU', 'Geen'))
+        self.product_id = product.sku
         self.images = product.images
         self.quantity = product.stock.quantity
         self.description = attributes_dict.get('Omschrijving', '')
 
         self.product_type = attributes_dict.get('Producttype', 'Vloer')
         self.unit = attributes_dict.get('Eenheid', 'm²')
-        surface = attributes_dict.get('Oppervlakte', None)
+        surface = attributes_dict.get('Verpakking', None)
 
         if self.product_type == "Vloer" and surface:
             self.surface = SurfaceAreaCalculator.parse_surface_area(
@@ -100,9 +99,7 @@ class ProductDetailView:
             self.big_unit = "pak"
             self.big_unit_multi = "pakken"
 
-        elif self.product_type == "Ondervloeren" and surface:
-            self.surface = SurfaceAreaCalculator.parse_surface_area(
-                surface)
+        elif self.product_type == "Ondervloeren":
             self.big_unit = "rol"
             self.big_unit_multi = "rollen"
         else:

@@ -27,12 +27,12 @@
                   aria-controls="tabs-1-panel-{{ forloop.counter }}"
                   role="tab"
                   type="button"
-                  onclick="changeImage('{{ image.image.url }}')"
+                  onclick="changeImage('{{ image.image_url }}')"
                 >
                   <span class="sr-only">{{ image.alt }}</span>
                   <span class="absolute inset-0 overflow-hidden rounded-md">
                     <img
-                      src="{{ image.image.url }}"
+                      src="{{ image.image_url }}"
                       alt="{{ image.alt }}"
                       class="h-full w-full object-cover object-center"
                       onerror="this.src='/static/img/placeholder.jpg'; this.onerror=null;"

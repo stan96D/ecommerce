@@ -96,13 +96,15 @@ class Product(models.Model):
         max_digits=10, decimal_places=2, default=0.00, db_index=True)
     price = models.DecimalField(
         max_digits=10, decimal_places=2, default=0.00, db_index=True)
-    thumbnail = models.ImageField(
-        upload_to='product_thumbnails/', null=True, blank=True)
+    thumbnail_url = models.URLField(
+        max_length=500, blank=True, null=True)
     tax = models.DecimalField(
         max_digits=5, decimal_places=2, default=21, db_index=True)
     runner = models.BooleanField(default=False)
     selling_percentage = models.DecimalField(
         max_digits=5, decimal_places=2, default=0.00)
+    sku = models.CharField(
+        max_length=50, unique=True, db_index=True)
 
     @property
     def buy_price_excl_tax(self):
@@ -151,7 +153,7 @@ class Product(models.Model):
         return selling_price_incl_tax
 
     def __str__(self):
-        return self.name
+        return self.sku + ": " + self.name
 
     @property
     def search_string(self):
@@ -281,15 +283,18 @@ class ProductStock(models.Model):
     product = models.OneToOneField(
         Product, on_delete=models.CASCADE, related_name='stock')
     quantity = models.IntegerField(default=0)
+    delivery_date = models.DateField(
+        null=True, blank=True)  # Nullable delivery date
 
     def __str__(self):
-        return f"{self.product.name} - Quantity: {self.quantity}"
+        return f"{self.product}: {self.product.name} - Quantity: {self.quantity}"
 
 
 class ProductImage(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='images', default=False)
-    image = models.ImageField(upload_to='product_images/')
+    image_url = models.URLField(
+        max_length=500, blank=True, null=True)
 
     def __str__(self):
         return f"Image for {self.product.name}"
@@ -317,6 +322,10 @@ class ProductFilter(models.Model):
         blank=True)
     parent_category = models.ForeignKey(
         ProductCategory, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        # Ensures unique name per category
+        unique_together = ('name', 'parent_category')
 
     def __str__(self):
         if self.parent_category:

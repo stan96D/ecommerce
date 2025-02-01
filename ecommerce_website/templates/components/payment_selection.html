@@ -1,92 +1,175 @@
-{% load static %}
-
-<fieldset>
-  <legend class="text-lg font-medium text-gray-900">
-    Betaalwijze <span class="text-red-500">*</span>
-  </legend>
-  <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
-    <!-- Standard Delivery -->
-    <label
-      class="relative flex cursor-pointer rounded-lg border bg-white p-4 shadow-sm focus:outline-none"
-    >
-      <input type="radio" name="payment-method" value="iDeal" class="sr-only" />
-      <span class="flex flex-1">
-        <span class="flex flex-col">
-          <span class="block text-sm font-medium text-gray-900">iDeal</span>
-          <!-- Replace text with image -->
-          <img
-            class="max-h-12 max-w-12 mt-1"
-            src="{% static 'images/bank_ideal.png' %}"
-            alt="iDeal Image"
-          />
-          <div class="mt-4 w-full rounded-md bg-white">
-            <select
-              id="issuerSelect"
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-              name="issuer_id"
-            >
-              <option value="" disabled selected>--Selecteer uw bank--</option>
-              <!-- Generate options dynamically -->
-              {% for issuer in payment_issuers %}
-                <option value="{{ issuer.id }}">{{ issuer.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <input type="hidden" name="issuer_name" id="issuerNameInput" />
-          <input
-            type="hidden"
-            name="payment_method"
-            id="paymentMethod"
-            value="ideal"
-          />
-          <input
-            type="hidden"
-            name="payment_name"
-            id="paymentName"
-            value="iDeal"
-          />
-
-          <p id="select-issuer-error" hidden class="text-red-500 text-sm mt-1">
-            Dit veld is verplicht.
-          </p>
-        </span>
-      </span>
-      <svg
-        class="h-5 w-5 text-green-600"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
+<!-- Hidden Inputs moved outside the loop -->
+<input type="hidden" name="payment_method" id="paymentMethod" value="" />
+<input type="hidden" name="payment_name" id="paymentName" value="" />
+{% for payment in payment_methods %}
+  <fieldset>
+    <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+      <!-- Payment Method -->
+      <label
+        class="relative flex cursor-pointer items-center rounded-lg border bg-white p-4 shadow-sm focus:outline-none payment-method"
+        data-method-id="{{ payment.id }}"
+        data-method-description="{{ payment.description }}"
       >
-        <path
-          fill-rule="evenodd"
-          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-          clip-rule="evenodd"
-        />
-      </svg>
-      <span
-        class="pointer-events-none absolute -inset-px rounded-lg border-2"
-        aria-hidden="true"
-      ></span>
-    </label>
-  </div>
-</fieldset>
+        <span class="flex flex-1 items-center gap-x-4">
+          <!-- Image -->
+          <img
+            class="max-h-12 max-w-12"
+            src="{{ payment.image_url }}"
+            alt="{{ payment.description }}"
+          />
+          <!-- Description and Dropdown -->
+          <span class="flex flex-col flex-grow">
+            <span
+              class="block text-sm font-medium text-gray-900 payment-method-text"
+            >
+              {{ payment.description }}
+            </span>
+
+            {% if payment.issuers %}
+              <div class="mt-2 w-full issuer-container">
+                <select
+                  id="issuerMethod"
+                  class=" block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm text-gray-900"
+                  name="issuer_id"
+                  data-method-id="{{ payment.id }}"
+                >
+                  <option value="" disabled selected>
+                    --Selecteer uw bank--
+                  </option>
+                  <!-- Generate options dynamically -->
+                  {% for issuer in payment.issuers %}
+                    <option value="{{ issuer.id }}">{{ issuer.name }}</option>
+                  {% endfor %}
+                </select>
+                <p class="select-issuer-error text-red-500 text-sm mt-1 hidden">
+                  Dit veld is verplicht.
+                </p>
+              </div>
+            {% endif %}
+          </span>
+        </span>
+        <svg
+          class="h-5 w-5 text-gray-300 payment-icon ml-4"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <span
+          class="pointer-events-none absolute -inset-px rounded-lg border-2"
+          aria-hidden="true"
+        ></span>
+      </label>
+    </div>
+  </fieldset>
+{% endfor %}
 
 <script>
-  const issuerSelect = document.getElementById('issuerSelect')
-  const errorMessage = document.getElementById('select-issuer-error')
-  const issuerNameInput = document.getElementById('issuerNameInput')
+  document.addEventListener('DOMContentLoaded', () => {
+    const paymentMethodLabels = document.querySelectorAll('.payment-method')
+    const paymentMethodInput = document.getElementById('paymentMethod') // Hidden input for payment method id
+    const paymentNameInput = document.getElementById('paymentName') // Hidden input for payment name
 
-  // Event listener to print the value when the select changes
-  issuerSelect.addEventListener('change', function () {
-    const selectedIssuer = issuerSelect.value
+    // Handle label clicks
+    paymentMethodLabels.forEach((label) => {
+      label.addEventListener('click', function () {
+        const methodId = label.getAttribute('data-method-id')
+        const methodDescription = label.getAttribute('data-method-description')
+        const issuerContainer = label.querySelector('.issuer-container')
 
-    const selectedOption = issuerSelect.options[issuerSelect.selectedIndex]
-    issuerNameInput.value = selectedOption.textContent
-    console.log(issuerNameInput.value)
-    if (!selectedIssuer || selectedIssuer === '') {
-      errorMessage.removeAttribute('hidden')
-    } else {
-      errorMessage.setAttribute('hidden', 'true')
+        if (issuerContainer) {
+          // Case: Payment method has issuers (click logic applies to <select>)
+          const issuerSelect = issuerContainer.querySelector('select')
+
+          if (issuerSelect.value) {
+            // If an issuer is already selected, mark as active
+            updateSelectedPayment(
+              methodId,
+              methodDescription,
+              issuerSelect.value,
+            )
+          } else {
+            // Show the dropdown and wait for issuer selection
+            issuerContainer.classList.remove('hidden')
+            issuerSelect.focus()
+          }
+        } else {
+          // Case: Payment method without issuers (direct label click)
+          updateSelectedPayment(methodId, methodDescription, '')
+        }
+
+        // Deselect other payment methods
+        deselectOtherPaymentMethods(label)
+      })
+    })
+
+    // Handle issuer selection
+    const issuerSelects = document.querySelectorAll('.issuer-container select')
+    issuerSelects.forEach((issuerSelect) => {
+      issuerSelect.addEventListener('change', function () {
+        const methodId = this.getAttribute('data-method-id')
+        const methodDescription = document
+          .querySelector(`[data-method-id="${methodId}"]`)
+          .getAttribute('data-method-description')
+
+        if (this.value) {
+          // Update inputs when issuer is selected
+          updateSelectedPayment(methodId, methodDescription, this.value)
+        }
+      })
+    })
+
+    // Update selected payment inputs
+    function updateSelectedPayment(methodId, methodDescription, issuerId) {
+      paymentMethodInput.value = methodId
+      paymentNameInput.value = methodDescription
+      console.log('Selected:', methodId, methodDescription, issuerId)
+
+      // Apply styling to the selected label
+      const selectedLabel = document.querySelector(
+        `[data-method-id="${methodId}"]`,
+      )
+      selectedLabel.classList.add(
+        'bg-gradient-to-r',
+        'from-orange-600',
+        'to-orange-400',
+        'text-white',
+      )
+      selectedLabel.querySelector('.payment-icon').classList.add('text-white')
+      selectedLabel
+        .querySelector('.payment-method-text')
+        .classList.add('text-white')
+    }
+
+    // Deselect other payment methods
+    function deselectOtherPaymentMethods(currentLabel) {
+      paymentMethodLabels.forEach((label) => {
+        if (label !== currentLabel) {
+          label.classList.remove(
+            'bg-gradient-to-r',
+            'from-orange-600',
+            'to-orange-400',
+            'text-white',
+          )
+          label.querySelector('.payment-icon').classList.remove('text-white')
+          label
+            .querySelector('.payment-method-text')
+            .classList.remove('text-white')
+
+          // Reset issuer select if applicable
+          const issuerContainer = label.querySelector('.issuer-container')
+          if (issuerContainer) {
+            const issuerSelect = issuerContainer.querySelector('select')
+            issuerSelect.value = ''
+            issuerContainer.classList.add('hidden')
+          }
+        }
+      })
     }
   })
 </script>

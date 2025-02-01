@@ -13,8 +13,8 @@ class CartItemView:
         self.unit_price = product.unit_selling_price
         self.attributes = attributes_dict
 
-        if product.thumbnail and product.thumbnail.url:
-            self.thumbnail_url = product.thumbnail.url
+        if product.thumbnail_url:
+            self.thumbnail_url = product.thumbnail_url
 
         else:
             self.thumbnail_url = "/static/images/no_image_placeholder.png"
