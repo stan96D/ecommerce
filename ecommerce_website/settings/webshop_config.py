@@ -342,7 +342,7 @@ class WebShopConfig:
 
     @staticmethod
     def contact_email():
-        return "info@goedkoopstevloerenshop.com"
+        return "info@goedkoopstevloerenshop.nl"
 
     @staticmethod
     def address():
