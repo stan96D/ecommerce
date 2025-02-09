@@ -21,7 +21,6 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
-NPM_BIN_PATH = "/usr/bin/npm"
 ENVIRONMENT = os.getenv('DJANGO_ENV', 'dev')
 SECRET_KEY = os.getenv(
     'SECRET_KEY')
@@ -64,7 +63,9 @@ if ENVIRONMENT == "dev":
     if NGROK_URL:
         ALLOWED_HOSTS.append(NGROK_URL)
 
-    NPM_BIN_PATH = "C:\Program Files\nodejs"
+    # NPM_BIN_PATH = "C:\Program Files\nodejs"
+    NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+
 elif ENVIRONMENT == "test":
     DEBUG = True
 
@@ -209,8 +210,6 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TAILWIND_APP_NAME = 'ecommerce_website'
-
-NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
 INTERNAL_IPS = [
     "127.0.0.1",
