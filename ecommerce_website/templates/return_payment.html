@@ -51,30 +51,7 @@
         >
           <section aria-labelledby="cart-heading" class="lg:col-span-7">
             <div>
-              <div>
-                <fieldset>
-                  <legend class="text-lg font-medium text-gray-900">
-                    Afhaalmethode <span class="text-red-500">*</span>
-                  </legend>
-
-                  <div
-                    class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4"
-                  >
-                    {% for delivery_method in delivery_methods %}
-                      {% include 'components/delivery_method.html' %}
-                    {% endfor %}
-                  </div>
-                  <p
-                    id="select-delivery-method-error"
-                    hidden
-                    class="text-red-500 text-sm mt-1"
-                  >
-                    Selecteer een afhaalmethode.
-                  </p>
-                </fieldset>
-              </div>
-
-              <div class="mt-10 border-t border-gray-200 pt-10">
+              <div class="mt-10 ">
                 <h2 class="text-lg font-medium text-gray-900">
                   Afhaaldatum <span class="text-red-500">*</span>
                 </h2>

@@ -8,6 +8,7 @@ class ReturnOrderView:
         self.id = return_order.id
         self.token = return_order.token
 
+        self.payment_url = return_order.payment_url
         self.created_date = return_order.created_date.strftime("%A %e %B %Y")
         self.order_number = return_order.order.order_number
         self.order_id = return_order.order.id

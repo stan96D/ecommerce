@@ -236,20 +236,7 @@
 
         <aside>
           <h2 class="sr-only">Filters</h2>
-          <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
-          <button type="button" class="inline-flex items-center lg:hidden">
-            <span class="text-sm font-medium text-gray-700">Filters</span>
-            <svg
-              class="ml-1 h-5 w-5 flex-shrink-0 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z"
-              />
-            </svg>
-          </button>
+
           <div class="hidden lg:block">
             <form class="space-y-5 divide-y divide-gray-200">
               {% for product_filter in filter_data %}
@@ -421,7 +408,7 @@
             <h2 class="sr-only">Products</h2>
 
             <div
-              class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8"
+              class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8"
             >
               {% if products|length > 0 %}
                 {% for product in products %}
@@ -430,6 +417,7 @@
               {% endif %}
             </div>
           </div>
+
           <nav
             aria-label="Pagination"
             class="mx-auto mt-12 px-8 flex max-w-7xl justify-between text-sm font-medium text-gray-700"
@@ -448,54 +436,24 @@
               </div>
 
               <!-- Page Numbers -->
-              <div class="hidden space-x-2 sm:flex">
+              <div class="space-x-2 sm:flex sm:space-x-4 lg:flex lg:space-x-6">
                 {% with page_obj.paginator as paginator %}
                   {% with paginator.page_range as page_range %}
-                    <!-- Show First Page -->
-                    {% if page_obj.number > 4 %}
-                      <a
-                        href="javascript:void(0)"
-                        onclick="goToPage(1)"
-                        class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
-                        >1</a
+                    <!-- For small (sm) and medium (md) screens: Show first, current, and last page only -->
+                    <div class="sm:flex md:flex lg:hidden space-x-2">
+                      {% if page_obj.number != 1 %}
+                        <a
+                          href="javascript:void(0)"
+                          onclick="goToPage(1)"
+                          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
+                          >1</a
+                        >
+                      {% endif %}
+                      <span
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-orange-500 bg-white ring-1 ring-orange-500"
+                        >{{ page_obj.number }}</span
                       >
-
-                      {% if page_obj.number > 5 %}
-                        <span
-                          class="inline-flex h-10 items-center px-1.5 text-gray-500"
-                          >...</span
-                        >
-                      {% endif %}
-                    {% endif %}
-
-                    <!-- Pages Around Current Page -->
-                    {% for i in page_range %}
-                      {% if i >= page_obj.number|add:'-3' and i <= page_obj.number|add:'3' %}
-                        {% if i == page_obj.number %}
-                          <span
-                            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-orange-500 bg-white ring-1 ring-orange-500"
-                            >{{ i }}</span
-                          >
-                        {% else %}
-                          <a
-                            href="javascript:void(0)"
-                            onclick="goToPage({{ i }})"
-                            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
-                            >{{ i }}</a
-                          >
-                        {% endif %}
-                      {% endif %}
-                    {% endfor %}
-
-                    <!-- Show Ellipsis and Last Page -->
-                    {% if page_obj.number < paginator.num_pages|add:'-3' %}
-                      {% if page_obj.number < paginator.num_pages|add:'-4' %}
-                        <span
-                          class="inline-flex h-10 items-center px-1.5 text-gray-500"
-                          >...</span
-                        >
-                      {% endif %}
-                      {% if paginator.num_pages != page_obj.number %}
+                      {% if page_obj.number != paginator.num_pages %}
                         <a
                           href="javascript:void(0)"
                           onclick="goToPage({{ paginator.num_pages }})"
@@ -503,7 +461,61 @@
                           >{{ paginator.num_pages }}</a
                         >
                       {% endif %}
-                    {% endif %}
+                    </div>
+
+                    <!-- For large (lg) screens: Show full range of pages with ellipses -->
+                    <div class="hidden lg:flex space-x-2">
+                      <!-- Show First Page -->
+                      {% if page_obj.number > 4 %}
+                        <a
+                          href="javascript:void(0)"
+                          onclick="goToPage(1)"
+                          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
+                          >1</a
+                        >
+                        {% if page_obj.number > 5 %}
+                          <span
+                            class="inline-flex h-10 items-center px-1.5 text-gray-500"
+                            >...</span
+                          >
+                        {% endif %}
+                      {% endif %}
+
+                      <!-- Pages Around Current Page -->
+                      {% for i in page_range %}
+                        {% if i >= page_obj.number|add:'-3' and i <= page_obj.number|add:'3' %}
+                          {% if i == page_obj.number %}
+                            <span
+                              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-orange-500 bg-white ring-1 ring-orange-500"
+                              >{{ i }}</span
+                            >
+                          {% else %}
+                            <a
+                              href="javascript:void(0)"
+                              onclick="goToPage({{ i }})"
+                              class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
+                              >{{ i }}</a
+                            >
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+
+                      <!-- Show Ellipsis and Last Page -->
+                      {% if page_obj.number < paginator.num_pages|add:'-3' %}
+                        {% if page_obj.number < paginator.num_pages|add:'-4' %}
+                          <span
+                            class="inline-flex h-10 items-center px-1.5 text-gray-500"
+                            >...</span
+                          >
+                        {% endif %}
+                        <a
+                          href="javascript:void(0)"
+                          onclick="goToPage({{ paginator.num_pages }})"
+                          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gray-300 bg-white hover:bg-gray-100 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-25 focus:ring-offset-1 focus:ring-offset-orange-500"
+                          >{{ paginator.num_pages }}</a
+                        >
+                      {% endif %}
+                    </div>
                   {% endwith %}
                 {% endwith %}
               </div>

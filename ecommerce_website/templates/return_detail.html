@@ -15,7 +15,7 @@
 
   <div class="mx-auto bg-gray-50">
     <div
-      class="mx-auto w-1/2 px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl "
+      class="mx-auto w-2/3 sm:w-1/2 px-4 py-16 sm:px-6 sm:py-24 lg:grid lg:max-w-7xl"
     >
       <div class="pb-8">{% include 'components/progress_view.html' %}</div>
 
@@ -136,47 +136,49 @@
             class="mt-6 divide-y divide-gray-200 border-t border-gray-200 text-sm font-medium text-gray-500"
           >
             {% for order_line in order.return_order_lines %}
-              <li class="flex space-x-6 py-6 relative">
+              <li class="flex flex-col sm:flex-row sm:space-x-6 py-6 relative">
+                <!-- Product Thumbnail on mobile: aligned left -->
                 <img
                   src="{{ order_line.thumbnail_url }}"
                   alt="{{ order_line.name }}"
-                  class="h-24 w-24 flex-none rounded-md bg-gray-100 object-cover object-center"
+                  class="h-24 w-24 sm:h-24 sm:w-24 flex-none rounded-md bg-gray-100 object-cover object-center sm:mx-0"
                 />
-                <div class="flex-auto space-y-1">
+
+                <div class="flex-auto space-y-1 sm:space-y-0">
+                  <!-- Product name and quantity -->
                   <h3 class="text-gray-900">
                     <a href="{% url 'product_detail' order_line.product_id %}">
                       {{ order_line.name }}
                     </a>
                   </h3>
-                  <p class="text-gray-400">
-                    {{ order_line.quantity }} stuk(s)
-                    {% if order_line.returned_quantity > 0 %}
-                      {% if order_line.return_id is not None %}
-                        <a
-                          href="/return_detail/?return_id={{ order_line.token }}"
-                          class="text-orange-400 font-medium text-xs"
-                        >
-                          {{ order_line.returned_quantity }} geretourneerd
-                        </a>
-                      {% else %}
-                        <span class="text-orange-400 font-medium text-xs">
-                          {{ order_line.returned_quantity }} geretourneerd
-                        </span>
-                      {% endif %}
-                    {% endif %}
-                  </p>
+                  <p class="text-gray-400">{{ order_line.quantity }} stuk(s)</p>
                   <p>€{{ order_line.unit_price }} per {{ order_line.unit }}</p>
                 </div>
-
-                <!-- Price stays as is -->
-                <p class="font-medium text-gray-900 text-right">
-                  €{{ order_line.total_price }}
-                </p>
-
-                <!-- Status div at the bottom-right with simplified icons -->
-                <div class="absolute bottom-0 right-0 pb-4 flex">
+                <div class="flex items-center">
+                  <!-- Status text (only visible on mobile) -->
                   <div
-                    class="flex items-center bg-gray-100 text-sm px-3 py-1 rounded-full"
+                    class="flex items-center bg-gray-100 text-sm px-3 py-1 rounded-full w-full sm:hidden mt-2 mr-2"
+                  >
+                    <!-- Status text with neutral gray color -->
+                    <span class="text-xs font-medium text-gray-500">
+                      {{ order_line.statusText|default:"" }}
+                    </span>
+                  </div>
+
+                  <!-- Price stays centered on mobile and right-aligned on larger screens -->
+                  <p
+                    class="font-medium text-gray-900 sm:text-left text-center sm:text-right w-full"
+                  >
+                    €{{ order_line.total_price }}
+                  </p>
+                </div>
+
+                <!-- Status div at the bottom-right with simplified icons (shown only on screens above medium) -->
+                <div
+                  class="absolute hidden md:flex md:bottom-0 md:right-0 md:pb-4 md:space-x-2 flex justify-between items-center w-full md:w-auto md:max-w-xs mt-2 md:mt-0"
+                >
+                  <div
+                    class="flex items-center bg-gray-100 text-sm px-3 py-1 rounded-full w-full md:w-auto"
                   >
                     <span class="flex items-center text-xs pr-2">
                       <!-- Simplified Icon for status with color -->
@@ -253,9 +255,12 @@
             {% endif %}
           </dl>
 
-          <dl class="mt-16 grid grid-cols-2 gap-x-4 text-sm text-gray-600">
+          <dl
+            class="mt-16 grid grid-cols-1 gap-y-8 text-sm text-gray-600 sm:grid-cols-2 sm:gap-x-4"
+          >
+            <!-- Shipping Address -->
             <div>
-              <dt class="font-medium text-gray-900">Afhaal adres</dt>
+              <dt class="font-medium text-gray-900">Aflever adres</dt>
               <dd class="mt-2">
                 <address class="not-italic">
                   <span class="block"
@@ -266,25 +271,50 @@
               </dd>
             </div>
 
-            <div>
+            <!-- Billing Address -->
+            <div class="sm:col-start-1 sm:order-1 order-2">
+              <dt class="font-medium text-gray-900">Factuur adres</dt>
+              <dd class="mt-2">
+                <address class="not-italic">
+                  <span class="block"
+                    >{{ order.first_name }} {{ order.last_name }}</span
+                  >
+                  <span class="block">{{ order.billing_address |safe }}</span>
+                </address>
+              </dd>
+            </div>
+
+            <!-- Payment Information - Desktop (Right-aligned) -->
+            <div class="sm:col-start-2 sm:text-right sm:block hidden">
               <dt class="font-medium text-gray-900">Betalingsinformatie</dt>
-              <dd class="mt-2 space-y-2 sm:flex sm:space-x-4 sm:space-y-0">
-                <div class="flex-none">
-                  <img
-                    src="{{ order.payment_logo }}"
-                    alt="{{ order.payment_information }}"
-                    class="flex-none rounded-md bg-gray-100 object-cover object-center"
-                  />
-                </div>
+              <dd
+                class="mt-2 space-y-2 sm:flex sm:space-x-4 sm:space-y-0 sm:justify-end"
+              >
                 <div class="flex-auto">
-                  <p class="text-gray-900">{{ order.payment_information }}</p>
-                  <p>{{ order.payment_status }}</p>
+                  <div class="flex sm:justify-end justify-start pb-2">
+                    <!-- Payment Logo -->
+                    <div class="flex sm:ml-4">
+                      <img
+                        src="{{ order.payment_logo }}"
+                        alt="{{ order.payment_information }}"
+                        class="flex-none rounded-md bg-gray-100 object-cover object-center"
+                      />
+                    </div>
+                    <!-- Payment Details -->
+                    <div class="flex-col ml-2 justify-center items-center mt-1">
+                      <p class="text-gray-900">
+                        {{ order.payment_information }}
+                      </p>
+                      <p>{{ order.payment_status }}</p>
+                    </div>
+                  </div>
                   {% if order.status == 'open' %}
                     <a
                       href="{{ order.payment_url }}"
                       target="_blank"
                       class="font-normal text-blue-600 custom-link"
-                      >Betaalpagina
+                    >
+                      Betaalpagina
                     </a>
                   {% elif order.status == 'failed' %}
                     <form
@@ -303,15 +333,52 @@
                 </div>
               </dd>
             </div>
-            <div class="pt-10">
-              <dt class="font-medium text-gray-900">Factuur adres</dt>
-              <dd class="mt-2">
-                <address class="not-italic">
-                  <span class="block"
-                    >{{ order.first_name }} {{ order.last_name }}</span
-                  >
-                  <span class="block">{{ order.billing_address |safe }}</span>
-                </address>
+
+            <!-- Payment Information - Mobile (Appears below Factuur adres) -->
+            <div class="sm:hidden block order-3">
+              <dt class="font-medium text-gray-900">Betalingsinformatie</dt>
+              <dd class="mt-2 space-y-2">
+                <div class="flex-auto">
+                  <div class="flex justify-start pb-2">
+                    <!-- Payment Logo -->
+                    <div class="flex">
+                      <img
+                        src="{{ order.payment_logo }}"
+                        alt="{{ order.payment_information }}"
+                        class="flex-none rounded-md bg-gray-100 object-cover object-center"
+                      />
+                    </div>
+                    <!-- Payment Details -->
+                    <div class="flex-col ml-2 justify-center items-center mt-1">
+                      <p class="text-gray-900">
+                        {{ order.payment_information }}
+                      </p>
+                      <p>{{ order.payment_status }}</p>
+                    </div>
+                  </div>
+                  {% if order.status == 'open' %}
+                    <a
+                      href="{{ order.payment_url }}"
+                      target="_blank"
+                      class="font-normal text-blue-600 custom-link"
+                    >
+                      Betaalpagina
+                    </a>
+                  {% elif order.status == 'failed' %}
+                    <form
+                      action="{% url 'repay_order' order.id %}"
+                      method="post"
+                    >
+                      {% csrf_token %}
+                      <button
+                        class="font-normal text-blue-600 custom-link"
+                        type="submit"
+                      >
+                        Opnieuw proberen
+                      </button>
+                    </form>
+                  {% endif %}
+                </div>
               </dd>
             </div>
           </dl>

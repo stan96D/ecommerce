@@ -7,423 +7,158 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
   <div class="bg-white">
-    <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
-      <div class="fixed inset-0 bg-black bg-opacity-25"></div>
-
-      <div class="fixed inset-0 z-40 flex">
-        <div
-          class="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl"
-        >
-          <div class="flex px-4 pb-2 pt-5">
-            <button
-              type="button"
-              class="-m-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400"
-            >
-              <span class="sr-only">Close menu</span>
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-
-          <div class="mt-2">
-            <div class="border-b border-gray-200">
-              <div
-                class="-mb-px flex space-x-8 px-4"
-                aria-orientation="horizontal"
-                role="tablist"
-              >
-                <!-- Selected: "border-orange-600 text-orange-600", Not Selected: "border-transparent text-gray-900" -->
-                <button
-                  id="tabs-1-tab-1"
-                  class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"
-                  aria-controls="tabs-1-panel-1"
-                  role="tab"
-                  type="button"
-                >
-                  Women
-                </button>
-                <!-- Selected: "border-orange-600 text-orange-600", Not Selected: "border-transparent text-gray-900" -->
-                <button
-                  id="tabs-1-tab-2"
-                  class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"
-                  aria-controls="tabs-1-panel-2"
-                  role="tab"
-                  type="button"
-                >
-                  Men
-                </button>
-              </div>
-            </div>
-
-            <!-- 'Women' tab panel, show/hide based on tab state. -->
-            <div
-              id="tabs-1-panel-1"
-              class="space-y-12 px-4 py-6"
-              aria-labelledby="tabs-1-tab-1"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <div class="grid grid-cols-2 gap-x-4 gap-y-10">
-                <div class="group relative">
-                  <div
-                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
-                  >
-                    <img
-                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg"
-                      alt="Models sitting back to back, wearing Basic Tee in black and bone."
-                      class="object-cover object-center"
-                    />
-                  </div>
-                  <a
-                    href="#"
-                    class="mt-6 block text-sm font-medium text-gray-900"
-                  >
-                    <span
-                      class="absolute inset-0 z-10"
-                      aria-hidden="true"
-                    ></span>
-                    New Arrivals
-                  </a>
-                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
-                    Shop now
-                  </p>
-                </div>
-                <div class="group relative">
-                  <div
-                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
-                  >
-                    <img
-                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg"
-                      alt="Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees."
-                      class="object-cover object-center"
-                    />
-                  </div>
-                  <a
-                    href="#"
-                    class="mt-6 block text-sm font-medium text-gray-900"
-                  >
-                    <span
-                      class="absolute inset-0 z-10"
-                      aria-hidden="true"
-                    ></span>
-                    Basic Tees
-                  </a>
-                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
-                    Shop now
-                  </p>
-                </div>
-                <div class="group relative">
-                  <div
-                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
-                  >
-                    <img
-                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-03.jpg"
-                      alt="Model wearing minimalist watch with black wristband and white watch face."
-                      class="object-cover object-center"
-                    />
-                  </div>
-                  <a
-                    href="#"
-                    class="mt-6 block text-sm font-medium text-gray-900"
-                  >
-                    <span
-                      class="absolute inset-0 z-10"
-                      aria-hidden="true"
-                    ></span>
-                    Accessories
-                  </a>
-                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
-                    Shop now
-                  </p>
-                </div>
-                <div class="group relative">
-                  <div
-                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
-                  >
-                    <img
-                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-category-04.jpg"
-                      alt="Model opening tan leather long wallet with credit card pockets and cash pouch."
-                      class="object-cover object-center"
-                    />
-                  </div>
-                  <a
-                    href="#"
-                    class="mt-6 block text-sm font-medium text-gray-900"
-                  >
-                    <span
-                      class="absolute inset-0 z-10"
-                      aria-hidden="true"
-                    ></span>
-                    Carry
-                  </a>
-                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
-                    Shop now
-                  </p>
-                </div>
-              </div>
-            </div>
-            <!-- 'Men' tab panel, show/hide based on tab state. -->
-            <div
-              id="tabs-1-panel-2"
-              class="space-y-12 px-4 py-6"
-              aria-labelledby="tabs-1-tab-2"
-              role="tabpanel"
-              tabindex="0"
-            >
-              <div class="grid grid-cols-2 gap-x-4 gap-y-10">
-                <div class="group relative">
-                  <div
-                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
-                  >
-                    <img
-                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-01.jpg"
-                      alt="Hats and sweaters on wood shelves next to various colors of t-shirts on hangers."
-                      class="object-cover object-center"
-                    />
-                  </div>
-                  <a
-                    href="#"
-                    class="mt-6 block text-sm font-medium text-gray-900"
-                  >
-                    <span
-                      class="absolute inset-0 z-10"
-                      aria-hidden="true"
-                    ></span>
-                    New Arrivals
-                  </a>
-                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
-                    Shop now
-                  </p>
-                </div>
-                <div class="group relative">
-                  <div
-                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
-                  >
-                    <img
-                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg"
-                      alt="Model wearing light heather gray t-shirt."
-                      class="object-cover object-center"
-                    />
-                  </div>
-                  <a
-                    href="#"
-                    class="mt-6 block text-sm font-medium text-gray-900"
-                  >
-                    <span
-                      class="absolute inset-0 z-10"
-                      aria-hidden="true"
-                    ></span>
-                    Basic Tees
-                  </a>
-                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
-                    Shop now
-                  </p>
-                </div>
-                <div class="group relative">
-                  <div
-                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
-                  >
-                    <img
-                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-03.jpg"
-                      alt="Grey 6-panel baseball hat with black brim, black mountain graphic on front, and light heather gray body."
-                      class="object-cover object-center"
-                    />
-                  </div>
-                  <a
-                    href="#"
-                    class="mt-6 block text-sm font-medium text-gray-900"
-                  >
-                    <span
-                      class="absolute inset-0 z-10"
-                      aria-hidden="true"
-                    ></span>
-                    Accessories
-                  </a>
-                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
-                    Shop now
-                  </p>
-                </div>
-                <div class="group relative">
-                  <div
-                    class="aspect-h-1 aspect-w-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75"
-                  >
-                    <img
-                      src="https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-04.jpg"
-                      alt="Model putting folded cash into slim card holder olive leather wallet with hand stitching."
-                      class="object-cover object-center"
-                    />
-                  </div>
-                  <a
-                    href="#"
-                    class="mt-6 block text-sm font-medium text-gray-900"
-                  >
-                    <span
-                      class="absolute inset-0 z-10"
-                      aria-hidden="true"
-                    ></span>
-                    Carry
-                  </a>
-                  <p aria-hidden="true" class="mt-1 text-sm text-gray-500">
-                    Shop now
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-            <div class="flow-root">
-              <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
-                >Company</a
-              >
-            </div>
-            <div class="flow-root">
-              <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
-                >Stores</a
-              >
-            </div>
-          </div>
-
-          <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-            <div class="flow-root">
-              <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
-                >Create an account</a
-              >
-            </div>
-            <div class="flow-root">
-              <a href="#" class="-m-2 block p-2 font-medium text-gray-900"
-                >Sign in</a
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-   <div class="relative">
+    <div class="relative">
       <!-- Background image and overlap -->
-<div aria-hidden="true" class="absolute inset-0 hidden sm:flex sm:flex-col">
-  <div class="relative w-full flex-1 bg-gray-800">
-    <div class="absolute inset-0 overflow-hidden">
-      <!-- Make sure the image fills the container and covers the area properly -->
-      <img
-        src="{% static 'images/landing_page2.jpg' %}"
-        alt=""
-        class="h-full w-full object-cover object-center"
-      />
-    </div>
-    <!-- The dark overlay remains in place to darken the image if needed -->
-    <div class="absolute inset-0 bg-gray-100 opacity-75"></div>
-  </div>
-  <div class="h-32 w-full bg-white md:h-40 lg:h-48"></div>
-</div>
-
-
-      <div class="relative mx-auto max-w-3xl px-4 pb-96 text-center sm:px-6 sm:pb-0 lg:px-8">
-        <!-- Background image and overlap -->
-        <div aria-hidden="true" class="absolute inset-0 flex flex-col sm:hidden">
-          <div class="relative w-full flex-1 bg-gray-800">
-            <div class="absolute inset-0 overflow-hidden">
-              <img src="https://tailwindui.com/plus/img/ecommerce-images/home-page-04-hero-full-width.jpg" alt="" class="size-full object-cover">
-            </div>
-    <div class="absolute inset-0 bg-gray-800 opacity-50"></div>
+      <div aria-hidden="true" class="absolute inset-0  flex flex-col">
+        <div class="relative w-full flex-1 bg-gray-800">
+          <div class="absolute inset-0 overflow-hidden">
+            <!-- Make sure the image fills the container and covers the area properly -->
+            <img
+              src="{% static 'images/landing_page2.jpg' %}"
+              alt=""
+              class="h-full w-full object-cover object-center"
+            />
           </div>
-          <div class="h-48 w-full bg-white"></div>
+          <!-- The dark overlay remains in place to darken the image if needed -->
+          <div class="absolute inset-0 bg-gray-100 opacity-75"></div>
         </div>
+        <div class="h-32 w-full bg-white md:h-40 lg:h-48"></div>
+      </div>
+
       <div
-        class="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-4 text-center sm:pt-32 sm:pb-12 lg:px-0"
+        class="relative mx-auto max-w-3xl px-4 pb-96 text-center sm:px-6 sm:pb-0 lg:px-8"
       >
-<div class="text-center py-10">
+        <div
+          class="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-4 text-center sm:pt-32 sm:pb-12 lg:px-0"
+        >
+          <div class="text-center py-10">
             <h2
               id="sale-heading"
               class="text-4xl font-bold tracking-tight text-black sm:text-5xl lg:text-6xl"
             >
-                Dé goedkoopste vloeren
-
+              Dé goedkoopste vloeren
             </h2>
 
-  <p class="mt-6 text-pretty text-lg font-normal text-gray-700 max-w-2xl mx-auto leading-relaxed">
-    Van PVC tot laminaat, deze zijn allemaal verkrijgbaar in ons uitgebreide assortiment! 
-    Genoeg keuze uit de beste topmerken!
-  </p>
-  <a
-    href="/products"
-    class="mt-8 inline-block rounded-md border border-transparent bg-gradient-to-r from-orange-500 to-orange-400 px-8 py-3 text-lg font-medium text-white shadow-lg hover:from-orange-600 hover:to-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500 focus:ring-offset-2"
-  >
-    Bekijk ons assortiment
-  </a>
-</div>
-
-
+            <p
+              class="mt-6 text-pretty text-lg font-normal text-gray-700 max-w-2xl mx-auto leading-relaxed"
+            >
+              Van PVC tot laminaat, deze zijn allemaal verkrijgbaar in ons
+              uitgebreide assortiment! Genoeg keuze uit de beste topmerken!
+            </p>
+            <a
+              href="/products"
+              class="mt-8 inline-block rounded-md border border-transparent bg-gradient-to-r from-orange-500 to-orange-400 px-8 py-3 text-lg font-medium text-white shadow-lg hover:from-orange-600 hover:to-orange-500 focus:outline-none focus:ring-4 focus:ring-orange-500 focus:ring-offset-2"
+            >
+              Bekijk ons assortiment
+            </a>
+          </div>
+        </div>
       </div>
-      </div>
-      <section aria-labelledby="collection-heading" class="relative -mt-96 sm:mt-0">
+      <section
+        aria-labelledby="collection-heading"
+        class="relative -mt-96 sm:mt-0"
+      >
         <h2 id="collection-heading" class="sr-only">Vloeren aanbieding</h2>
-        <div class="mx-auto grid max-w-md grid-cols-1 gap-y-6 px-4 sm:max-w-7xl sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 sm:px-6 lg:gap-x-8 lg:px-8">
-          <div class="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-[4/5] sm:h-auto">
-            <div aria-hidden="true" class="absolute inset-0 overflow-hidden rounded-lg">
-              <div class="absolute inset-0 overflow-hidden group-hover:opacity-75">
-<img src="{% static 'images/'|add:hero_data.hero1.image_path %}" alt="{{ hero_data.hero1.description }} {{ hero_data.hero1.title }}" class="size-full object-cover">
+        <div
+          class="mx-auto grid max-w-md grid-cols-1 gap-y-6 px-4 sm:max-w-7xl sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0 sm:px-6 lg:gap-x-8 lg:px-8"
+        >
+          <div
+            class="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-[4/5] sm:h-auto"
+          >
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 overflow-hidden rounded-lg"
+            >
+              <div
+                class="absolute inset-0 overflow-hidden group-hover:opacity-75"
+              >
+                <img
+                  src="{% static 'images/'|add:hero_data.hero1.image_path %}"
+                  alt="{{ hero_data.hero1.description }} {{ hero_data.hero1.title }}"
+                  class="size-full object-cover"
+                />
               </div>
-              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"></div>
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"
+              ></div>
             </div>
             <div class="absolute inset-0 flex items-end rounded-lg p-6">
               <div>
-                <p aria-hidden="true" class="text-sm text-white">{{hero_data.hero1.title}}</p>
+                <p aria-hidden="true" class="text-sm text-white">
+                  {{ hero_data.hero1.title }}
+                </p>
                 <h3 class="mt-1 font-semibold text-white">
-                  <a href="{{hero_data.hero1.url}}">
+                  <a href="{{ hero_data.hero1.url }}">
                     <span class="absolute inset-0"></span>
-                    {{hero_data.hero1.description}}
+                    {{ hero_data.hero1.description }}
                   </a>
                 </h3>
               </div>
             </div>
           </div>
-          <div class="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-[4/5] sm:h-auto">
-            <div aria-hidden="true" class="absolute inset-0 overflow-hidden rounded-lg">
-              <div class="absolute inset-0 overflow-hidden group-hover:opacity-75">
-<img src="{% static 'images/'|add:hero_data.hero2.image_path %}" alt="{{ hero_data.hero2.description }} {{ hero_data.hero2.title }}" class="size-full object-cover">
+          <div
+            class="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-[4/5] sm:h-auto"
+          >
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 overflow-hidden rounded-lg"
+            >
+              <div
+                class="absolute inset-0 overflow-hidden group-hover:opacity-75"
+              >
+                <img
+                  src="{% static 'images/'|add:hero_data.hero2.image_path %}"
+                  alt="{{ hero_data.hero2.description }} {{ hero_data.hero2.title }}"
+                  class="size-full object-cover"
+                />
               </div>
-              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"></div>
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"
+              ></div>
             </div>
             <div class="absolute inset-0 flex items-end rounded-lg p-6">
               <div>
-                <p aria-hidden="true" class="text-sm text-white">                    {{hero_data.hero2.title}}
-</p>
+                <p aria-hidden="true" class="text-sm text-white">
+                  {{ hero_data.hero2.title }}
+                </p>
                 <h3 class="mt-1 font-semibold text-white">
-                  <a href="{{hero_data.hero2.url}}">
+                  <a href="{{ hero_data.hero2.url }}">
                     <span class="absolute inset-0"></span>
-                    {{hero_data.hero2.description}}
+                    {{ hero_data.hero2.description }}
                   </a>
                 </h3>
               </div>
             </div>
           </div>
-          <div class="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-[4/5] sm:h-auto">
-            <div aria-hidden="true" class="absolute inset-0 overflow-hidden rounded-lg">
-              <div class="absolute inset-0 overflow-hidden group-hover:opacity-75">
-<img src="{% static 'images/'|add:hero_data.hero3.image_path %}" alt="{{ hero_data.hero3.description }} {{ hero_data.hero3.title }}" class="size-full object-cover">
+          <div
+            class="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-[4/5] sm:h-auto"
+          >
+            <div
+              aria-hidden="true"
+              class="absolute inset-0 overflow-hidden rounded-lg"
+            >
+              <div
+                class="absolute inset-0 overflow-hidden group-hover:opacity-75"
+              >
+                <img
+                  src="{% static 'images/'|add:hero_data.hero3.image_path %}"
+                  alt="{{ hero_data.hero3.description }} {{ hero_data.hero3.title }}"
+                  class="size-full object-cover"
+                />
               </div>
-              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"></div>
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"
+              ></div>
             </div>
             <div class="absolute inset-0 flex items-end rounded-lg p-6">
               <div>
-                <p aria-hidden="true" class="text-sm text-white">{{hero_data.hero3.title}}</p>
+                <p aria-hidden="true" class="text-sm text-white">
+                  {{ hero_data.hero3.title }}
+                </p>
                 <h3 class="mt-1 font-semibold text-white">
-                  <a href="{{hero_data.hero3.url}}">
+                  <a href="{{ hero_data.hero3.url }}">
                     <span class="absolute inset-0"></span>
-                    {{hero_data.hero3.description}}
+                    {{ hero_data.hero3.description }}
                   </a>
                 </h3>
               </div>
@@ -439,7 +174,7 @@
           <div class="mx-auto max-w-7xl px-4 py-24 lg:px-8 relative">
             <button
               id="nextButtonRunners"
-              class="absolute top-1/2 right-0 transform text-orange-400 -translate-y-1/2 px-4 py-2 bg-gray-50 border-gray-200 border-2  rounded-full z-10"
+              class="absolute top-1/2 right-0 transform text-orange-400 -translate-y-1/2 px-4 py-2 bg-gray-50 border-gray-200 border-2 rounded-full z-10"
             >
               <i class="fas fa-chevron-right"></i>
             </button>
@@ -454,13 +189,14 @@
               <a
                 href="/runners"
                 class="hidden text-sm font-medium text-orange-500 hover:text-orange-400 md:block"
-                >Zie alles<span aria-hidden="true"> &rarr;</span></a
               >
+                Zie alles<span aria-hidden="true"> &rarr;</span>
+              </a>
             </div>
 
             <div class="mt-6 relative">
               <div
-                class="slider-runners overflow-hidden relative"
+                class="slider-runners flex overflow-hidden relative"
                 id="productContainer"
               >
                 {% for product in runner_products_data %}
@@ -479,7 +215,7 @@
       {% endif %}
 
       <div class="relative">
-        <div class=" overflow-hidden px-24">
+        <div class="overflow-hidden px-24">
           <img
             src="media\brand_images\hardlopers_category.jpg"
             alt=""
@@ -503,68 +239,19 @@
             </p>
             <a
               href="/discounts"
-              class="mt-6 inline-block w-full rounded-md border border-transparent bg-orange-500 px-8 py-3 font-medium text-white hover:bg-orange-400 sm:w-auto"
+              class="mt-6 inline-block  rounded-md border border-transparent bg-orange-500 px-8 py-3 font-medium text-white hover:bg-orange-400 w-auto"
               >Zie kortingen</a
             >
           </div>
         </section>
       </div>
 
-      {% if brands %}
-        <section
-          aria-labelledby="category-heading"
-          class="pt-24 xl:mx-auto xl:max-w-7xl xl:px-8"
-        >
-          <div
-            class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
-          >
-            <h2
-              id="category-heading"
-              class="text-2xl font-bold tracking-tight text-gray-900"
-            >
-              De beste merken
-            </h2>
-          </div>
+      {% include 'components/brand_section.html' %}
 
-          <div class="mt-10 flow-root">
-            <div class="-my-2">
-              <div
-                class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible"
-              >
-                <div
-                  class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-4 xl:gap-x-8 xl:space-x-0 xl:px-0"
-                >
-                  {% for brand in brands.all|slice:":4" %}
-                    <div class="group relative">
-                      <div
-                        class="aspect-w-1 aspect-h-1 w-full  overflow-hidden rounded-full bg-gray-200"
-                      >
-                        <img
-                          src="media/{{ brand.image }}"
-                          alt="{{ brand.name }}"
-                          class="h-full w-full object-cover object-center group-hover:opacity-75 rounded-full"
-                        />
-                      </div>
-                      <div class="mt-6 text-center">
-                        <h3 class="mt-1 text-lg font-semibold text-gray-900">
-                          <a href="/products/{{ brand.name }}">
-                            <span class="absolute inset-0"></span>
-                            {{ brand.name }}
-                          </a>
-                        </h3>
-                      </div>
-                    </div>
-                  {% endfor %}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      {% endif %}
       <!-- Category section -->
       <section
         aria-labelledby="category-heading"
-        class="py-24  sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8"
+        class="py-24 sm:pt-32 xl:mx-auto xl:max-w-7xl xl:px-8"
       >
         <div
           class="px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8 xl:px-0"
@@ -580,22 +267,18 @@
           {% endfor %}
         </div>
 
-        <div class="mt-4 flow-root">
+        <div class="mt-8 flow-root">
           <div class="-my-2">
-            <div
-              class="relative box-content h-80 overflow-x-auto py-2 xl:overflow-visible"
-            >
+            <div class="relative box-content py-2 xl:overflow-visible">
               <div
-                class="absolute  flex space-x-8 px-4 sm:px-6 lg:px-8 xl:relative xl:grid xl:grid-cols-5 xl:gap-x-8 xl:space-x-0 xl:px-0"
+                class="flex flex-wrap gap-8 px-4 sm:px-6 lg:px-8 xl:grid xl:grid-cols-5 xl:gap-8 xl:px-0 justify-center sm:justify-center"
               >
                 {% for category in category_data|slice:"5" %}
-
                   {% if category.thumbnail %}
-
                     {% if category.name == 'Hardlopers' %}
                       <a
                         href="/runners"
-                        class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
+                        class="relative flex w-full sm:w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto sm:h-112 md:h-96 xl:h-112"
                       >
                         <span aria-hidden="true" class="absolute inset-0">
                           <img
@@ -610,13 +293,14 @@
                         ></span>
                         <span
                           class="relative mt-auto text-center text-xl font-bold text-white"
-                          >{{ category.name }}</span
                         >
+                          {{ category.name }}
+                        </span>
                       </a>
                     {% else %}
                       <a
                         href="/products/{{ category.name }}"
-                        class="relative flex h-80 w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto"
+                        class="relative flex w-full sm:w-56 flex-col overflow-hidden rounded-lg p-6 hover:opacity-75 xl:w-auto sm:h-112 md:h-96 xl:h-112"
                       >
                         <span aria-hidden="true" class="absolute inset-0">
                           <img
@@ -631,8 +315,9 @@
                         ></span>
                         <span
                           class="relative mt-auto text-center text-xl font-bold text-white"
-                          >{{ category.name }}</span
                         >
+                          {{ category.name }}
+                        </span>
                       </a>
                     {% endif %}
                   {% endif %}
@@ -670,179 +355,167 @@
               </span>
             </div>
 
-<div class="mx-auto mt-6 justify-center text-center">
-    <div class="flex items-left justify-center mt-2 space-x-2">
-    <i class="fas fa-check text-green-500"></i>
-    <span class="text-sm font-medium text-gray-500">Wij nemen onze klantfeedback serieus</span>
-  </div>
-    <!-- Green circle icon for the second checkmark -->
-  <div class="flex items-left justify-center mt-2 space-x-2">
-    <i class="fas fa-check text-green-500"></i>
-    <span class="text-sm font-medium text-gray-500">Wij staan open voor uw feedback</span>
-  </div>
-  <!-- Green circle icon for the first checkmark -->
-  <div class="flex items-left justify-center mt-2 space-x-2">
-    <i class="fas fa-check text-green-500"></i>
-    <span class="text-sm font-medium text-gray-500">Constant aan het vernieuwen</span>
-  </div>
-
-
-
-  <!-- Green circle icon for the third checkmark -->
-
-
-  <!-- Add more checkmarks as needed -->
-</div>
-
-
-      </div>
+            <div class="mx-auto mt-6 justify-center text-center">
+              <div class="flex items-left justify-center mt-2 space-x-2">
+                <i class="fas fa-check text-green-500"></i>
+                <span class="text-sm font-medium text-gray-500"
+                  >Wij nemen onze klantfeedback serieus</span
+                >
+              </div>
+              <div class="flex items-left justify-center mt-2 space-x-2">
+                <i class="fas fa-check text-green-500"></i>
+                <span class="text-sm font-medium text-gray-500"
+                  >Wij staan open voor uw feedback</span
+                >
+              </div>
+              <div class="flex items-left justify-center mt-2 space-x-2">
+                <i class="fas fa-check text-green-500"></i>
+                <span class="text-sm font-medium text-gray-500"
+                  >Constant aan het vernieuwen</span
+                >
+              </div>
+            </div>
           </div>
+        </div>
 
-          <!-- Klantenbeoordelingen and Reviews arranged horizontally -->
-          <div
-            class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-24"
-          >
-            <div class="lg:flex lg:space-x-8">
-              <!-- Klantenbeoordelingen Section -->
-              <div class="lg:w-1/3">
-                <h2 class="text-2xl font-bold tracking-tight text-gray-900">
-                  Klantenbeoordelingen
-                </h2>
+        <!-- Klantenbeoordelingen and Reviews -->
+        <div
+          class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-24"
+        >
+          <div class="lg:flex lg:space-x-8">
+            <!-- Klantenbeoordelingen Section -->
+            <div class="lg:w-1/3 px-6 lg:px-0">
+              <h2 class="text-2xl font-bold tracking-tight text-gray-900">
+                Klantenbeoordelingen
+              </h2>
+              <div class="mt-4">
+                <div class="flex items-center">
+                  <div class="flex items-center text-orange-400 text-xl">
+                    {% for i in store_rating_data.range %}
+                      {% if i <= store_rating_data.mean %}
+                        ★
+                      {% else %}
+                        ☆
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <span class="ml-2 text-sm text-gray-900 font-semibold"
+                    >{{ store_rating_data.mean }} van de 5</span
+                  >
+                </div>
+                <p class="text-sm text-gray-500 mt-2">
+                  Gebaseerd op {{ store_rating_data.count }} reviews
+                </p>
+              </div>
 
-                <div class="mt-4">
-                  <div class="flex items-center">
-                    <div class="flex items-center text-orange-400 text-xl">
-                      <!-- Display star rating dynamically -->
-                      {% for i in store_rating_data.range %}
-                        {% if i <= store_rating_data.mean %}
-                          ★
-                        {% else %}
-                          ☆
-                        {% endif %}
-                      {% endfor %}
+              <div class="mt-6 space-y-4">
+                {% for key, value in store_rating_data.stars.items %}
+                  <div class="flex items-center text-sm">
+                    <span class="w-12 font-medium text-base text-gray-900"
+                      >{{ key }}</span
+                    >
+                    <div class="relative  w-full h-4 bg-gray-100 rounded-full">
+                      <div
+                        class="absolute h-4 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full"
+                        style="width: {{ value.percentage }}%;"
+                      ></div>
                     </div>
-                    <span class="ml-2 text-sm text-gray-900 font-semibold">
-                      {{ store_rating_data.mean }} van de 5
+                    <span
+                      class="ml-4 text-right text-xs text-gray-900 font-semibold"
+                    >
+                      {{ value.percentage|default:"0"|floatformat:0 }}%
                     </span>
                   </div>
-                  <p class="text-sm text-gray-500 mt-2">
-                    Gebaseerd op {{ store_rating_data.count }} reviews
-                  </p>
-                </div>
+                {% endfor %}
+              </div>
 
-                <div class="mt-6 space-y-4">
-                  <!-- Rating distribution bars -->
-                  {% for key, value in store_rating_data.stars.items %}
-                    <div class="flex items-center text-sm">
-                      <span class="w-12 font-medium text-base text-gray-900">
-                        {{ key }}
-                      </span>
-                      <div
-                        class="relative  w-full h-4 bg-gray-100 rounded-full"
-                      >
-                        <div
-                          class="absolute h-4 bg-gradient-to-r from-orange-500 to-orange-400 rounded-full"
-                          style="width: {{ value.percentage }}%;"
-                        ></div>
-                      </div>
-<span class="ml-4 text-right text-xs text-gray-900 font-semibold">
-  {{ value.percentage|floatformat:0 }}%
-</span>
-
-
-                    </div>
-                  {% endfor %}
-                </div>
-                {{ can_write }}
-                {% if user.is_authenticated %}
-                  {% if can_write_review %}
-                    <div class="mt-10">
-                      <h3 class="text-lg font-medium text-gray-900">
-                        Deel je mening
-                      </h3>
-                      <p class="mt-1 text-sm text-gray-600">
-                        Als je bij ons een aankoop hebt gedaan en je wilt laten
-                        weten wat je ervan vond, doe dit hier!
-                      </p>
-                      <a
-                        href="/store_rating"
-                      class="mt-4 inline-flex items-center justify-center rounded-md border border-orange-400 bg-white px-6 py-2 text-sm font-medium text-orange-500 hover:bg-orange-500 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500400 transition duration-300"
-                      >
-                        Schrijf een beoordeling
-                      </a>
-                    </div>
-                  {% else %}
-                    <div class="mt-10">
-                      <h3 class="text-lg font-medium text-gray-900">
-                        Deel je mening
-                      </h3>
-                      <p class="mt-1 text-sm text-gray-600">
-                        Je hebt nog geen recente aankopen gedaan om een
-                        beoordeling over te geven. Dus waar wacht je op?
-                      </p>
-                      <a
-                        href="/products"
-                      class="mt-4 inline-flex items-center justify-center rounded-md border border-orange-400 bg-white px-6 py-2 text-sm font-medium text-orange-500 hover:bg-orange-500 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500400 transition duration-300"
-                      >
-                        Naar assortiment
-                      </a>
-                    </div>
-                  {% endif %}
+              <!-- User Review Section -->
+              {% if user.is_authenticated %}
+                {% if can_write_review %}
+                  <div class="mt-10">
+                    <h3 class="text-lg font-medium text-gray-900">
+                      Deel je mening
+                    </h3>
+                    <p class="mt-1 text-sm text-gray-600">
+                      Als je bij ons een aankoop hebt gedaan en je wilt laten
+                      weten wat je ervan vond, doe dit hier!
+                    </p>
+                    <a
+                      href="/store_rating"
+                      class="mt-4 inline-flex items-center justify-center rounded-md border border-orange-400 bg-white px-6 py-2 text-sm font-medium text-orange-500 hover:bg-orange-500 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300"
+                    >
+                      Schrijf een beoordeling
+                    </a>
+                  </div>
                 {% else %}
                   <div class="mt-10">
                     <h3 class="text-lg font-medium text-gray-900">
                       Deel je mening
                     </h3>
                     <p class="mt-1 text-sm text-gray-600">
-                      Wil je een beoordeling achterlaten? Log eerst in of maak
-                      een account aan. Je kunt ook een bestelling plaatsen om je
-                      ervaring te delen!
+                      Je hebt nog geen recente aankopen gedaan om een
+                      beoordeling over te geven. Dus waar wacht je op?
                     </p>
                     <a
-                      href="{% url 'login' %}"
-                      class="mt-4 inline-flex items-center justify-center rounded-md border border-orange-400 bg-white px-6 py-2 text-sm font-medium text-orange-500 hover:bg-orange-500 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500400 transition duration-300"
+                      href="/products"
+                      class="mt-4 inline-flex items-center justify-center rounded-md border border-orange-400 bg-white px-6 py-2 text-sm font-medium text-orange-500 hover:bg-orange-500 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 transition duration-300"
                     >
-                      Log in of maak een account aan
+                      Naar assortiment
                     </a>
                   </div>
                 {% endif %}
-              </div>
-
-              <!-- Recent Reviews Section -->
-              <div class="lg:w-2/3 mt-16 lg:mt-0 pl-12">
-                <h3 class="text-xl font-semibold text-gray-900">
-                  Recente beoordelingen
-                </h3>
-
-                <div class="mt-6 space-y-8">
-                  {% for review in store_rating_data.last %}
-                    <div
-                class="rounded-lg shadow-md border border-gray-200 p-8 bg-gray-50"
-                    >
-                      <p class="text-base font-medium text-gray-900">
-                        {{ review.title }}
-                      </p>
-                      <p class="text-sm text-gray-600 mt-1">
-                        {{ review.description }}
-                      </p>
-
-                      <div class="mt-4">
-                        <span class="text-orange-500 text-xl">
-                          {% for i in store_rating_data.range %}
-                            {% if i <= review.stars %}
-                              ★
-                            {% else %}
-                              ☆
-                            {% endif %}
-                          {% endfor %}
-                        </span>
-                        <span class="ml-2 text-sm text-gray-400 font-normal">
-                          {{ review.stars }} sterren
-                        </span>
-                      </div>
-                    </div>
-                  {% endfor %}
+              {% else %}
+                <div class="mt-10">
+                  <h3 class="text-lg font-medium text-gray-900">
+                    Deel je mening
+                  </h3>
+                  <p class="mt-1 text-sm text-gray-600">
+                    Wil je een beoordeling achterlaten? Log eerst in of maak een
+                    account aan. Je kunt ook een bestelling plaatsen om je
+                    ervaring te delen!
+                  </p>
+                  <a
+                    href="{% url 'login' %}"
+                    class="mt-4 inline-flex items-center justify-center rounded-md border border-orange-400 bg-white px-6 py-2 text-sm font-medium text-orange-500 hover:bg-orange-500 hover:text-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500400 transition duration-300"
+                  >
+                    Log in of maak een account aan
+                  </a>
                 </div>
+              {% endif %}
+            </div>
+
+            <!-- Recent Reviews Section -->
+            <div class="lg:w-2/3 mt-16 lg:mt-0 px-6">
+              <h3 class="text-xl font-semibold text-gray-900">
+                Recente beoordelingen
+              </h3>
+              <div class="mt-6 space-y-8">
+                {% for review in store_rating_data.last %}
+                  <div
+                    class="rounded-lg shadow-md border border-gray-200 p-8 bg-gray-50"
+                  >
+                    <p class="text-base font-medium text-gray-900">
+                      {{ review.title }}
+                    </p>
+                    <p class="text-sm text-gray-600 mt-1">
+                      {{ review.description }}
+                    </p>
+                    <div class="mt-4">
+                      <span class="text-orange-500 text-xl">
+                        {% for i in store_rating_data.range %}
+                          {% if i <= review.stars %}
+                            ★
+                          {% else %}
+                            ☆
+                          {% endif %}
+                        {% endfor %}
+                      </span>
+                      <span class="ml-2 text-sm text-gray-400 font-normal"
+                        >{{ review.stars }} sterren</span
+                      >
+                    </div>
+                  </div>
+                {% endfor %}
               </div>
             </div>
           </div>

@@ -21,21 +21,19 @@
       </div>
     </div>
 
-    <!-- Contact Details & Availability Section -->
     <div
       class="mx-auto mt-12 max-w-screen-xl flex flex-col sm:flex-row gap-12 sm:gap-8 px-6"
     >
       <!-- Email Block (wider) -->
-      <div
-        class="flex gap-6 items-center bg-gradient-to-r bg-white rounded-lg p-8 w-full sm:w-1/2"
-      >
-        <!-- Circle with Perfect Round Icon -->
+      <div class="flex gap-6 items-center p-8 w-full sm:w-1/2">
+        <!-- Circle with Fixed Icon Size -->
         <div
-          class="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-600 to-orange-400 shadow-lg"
+          class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-orange-600 to-orange-400 shadow-lg rounded-full flex items-center justify-center flex-shrink-0"
         >
-          <i class="fa fa-envelope text-white text-2xl"></i>
+          <i class="fa fa-envelope text-white text-xl sm:text-2xl"></i>
+          <!-- Icon size remains fixed -->
         </div>
-        <div>
+        <div class="flex-1">
           <h3 class="text-lg font-semibold text-gray-900">E-mail</h3>
           <a
             href="mailto:{{ store_data.contact_email }}"
@@ -52,16 +50,15 @@
       </div>
 
       <!-- Availability Block (wider) -->
-      <div
-        class="flex gap-6 items-center bg-gradient-to-r bg-white rounded-lg p-8 w-full sm:w-1/2"
-      >
-        <!-- Circle with Perfect Round Icon -->
+      <div class="flex gap-6 items-center p-8 w-full sm:w-1/2">
+        <!-- Circle with Fixed Icon Size -->
         <div
-          class="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-orange-600 to-orange-400 shadow-lg"
+          class="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-orange-600 to-orange-400 shadow-lg rounded-full flex items-center justify-center flex-shrink-0"
         >
-          <i class="fa fa-clock text-white text-2xl"></i>
+          <i class="fa fa-clock text-white text-xl sm:text-2xl"></i>
+          <!-- Icon size remains fixed -->
         </div>
-        <div>
+        <div class="flex-1">
           <h3 class="text-lg font-semibold text-gray-900">Beschikbaarheid</h3>
           <p class="text-sm font-semibold text-orange-400">
             {{ store_data.opening_time_week }}

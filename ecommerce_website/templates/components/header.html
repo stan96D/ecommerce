@@ -6,7 +6,7 @@
     display: none;
   }
 </style>
-<header class="bg-white border-b border-gray-200">
+<header class="bg-white border-b border-gray-200 top-0 z-10">
   <div class="bg-gray-100">
     <!-- {% if env == "test" %}
       <div
@@ -30,29 +30,35 @@
     {% if current_sale %}
       <a href="/discounts" class="block">
         <div
-          class="bg-black text-white py-4 px-4 text-center shadow-sm flex items-center justify-center space-x-4"
+          class="bg-black text-white py-4 px-4 text-center shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-center space-y-4 sm:space-y-0 sm:space-x-6 lg:space-x-8 mx-auto max-w-full"
         >
           <!-- Font Awesome Sale Icon -->
-          <i class="fas fa-tag text-white text-xl"></i>
-          <!-- Sale icon -->
+          <i class="fas fa-tag text-white text-xl sm:text-xl lg:text-xl"></i>
 
-          <p class="text-sm font-semibold">{{ current_sale.description }}</p>
+          <!-- Sale description and days left -->
+          <div
+            class="text-sm sm:text-sm flex flex-col sm:flex-row sm:items-center sm:space-x-4"
+          >
+            <p class="font-semibold text-sm sm:text-sm">
+              {{ current_sale.description }}
+            </p>
 
-          <p class="text-sm">
-            {% if current_sale.days_left <= 7 %}
-              U heeft nog
-              <span class="font-bold"
-                >{{ current_sale.days_left }}
-                dag{{ current_sale.days_left|pluralize:"" }}</span
-              >
-              om te profiteren van deze korting!
-            {% else %}
-              Korting beschikbaar tot
-              <span class="font-bold"
-                >{{ current_sale.end_date|date:"m/d/Y" }}</span
-              >.
-            {% endif %}
-          </p>
+            <p class="text-sm sm:text-sm">
+              {% if current_sale.days_left <= 7 %}
+                U heeft nog
+                <span class="font-bold"
+                  >{{ current_sale.days_left }}
+                  dag{{ current_sale.days_left|pluralize:"" }}</span
+                >
+                om te profiteren van deze korting!
+              {% else %}
+                Korting beschikbaar tot
+                <span class="font-bold"
+                  >{{ current_sale.end_date|date:"m/d/Y" }}</span
+                >.
+              {% endif %}
+            </p>
+          </div>
         </div>
       </a>
     {% endif %}
@@ -61,12 +67,24 @@
       class="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8"
     >
       {% for motivation in store_motivations %}
+        <!-- 
+      Show the first 2 items on mobile screens
+      Show the first 3 items on medium screens (tablets)
+      Show up to 4 items on large screens (desktops)
+    -->
         <p
           id="storeMotivation"
-          class="flex-1 text-center text-sm font-medium text-black lg:flex-none"
+          class="flex-1 text-center text-sm font-medium text-black lg:flex-none
+        {% if forloop.counter > 4 %}
+            hidden lg:block
+          {% elif forloop.counter > 3 %}
+            hidden md:block
+          {% elif forloop.counter > 2 %}
+            hidden sm:block
+          {% endif %}
+      "
         >
           <i class="fas {{ motivation.icon }} text-orange-400 mr-1"></i>
-
           {{ motivation.name }}
         </p>
       {% endfor %}
@@ -74,22 +92,58 @@
   </div>
   <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-200 ">
     <div class="relative flex h-32 justify-between">
-      <div class="relative z-10 flex px-2 lg:px-0">
-        <a href="{% url 'home' %}" class="flex flex-shrink-0 items-center">
-          <img
-            class="max-h-32 w-auto"
-            src="{% static 'images/gvs_logo_plain_cropped.jpg' %}"
-            alt="{{ store_data.name }}"
-          />
-        </a>
+      <div class="relative z-10 flex items-center px-2 lg:px-0">
+        <div class="flex flex-shrink-0 items-center w-full justify-between">
+          <!-- Mobile Logo (smaller screens) -->
+          <a href="{% url 'home' %}">
+            <img
+              class="block sm:hidden w-16 h-auto max-h-24"
+              src="{% static 'images/logo_new_transparent.png' %}"
+              alt="{{ store_data.name }}"
+            />
+          </a>
+
+          <!-- Mobile and Medium Hamburger Icon (visible on smaller screens and medium screens) -->
+          <div
+            class="md:hidden flex items-center justify-center ml-2"
+            onclick="toggleMobileMenu()"
+          >
+            <button class="text-gray-400 focus:outline-none">
+              <svg
+                class="w-8 h-8"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <a href="{% url 'home' %}">
+            <!-- Desktop Logo (larger screens) -->
+            <img
+              class="hidden sm:block w-36 md:w-44 lg:w-56 xl:w-72 h-auto max-h-40"
+              src="{% static 'images/gvs_logo_plain_cropped.jpg' %}"
+              alt="{{ store_data.name }}"
+            />
+          </a>
+        </div>
       </div>
-      <div class="z-0 flex flex-1 items-center justify-center px-2 sm:inset-0">
+
+      <div class="z-0 flex flex-1 items-center justify-between px-2 sm:inset-0">
         <div class="w-full sm:max-w-xs relative">
           <form id="searchForm" onsubmit="submitSearch(event)">
             <label for="search" class="sr-only">Search</label>
             <div
               id="search-container"
-              class="relative rounded-md  border-gray-300 transition-all duration-200 ease-in-out"
+              class="relative rounded-md border-gray-300 transition-all duration-200 ease-in-out"
             >
               <!-- Glass Icon -->
               <div
@@ -170,82 +224,32 @@
             }
           </script>
         </div>
-
         {% if store_data and store_data.contact_email %}
-          <div class="ml-4">
+          <div class="ml-4 flex-grow sm:flex-shrink-0 hidden sm:block">
             <a
               href="mailto:{{ store_data.contact_email }}"
-              class="inline-block rounded-full border-2 border-transparent bg-gradient-to-r from-orange-500 to-orange-400 px-6 py-2 text-sm font-medium text-white hover:from-orange-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 transform transition-all duration-300 ease-in-out hover:scale-105"
+              class="inline-flex items-center rounded-full border-2 border-transparent bg-gradient-to-r from-orange-500 to-orange-400 px-6 py-2 text-sm font-medium text-white hover:from-orange-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 transform transition-all duration-300 ease-in-out hover:scale-105 w-full sm:w-auto"
             >
-              <i
-                class="fas fa-envelope mr-2 text-lg transition-transform duration-300 ease-in-out hover:rotate-90"
-              ></i>
+              <!-- Icon (Visible on md and larger) -->
+              <i class="fas fa-envelope text-lg md:inline hidden"></i>
+
+              <!-- Email text (Only visible on lg and larger) -->
               <span
-                class="inline-block transition-all duration-300 ease-in-out hover:translate-x-1"
-                >{{ store_data.contact_email }}</span
+                class="ml-2 hidden lg:inline transition-all duration-300 ease-in-out hover:translate-x-1"
               >
+                {{ store_data.contact_email }}
+              </span>
             </a>
           </div>
         {% endif %}
       </div>
 
-      <div class="relative z-10 flex items-center lg:hidden">
-        <!-- Mobile menu button -->
-        <button
-          type="button"
-          class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-          aria-controls="mobile-menu"
-          aria-expanded="false"
-        >
-          <span class="absolute -inset-0.5"></span>
-          <span class="sr-only">Open menu</span>
-          <!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
-          <svg
-            class="block h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
-          <!--
-            Icon when menu is open.
-
-            Menu open: "block", Menu closed: "hidden"
-          -->
-          <svg
-            class="hidden h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+      <div class="relative :z-10 lg:ml-4 flex items-center">
         {% if user.is_authenticated %}
           <a href="{% url 'account' %}">
             <button
               type="button"
-              class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-300 mr-2 w-10 h-10"
+              class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-300 mr-2 w-10 h-10 hidden sm:block"
             >
               <span class="sr-only">Account</span>
               <i class="far fa-user fa-lg"></i>
@@ -257,7 +261,7 @@
         <button
           type="button"
           onclick="openFavorites()"
-          class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-300  mr-2 w-10 h-10"
+          class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-300  mr-2 w-10 h-10 hidden sm:block"
         >
           <span class="sr-only">Favorite</span>
           <i class="far fa-heart fa-lg"></i>
@@ -271,7 +275,7 @@
         <button
           type="button"
           onclick="openFlyoutPanel()"
-          class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-300  w-10 h-10"
+          class="relative flex-shrink-0 rounded-full p-1 text-gray-400 hover:text-gray-300 mr-2 w-10 h-10"
         >
           <span class="sr-only">Store Cart</span>
           <i class="fas fa-shopping-cart fa-lg"></i>
@@ -285,12 +289,13 @@
     </div>
 
     <div class="flex">
+      <!-- Navigation (hidden on mobile, visible on medium screens and above) -->
       <nav
         id="navigation-container"
-        class="hidden lg:flex lg:space-x-6 lg:py-4"
+        class="hidden md:flex md:space-x-6 md:py-4"
         aria-label="Global"
       >
-        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+        <!-- Loop through categories and display them -->
         {% for category in headerData %}
           {% if category.name == 'Hardlopers' %}
             <a
@@ -313,38 +318,31 @@
           {% endif %}
         {% endfor %}
       </nav>
+
+      <!-- Right-aligned items (hidden on mobile, visible on medium screens and above) -->
       <div
-        class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6"
+        class="hidden md:flex md:flex-1 md:items-center md:justify-end md:space-x-6"
       >
         {% if user.is_authenticated %}
           <a
-            href="/account"
-            class="text-sm font-medium text-white hover:text-gray-100"
-            >{{ user }}</a
-          >
-          <a
             href="/logout"
-            class="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
-            >Uitloggen</a
+            class="hidden md:block md:ml-4 rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
           >
+            Uitloggen
+          </a>
         {% else %}
           <a
             href="/registration"
-            class="text-sm font-medium text-white hover:text-gray-100"
-            >Account aanmaken</a
+            class="text-sm font-medium text-gray-400 hover:text-gray-300"
           >
-          <!-- <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span> -->
+            Account aanmaken
+          </a>
           <a
             href="/login"
             class="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500"
-            >Inloggen</a
           >
-
-          <!-- <a
-            href="/login"
-            class="text-sm font-medium text-white hover:text-gray-100"
-            >Inloggen</a
-          > -->
+            Inloggen
+          </a>
         {% endif %}
       </div>
     </div>
@@ -353,87 +351,6 @@
       {% include 'components/fly_out_menu_standard.html' %}
     {% endfor %}
   </div>
-
-  <!-- Mobile menu, show/hide based on menu state. -->
-  <nav class="lg:hidden" aria-label="Global" id="mobile-menu">
-    <div class="space-y-1 px-2 pb-3 pt-2">
-      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <a
-        href="#"
-        class="bg-gray-900 text-white block rounded-md py-2 px-3 text-base font-medium"
-        aria-current="page"
-        >Dashboard</a
-      >
-      <a
-        href="#"
-        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
-        >Team</a
-      >
-      <a
-        href="#"
-        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
-        >Projects</a
-      >
-      <a
-        href="#"
-        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md py-2 px-3 text-base font-medium"
-        >Calendar</a
-      >
-    </div>
-    <div class="border-t border-gray-700 pb-3 pt-4 ">
-      <div class="flex items-center px-4">
-        <div class="flex-shrink-0">
-          <img
-            class="h-10 w-10 rounded-full"
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
-        </div>
-        <div class="ml-3">
-          <div class="text-base font-medium text-white">Tom Cook</div>
-          <div class="text-sm font-medium text-gray-400">tom@example.com</div>
-        </div>
-        <button
-          type="button"
-          class="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-        >
-          <span class="absolute -inset-1.5"></span>
-          <span class="sr-only">View notifications</span>
-          <svg
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-            />
-          </svg>
-        </button>
-      </div>
-      <div class="mt-3 space-y-1 px-2">
-        <a
-          href="#"
-          class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-          >Your Profile</a
-        >
-        <a
-          href="#"
-          class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-          >Settings</a
-        >
-        <a
-          href="#"
-          class="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-          >Sign out</a
-        >
-      </div>
-    </div>
-  </nav>
 </header>
 
 {% if breadcrumbs %}
@@ -446,7 +363,7 @@
     {% endif %}
   {% endfor %}
 {% endif %}
-
+{% include 'components/mobile_menu.html' %}
 <!-- Flyout panel -->
 <div
   class="relative z-50 hidden"
@@ -462,14 +379,14 @@
   ></div>
   <!-- Dark backdrop with 25% opacity -->
 
-  <div class="absolute inset-0 overflow-hidden ">
-    <div class="absolute inset-0 overflow-hidden ">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
       <div
-        class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 "
+        class="pointer-events-none fixed inset-y-0 right-0 flex w-full h-screen sm:max-w-md sm:w-full pl-10"
       >
-        <div class="pointer-events-auto w-screen max-w-md">
+        <div class="pointer-events-auto w-full sm:max-w-md">
           <div
-            class="flex h-full flex-col bg-white py-6 shadow-xl overflow-y-auto "
+            class="flex h-full flex-col bg-white py-6 shadow-xl overflow-y-auto"
           >
             <div class="px-4 sm:px-6">
               <div class="flex items-start justify-between">
@@ -550,6 +467,14 @@
     </div>
   </div>
 </div>
+
+<!-- JavaScript to close the flyout panel -->
+<script>
+  function closeFlyoutPanel() {
+    const panel = document.getElementById('flyout-panel')
+    panel.classList.add('hidden')
+  }
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
@@ -881,10 +806,18 @@
         console.log(favoriteCount)
 
         const favoriteCountElement = $('#favorite-count')
+        const favoriteCountElementMobile = $('#favorite-count-mobile')
+
         if (favoriteCount === 0) {
           favoriteCountElement.addClass('hidden').removeClass('flex')
+          favoriteCountElementMobile.addClass('hidden').removeClass('flex')
         } else {
           favoriteCountElement
+            .text(favoriteCount)
+            .removeClass('hidden')
+            .addClass('flex')
+
+          favoriteCountElementMobile
             .text(favoriteCount)
             .removeClass('hidden')
             .addClass('flex')
@@ -1044,5 +977,6 @@
     flagIcon.className = 'flag-icon ' + iconClass
     document.getElementById('selected-flag').appendChild(flagIcon)
   }
+
   <!-- updateSelectedFlag(document.getElementById('desktop-language')) -->
 </script>
