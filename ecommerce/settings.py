@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
-NPM_BIN_PATH = "/usr/local/bin/npm"
+NPM_BIN_PATH = "/usr/bin/npm"
 ENVIRONMENT = os.getenv('DJANGO_ENV', 'dev')
 SECRET_KEY = os.getenv(
     'SECRET_KEY')
