@@ -93,13 +93,15 @@
           <dl
             class="space-y-8 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-8 sm:space-y-0 lg:gap-x-10"
           >
-            {% for question, answer in store_data.faq.items %}
+            {% for question in store_data.faq %}
               <div>
                 <dt class="text-base font-semibold text-gray-900">
-                  {{ question }}
+                  {{ question.question }}
                   <span class="text-2xl" aria-hidden="true"> &darr;</span>
                 </dt>
-                <dd class="mt-2 text-base text-gray-600">{{ answer }}</dd>
+                <dd class="mt-2 text-base text-gray-600">
+                  {{ question.answer }}
+                </dd>
               </div>
             {% endfor %}
           </dl>

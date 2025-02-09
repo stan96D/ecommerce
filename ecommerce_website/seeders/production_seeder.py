@@ -16,6 +16,7 @@ from ecommerce_website.seeders.initial_seeder_data.store_ratings import store_ra
 from ecommerce_website.seeders.initial_seeder_data.store_motivations import store_motivations
 from ecommerce_website.seeders.initial_seeder_data.category_data import category_data
 from ecommerce_website.seeders.initial_seeder_data.brands_data import brands_data
+from ecommerce_website.seeders.initial_seeder_data.faq_data import faq_data
 from django.db import transaction
 
 
@@ -54,6 +55,7 @@ class ProductionSeeder():
             opening_time_week=WebShopConfig.opening_time_week(),
             opening_time_weekend=WebShopConfig.opening_time_weekend(),
             socials=WebShopConfig.socials(),
+            faq=faq_data,
             active=True
 
         )
@@ -195,26 +197,31 @@ class ProductionSeeder():
         total_attribute_types = product_attribute_types.count()
 
         # Start tracking the overall task
-        progress_manager.start_task("Seeding Product Filters", total_steps=total_categories * total_attribute_types)
-        
+        progress_manager.start_task(
+            "Seeding Product Filters", total_steps=total_categories * total_attribute_types)
+
         # Loop over each category
         for category_index, category in enumerate(categories):
             print("Now in category: ", category)
             # Track progress for categories
-            progress_manager.update_task("Seeding Product Filters", steps=total_attribute_types)
+            progress_manager.update_task(
+                "Seeding Product Filters", steps=total_attribute_types)
 
             for attribute_type in product_attribute_types:
-                print(f"Now processing attribute: {attribute_type.name} for category: {category.name}")
+                print(f"Now processing attribute: {
+                      attribute_type.name} for category: {category.name}")
 
                 # Track progress for each category-attribute combination
-                progress_manager.update_task("Seeding Product Filters", steps=1)
+                progress_manager.update_task(
+                    "Seeding Product Filters", steps=1)
 
                 is_slider = attribute_type.name in attributes_for_slider
 
                 # Skip excluded attributes or the ones that have the same name as the category
                 if attribute_type.name != category.name and attribute_type.name in included_attributes:
 
-                    print(f"Now in attribute_type: {attribute_type} for category: {category.name}")
+                    print(f"Now in attribute_type: {
+                          attribute_type} for category: {category.name}")
 
                     associated_attributes = ProductAttribute.objects.filter(
                         attribute_type=attribute_type)
@@ -225,14 +232,16 @@ class ProductionSeeder():
                         for product_attribute in associated_attributes:
                             if is_slider:
                                 try:
-                                    numeric_value = float(product_attribute.numeric_value)
+                                    numeric_value = float(
+                                        product_attribute.numeric_value)
                                 except Exception:
                                     numeric_value = None
                                 if numeric_value is not None and numeric_value not in values_for_filter:
                                     values_for_filter.append(numeric_value)
                             else:
                                 if product_attribute.value not in values_for_filter:
-                                    values_for_filter.append(product_attribute.value)
+                                    values_for_filter.append(
+                                        product_attribute.value)
 
                         filter_type = "option"
                         if attribute_type.name in attributes_for_slider:
@@ -245,7 +254,8 @@ class ProductionSeeder():
                             values=values_for_filter,
                             filter_type=filter_type
                         )
-                        print(f"Product filter created, with name: {product_filter.name}")
+                        print(f"Product filter created, with name: {
+                              product_filter.name}")
                     else:
                         # Handle other categories
                         product_attributes_with_category = ProductFilterService.filter_attributes_by_category(
@@ -261,15 +271,18 @@ class ProductionSeeder():
                                         if product_attribute.value not in values_for_filter:
                                             if is_slider:
                                                 try:
-                                                    numeric_value = float(product_attribute.numeric_value)
+                                                    numeric_value = float(
+                                                        product_attribute.numeric_value)
                                                 except Exception:
                                                     numeric_value = None
                                                 if numeric_value is not None:
-                                                    values_for_filter.append(numeric_value)
+                                                    values_for_filter.append(
+                                                        numeric_value)
                                                 if unit_value is None:
                                                     unit_value = product_attribute.additional_data["Unit"]
                                             else:
-                                                values_for_filter.append(product_attribute.value)
+                                                values_for_filter.append(
+                                                    product_attribute.value)
 
                                 filter_type = "option"
                                 if is_slider:
@@ -283,7 +296,8 @@ class ProductionSeeder():
                                     filter_type=filter_type,
                                     unit_value=unit_value
                                 )
-                                print(f"Product filter created, with name: {product_filter.name}")
+                                print(f"Product filter created, with name: {
+                                      product_filter.name}")
 
         # Mark task completion and generate a final report
         progress_manager.complete_task("Seeding Product Filters")

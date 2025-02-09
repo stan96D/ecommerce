@@ -21476,42 +21476,7 @@
     "Dikte": "2.5 mm",
     "Gebruiksklasse": "33"
   },
-  {
-    "Product": "Moduleo - Roots - SPROOCLO24864STP - Classic Oak 24864",
-    "SKU": "400096824",
-    "Omschrijving": "Een klassieker pur sang. Majestueus en barstensvol rijke kleuraccenten. Een natuurgetrouwe weergave van de schoonheid en veelzijdigheid van eikenhout.",
-    "Prijs": 0.0,
-    "Voorraad": 0,
-    "Verpakking": "3.62 m²",
-    "Eenheid": "m²",
-    "Links": {
-      "Brochures": "https://pro.moduleo.com/nl-nl/documents?filter=languages.eq.nl-nl/documenttype.eq.brochure&page=1&page_size=36&view_size=36",
-      "Algemene installatierichtlijnen": "https://pro.moduleo.com/-/media/d808c16fc4e6511bad8588b465cb6504.ashx?mode=inline&filename=MOD_Installation_LVT_FlexDBRoots_NL-NL.pdf"
-    },
-    "Afbeeldingen": [
-      "https://www.unilinflooring.nl/images/products/large/Classic Oak 24864.jpeg",
-      "https://www.unilinflooring.nl/images/products/large/Moduleo 40_CLASSIC OAK 24864_full plank-WEB1280.jpg",
-      "https://www.unilinflooring.nl/images/products/large/Tropical Forest_Classic Oak 24864_room-WEB1280.jpg"
-    ],
-    "Merk": "Moduleo",
-    "Thumbnail": "https://www.unilinflooring.nl/images/products/large/Classic Oak 24864.jpeg",
-    "Producttype": "Vloer",
-    "Leverancier": "Unilin",
-    "Type": "PVC",
-    "Totaalprijs": 0.01,
-    "Vloertype": "Dryback",
-    "Dikte": "2 mm",
-    "Afmeting": "19.6 x 132.0 cm",
-    "Lengte": "19.6 cm",
-    "Breedte": "132.0 cm",
-    "Oppervlakte": "0.26 m²",
-    "Slijtlaag": "0.55 mm",
-    "Gebruiksklasse": "33",
-    "Brandgedrag": "Bfl-S1",
-    "Geschikt voor vloerverwarming": "Ja",
-    "Embossing": "Embossing in register",
-    "Garantie": "Levenslang"
-  },
+
   {
     "Product": "Moduleo - Roots - MODROOSHA62872SQT - Shades 62872",
     "SKU": "400091964",
