@@ -1,3 +1,4 @@
+import logging
 from email.mime.image import MIMEImage
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -19,16 +20,31 @@ class BaseMailManager(ABC):
         pass
 
 
+# Set up logging configuration
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()  # You can also use FileHandler to log to a file
+ch.setLevel(logging.DEBUG)
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+ch.setFormatter(formatter)
+logger.addHandler(ch)
+
+
 class HTMLMailManager(BaseMailManager):
 
     def send(self, sender_email, sender_password, recipient_email, subject, message, timeout=0, image=None):
         try:
+            logger.info("Starting email sending process.")
             smtp_server = 'smtp.strato.com'
             smtp_port = 587
 
+            logger.debug(
+                f"Connecting to SMTP server: {smtp_server} on port {smtp_port}")
             server = smtplib.SMTP(smtp_server, smtp_port, timeout)
             server.starttls()
 
+            logger.debug(f"Logging in with sender email: {sender_email}")
             server.login(sender_email, sender_password)
 
             msg = MIMEMultipart()
@@ -36,22 +52,27 @@ class HTMLMailManager(BaseMailManager):
             msg['To'] = recipient_email
             msg['Subject'] = subject
 
+            logger.debug(f"Attaching HTML message content")
             msg.attach(MIMEText(message, 'html'))
 
             if image:
-
+                logger.debug(f"Attaching image {image}")
                 with open(image, 'rb') as img_file:
                     img = MIMEImage(img_file.read(), name="logo.png")
                     img.add_header('Content-ID', '<logo>')
                     msg.attach(img)
 
+            logger.info(f"Sending email to {recipient_email}")
             server.send_message(msg)
 
             server.quit()
 
+            logger.info("Email sent successfully!")
             return "Email sent successfully!"
         except Exception as e:
+            logger.error(f"Failed to send email. Error: {str(e)}")
             return f"Failed to send email. Error: {str(e)}"
+
 
 
 class ClientMailSender:
