@@ -8,11 +8,13 @@ from abc import ABC, abstractmethod
 from ecommerce_website.classes.helpers.token_generator.token_generator import ResetPasswordTokenGenerator
 from ecommerce_website.classes.managers.url_manager.url_manager import *
 from ecommerce_website.classes.helpers.env_loader import *
+from ecommerce.settings import BASE_DIR
 
 url_manager = EncapsulatedURLManager.get_url_manager(EnvLoader.get_env())
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-logo_url = os.path.join(BASE_DIR,
+
+logo_url = os.path.join(BASE_DIR, 'ecommerce_website',
                         'static', 'images', 'gvs_logo_plain_cropped.jpg')
+print(BASE_DIR, logo_url)
 
 
 class BaseMailManager(ABC):
