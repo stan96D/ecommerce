@@ -24,6 +24,10 @@ load_dotenv(BASE_DIR / '.env')
 ENVIRONMENT = os.getenv('DJANGO_ENV', 'dev')
 SECRET_KEY = os.getenv(
     'SECRET_KEY')
+SENDER_EMAIL = os.getenv(
+    'SENDER_EMAIL')
+ADMIN_EMAIL = os.getenv(
+    'ADMIN_EMAIL')
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -32,6 +36,9 @@ logger = logging.getLogger(__name__)
 logger.info("Loaded environment variables:")
 logger.info("DJANGO_ENV: %s", ENVIRONMENT)
 logger.info("SECRET_KEY: %s", SECRET_KEY)
+logger.info("SENDER_EMAIL: %s", SENDER_EMAIL)
+logger.info("ADMIN_EMAIL: %s", ADMIN_EMAIL)
+
 # If you're using a DEBUG variable in .env
 logger.info("DEBUG: %s", os.getenv('DEBUG'))
 logger.info("DATABASE_URL: %s", os.getenv('DATABASE_URL'))  # If applicable
