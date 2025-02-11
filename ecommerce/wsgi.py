@@ -1,29 +1,26 @@
-"""
-WSGI config for ecommerce project.
-
-It exposes the WSGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
-"""
-
-from django.core.wsgi import get_wsgi_application
+import logging
 import os
 import sys
+from django.core.wsgi import get_wsgi_application
 from dotenv import load_dotenv
 
-# Define the base directory
+# Define base directory
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Load environment variables from .env
-dotenv_path = os.path.join(BASE_DIR, '.env')
+# Load .env file explicitly
+dotenv_path = os.path.join(BASE_DIR, ".env")
 load_dotenv(dotenv_path)
 
-# Ensure the project directory is in the system path
+# Ensure project directory is in system path
 sys.path.append(BASE_DIR)
 
 # Set the Django settings module
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ecommerce.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ecommerce.settings")
+
+# Explicitly log environment variables to verify
+logger = logging.getLogger(__name__)
+logger.info("SENDER_EMAIL: %s", os.getenv("SENDER_EMAIL"))
+logger.info("SENDER_PASSWORD: %s", os.getenv("SENDER_PASSWORD"))
 
 # Get WSGI application
 application = get_wsgi_application()
