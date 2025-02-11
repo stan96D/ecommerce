@@ -11,7 +11,7 @@ from ecommerce_website.classes.helpers.env_loader import *
 
 url_manager = EncapsulatedURLManager.get_url_manager(EnvLoader.get_env())
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-logo_url = os.path.join(BASE_DIR, 'ecommerce_website',
+logo_url = os.path.join(BASE_DIR,
                         'static', 'images', 'gvs_logo_plain_cropped.jpg')
 
 
