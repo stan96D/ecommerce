@@ -10,7 +10,9 @@ from ecommerce_website.classes.managers.url_manager.url_manager import *
 from ecommerce_website.classes.helpers.env_loader import *
 
 url_manager = EncapsulatedURLManager.get_url_manager(EnvLoader.get_env())
-logo_url = "ecommerce_website/static/images/gvs_logo_plain_cropped.jpg"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+logo_url = os.path.join(BASE_DIR, 'ecommerce_website',
+                        'static', 'images', 'gvs_logo_plain_cropped.jpg')
 
 
 class BaseMailManager(ABC):
@@ -72,7 +74,6 @@ class HTMLMailManager(BaseMailManager):
         except Exception as e:
             logger.error(f"Failed to send email. Error: {str(e)}")
             return f"Failed to send email. Error: {str(e)}"
-
 
 
 class ClientMailSender:
