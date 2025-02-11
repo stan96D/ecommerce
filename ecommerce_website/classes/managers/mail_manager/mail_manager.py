@@ -63,6 +63,7 @@ class ClientMailSender:
         self.sender_password = os.getenv('SENDER_PASSWORD')
         self.mail_manager = mail_manager
         self.company_name = store_name
+        print("Initializing mail: ", self.sender_email, self.contact_email)
 
     def send_return_payment_confirmation(self, salutation, last_name, recipient_email, order_number, return_order_url):
 
