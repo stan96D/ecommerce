@@ -175,9 +175,8 @@
                 </h3>
                 <fieldset class="mt-2">
                   <legend class="sr-only">Kies een kleur</legend>
-                  <span class="flex items-center space-x-3">
+                  <span class="flex items-center space-x-3 flex-wrap">
                     <!-- Loop through product colors -->
-
                     {% for alternative_product in alternative_products %}
                       {% if alternative_product.id == product.id %}
                         <a
@@ -476,7 +475,7 @@
                               <a
                                 href="{{ attribute_value }}"
                                 target="_blank"
-                                class="font-medium text-blue-600 custom-link"
+                                class="font-medium text-blue-600 custom-link block break-words"
                                 >{{ attribute_value }}
                               </a>
                             {% else %}

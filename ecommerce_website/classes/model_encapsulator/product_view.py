@@ -5,6 +5,8 @@ import json
 # Assuming you're using Django's cache system
 from django.core.cache import cache
 
+from ecommerce_website.settings.webshop_config import WebShopConfig
+
 
 class ProductView:
     def __init__(self, product):
@@ -26,7 +28,7 @@ class ProductView:
         # Accessing attributes from the pre-fetched dictionary
         self.product_type = attributes_dict.get('Producttype', 'Vloer')
         self.unit = attributes_dict.get('Eenheid', 'm²')
-        self.brand = attributes_dict.get('Merk', 'Merkloos')
+        self.brand = attributes_dict.get('Merk', WebShopConfig.customBrand())
 
         # Images and stock quantity
         self.images = product.images

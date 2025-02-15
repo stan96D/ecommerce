@@ -5,16 +5,13 @@ from ecommerce_website.classes.model.base_shopping_cart_service import *
 
 
 class SessionShoppingCart(ShoppingCartInterface):
-    def __init__(self, request, shipping_price=0, discount_amount=0):
+    def __init__(self, request):
         self.session = request.session
 
         cart = self.session.get('cart')
         if not cart:
             cart = self.session['cart'] = {}
         self.cart = cart
-
-        self.shipping_price = shipping_price
-        self.discount_amount = discount_amount
 
     def quantity_in_cart(self, product_id):
         product_id = str(product_id)
@@ -57,12 +54,35 @@ class SessionShoppingCart(ShoppingCartInterface):
         ]
 
     @property
-    def get_shipping_price(self):
-        return self.shipping_price
+    def shipping_price(self):
+        total = 0
+
+        for product_id, item in self.cart.items():
+            product = ProductService.get_product_by_id(product_id)
+            if product is not None:
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
+                else:
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
+                subtotal = item['quantity'] * product_price
+                total += subtotal
+
+        if total < 500:
+            return 50
+        else:
+            return 0
 
     @property
-    def get_discount_amount(self):
-        return self.discount_amount
+    def discount_amount(self):
+        return 0
 
     @property
     def total_price(self):
@@ -91,7 +111,6 @@ class SessionShoppingCart(ShoppingCartInterface):
 
         total -= discount_amount
         total += shipping_price
-        print("SHOPPINGPRICE:", shipping_price, discount_amount, total)
         return total
 
     @property
@@ -201,11 +220,8 @@ class SessionShoppingCart(ShoppingCartInterface):
 
 class AccountShoppingCart(ShoppingCartInterface):
 
-    def __init__(self, shipping_price=0, discount_amount=0):
+    def __init__(self):
         self.cart = cache.get('cached_cart') or {}
-
-        self.shipping_price = shipping_price
-        self.discount_amount = discount_amount
 
     def quantity_in_cart(self, product_id):
         product_id = str(product_id)
@@ -247,12 +263,35 @@ class AccountShoppingCart(ShoppingCartInterface):
         ]
 
     @property
-    def get_shipping_price(self):
-        return self.shipping_price
+    def shipping_price(self):
+        total = 0
+
+        for product_id, item in self.cart.items():
+            product = ProductService.get_product_by_id(product_id)
+            if product is not None:
+                productType = product.attributes.filter(
+                    attribute_type__name="Producttype").first() or None
+                if productType.value == "Vloer":
+                    if product.has_product_sale:
+                        product_price = product.unit_sale_price
+                    else:
+                        product_price = product.unit_selling_price
+                else:
+                    if product.has_product_sale:
+                        product_price = product.sale_price
+                    else:
+                        product_price = product.selling_price
+                subtotal = item['quantity'] * product_price
+                total += subtotal
+
+        if total < 500:
+            return 50
+        else:
+            return 0
 
     @property
-    def get_discount_amount(self):
-        return self.discount_amount
+    def discount_amount(self):
+        return 0
 
     @property
     def total_price(self):

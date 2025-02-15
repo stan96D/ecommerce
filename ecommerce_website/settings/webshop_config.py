@@ -4,6 +4,10 @@ from decimal import Decimal
 class WebShopConfig:
 
     @staticmethod
+    def customBrand():
+        return "Cheapito"
+
+    @staticmethod
     def disclaimer():
         return """<section>
   <h2 style="font-weight:bold; margin-top:30px;">A. Definities</h2>

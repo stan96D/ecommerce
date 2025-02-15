@@ -338,7 +338,7 @@ def account_view(request):
                                             'store_motivations': ViewServiceUtility.get_store_motivations()})
 
 
-@ csrf_protect
+@csrf_protect
 def change_account_information(request):
     if request.method == 'POST':
         first_name = request.POST.get('first-name')
@@ -378,7 +378,7 @@ def change_account_information(request):
     return JsonResponse({'status': 'fail', 'message': 'Invalid request method'}, status=405)
 
 
-@ csrf_protect
+@csrf_protect
 def change_delivery_address_information(request):
     if request.method == 'POST':
         address = request.POST.get('address')
@@ -415,7 +415,7 @@ def change_delivery_address_information(request):
     return JsonResponse({'status': 'fail', 'message': 'Invalid request method'}, status=405)
 
 
-@ login_required
+@login_required
 def delete_account(request):
     if request.method == 'DELETE':
         user = request.user
@@ -558,28 +558,28 @@ def order_info(request):
     elif request.method == "POST":
 
         attributes = request.POST.copy()
-        different_billing = attributes.get('billing-toggle')
-        first_name = attributes.get('first-name')
-        last_name = attributes.get('last-name')
-        email_address = attributes.get('email-address')
+        different_billing = attributes.get('billing_toggle')
+        first_name = attributes.get('first_name')
+        last_name = attributes.get('last_name')
+        email_address = attributes.get('email_address')
         address = attributes.get('address')
-        house_number = attributes.get('house-number')
+        house_number = attributes.get('house_number')
         city = attributes.get('city')
-        postal_code = attributes.get('postal-code')
+        postal_code = attributes.get('postal_code')
         country = attributes.get('country')
         phone = attributes.get('phone')
         salutation = attributes.get('salutation')
-        billing_address = attributes.get('billing-address', "")
-        billing_house_number = attributes.get('billing-house-number', "")
-        billing_city = attributes.get('billing-city', "")
-        billing_postal_code = attributes.get('billing-postal-code', "")
-        billing_country = attributes.get('billing-country', "")
+        billing_address = attributes.get('billing_address', "")
+        billing_house_number = attributes.get('billing_house_number', "")
+        billing_city = attributes.get('billing_city', "")
+        billing_postal_code = attributes.get('billing_postal_code', "")
+        billing_country = attributes.get('billing_country', "")
 
         if different_billing == 'false':
             billing_address = attributes.get('address')
-            billing_house_number = attributes.get('house-number')
+            billing_house_number = attributes.get('house_number')
             billing_city = attributes.get('city')
-            billing_postal_code = attributes.get('postal-code')
+            billing_postal_code = attributes.get('postal_code')
             billing_country = attributes.get('country')
 
         contact_info = ContactInfo(

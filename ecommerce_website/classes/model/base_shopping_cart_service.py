@@ -35,3 +35,8 @@ class ShoppingCartInterface(ABC):
     @abstractmethod
     def total_price(self):
         pass
+
+    @property
+    @abstractmethod
+    def shipping_price(self):
+        pass

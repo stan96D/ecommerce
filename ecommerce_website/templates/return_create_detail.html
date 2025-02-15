@@ -48,7 +48,7 @@
         <input
           type="hidden"
           name="billing_toggle"
-          id="billing-toggle-input"
+          id="billing_toggle_input"
           value="{{ form.billing_toggle.value }}"
         />
         <div
@@ -82,7 +82,7 @@
                   >
                   {% if form.return_reason.errors %}
                     <p
-                      id="return_reason-error"
+                      id="return_reason_error"
                       class="text-red-500 text-sm mt-1"
                     >
                       {{ form.return_reason.errors|striptags }}
@@ -118,7 +118,7 @@
                     </div>
                     {% if form.first_name.errors %}
                       <p
-                        id="first_name-error"
+                        id="first_name_error"
                         class="text-red-500 text-sm mt-1"
                       >
                         {{ form.first_name.errors|striptags }}
@@ -145,7 +145,7 @@
                       />
                       {% if form.last_name.errors %}
                         <p
-                          id="last_name-error"
+                          id="last_name_error"
                           class="text-red-500 text-sm mt-1"
                         >
                           {{ form.last_name.errors|striptags }}
@@ -173,7 +173,7 @@
                     />
                     {% if form.email_address.errors %}
                       <p
-                        id="email_address-error"
+                        id="email_address_error"
                         class="text-red-500 text-sm mt-1"
                       >
                         {{ form.email_address.errors|striptags }}
@@ -196,17 +196,17 @@
                       class="relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-gray-200 transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2"
                       role="switch"
                       aria-checked="false"
-                      aria-labelledby="billing-toggle-label"
+                      aria-labelledby="billing_toggle_label"
                       onclick="toggleBilling()"
                     >
                       <span
-                        id="billing-toggle-thumb"
+                        id="billing_toggle_thumb"
                         aria-hidden="true"
                         class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0"
                       ></span>
                     </button>
                     <!-- Toggle Label -->
-                    <span class="ml-3 text-sm" id="billing-toggle-label">
+                    <span class="ml-3 text-sm" id="billing_toggle_label">
                       <!-- <span class="font-medium text-gray-900"
                       >Afwijkend factuuradres?</span
                     > -->
@@ -231,12 +231,12 @@
                         name="address"
                         id="address"
                         value="{{ form.address.value }}"
-                        autocomplete="street-address"
+                        autocomplete="address"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
                       {% if form.address.errors %}
-                        <p id="address-error" class="text-red-500 text-sm mt-1">
+                        <p id="address_error" class="text-red-500 text-sm mt-1">
                           {{ form.address.errors|striptags }}
                         </p>
                       {% endif %}
@@ -262,7 +262,7 @@
                       />
                       {% if form.house_number.errors %}
                         <p
-                          id="house_number-error"
+                          id="house_number_error"
                           class="text-red-500 text-sm mt-1"
                         >
                           {{ form.house_number.errors|striptags }}
@@ -289,7 +289,7 @@
                         required
                       />
                       {% if form.city.errors %}
-                        <p id="city-error" class="text-red-500 text-sm mt-1">
+                        <p id="city_error" class="text-red-500 text-sm mt-1">
                           {{ form.city.errors|striptags }}
                         </p>
                       {% endif %}
@@ -314,7 +314,7 @@
                       />
                       {% if form.postal_code.errors %}
                         <p
-                          id="postal_code-error"
+                          id="postal_code_error"
                           class="text-red-500 text-sm mt-1"
                         >
                           {{ form.postal_code.errors|striptags }}
@@ -353,7 +353,7 @@
                         {% endif %}
                       </select>
                       {% if form.country.errors %}
-                        <p id="country-error" class="text-red-500 text-sm mt-1">
+                        <p id="country_error" class="text-red-500 text-sm mt-1">
                           {{ form.country.errors|striptags }}
                         </p>
                       {% endif %}
@@ -372,13 +372,14 @@
                         type="text"
                         name="phone"
                         id="phone"
+                        autocomplete="phone"
                         value="{{ form.phone.value }}"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
 
                       {% if form.phone.errors %}
-                        <p id="phone-error" class="text-red-500 text-sm mt-1">
+                        <p id="phone_error" class="text-red-500 text-sm mt-1">
                           {{ form.phone.errors|striptags }}
                         </p>
                       {% endif %}
@@ -390,7 +391,7 @@
 
             <!-- Additional Billing Address Fields (Hidden by Default) -->
             <div
-              id="alternate-billing"
+              id="alternate_billing"
               class="mt-10 border-t border-gray-200 pt-10 hidden"
             >
               <h2 class="text-lg font-medium text-gray-900">Factuuradres</h2>
@@ -399,7 +400,7 @@
               >
                 <div>
                   <label
-                    for="billing-address"
+                    for="billing_address"
                     class="block text-sm font-medium text-gray-700"
                   >
                     Adres <span class="text-red-500">*</span>
@@ -408,9 +409,9 @@
                     <input
                       type="text"
                       name="billing_address"
-                      id="billing-address"
+                      id="billing_address"
                       value="{{ form.billing_address.value }}"
-                      autocomplete="street-address"
+                      autocomplete="billing_address"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
@@ -418,7 +419,7 @@
                 </div>
                 <div>
                   <label
-                    for="billing-house-number"
+                    for="billing_house_number"
                     class="block text-sm font-medium text-gray-700"
                   >
                     Huisnummer <span class="text-red-500">*</span>
@@ -427,9 +428,9 @@
                     <input
                       type="text"
                       name="billing_house_number"
-                      id="billing-house-number"
+                      id="billing_house_number"
                       value="{{ form.billing_house_number.value }}"
-                      autocomplete="house-number"
+                      autocomplete="billing_house_number"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
@@ -437,7 +438,7 @@
                 </div>
                 <div>
                   <label
-                    for="billing-city"
+                    for="billing_city"
                     class="block text-sm font-medium text-gray-700"
                   >
                     Plaats <span class="text-red-500">*</span>
@@ -446,9 +447,9 @@
                     <input
                       type="text"
                       name="billing_city"
-                      id="billing-city"
+                      id="billing_city"
                       value="{{ form.billing_city.value }}"
-                      autocomplete="address-level2"
+                      autocomplete="billing_city"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
@@ -456,7 +457,7 @@
                 </div>
                 <div>
                   <label
-                    for="billing-postal-code"
+                    for="billing_postal_code"
                     class="block text-sm font-medium text-gray-700"
                   >
                     Postcode <span class="text-red-500">*</span>
@@ -465,9 +466,9 @@
                     <input
                       type="text"
                       name="billing_postal_code"
-                      id="billing-postal-code"
+                      id="billing_postal_code"
                       value="{{ form.billing_postal_code.value }}"
-                      autocomplete="postal-code"
+                      autocomplete="billing_postal_code"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
@@ -475,16 +476,16 @@
                 </div>
                 <div>
                   <label
-                    for="billing-country"
+                    for="billing_country"
                     class="block text-sm font-medium text-gray-700"
                   >
                     Land <span class="text-red-500">*</span>
                   </label>
                   <div class="mt-1">
                     <select
-                      id="billing-country"
+                      id="billing_country"
                       name="billing_country"
-                      autocomplete="billing-country"
+                      autocomplete="billing_country"
                       value="{{ form.billing_country.value }}"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
@@ -560,7 +561,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // Get the hidden input element
-      const billingToggleInput = document.getElementById('billing-toggle-input')
+      const billingToggleInput = document.getElementById('billing_toggle_input')
 
       // Get its value
       const initialBillingState = billingToggleInput.value === 'true'
@@ -571,11 +572,11 @@
 
     // Function to initialize the toggle based on the initial value
     function initializeBillingToggle(isActive) {
-      const toggle = document.getElementById('billing-toggle')
-      const thumb = document.getElementById('billing-toggle-thumb')
-      const alternateBilling = document.getElementById('alternate-billing')
+      const toggle = document.getElementById('billing_toggle')
+      const thumb = document.getElementById('billing_toggle_thumb')
+      const alternateBilling = document.getElementById('alternate_billing')
       const billingFields = alternateBilling.querySelectorAll('input')
-      const hiddenInput = document.getElementById('billing-toggle-input') // Hidden input for the toggle value
+      const hiddenInput = document.getElementById('billing_toggle_input') // Hidden input for the toggle value
 
       if (isActive) {
         // Set toggle to active state
@@ -610,11 +611,11 @@
 
     // Function to handle toggle changes
     function toggleBilling() {
-      const toggle = document.getElementById('billing-toggle')
-      const thumb = document.getElementById('billing-toggle-thumb')
-      const alternateBilling = document.getElementById('alternate-billing')
+      const toggle = document.getElementById('billing_toggle')
+      const thumb = document.getElementById('billing_toggle_thumb')
+      const alternateBilling = document.getElementById('alternate_billing')
       const billingFields = alternateBilling.querySelectorAll('input')
-      const hiddenInput = document.getElementById('billing-toggle-input') // Hidden input for the toggle value
+      const hiddenInput = document.getElementById('billing_toggle_input') // Hidden input for the toggle value
 
       const isActive = toggle.getAttribute('aria-checked') === 'true'
 

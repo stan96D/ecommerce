@@ -94,6 +94,7 @@
                         name="salutation"
                         type="radio"
                         value="Meneer"
+                        required
                         checked
                         class="h-4 w-4 border-gray-300 text-orange-500 focus:ring-orange-400"
                       />
@@ -146,7 +147,8 @@
                     type="text"
                     name="first_name"
                     id="first_name"
-                    autocomplete="given-name"
+                    required
+                    autocomplete="first_name"
                     value="{{ form.first_name.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
@@ -168,8 +170,9 @@
                   <input
                     type="text"
                     name="last_name"
-                    id="id_last_name"
-                    autocomplete="family-name"
+                    id="last_name"
+                    required
+                    autocomplete="last-name"
                     value="{{ form.last_name.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
@@ -192,6 +195,7 @@
                     type="text"
                     name="address"
                     id="address"
+                    required
                     autocomplete="address"
                     value="{{ form.address.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
@@ -214,7 +218,8 @@
                   <input
                     type="text"
                     name="house_number"
-                    id="house-number"
+                    id="house_number"
+                    required
                     autocomplete="house_number"
                     value="{{ form.house_number.value }}"
                     pattern="[0-9]*"
@@ -243,7 +248,8 @@
                     type="text"
                     name="postal_code"
                     id="postal_code"
-                    autocomplete="postal-code"
+                    required
+                    autocomplete="postal_code"
                     value="{{ form.postal_code.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
@@ -266,6 +272,7 @@
                     type="text"
                     name="city"
                     id="city"
+                    required
                     autocomplete="city"
                     value="{{ form.city.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
@@ -288,6 +295,7 @@
                   <select
                     id="country"
                     name="country"
+                    required
                     autocomplete="country"
                     value="{{ form.country.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -315,7 +323,8 @@
                     type="text"
                     name="phone_number"
                     id="phone_number"
-                    autocomplete="phone-number"
+                    autocomplete="phone_number"
+                    required
                     value="{{ form.phone_number.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
@@ -358,6 +367,7 @@
                     id="username"
                     name="email"
                     type="email"
+                    required
                     autocomplete="email"
                     value="{{ form.email.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
@@ -369,6 +379,7 @@
                   {% endif %}
                 </div>
               </div>
+
               <div class="sm:col-span-4">
                 <label
                   for="password1"
@@ -380,6 +391,7 @@
                     id="password1"
                     name="password1"
                     type="password"
+                    required
                     autocomplete="password"
                     value="{{ form.password1.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
@@ -403,6 +415,7 @@
                     id="password2"
                     name="password2"
                     type="password"
+                    required
                     autocomplete="password"
                     value="{{ form.password2.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
@@ -413,6 +426,19 @@
                     </p>
                   {% endif %}
                 </div>
+              </div>
+
+              <!-- Password Requirements Text -->
+              <div class="sm:col-span-6 mt-2 text-sm text-gray-600">
+                <p><strong>Wachtwoord vereisten:</strong></p>
+                <ul class="list-disc pl-5">
+                  <li>Minimaal 8 tekens.</li>
+                  <li>
+                    Moet een combinatie van letters (zowel hoofdletters als
+                    kleine letters) en cijfers bevatten.
+                  </li>
+                  <li>Mag geen eenvoudig woord of het e-mailadres bevatten.</li>
+                </ul>
               </div>
             </div>
           </div>

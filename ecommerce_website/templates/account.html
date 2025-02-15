@@ -130,16 +130,16 @@
             >
               <div class="sm:col-span-3">
                 <label
-                  for="first-name"
+                  for="first_name"
                   class="block text-sm font-medium leading-6 text-gray-900"
                   >Voornaam</label
                 >
                 <div class="mt-2">
                   <input
                     type="text"
-                    name="first-name"
-                    id="first-name"
-                    autocomplete="given-name"
+                    name="first_name"
+                    id="first_name"
+                    autocomplete="first_name"
                     placeholder="{{ account.first_name }}"
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
@@ -148,16 +148,16 @@
 
               <div class="sm:col-span-3">
                 <label
-                  for="last-name"
+                  for="last_name"
                   class="block text-sm font-medium leading-6 text-gray-900"
                   >Achternaam</label
                 >
                 <div class="mt-2">
                   <input
                     type="text"
-                    name="last-name"
-                    id="last-name"
-                    autocomplete="family-name"
+                    name="last_name"
+                    id="last_name"
+                    autocomplete="last_name"
                     placeholder="{{ account.last_name }}"
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
@@ -272,7 +272,7 @@
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
                   {% if form.address.errors %}
-                    <p id="address-error" class="text-red-500 text-sm mt-1">
+                    <p id="address_error" class="text-red-500 text-sm mt-1">
                       {{ form.address.errors|striptags }}
                     </p>
                   {% endif %}
@@ -299,7 +299,7 @@
                   />
                   {% if form.house_number.errors %}
                     <p
-                      id="house_number-error"
+                      id="house_number_error"
                       class="text-red-500 text-sm mt-1"
                     >
                       {{ form.house_number.errors|striptags }}
@@ -325,7 +325,7 @@
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
                   {% if form.postal_code.errors %}
-                    <p id="postal_code-error" class="text-red-500 text-sm mt-1">
+                    <p id="postal_code_error" class="text-red-500 text-sm mt-1">
                       {{ form.postal_code.errors|striptags }}
                     </p>
                   {% endif %}
@@ -349,7 +349,7 @@
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
                   {% if form.city.errors %}
-                    <p id="city-error" class="text-red-500 text-sm mt-1">
+                    <p id="city_error" class="text-red-500 text-sm mt-1">
                       {{ form.city.errors|striptags }}
                     </p>
                   {% endif %}
@@ -385,7 +385,7 @@
                     {% endif %}
                   </select>
                   {% if form.country.errors %}
-                    <p id="country-error" class="text-red-500 text-sm mt-1">
+                    <p id="country_error" class="text-red-500 text-sm mt-1">
                       {{ form.country.errors|striptags }}
                     </p>
                   {% endif %}
@@ -628,7 +628,7 @@
 
                 // Remove existing error messages that are not in the current error response
                 errorElements.forEach((el) => {
-                  const inputFieldId = el.id.replace('-error', '') // Extract input field ID from error message ID
+                  const inputFieldId = el.id.replace('_error', '') // Extract input field ID from error message ID
                   if (!(inputFieldId in errors)) {
                     el.remove() // Remove error message if the field is not in the current errors
                   }
@@ -640,11 +640,11 @@
                   const inputField = formAccount.querySelector(`#${field}`)
                   if (inputField) {
                     const existingError = formAccount.querySelector(
-                      `#${field}-error`,
+                      `#${field}_error`,
                     )
                     if (!existingError) {
                       const errorContainer = document.createElement('p')
-                      errorContainer.id = `${field}-error`
+                      errorContainer.id = `${field}_error`
                       errorContainer.classList.add(
                         'error-message',
                         'text-red-500',
@@ -672,7 +672,7 @@
 
           const houseNumberField =
             formDeliveryAddress.querySelector('#house-number')
-          const errorContainer = document.getElementById('house_number-error')
+          const errorContainer = document.getElementById('house_number_error')
 
           if (!houseNumberField.checkValidity()) {
             // If house number field is invalid, show error message or handle accordingly
@@ -684,7 +684,7 @@
             } else {
               // If error container does not exist, create and append a new error container
               const newErrorContainer = document.createElement('p')
-              newErrorContainer.id = 'house_number-error'
+              newErrorContainer.id = 'house_number_error'
               newErrorContainer.classList.add('text-red-500', 'text-sm', 'mt-1')
               newErrorContainer.textContent = errorMessage
               houseNumberField.parentNode.appendChild(newErrorContainer)
@@ -722,7 +722,7 @@
 
                   const inputField = formAccount.querySelector(`#${field}`)
                   const errorContainer = document.createElement('p') // Use <p> instead of <div> for consistency with your example
-                  errorContainer.id = `${field}-error`
+                  errorContainer.id = `${field}_error`
                   errorContainer.classList.add(
                     'text-red-500',
                     'text-sm',
