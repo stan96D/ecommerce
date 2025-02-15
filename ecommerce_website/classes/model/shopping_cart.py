@@ -215,6 +215,9 @@ class SessionShoppingCart(ShoppingCartInterface):
                 }
                 cart_data['items'].append(item_data)
 
+        if len(cart_data["items"]) == 0:
+            cart_data['total_price'] = float(0)
+
         return cart_data
 
 
@@ -424,5 +427,8 @@ class AccountShoppingCart(ShoppingCartInterface):
                     'totalPrice': float(item['quantity'] * product_price)
                 }
                 cart_data['items'].append(item_data)
+
+        if len(cart_data["items"]) == 0:
+            cart_data['total_price'] = float(0)
 
         return cart_data

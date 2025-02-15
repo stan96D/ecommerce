@@ -327,6 +327,7 @@ class WebShopConfig:
     def search_filters():
         return [
             "Vloertype",
+            "Producttype",
             "Type",
             "Merk",
             "Model",
