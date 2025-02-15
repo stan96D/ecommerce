@@ -70,7 +70,7 @@ class RealStoreRatingDataSeeder(RealSeederInterface):
         StoreRating.objects.create(
             stars=5,
             title="Super snelle levering!",
-            description="Mijn vloer was er binnen 48 uur, zoals beloofd. Echt top! De klantenservice was ook erg vriendelijk en behulpzaam."
+            description="Mijn vloer was er binnen 96 uur, zoals beloofd. Echt top! De klantenservice was ook erg vriendelijk en behulpzaam."
         )
 
         StoreRating.objects.create(
@@ -114,9 +114,9 @@ class RealStoreMotivationDataSeeder(RealSeederInterface):
                                        text="Wij bieden de goedkoopste vloeren van Nederland en België. Nergens anders krijg je zulke topvloeren voor deze prijs!",
                                        for_homepage=True)
 
-        StoreMotivation.objects.create(name="Binnen 48 uur in huis",
+        StoreMotivation.objects.create(name="Binnen 96 uur in huis",
                                        active=True,
-                                       text="Door onze geweldige bezorgdienst garanderen wij dat jij je vloer binnen maximaal twee dagen in huis hebt. Leggen maar!",
+                                       text="Door onze geweldige bezorgdienst garanderen wij dat jij je vloer binnen maximaal vier (werk)dagen in huis hebt. Leggen maar!",
                                        for_homepage=True)
 
         print("RealStoreMotivationDataSeeder finished...")

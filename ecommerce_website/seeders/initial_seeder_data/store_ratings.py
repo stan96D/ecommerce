@@ -17,7 +17,7 @@ store_ratings = [
     {
         "stars": 5,
         "title": "Super snelle levering!",
-        "description": "Mijn vloer was er binnen 48 uur, zoals beloofd. Echt top! De klantenservice was ook erg vriendelijk en behulpzaam."
+        "description": "Mijn vloer was er binnen 96 uur, zoals beloofd. Echt top! De klantenservice was ook erg vriendelijk en behulpzaam."
     },
     {
         "stars": 2,

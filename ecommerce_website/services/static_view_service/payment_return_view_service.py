@@ -60,7 +60,7 @@ class PaymentReturnViewService:
                     "text": (
                         "Zodra uw order is betaald, nemen wij het van daaruit over. Onze bezorgservice neemt de door u gekozen afleverdatum in behandeling en stemt met u hierbij het gewenste tijdstip af. "
                         "Indien nodig nemen zij contact met u op om een alternatieve datum af te stemmen.<br><br>"
-                        "Wij leveren uw bestelling binnen <strong>48 uur</strong> op werkdagen, overal in <strong>België</strong> en <strong>Nederland</strong>.<br><br>"
+                        "Wij leveren uw bestelling binnen <strong>96 uur</strong> op werkdagen, overal in <strong>Nederland</strong>, <strong>België</strong> en <strong>Duitsland</strong>.<br><br>"
                         "Wij begrijpen hoe belangrijk het is om uw bestelling op tijd en in perfecte staat te ontvangen, en daarom besteden wij extra aandacht aan elk detail.<br><br>"
                         "Heeft u speciale verzoeken of vragen over de levering? Neem gerust <a href='/contact-service' class='font-medium text-orange-500'>contact met ons op</a>, wij staan klaar om u te helpen."
                     ),
@@ -75,7 +75,7 @@ class PaymentReturnViewService:
                 "Na het plaatsen van uw order kunt u kiezen uit verschillende betaalmethoden zoals <strong>iDEAL</strong>, <strong>creditcard</strong>, of <strong>PayPal</strong>. "
                 "Uw bestelling wordt pas verwerkt nadat de betaling is voltooid.<br><br>"
                 "Bestellingen boven de <strong>€500</strong> worden gratis verzonden, terwijl voor bestellingen onder dit bedrag slechts <strong>€50</strong> aan verzendkosten wordt gerekend. "
-                "Wij leveren binnen <strong>48 uur</strong> op werkdagen, en bezorgen overal in <strong>België</strong> en <strong>Nederland</strong>. "
+                "Wij leveren binnen <strong>96 uur</strong> op werkdagen, en bezorgen overal in <strong>Nederland</strong>, <strong>België</strong> en <strong>Duitsland</strong>. "
                 "Onze bezorgservice zorgt ervoor dat uw bestelling snel en in perfecte staat bij u wordt afgeleverd.<br><br>"
                 "<strong>Heeft u vragen over het proces?</strong> Neem gerust <a href='/contact-service' class='font-medium text-orange-500'>contact met ons op</a>!"
             ),

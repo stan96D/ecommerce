@@ -21,9 +21,9 @@ store_motivations = [
         "icon": "fa-tag",
     },
     {
-        "name": "Binnen 72 uur in huis",
+        "name": "Binnen 96 uur in huis",
         "active": True,
-        "text": "Door onze geweldige bezorgdienst garanderen wij dat jij je vloer binnen maximaal drie (werk)dagen in huis hebt. Leggen maar!",
+        "text": "Door onze geweldige bezorgdienst garanderen wij dat jij je vloer binnen maximaal vier (werk)dagen in huis hebt. Leggen maar!",
         "for_homepage": True,
         "icon": "fa-shipping-fast",
     }
