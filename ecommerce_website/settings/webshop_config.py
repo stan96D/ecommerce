@@ -65,7 +65,7 @@ class WebShopConfig:
 <section>
   <h2 style=" font-weight:bold; margin-top:30px;">H. Herroepingsrecht en Retouren</h2>
   <p style="margin-bottom:16px;">Volgens de wet heb je het recht om een product binnen 14 dagen na ontvangst zonder opgave van redenen te retourneren. Indien deze termijn van 14 dagen is overschreden, kunnen wij helaas geen producten meer terugnemen of retourneren. Het herroepingsrecht vervalt automatisch na het verstrijken van de termijn.</p>
-  <p style="margin-bottom:16px;">Wij raden je aan om je retouren tijdig aan te melden en te zorgen voor een snelle terugzending van het product, indien je besluit gebruik te maken van je herroepingsrecht binnen de gestelde termijn.</p>
+  <p style="margin-bottom:16px;">Wij raden je aan om je retouren tijdig aan te melden en te zorgen voor een snelle terugzending van het product, indien je besluit gebruik te maken van je herroepingsrecht binnen de gestelde termijn. Wij zijn niet voorzien van een retourneringsformulier aangezien onze afhaalservice uw retouren handmatig komt ophalen.</p>
 </section>
 
 <section>
@@ -113,6 +113,8 @@ class WebShopConfig:
         <li><strong>5.2</strong> Levering vindt plaats op het door de consument opgegeven adres.</li>
         <li><strong>5.3</strong> De ondernemer streeft naar levering binnen de vermelde termijn. Bij vertraging wordt de consument hiervan tijdig op de hoogte gesteld.</li>
         <li><strong>5.4</strong> De ondernemer levert alleen de producten. Het leggen van de vloer dient door de consument zelf te worden uitgevoerd.</li>
+        <li><strong>5.5</strong> De ondernemer accepteert geen retour van overgebleven producten, tenzij deze voldoen aan onze retourvoorwaarden.</li>
+
     </ul>
 
     <h2 style="margin-top: 30px; font-weight: bold;">Artikel 6. Herroepingsrecht</h2>
