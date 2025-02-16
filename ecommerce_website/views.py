@@ -8,6 +8,7 @@ from ecommerce_website.classes.forms.payment_form import PaymentForm
 from ecommerce_website.classes.forms.return_form import ReturnForm
 from ecommerce_website.classes.helpers.progress_view import get_order_progress_phases, get_return_progress_phases
 from ecommerce_website.classes.model.cached_return_order import SessionReturnOrderService
+from ecommerce_website.services.seo_service.seo_service import *
 from ecommerce_website.services.static_view_service.abous_us_view_service import AboutUsViewService
 from ecommerce_website.services.static_view_service.contact_service import ContactService
 from ecommerce_website.services.static_view_service.payment_return_view_service import PaymentReturnViewService
@@ -51,8 +52,6 @@ from ecommerce_website.classes.helpers.env_loader import *
 environment = EnvLoader.get_env()
 url_manager = EncapsulatedURLManager.get_url_manager(environment)
 
-# static views
-
 
 def custom_404_view(request, exception):
     return render(request, '404.html', status=404)
@@ -67,12 +66,16 @@ def static_html_view(request):
     if route_name == 'terms_and_conditions':
         data = WebShopConfig.terms_and_conditions()
         category_name = "Algemene voorwaarden"
+        meta = TermsConditionsSEOService().get_meta_object()
     elif route_name == 'disclaimer':
         data = WebShopConfig.disclaimer()
         category_name = "Disclaimer"
+        meta = DisclaimerSEOService().get_meta_object()
+
     else:
         data = 'Geen content om weer te geven'
         category_name = "Geen inhoud"
+        meta = None
 
     return render(request, "static_html_view.html", {
         'headerData': ViewServiceUtility.get_header_data(),
@@ -86,7 +89,8 @@ def static_html_view(request):
         'messages': messages.get_messages(request),
         'store_data': store_data,
         'breadcrumbs': [category_name],
-        'category_data': ViewServiceUtility.get_active_categories()
+        'category_data': ViewServiceUtility.get_active_categories(),
+        'meta': meta,
     })
 
 
@@ -107,7 +111,8 @@ def contact_service(request):
         'messages': messages.get_messages(request),
         'store_data': store_data,
         'breadcrumbs': ["Klantenservice"],
-        'category_data': ViewServiceUtility.get_active_categories()
+        'category_data': ViewServiceUtility.get_active_categories(),
+        "meta": ContactSEOService.get_meta_object()
     })
 
 
@@ -129,7 +134,8 @@ def payment_return_service(request):
         'messages': messages.get_messages(request),
         'store_data': store_data,
         'breadcrumbs': ["Betaling & verzending"],
-        'category_data': ViewServiceUtility.get_active_categories()
+        'category_data': ViewServiceUtility.get_active_categories(),
+        'meta': PaymentDeliverySEOService.get_meta_object()
     })
 
 
@@ -151,7 +157,8 @@ def return_service(request):
         'messages': messages.get_messages(request),
         'store_data': store_data,
         'breadcrumbs': ["Retournering"],
-        'category_data': ViewServiceUtility.get_active_categories()
+        'category_data': ViewServiceUtility.get_active_categories(),
+        'meta': ReturnSEOService.get_meta_object()
     })
 
 
@@ -175,7 +182,8 @@ def about_us(request):
         'store_rating_data': ViewServiceUtility.get_store_rating_data(),
 
         'breadcrumbs': ["Over ons"],
-        'category_data': ViewServiceUtility.get_active_categories()
+        'category_data': ViewServiceUtility.get_active_categories(),
+        'meta': AboutUsSEOService.get_meta_object()
     })
 
 
@@ -191,10 +199,13 @@ def sign_in(request):
 
             return redirect('home')
         else:
-            return render(request, 'login.html', {'error_message': 'De combinatie van e-mailadres en wachtwoord is niet geldig.'})
+            return render(request, 'login.html', {'error_message': 'De combinatie van e-mailadres en wachtwoord is niet geldig.',             'meta': SignInSEOService.get_meta_object()
+                                                  })
 
     else:
-        return render(request, 'login.html')
+        return render(request, 'login.html', {
+            'meta': SignInSEOService.get_meta_object()
+        })
 
 
 def home(request):
@@ -211,7 +222,8 @@ def home(request):
                                          'brands': ViewServiceUtility.get_all_brands(),
                                          'messages': messages.get_messages(request),
                                          'hero_data': WebShopConfig.get_hero_data(),
-                                         'category_data': ViewServiceUtility.get_active_categories()})
+                                         'category_data': ViewServiceUtility.get_active_categories(),
+                                         'meta': HomeSEOService.get_meta_object()})
 
 
 def logout_user(request):
@@ -226,7 +238,10 @@ def logout_user(request):
 
 def login_view(request):
 
-    return render(request, "login.html")
+    return render(request, "login.html", {
+        'meta': SignInSEOService.get_meta_object()
+
+    })
 
 
 def store_rating_view(request):
@@ -240,7 +255,8 @@ def store_rating_view(request):
                                                  'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                  'store_motivations': ViewServiceUtility.get_store_motivations(),
                                                  'brands': ViewServiceUtility.get_all_brands(),
-                                                 'messages': messages.get_messages(request)})
+                                                 'messages': messages.get_messages(request),
+                                                 'meta': StoreRatingSEOService.get_meta_object()})
 
 
 def create_store_rating(request):
@@ -263,7 +279,7 @@ def new_password(request, token):
         is_expired = ResetPasswordTokenGenerator.is_token_expired(token)
 
         if not is_expired:
-            return render(request, "new_password.html", {'token': token})
+            return render(request, "new_password.html", {'token': token, 'meta': NewPasswordSEOService.get_meta_object()})
         else:
             return redirect('home')
 
@@ -272,7 +288,7 @@ def new_password(request, token):
         new_password2 = request.POST.get('new_password2')
 
         if new_password1 != new_password2:
-            return render(request, "new_password.html", {'token': token, 'error_message': "Wachtwoorden komen niet overeen."})
+            return render(request, "new_password.html", {'token': token, 'error_message': "Wachtwoorden komen niet overeen.", 'meta': NewPasswordSEOService.get_meta_object()})
 
         try:
             uidb64, token = token.split('-', 1)
@@ -282,12 +298,12 @@ def new_password(request, token):
             if ResetPasswordTokenGenerator.check_token(user, token):
                 user.password = make_password(new_password1)
                 user.save()
-                return render(request, "login.html", {'success_message': "Wachtwoord succesvol veranderd."})
+                return render(request, "login.html", {'success_message': "Wachtwoord succesvol veranderd.", 'meta': SignInSEOService.get_meta_object()})
             else:
-                return render(request, "new_password.html", {'token': token, 'error_message': "Ongeldige of verlopen token."})
+                return render(request, "new_password.html", {'token': token, 'error_message': "Ongeldige of verlopen token.", 'meta': NewPasswordSEOService.get_meta_object()})
 
         except (Account.DoesNotExist, ValueError, TypeError):
-            return render(request, "new_password.html", {'token': token, 'error_message': "Ongeldige of verlopen token."})
+            return render(request, "new_password.html", {'token': token, 'error_message': "Ongeldige of verlopen token.", 'meta': NewPasswordSEOService.get_meta_object()})
 
 
 def forgot_password(request):
@@ -300,12 +316,14 @@ def forgot_password(request):
             ForgotPasswordMailSender(
                 HTMLMailManager(), store_name=StoreService.get_active_store().name).send_password_reset_email(user)
 
-            return render(request, "login.html", {'success_message': "Nieuw wachtwoord aangevraagd."})
+            return render(request, "login.html", {'success_message': "Nieuw wachtwoord aangevraagd.", 'meta': SignInSEOService.get_meta_object()})
         except Account.DoesNotExist:
-            return render(request, 'forgot_password.html', {'error_message': 'Geen account met gegeven email gevonden.'})
+            return render(request, 'forgot_password.html', {'error_message': 'Geen account met gegeven email gevonden.', 'meta': NewPasswordSEOService.get_meta_object()})
 
     elif request.method == 'GET':
-        return render(request, "forgot_password.html")
+        return render(request, "forgot_password.html", {
+            'meta': NewPasswordSEOService.get_meta_object()
+        })
 
 
 def registration_view(request):
@@ -315,7 +333,8 @@ def registration_view(request):
                                             'store_data': ViewServiceUtility.get_current_store_data(),
                                             'payment_methods': ViewServiceUtility.get_payment_methods(),
                                             'brands': ViewServiceUtility.get_all_brands(),
-                                            'store_motivations': ViewServiceUtility.get_store_motivations()})
+                                            'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                            'meta': SignUpSEOService.get_meta_object()})
 
 
 def account_view(request):
@@ -335,7 +354,8 @@ def account_view(request):
                                             'brands': ViewServiceUtility.get_all_brands(),
                                             'orders': ViewServiceUtility.get_orders_by_user(user),
                                             'returns': ViewServiceUtility.get_return_orders_by_user(user),
-                                            'store_motivations': ViewServiceUtility.get_store_motivations()})
+                                            'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                            'meta': AccountViewSEOService.get_meta_object()})
 
 
 @csrf_protect
@@ -450,7 +470,8 @@ def sign_up(request):
                 'store_data': ViewServiceUtility.get_current_store_data(),
                 'payment_methods': ViewServiceUtility.get_payment_methods(),
                 'brands': ViewServiceUtility.get_all_brands(),
-                'store_motivations': ViewServiceUtility.get_store_motivations()
+                'store_motivations': ViewServiceUtility.get_store_motivations(),
+                'meta': SignUpSEOService.get_meta_object()
             })
 
     else:
@@ -481,7 +502,8 @@ def cart(request):
                                          'payment_methods': ViewServiceUtility.get_payment_methods(),
                                          'brands': ViewServiceUtility.get_all_brands(),
                                          'cart': ViewServiceUtility.get_cart_view(request),
-                                         'store_motivations': ViewServiceUtility.get_store_motivations()})
+                                         'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                         'meta': ShoppingCartSEOService.get_meta_object()})
 
 
 def order_info(request):
@@ -554,7 +576,8 @@ def order_info(request):
                                                  'brands': ViewServiceUtility.get_all_brands(),
                                                  'cart': ViewServiceUtility.get_cart_view(request),
                                                  'order_info': order_info_view,
-                                                 'store_motivations': ViewServiceUtility.get_store_motivations()})
+                                                 'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                                 'meta': CheckoutSEOService.get_meta_object()})
     elif request.method == "POST":
 
         attributes = request.POST.copy()
@@ -616,7 +639,8 @@ def checkout(request):
                                                     'brands': ViewServiceUtility.get_all_brands(),
                                                     'order': order,
                                                     'delivery_methods': ViewServiceUtility.get_active_delivery_methods(),
-                                                    'store_motivations': ViewServiceUtility.get_store_motivations()})
+                                                    'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                                    'meta': PaymentSEOService.get_meta_object()})
 
         else:
             return redirect('order_info')
@@ -654,7 +678,8 @@ def order_detail(request):
                                                  'brands': ViewServiceUtility.get_all_brands(),
                                                  'progress_phases': progress_phases,
                                                  'order': order,
-                                                 'store_motivations': ViewServiceUtility.get_store_motivations()})
+                                                 'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                                 'meta': OrderDetailSEOService.get_meta_object()})
 
 
 def repay_order(request, order_id):
@@ -690,7 +715,8 @@ def confirm_order(request):
                                                     'brands': ViewServiceUtility.get_all_brands(),
                                                     'order': order,
                                                     'delivery_methods': ViewServiceUtility.get_active_delivery_methods(),
-                                                    'store_motivations': ViewServiceUtility.get_store_motivations()})
+                                                    'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                                    'meta': PaymentSEOService.get_meta_object()})
 
         issuer_id = form.cleaned_data.get('issuer_id')
         issuer_name = form.cleaned_data.get('issuer_name')
@@ -878,14 +904,14 @@ def products(request, category='Assortiment'):
         'headerData': ViewServiceUtility.get_header_data(),
         'env': environment,
         'current_sale': ViewServiceUtility.get_current_sale_data(),
-
         'store_data': ViewServiceUtility.get_current_store_data(),
         'payment_methods': ViewServiceUtility.get_payment_methods(),
         'brands': ViewServiceUtility.get_all_brands(),
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
-        'product_count': len(products)
+        'product_count': len(products),
+        'meta': AssortmentSEOService.get_meta_object()
     })
     print(
         f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
@@ -1029,7 +1055,8 @@ def search_products(request, category="Zoeken"):
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
-        'product_count': len(products)
+        'product_count': len(products),
+        'meta': SearchSEOService.get_meta_object({"query": search})
     })
     print(
         f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
@@ -1196,7 +1223,8 @@ def favorite_products(request, category="Favorieten"):
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
-        'product_count': len(products)
+        'product_count': len(products),
+        'meta': FavoritesSEOService.get_meta_object()
     })
     print(
         f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
@@ -1337,7 +1365,8 @@ def discount_products(request, category='Kortingen'):
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
-        'product_count': len(products)
+        'product_count': len(products),
+        'meta': DiscountsSEOService.get_meta_object()
     })
     print(
         f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
@@ -1477,7 +1506,8 @@ def runner_products(request, category='Hardlopers'):
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
-        'product_count': len(products)
+        'product_count': len(products),
+        'meta': RunnersSEOService.get_meta_object()
     })
     print(
         f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
@@ -1623,7 +1653,8 @@ def products_by_category(request, category):
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
-        'product_count': len(products)
+        'product_count': len(products),
+        'meta': CategorySEOService.get_meta_object(category_data)
     })
     print(
         f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
@@ -1770,7 +1801,9 @@ def products_by_subcategory(request, category, subcategory):
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
-        'product_count': len(products)
+        'product_count': len(products),
+        'meta': CategorySEOService.get_meta_object(category_data)
+
     })
     print(
         f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
@@ -1917,7 +1950,9 @@ def products_by_attribute(request, category, subcategory, attribute):
         'categoryData': category_data,
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
-        'product_count': len(products)
+        'product_count': len(products),
+                'meta': CategorySEOService.get_meta_object(category_data)
+
     })
     print(
         f"Rendered template - Total time elapsed: {time.time() - start_time:.4f} seconds")
@@ -1943,7 +1978,8 @@ def product_detail(request, id=None):
                     'payment_methods': ViewServiceUtility.get_payment_methods(),
                     'brands': ViewServiceUtility.get_all_brands(),
                     'alternative_products': ViewServiceUtility.get_alternative_products(id),
-                    'store_motivations': ViewServiceUtility.get_store_motivations()}
+                    'store_motivations': ViewServiceUtility.get_store_motivations(),
+                    'meta': ProductDetailSEOService.get_meta_object(product)}
 
     if product.product_type == "Vloer":
         misc_products = ViewServiceUtility.get_misc_products()
@@ -2171,7 +2207,10 @@ def create_return(request):
                                                       'payment_methods': ViewServiceUtility.get_payment_methods(),
                                                       'brands': ViewServiceUtility.get_all_brands(),
                                                       'order': ViewServiceUtility.get_order_by_id_for_return(order_id),
-                                                      'store_motivations': ViewServiceUtility.get_store_motivations()})
+                                                      'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                                      'meta': CreateReturnSEOService.get_meta_object()
+                                                      }
+                      )
     elif request.method == 'POST':
         try:
             data = json.loads(request.body)
@@ -2240,6 +2279,8 @@ def create_return_overview(request):
                 'brands': ViewServiceUtility.get_all_brands(),
                 'store_motivations': ViewServiceUtility.get_store_motivations(),
                 'form': form,
+                'meta': CreateReturnSEOService.get_meta_object()
+
             },
         )
     elif request.method == 'POST':
@@ -2276,6 +2317,8 @@ def create_return_overview(request):
                            'payment_methods': ViewServiceUtility.get_payment_methods(),
                            'brands': ViewServiceUtility.get_all_brands(),
                            'store_motivations': ViewServiceUtility.get_store_motivations(),
+                           'meta': CreateReturnSEOService.get_meta_object()
+
                        })
 
             result = return_order_service.update_form_data(
@@ -2295,6 +2338,9 @@ def create_return_overview(request):
                            'payment_methods': ViewServiceUtility.get_payment_methods(),
                            'brands': ViewServiceUtility.get_all_brands(),
                            'store_motivations': ViewServiceUtility.get_store_motivations(),
+                           'meta': CreateReturnSEOService.get_meta_object(),
+
+
                        })
             else:
 
@@ -2318,6 +2364,7 @@ def create_return_overview(request):
                     'payment_methods': ViewServiceUtility.get_payment_methods(),
                     'brands': ViewServiceUtility.get_all_brands(),
                     'store_motivations': ViewServiceUtility.get_store_motivations(),
+                    'meta': CreateReturnSEOService.get_meta_object()
                 },
             )
 
@@ -2354,6 +2401,7 @@ def confirm_return(request):
                           'store_motivations': ViewServiceUtility.get_store_motivations(),
                           'payment_issuers': MollieClient().get_issuers('ideal'),
                           'delivery_methods': ViewServiceUtility.get_active_takeaway_methods(),
+                          'meta': PaymentSEOService.get_meta_object()
                       })
 
     elif request.method == 'POST':
@@ -2394,6 +2442,7 @@ def confirm_return(request):
                               'payment_methods': ViewServiceUtility.get_payment_methods(),
                               'brands': ViewServiceUtility.get_all_brands(),
                               'store_motivations': ViewServiceUtility.get_store_motivations(),
+                              'meta': PaymentSEOService.get_meta_object()
                           })
 
         redirect_url = url_manager.create_redirect_return(
@@ -2470,4 +2519,5 @@ def return_detail(request):
                                                       'brands': ViewServiceUtility.get_all_brands(),
                                                       'order': return_order,
                                                       'progress_phases': progress_phases,
-                                                      'store_motivations': ViewServiceUtility.get_store_motivations()})
+                                                      'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                                      'meta': ReturnDetailSEOService.get_meta_object()})
