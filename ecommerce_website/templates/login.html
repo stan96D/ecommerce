@@ -14,6 +14,7 @@
       <title>{{ meta.title }}</title>
       <meta name="description" content="{{ meta.description }}" />
       <meta name="keywords" content="{{ meta.keywords }}" />
+      {% include 'components/shared_google_analytics.html' %}
 
       <link
         rel="icon"
@@ -121,13 +122,6 @@
                     </div>
 
                     <div class="flex items-end justify-end">
-                      <!-- <div class="flex items-center">
-                                        <input id="remember-me" name="remember-me" type="checkbox"
-                                            class="h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-500">
-                                        <label for="remember-me" class="ml-3 block text-sm leading-6 text-gray-700">Onthoud
-                                            me</label>
-                                    </div> -->
-
                       <div class="text-sm leading-6">
                         <a
                           href="{% url 'forgot_password' %}"
