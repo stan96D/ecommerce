@@ -205,7 +205,7 @@ class WebShopConfig:
             "hero2":
             {
                 "title": "Click PVC",
-                "description": "Makkelijk om zelf te leggen!",
+                "description": "Makkelijk om zelf te leggen",
                 "url": "products/?Vloertype=Click",
 
 

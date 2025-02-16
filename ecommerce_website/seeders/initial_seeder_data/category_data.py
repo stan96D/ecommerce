@@ -36,7 +36,7 @@ category_data = [
         "active": True,
         "for_homepage": True,
         "description": "Verhoog de afwerking van je vloer en geef je ruimte een nette uitstraling met onze stijlvolle plinten. Onze plinten bieden niet alleen esthetische voordelen, maar helpen ook om je vloeren te beschermen tegen vuil, vocht en beschadigingen. Van klassieke tot moderne ontwerpen, we hebben de juiste plint voor iedere stijl.",
-        "thumbnail": "category_thumbnails/klik-vinyl-category.jpg",
+        "thumbnail": "category_thumbnails/plinten-category.webp",
         "subcategories": []
     },
     {

@@ -180,7 +180,7 @@ class RealBrandDataSeeder(RealSeederInterface):
                              image="brand_images/mflor_floor.jpg")
 
         Brand.objects.create(name="Douwes Dekker",
-                             image="brand_images/douwers_dekker_floor.jpg")
+                             image="brand_images/douwes_dekker_floor.jpg")
 
         Brand.objects.create(name="OTIUM at Home",
                              image="brand_images/otium_floor.jpg")
