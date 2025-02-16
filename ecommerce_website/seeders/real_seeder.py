@@ -186,7 +186,7 @@ class RealBrandDataSeeder(RealSeederInterface):
                              image="brand_images/otium_floor.jpg")
 
         Brand.objects.create(name="Sense",
-                             image="brand_images/sense_floor.jpg")
+                             image="brand_images/sense_floor.jpeg")
 
         print("RealBrandDataSeeder finished...")
 
