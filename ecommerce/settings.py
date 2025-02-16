@@ -74,7 +74,7 @@ if ENVIRONMENT == "dev":
     NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
 elif ENVIRONMENT == "test":
-    DEBUG = True
+    DEBUG = False
 
     BASE_URL = 'https://test.goedkoopstevloerenshop.nl'
     ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl']
