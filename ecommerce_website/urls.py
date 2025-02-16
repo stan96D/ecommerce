@@ -1,10 +1,19 @@
 from django.urls import path
 from . import views
+from .sitemaps import *
+from django.contrib.sitemaps.views import sitemap
 
+sitemaps = {
+    'products': ProductSitemap,
+    'categories': ProductCategorySitemap,
+    'subcategories': ProductSubcategorySitemap,
+}
 
 handler404 = 'ecommerce_website.views.custom_404_view'
 
 urlpatterns = [
+    # Sitemap
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
 
     # Webhooks
     path('mollie_webhook/', views.mollie_webhook, name="mollie_webhook"),

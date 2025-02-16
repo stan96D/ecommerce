@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /login/
+Disallow: /logout/
+Disallow: /profile/
+Disallow: /order-history/
+
+Allow: /product/
+Allow: /category/
+Allow: /sitemap.xml  # Allow crawling of the sitemap (relative path)
+
+Sitemap: /sitemap.xml  # Use a relative path to the sitemap
