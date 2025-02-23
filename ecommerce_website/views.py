@@ -1951,7 +1951,7 @@ def products_by_attribute(request, category, subcategory, attribute):
         'breadcrumbs': breadcrumb,
         'store_motivations': ViewServiceUtility.get_store_motivations(),
         'product_count': len(products),
-                'meta': CategorySEOService.get_meta_object(category_data)
+        'meta': CategorySEOService.get_meta_object(category_data)
 
     })
     print(
@@ -2084,7 +2084,7 @@ def mollie_webhook(request):
                     last_name = new_order.last_name
                     email = new_order.email
 
-                redirect_url = url_manager.create_redirect(new_order.id)
+                redirect_url = url_manager.create_redirect(new_order.token)
 
                 ClientMailSender(mail_manager=HTMLMailManager(), store_name=StoreService.get_active_store().name).send_order_payment_confirmation(salutation,
                                                                                                                                                   last_name,
