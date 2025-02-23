@@ -114,6 +114,7 @@ class WebShopConfig:
         <li><strong>5.3</strong> De ondernemer streeft naar levering binnen de vermelde termijn. Bij vertraging wordt de consument hiervan tijdig op de hoogte gesteld.</li>
         <li><strong>5.4</strong> De ondernemer levert alleen de producten. Het leggen van de vloer dient door de consument zelf te worden uitgevoerd.</li>
         <li><strong>5.5</strong> De ondernemer accepteert geen retour van overgebleven producten, tenzij deze voldoen aan onze retourvoorwaarden.</li>
+        <li><strong>5.6</strong> Levertijden zijn indicatief en afhankelijk van de leverancier. De ondernemer kan niet aansprakelijk worden gesteld voor eventuele vertragingen veroorzaakt door de leverancier.</li>
 
     </ul>
 
@@ -163,10 +164,12 @@ class WebShopConfig:
         <li><strong>8.2</strong> Behoudens opzet of grove nalatigheid van de ondernemer, is de aansprakelijkheid van de ondernemer beperkt tot het bedrag dat de consument voor het product heeft betaald.</li>
     </ul>
 
-    <h2 style="margin-top: 30px; font-weight: bold;">Artikel 9. Privacy</h2>
+    <h2 style="margin-top: 30px; font-weight: bold;">Artikel 9. Privacy en Correctheid</h2>
     <ul style="margin-left: 20px; line-height: 1.6;">
         <li><strong>9.1</strong> De ondernemer respecteert de privacy van de consument en verwerkt persoonsgegevens conform de Algemene Verordening Gegevensbescherming (AVG).</li>
         <li><strong>9.2</strong> Persoonsgegevens worden uitsluitend gebruikt voor de uitvoering van de overeenkomst.</li>
+        <li><strong>9.3</strong> De consument is zelf verantwoordelijk voor het correct en volledig invullen van zijn gegevens. Onjuiste gegevens kunnen leiden tot vertragingen of andere problemen waarvoor de ondernemer niet aansprakelijk is.</li>
+
     </ul>
 
     <h2 style="margin-top: 30px; font-weight: bold;">Artikel 10. Toepasselijk Recht en Geschillen</h2>

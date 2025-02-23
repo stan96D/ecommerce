@@ -112,10 +112,10 @@
       <span class="text-gray-900 font-medium text-sm">
         {% if item.stock > 10 %}
           <i class="fas fa-check-circle text-green-500"></i> Direct leverbaar
-        {% else %}
-          <i class="fas fa-exclamation text-orange-500 mr-1"></i> Vertraagde
-          levering
-        {% endif %}
+          {% else %}
+            <i class="fas fa-clock text-orange-500"></i> Mogelijk langere
+            levertijd
+          {% endif %}
       </span>
       <span class="font-medium text-gray-900 text-lg"
         >€{{ item.totalPrice }}

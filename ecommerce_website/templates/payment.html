@@ -75,10 +75,11 @@
                 <div class="mt-6 grid grid-cols-4 gap-x-4 gap-y-6">
                   <div class="col-span-4">
                     <label
-                      for="card-number"
+                      for="datepicker"
                       class="block text-sm font-medium text-gray-700"
-                      >Kies je gewenste datum</label
                     >
+                      Kies je gewenste datum
+                    </label>
                     <div class="mt-1">
                       <input
                         type="text"
@@ -93,12 +94,17 @@
                         </p>
                       {% endif %}
 
-                      <!-- <input type="text" id="card-number" name="card-number" autocomplete="cc-number"
-                                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"> -->
+                      <!-- Informative message -->
+                      <p class="text-sm text-gray-500 mt-2">
+                        Dit is een aanbevolen bezorgdatum en kan nog wijzigen.
+                        Onze bezorgdienst neemt contact met je op om samen de
+                        definitieve leverdatum af te stemmen.
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div class="mt-10 border-t border-gray-200 pt-10">
                 <legend class="text-lg font-medium text-gray-900">
                   Betaalwijze <span class="text-red-500">*</span>

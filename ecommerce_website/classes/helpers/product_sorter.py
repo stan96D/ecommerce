@@ -125,7 +125,10 @@ class QueryProductSorter:
             # Then, sort by sale status (sale items first)
             'on_sale',
             # Then, by calculated sale price (if sale exists)
+            F('stock__quantity').desc(nulls_last=True),
+
             'effective_price',
+
 
         )
 

@@ -119,7 +119,7 @@ class Product(models.Model):
     @property
     def unit_selling_price(self):
 
-        excl_tax = self.unit_buy_price_excl_tax
+        excl_tax = self.unit_price
 
         selling_price_excl_tax = round(
             excl_tax * self.selling_percentage, 2)
@@ -137,7 +137,7 @@ class Product(models.Model):
     @property
     def selling_price(self):
 
-        excl_tax = self.buy_price_excl_tax
+        excl_tax = self.price
 
         selling_price_excl_tax = round(
             excl_tax * self.selling_percentage, 2)

@@ -907,7 +907,7 @@ class AdminMailSender:
         for supplier, lines in supplier_order_lines.items():
             supplier_lines_text = ""
             for line in lines:
-                supplier_lines_text += f"<li>{line.product.name} (Aantal: {
+                supplier_lines_text += f"<li>{line.product.name}: {line.product.sku} (Aantal: {
                     line.quantity}, Totaalprijs: €{line.total_price})</li>"
 
             order_lines_sections += f"""
@@ -1047,7 +1047,7 @@ class AdminMailSender:
         for supplier, lines in supplier_order_lines.items():
             supplier_lines_text = ""
             for line in lines:
-                supplier_lines_text += f"<li>{line.order_line.product.name} (Aantal: {
+                supplier_lines_text += f"<li>{line.order_line.product.name}: {line.order_line.product.sku} (Aantal: {
                     line.quantity}, Totaalprijs: €{line.refund_amount})</li>"
 
             order_lines_sections += f"""
