@@ -1,3 +1,4 @@
+import requests
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password
 from django.utils.http import urlsafe_base64_decode
@@ -7,6 +8,7 @@ from django.http import JsonResponse
 from ecommerce_website.classes.forms.payment_form import PaymentForm
 from ecommerce_website.classes.forms.return_form import ReturnForm
 from ecommerce_website.classes.helpers.progress_view import get_order_progress_phases, get_return_progress_phases
+from ecommerce_website.classes.managers.address_manager.address_manager import AddressManager
 from ecommerce_website.classes.model.cached_return_order import SessionReturnOrderService
 from ecommerce_website.services.seo_service.seo_service import *
 from ecommerce_website.services.static_view_service.abous_us_view_service import AboutUsViewService
@@ -449,6 +451,32 @@ def sign_up(request):
         form = CustomUserCreationForm(request.POST)
 
         if form.is_valid():
+            street = form.cleaned_data.get('address')
+            postal_code = form.cleaned_data.get('postal_code')
+            house_number = form.cleaned_data.get('house_number')
+            city = form.cleaned_data.get('city')
+            country = form.cleaned_data.get('country')
+
+            valid_address = AddressManager.fetch_and_validate_address(
+                street, postal_code, house_number, city, country)
+
+            if not valid_address:
+
+                form.add_error(
+                    None, "Het ingevoerde adres is onjuist. Controleer het adres en probeer opnieuw.")
+
+                return render(request, 'sign_up.html', {
+                    'form': form,
+                    'headerData': ViewServiceUtility.get_header_data(),
+                    'env': environment,
+                    'current_sale': ViewServiceUtility.get_current_sale_data(),
+
+                    'store_data': ViewServiceUtility.get_current_store_data(),
+                    'payment_methods': ViewServiceUtility.get_payment_methods(),
+                    'brands': ViewServiceUtility.get_all_brands(),
+                    'store_motivations': ViewServiceUtility.get_store_motivations(),
+                    'meta': SignUpSEOService.get_meta_object()
+                })
 
             auth_manager = AuthenticationManager()
 
@@ -2521,3 +2549,69 @@ def return_detail(request):
                                                       'progress_phases': progress_phases,
                                                       'store_motivations': ViewServiceUtility.get_store_motivations(),
                                                       'meta': ReturnDetailSEOService.get_meta_object()})
+
+
+@csrf_exempt
+def get_address(request):
+    """
+    Fetch address data from Nominatim API (OpenStreetMap) based on postal code, house number, and street.
+    Return consistent fields: Adres, Huisnummer, Postcode, Stad, Land.
+    Only allows POST requests.
+    """
+    print("Fetching address data...")
+
+    # Check if the request is a POST method
+    if request.method != 'POST':
+        return JsonResponse({"error": "Invalid request method, POST required."}, status=405)
+
+    try:
+        # Parse incoming JSON data from request body
+        body = json.loads(request.body)
+
+        postal_code = body.get('postal_code')
+        house_number = body.get('house_number')
+        street = body.get('street')
+        city = body.get('city')
+        country = body.get('country')
+
+        if not postal_code or not house_number or not street:
+            return JsonResponse({"error": "Postal code, house number, and street are required."}, status=400)
+
+        # Build the query string for the API
+        query = AddressManager.build_query(
+            street, postal_code, house_number, city, country)
+
+        # Fetch address data from the Nominatim API using the query
+        response_data = AddressManager.fetch_data_from_api(query)
+
+        # Handle errors from API response
+        if "error" in response_data:
+            return JsonResponse({"error": response_data["error"]}, status=500)
+
+        # If no data is returned, inform the user
+        if not response_data:
+            return JsonResponse({"error": "No address found for the given postal code."}, status=404)
+
+        # Extract the first address data from the API response
+        address_data = AddressManager.extract_address_data(response_data[0])
+
+        # Validate the extracted address data
+        is_valid, error_message = AddressManager.validate_address_data(
+            address_data)
+
+        if not is_valid:
+            return JsonResponse({"error": error_message}, status=400)
+
+        # Return validated address data
+        return JsonResponse({
+            'address': address_data['street'],
+            'house_number': house_number,
+            'postal_code': address_data['postal_code'],
+            'city': address_data['city'],
+            'country': address_data['country'],
+        })
+
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON in request body."}, status=400)
+    except requests.RequestException as e:
+        return JsonResponse({"error": str(e)}, status=500)

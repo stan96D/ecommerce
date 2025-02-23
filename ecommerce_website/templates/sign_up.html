@@ -457,17 +457,176 @@
     </main>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
+        // Autofill salutation
         var salutationValue = '{{ form.salutation.value }}'
+        document
+          .querySelectorAll('input[name="salutation"]')
+          .forEach(function (radio) {
+            if (radio.value === salutationValue) {
+              radio.checked = true
+            }
+          })
 
-        var salutationRadios = document.querySelectorAll(
-          'input[name="salutation"]',
-        )
+        // Function to fetch address data based on postal code, house number, street, city, and country from Django backend
+        async function fetchAddress(
+          postalCode,
+          houseNumber,
+          street,
+          city,
+          country,
+        ) {
+          try {
+            showSpinner() // Show the spinner before making the request
 
-        salutationRadios.forEach(function (radio) {
-          if (radio.value === salutationValue) {
-            radio.checked = true
+            // Create the payload (data to send in the body)
+            const requestBody = {
+              postal_code: postalCode,
+              house_number: houseNumber,
+              street: street, // Include street in the payload
+              city: city, // Include city in the payload
+              country: country, // Include country in the payload
+            }
+
+            // Call your Django backend to get address data
+            let response = await fetch('/get-address/', {
+              method: 'POST', // Use POST method
+              headers: {
+                'Content-Type': 'application/json', // Tell the server we're sending JSON
+              },
+              body: JSON.stringify(requestBody), // Send the payload as JSON in the body
+            })
+
+            // Handle the response
+            let data = await response.json()
+            console.log('API Response:', data)
+
+            // Reset the visual error indications
+            resetErrorIndicators()
+
+            if (data && !data.error) {
+              // Fill the form fields with the address data from the response
+              document.getElementById('address').value = data.address || ''
+              document.getElementById('postal_code').value =
+                data.postal_code || ''
+              document.getElementById('city').value = data.city || ''
+              document.getElementById('country').value =
+                data.country || 'Nederland' // Default country
+            } else {
+              // Handle error case: if data contains error or no data
+              showErrorIndicators(data)
+            }
+          } catch (error) {
+            console.error('Fout bij ophalen adres:', error)
+            showErrorIndicators({
+              error: 'Er is een fout opgetreden bij het ophalen van het adres.',
+            })
+          } finally {
+            hideSpinner() // Hide the spinner after the request completes
           }
+        }
+
+        // Reset error indicators for all address fields
+        function resetErrorIndicators() {
+          document.getElementById('address').style.border = ''
+          document.getElementById('postal_code').style.border = ''
+          document.getElementById('house_number').style.border = ''
+          document.getElementById('city').style.border = ''
+          document.getElementById('country').style.border = ''
+        }
+
+        // Show error indicators (red borders) for relevant fields
+        function showErrorIndicators(data) {
+          // Check if the error is related to a specific field and apply the red border
+          if (data.error) {
+            // You can customize this logic further to show borders on specific fields
+            if (!data.address) {
+              document.getElementById('address').style.border = '1px solid red'
+            }
+            if (!data.postal_code) {
+              document.getElementById('postal_code').style.border =
+                '1px solid red'
+            }
+            if (!data.house_number) {
+              document.getElementById('house_number').style.border =
+                '1px solid red'
+            }
+            if (!data.city) {
+              document.getElementById('city').style.border = '1px solid red'
+            }
+            if (!data.country) {
+              document.getElementById('country').style.border = '1px solid red'
+            }
+          }
+        }
+
+        // Listen for street input changes (address field)
+        document
+          .getElementById('address')
+          .addEventListener('blur', function () {
+            let street = this.value.trim()
+            let houseNumber = document
+              .getElementById('house_number')
+              .value.trim()
+            let postalCode = document.getElementById('postal_code').value.trim()
+            let city = document.getElementById('city').value.trim()
+            let country = document.getElementById('country').value.trim()
+
+            fetchAddress(postalCode, houseNumber, street, city, country)
+          })
+
+        // Listen for postal code input changes
+        document
+          .getElementById('postal_code')
+          .addEventListener('blur', function () {
+            let postalCode = this.value.trim()
+            let houseNumber = document
+              .getElementById('house_number')
+              .value.trim()
+            let street = document.getElementById('address').value.trim()
+            let city = document.getElementById('city').value.trim()
+            let country = document.getElementById('country').value.trim()
+
+            fetchAddress(postalCode, houseNumber, street, city, country)
+          })
+
+        // Listen for house number input changes
+        document
+          .getElementById('house_number')
+          .addEventListener('blur', function () {
+            let houseNumber = this.value.trim()
+            let postalCode = document.getElementById('postal_code').value.trim()
+            let street = document.getElementById('address').value.trim()
+            let city = document.getElementById('city').value.trim()
+            let country = document.getElementById('country').value.trim()
+
+            fetchAddress(postalCode, houseNumber, street, city, country)
+          })
+
+        // Listen for city input changes
+        document.getElementById('city').addEventListener('blur', function () {
+          let city = this.value.trim()
+          let houseNumber = document.getElementById('house_number').value.trim()
+          let postalCode = document.getElementById('postal_code').value.trim()
+          let street = document.getElementById('address').value.trim()
+          let country = document.getElementById('country').value.trim()
+
+          fetchAddress(postalCode, houseNumber, street, city, country)
         })
+
+        // Listen for country input changes
+        document
+          .getElementById('country')
+          .addEventListener('blur', function () {
+            let country = this.value.trim()
+            let houseNumber = document
+              .getElementById('house_number')
+              .value.trim()
+            let postalCode = document.getElementById('postal_code').value.trim()
+            let street = document.getElementById('address').value.trim()
+            let city = document.getElementById('city').value.trim()
+
+            fetchAddress(postalCode, houseNumber, street, city, country)
+          })
       })
     </script>
   {% endif %}
