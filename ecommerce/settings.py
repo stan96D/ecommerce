@@ -78,13 +78,15 @@ elif ENVIRONMENT == "test":
     DEBUG = False
 
     BASE_URL = 'https://test.goedkoopstevloerenshop.nl'
-    ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl']
+    ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl',
+                     'goedkoopstevloerenshop.nl']
 
     NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
 
 else:
     BASE_URL = 'https://goedkoopstevloerenshop.nl'
-    ALLOWED_HOSTS = ['goedkoopstevloerenshop.nl']
+    ALLOWED_HOSTS = ['goedkoopstevloerenshop.nl',
+                     'test.goedkoopstevloerenshop.nl']
 
     NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
 
