@@ -1,0 +1,39 @@
+name: Deploy to Server for PR merge from dev to main
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY_GITHUB_ACTIONS }}
+
+      - name: Ensure PR is from dev to main
+        run: |
+          if [[ "${GITHUB_HEAD_REF}" != "dev" || "${GITHUB_BASE_REF}" != "main" ]]; then
+            echo "This PR is not from dev to main. Exiting the deploy process."
+            exit 0
+          fi
+
+      - name: Run deploy script with debugging
+        run: |
+          echo "Deploying changes for PR from dev to main"
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} 'set -x; bash /opt/scripts/ecommerce_prod.sh'
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY_GITHUB_ACTIONS }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}

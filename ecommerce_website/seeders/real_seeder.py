@@ -114,9 +114,9 @@ class RealStoreMotivationDataSeeder(RealSeederInterface):
                                        text="Wij bieden de goedkoopste vloeren van Nederland en België. Nergens anders krijg je zulke topvloeren voor deze prijs!",
                                        for_homepage=True)
 
-        StoreMotivation.objects.create(name="Binnen 96 uur in huis",
+        StoreMotivation.objects.create(name="Super snelle levering",
                                        active=True,
-                                       text="Door onze geweldige bezorgdienst garanderen wij dat jij je vloer binnen maximaal vier (werk)dagen in huis hebt. Leggen maar!",
+                                       text="Door onze geweldige bezorgdienst garanderen wij dat jij je vloer zo snel mogelijk in huis hebt. Leggen maar!",
                                        for_homepage=True)
 
         print("RealStoreMotivationDataSeeder finished...")
