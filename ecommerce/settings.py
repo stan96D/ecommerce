@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import sentry_sdk
 import logging
 from pathlib import Path
 import os
@@ -225,3 +226,20 @@ INTERNAL_IPS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
+
+if ENVIRONMENT != "dev":
+    sentry_sdk.init(
+        dsn="https://9dad922d65a62df556fc4a3483b89a0d@o4508909517733888.ingest.de.sentry.io/4508909526646864",
+        # Add data like request headers and IP for users,
+        # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+        send_default_pii=True,
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for tracing.
+        traces_sample_rate=1.0,
+        _experiments={
+            # Set continuous_profiling_auto_start to True
+            # to automatically start the profiler on when
+            # possible.
+            "continuous_profiling_auto_start": True,
+        },
+    )

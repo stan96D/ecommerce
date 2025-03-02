@@ -11,7 +11,9 @@ sitemaps = {
 
 handler404 = 'ecommerce_website.views.custom_404_view'
 
+
 urlpatterns = [
+
     # API
     path('get-address/',
          views.get_address, name='get_address'),
