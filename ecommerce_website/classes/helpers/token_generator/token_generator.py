@@ -27,7 +27,7 @@ class ResetPasswordTokenGenerator(TokenGeneratorInterface):
         reset_token = f"{uid}-{token}"
 
         return reset_token
-    
+
     @staticmethod
     def is_token_expired(token):
         try:
@@ -43,4 +43,3 @@ class ResetPasswordTokenGenerator(TokenGeneratorInterface):
 
         except (ValueError, TypeError, Account.DoesNotExist):
             return True
-
