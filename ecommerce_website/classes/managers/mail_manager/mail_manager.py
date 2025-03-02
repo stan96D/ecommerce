@@ -1181,8 +1181,10 @@ class ForgotPasswordMailSender:
         # Generate the reset password URL with token
         token_generator = ResetPasswordTokenGenerator(user)
         token = token_generator.generate()
-        reset_password_confirm_url = f"http://127.0.0.1:8000/new_password/{
-            token}/"
+        environment = EnvLoader.get_env()
+
+        manager = EncapsulatedURLManager.get_url_manager(environment)
+        reset_password_confirm_url = manager.create_forgot_password(token)
 
         subject = "Aanvraag wachtwoord resetten"
         message = f"""

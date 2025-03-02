@@ -43,6 +43,10 @@ class URLManager(ABC):
     def create_webhook(self, currency, amount, description, redirect_url, webhook_url):
         pass
 
+    @abstractmethod
+    def create_forgot_password(token):
+        pass
+
 
 class TestURLManager(URLManager):
 
@@ -80,6 +84,12 @@ class TestURLManager(URLManager):
         return f"https://{
             settings.NGROK_URL}/return_detail?return_id={return_id}"
 
+    @staticmethod
+    def create_forgot_password(token):
+        return f"https://{
+            settings.NGROK_URL}/new_password/{
+            token}/"
+
 
 class RealURLManager(URLManager):
 
@@ -114,3 +124,8 @@ class RealURLManager(URLManager):
     @staticmethod
     def store_rating():
         return RealURLManager.get_base() + "/store_rating"
+
+    @staticmethod
+    def create_forgot_password(token):
+        return RealURLManager.get_base() + f"/new_password/{
+            token}/"
