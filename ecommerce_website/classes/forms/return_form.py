@@ -10,6 +10,7 @@ class ReturnForm(forms.Form):
         required=True,
         max_length=1000,
         label="Retourreden",
+
     )
     first_name = forms.CharField(
         max_length=50,
@@ -105,7 +106,7 @@ class ReturnForm(forms.Form):
     )
 
     # Field for the billing toggle
-    billing_toggle = forms.ChoiceField(
+    alternative_billing = forms.ChoiceField(
         choices=[("true", "True"), ("false", "False")],
         required=True,
         label="Afwijkend factuuradres",

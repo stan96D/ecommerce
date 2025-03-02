@@ -14,12 +14,17 @@ class SessionShoppingCart(ShoppingCartInterface):
         self.cart = cart
 
     def quantity_in_cart(self, product_id):
+
         product_id = str(product_id)
         if product_id in self.cart:
             return self.cart[product_id]['quantity']
         return 0
 
     def add_item(self, product_id, quantity):
+
+        if quantity < 1:
+            return
+
         product_id = str(product_id)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0}
@@ -34,6 +39,10 @@ class SessionShoppingCart(ShoppingCartInterface):
             self.save()
 
     def update_quantity(self, product_id, quantity):
+
+        if quantity < 1:
+            return
+
         product_id = str(product_id)
         if product_id in self.cart:
             self.cart[product_id]['quantity'] = quantity
@@ -233,6 +242,10 @@ class AccountShoppingCart(ShoppingCartInterface):
         return 0
 
     def add_item(self, product_id, quantity):
+
+        if quantity < 1:
+            return
+
         product_id = str(product_id)
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0}
@@ -246,6 +259,10 @@ class AccountShoppingCart(ShoppingCartInterface):
             self.save()
 
     def update_quantity(self, product_id, quantity):
+
+        if quantity < 1:
+            return
+
         product_id = str(product_id)
         if product_id in self.cart:
             self.cart[product_id]['quantity'] = quantity

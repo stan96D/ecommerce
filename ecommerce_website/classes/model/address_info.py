@@ -1,10 +1,11 @@
 class AddressInfo:
-    def __init__(self, address, house_number, city, postal_code, country):
+    def __init__(self, address, house_number, city, postal_code, country, is_billing_different=False):
         self.address = address
         self.house_number = house_number
         self.city = city
         self.postal_code = postal_code
         self.country = country
+        self.is_billing_different = is_billing_different
 
     def serialize(self):
         return {
@@ -12,7 +13,8 @@ class AddressInfo:
             'house_number': self.house_number,
             'city': self.city,
             'postal_code': self.postal_code,
-            'country': self.country
+            'country': self.country,
+            'is_billing_different': self.is_billing_different
         }
 
     @staticmethod

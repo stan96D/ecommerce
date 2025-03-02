@@ -5,6 +5,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from ecommerce_website.classes.forms.order_form import OrderInfoForm
 from ecommerce_website.classes.forms.payment_form import PaymentForm
 from ecommerce_website.classes.forms.return_form import ReturnForm
 from ecommerce_website.classes.helpers.progress_view import get_order_progress_phases, get_return_progress_phases
@@ -16,14 +17,12 @@ from ecommerce_website.services.static_view_service.contact_service import Conta
 from ecommerce_website.services.static_view_service.payment_return_view_service import PaymentReturnViewService
 from ecommerce_website.services.static_view_service.return_view_service import ReturnViewService
 from ecommerce_website.services.validation_service.validation_service import ValidationService
-from ecommerce_website.services.view_service.order_info_view_service import OrderInfoViewService
 from ecommerce_website.services.product_service.product_service import ProductService
 from django.shortcuts import redirect, render
 from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
-from ecommerce_website.services.shopping_cart_service.shopping_cart_service import ShoppingCartService
 from ecommerce_website.services.product_category_service.product_category_service import ProductCategoryService
 from ecommerce_website.services.product_filter_service.product_filter_service import ProductFilterService
-from ecommerce_website.classes.helpers.product_sorter import ProductSorter, ProductSorterUtility, QueryProductSorter
+from ecommerce_website.classes.helpers.product_sorter import ProductSorterUtility, QueryProductSorter
 from ecommerce_website.classes.model.address_info import AddressInfo
 from ecommerce_website.classes.model.contact_info import ContactInfo
 from ecommerce_website.classes.model.payment_info import PaymentInfo
@@ -363,8 +362,8 @@ def account_view(request):
 @csrf_protect
 def change_account_information(request):
     if request.method == 'POST':
-        first_name = request.POST.get('first-name')
-        last_name = request.POST.get('last-name')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
         email = request.POST.get('email')
         phone = request.POST.get('phone')
 
@@ -409,8 +408,35 @@ def change_delivery_address_information(request):
         city = request.POST.get('city')
         country = request.POST.get('country')
 
-        if not address and not house_number and not postal_code and not city and not country:
-            return JsonResponse({'status': 'success', 'message': 'Data received successfully'})
+        # Define the fields and the corresponding error messages
+        fields = {
+            'address': 'Het veld adres mag niet leeg zijn.',
+            'house_number': 'Het veld huisnummer mag niet leeg zijn.',
+            'postal_code': 'Het veld postcode mag niet leeg zijn.',
+            'city': 'Het veld plaats mag niet leeg zijn.',
+            'country': 'Het veld land mag niet leeg zijn.'
+        }
+
+        errors = {}
+
+        # Loop over fields and check if any are empty or only contain spaces
+        for field, error_message in fields.items():
+            value = locals().get(field)  # Get the value dynamically using locals()
+            if not value.strip():  # Strip spaces and check if it's empty
+                errors[field] = error_message
+
+        # If there are any errors, return a response with all errors
+        if errors:
+            return JsonResponse({
+                'status': 'fail',
+                'message': 'Invalid data submitted',
+                'errors': errors
+            })
+        valid_address = AddressManager.fetch_and_validate_address(
+            address, postal_code, house_number, city, country)
+
+        if not valid_address:
+            return JsonResponse({'status': 'fail', 'message': 'Invalid data submitted', 'errors': {'address': 'De combinatie met dit adres is niet valide.', 'postal_code':  "De combinatie met deze postcode is niet valide.", 'house_number':  "De combinatie met dit huisnummer is niet valide.", 'city':  "De combinatie met deze plaats is niet valide.", 'country':  "De combinatie met dit land is niet valide."}})
 
         user = request.user
         account = Account.objects.get(email=user.email)
@@ -535,27 +561,22 @@ def cart(request):
 
 
 def order_info(request):
-
     order_info_service = OrderInfoService(request)
 
     if request.method == 'GET':
-
         if not ShoppingCartService(request).is_valid:
             return redirect('cart')
 
         info_view = order_info_service.get_order()
-        info_view_service = OrderInfoViewService()
-
         user = request.user
 
         if info_view:
-
             json_data = info_view.to_json()
 
-            order_info_view = info_view_service.get({
+            initial_data = {
                 "first_name": json_data['contact_info']['first_name'],
                 "last_name": json_data['contact_info']['last_name'],
-                "email": json_data['contact_info']['email'],
+                "email_address": json_data['contact_info']['email'],
                 "phone": json_data['contact_info']['phonenumber'],
                 "salutation": json_data['contact_info']['salutation'],
 
@@ -570,14 +591,13 @@ def order_info(request):
                 "billing_city": json_data.get('billing_address_info', {}).get('city', ""),
                 "billing_postal_code": json_data.get('billing_address_info', {}).get('postal_code', ""),
                 "billing_country": json_data.get('billing_address_info', {}).get('country', ""),
-            })
-
+                "alternate_billing": json_data.get('billing_address_info', {}).get('is_billing_different', False),
+            }
         elif user.is_authenticated:
-
-            order_info_view = info_view_service.get({
+            initial_data = {
                 "first_name": user.first_name,
                 "last_name": user.last_name,
-                "email": user.email,
+                "email_address": user.email,
                 "phone": user.phone_number,
                 "address": user.address,
                 "house_number": user.house_number,
@@ -590,60 +610,97 @@ def order_info(request):
                 "billing_city": "",
                 "billing_postal_code": "",
                 "billing_country": "",
-            })
-
+                "alternate_billing": False,
+            }
         else:
-            order_info_view = info_view_service.get_single()
+            initial_data = {
+                "first_name": "",
+                "last_name": "",
+                "email_address": "",
+                "phone": "",
+                "address": "",
+                "house_number": "",
+                "city": "",
+                "postal_code": "",
+                "country": "",
+                "salutation": "",
+                "billing_address": "",
+                "billing_house_number": "",
+                "billing_city": "",
+                "billing_postal_code": "",
+                "billing_country": "",
+                "alternate_billing": False,
+            }
+        form = OrderInfoForm(initial=initial_data)
 
-        return render(request, "checkout.html", {'headerData': ViewServiceUtility.get_header_data(),
-                                                 'env': environment,
-                                                 'current_sale': ViewServiceUtility.get_current_sale_data(),
+        return render(request, "checkout.html", {
+            'headerData': ViewServiceUtility.get_header_data(),
+            'env': environment,
+            'current_sale': ViewServiceUtility.get_current_sale_data(),
+            'store_data': ViewServiceUtility.get_current_store_data(),
+            'payment_methods': ViewServiceUtility.get_payment_methods(),
+            'brands': ViewServiceUtility.get_all_brands(),
+            'cart': ViewServiceUtility.get_cart_view(request),
+            'order_info': form,
+            'store_motivations': ViewServiceUtility.get_store_motivations(),
+            'meta': CheckoutSEOService.get_meta_object()
+        })
 
-                                                 'store_data': ViewServiceUtility.get_current_store_data(),
-                                                 'payment_methods': ViewServiceUtility.get_payment_methods(),
-                                                 'brands': ViewServiceUtility.get_all_brands(),
-                                                 'cart': ViewServiceUtility.get_cart_view(request),
-                                                 'order_info': order_info_view,
-                                                 'store_motivations': ViewServiceUtility.get_store_motivations(),
-                                                 'meta': CheckoutSEOService.get_meta_object()})
     elif request.method == "POST":
+        form = OrderInfoForm(request.POST)
 
-        attributes = request.POST.copy()
-        different_billing = attributes.get('billing_toggle')
-        first_name = attributes.get('first_name')
-        last_name = attributes.get('last_name')
-        email_address = attributes.get('email_address')
-        address = attributes.get('address')
-        house_number = attributes.get('house_number')
-        city = attributes.get('city')
-        postal_code = attributes.get('postal_code')
-        country = attributes.get('country')
-        phone = attributes.get('phone')
-        salutation = attributes.get('salutation')
-        billing_address = attributes.get('billing_address', "")
-        billing_house_number = attributes.get('billing_house_number', "")
-        billing_city = attributes.get('billing_city', "")
-        billing_postal_code = attributes.get('billing_postal_code', "")
-        billing_country = attributes.get('billing_country', "")
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
 
-        if different_billing == 'false':
-            billing_address = attributes.get('address')
-            billing_house_number = attributes.get('house_number')
-            billing_city = attributes.get('city')
-            billing_postal_code = attributes.get('postal_code')
-            billing_country = attributes.get('country')
+            different_billing = cleaned_data.get('alternate_billing')
+            first_name = cleaned_data.get('first_name')
+            last_name = cleaned_data.get('last_name')
+            email_address = cleaned_data.get('email_address')
+            phone = cleaned_data.get('phone')
+            salutation = cleaned_data.get('salutation')
 
-        contact_info = ContactInfo(
-            first_name, last_name, email_address, phone, salutation)
-        billing_address_info = AddressInfo(
-            billing_address, billing_house_number, billing_city, billing_postal_code, billing_country)
-        shipping_address_info = AddressInfo(
-            address, house_number, city, postal_code, country)
+            address = cleaned_data.get('address')
+            house_number = cleaned_data.get('house_number')
+            city = cleaned_data.get('city')
+            postal_code = cleaned_data.get('postal_code')
+            country = cleaned_data.get('country')
 
-        order_info_service.create_order(
-            contact_info, billing_address_info, shipping_address_info)
+            if not different_billing:
+                billing_address = address
+                billing_house_number = house_number
+                billing_city = city
+                billing_postal_code = postal_code
+                billing_country = country
+            else:
+                billing_address = cleaned_data.get('billing_address')
+                billing_house_number = cleaned_data.get('billing_house_number')
+                billing_city = cleaned_data.get('billing_city')
+                billing_postal_code = cleaned_data.get('billing_postal_code')
+                billing_country = cleaned_data.get('billing_country')
 
-        return redirect("navigate_checkout")
+                if not AddressManager.fetch_and_validate_address(billing_address, billing_postal_code, billing_house_number, billing_city, billing_country):
+                    form.add_error(
+                        None, "Het ingevoerde factuuradres is onjuist. Controleer het en probeer opnieuw.")
+                    return render(request, "checkout.html", {'order_info': form})
+
+            if not AddressManager.fetch_and_validate_address(address, postal_code, house_number, city, country):
+                form.add_error(
+                    None, "Het ingevoerde adres is onjuist. Controleer het en probeer opnieuw.")
+                return render(request, "checkout.html", {'order_info': form})
+
+            contact_info = ContactInfo(
+                first_name, last_name, email_address, phone, salutation)
+            billing_address_info = AddressInfo(
+                billing_address, billing_house_number, billing_city, billing_postal_code, billing_country, different_billing)
+            shipping_address_info = AddressInfo(
+                address, house_number, city, postal_code, country)
+
+            order_info_service.create_order(
+                contact_info, billing_address_info, shipping_address_info)
+
+            return redirect("navigate_checkout")
+
+        return render(request, "checkout.html", {'order_info': form})
 
 
 def checkout(request):
@@ -2288,7 +2345,7 @@ def create_return_overview(request):
                 'billing_city': account_details.city,
                 'billing_postal_code': account_details.postal_code,
                 'billing_country': account_details.country,
-                'billing_toggle': 'false'
+                'alternative_billing': 'false'
             }
 
         form = ReturnForm(initial=initial_data)
@@ -2333,21 +2390,21 @@ def create_return_overview(request):
                 # General error
                 form.add_error(
                     None, "De gekozen orderrregels zijn aangepast en niet te retourneren.")
-                render(request, 'return_create_detail.html',
-                       {
-                           'form': form,
-                           'headerData': ViewServiceUtility.get_header_data(),
-                           'env': environment,
-                           'current_sale': ViewServiceUtility.get_current_sale_data(),
+                return render(request, 'return_create_detail.html',
+                              {
+                                  'form': form,
+                                  'headerData': ViewServiceUtility.get_header_data(),
+                                  'env': environment,
+                                  'current_sale': ViewServiceUtility.get_current_sale_data(),
 
-                           'return_order': return_order,
-                           'store_data': ViewServiceUtility.get_current_store_data(),
-                           'payment_methods': ViewServiceUtility.get_payment_methods(),
-                           'brands': ViewServiceUtility.get_all_brands(),
-                           'store_motivations': ViewServiceUtility.get_store_motivations(),
-                           'meta': CreateReturnSEOService.get_meta_object()
+                                  'return_order': return_order,
+                                  'store_data': ViewServiceUtility.get_current_store_data(),
+                                  'payment_methods': ViewServiceUtility.get_payment_methods(),
+                                  'brands': ViewServiceUtility.get_all_brands(),
+                                  'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                  'meta': CreateReturnSEOService.get_meta_object()
 
-                       })
+                              })
 
             result = return_order_service.update_form_data(
                 return_id, form.cleaned_data)
@@ -2356,21 +2413,82 @@ def create_return_overview(request):
                 # General error
                 form.add_error(
                     None, "Er is iets misgegaan bij het aanmaken van de retour. Probeer het opnieuw")
-                render(request, 'return_create_detail.html',
-                       {
-                           'form': form,
-                           'headerData': ViewServiceUtility.get_header_data(),
-                           'env': environment,
-                           'return_order': return_order,
-                           'store_data': ViewServiceUtility.get_current_store_data(),
-                           'payment_methods': ViewServiceUtility.get_payment_methods(),
-                           'brands': ViewServiceUtility.get_all_brands(),
-                           'store_motivations': ViewServiceUtility.get_store_motivations(),
-                           'meta': CreateReturnSEOService.get_meta_object(),
+                return render(request, 'return_create_detail.html',
+                              {
+                                  'form': form,
+                                  'headerData': ViewServiceUtility.get_header_data(),
+                                  'env': environment,
+                                  'return_order': return_order,
+                                  'store_data': ViewServiceUtility.get_current_store_data(),
+                                  'payment_methods': ViewServiceUtility.get_payment_methods(),
+                                  'brands': ViewServiceUtility.get_all_brands(),
+                                  'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                  'meta': CreateReturnSEOService.get_meta_object(),
 
 
-                       })
+                              })
             else:
+
+                cleaned_data = form.cleaned_data
+
+                different_billing = cleaned_data.get('alternative_billing')
+
+                address = cleaned_data.get('address')
+                house_number = cleaned_data.get('house_number')
+                city = cleaned_data.get('city')
+                postal_code = cleaned_data.get('postal_code')
+                country = cleaned_data.get('country')
+
+                if different_billing != 'true':
+                    billing_address = address
+                    billing_house_number = house_number
+                    billing_city = city
+                    billing_postal_code = postal_code
+                    billing_country = country
+                else:
+                    billing_address = cleaned_data.get('billing_address')
+                    billing_house_number = cleaned_data.get(
+                        'billing_house_number')
+                    billing_city = cleaned_data.get('billing_city')
+                    billing_postal_code = cleaned_data.get(
+                        'billing_postal_code')
+                    billing_country = cleaned_data.get('billing_country')
+
+                    if not AddressManager.fetch_and_validate_address(billing_address, billing_postal_code, billing_house_number, billing_city, billing_country):
+                        form.add_error(
+                            None, "Het ingevoerde factuuradres is onjuist. Controleer het en probeer opnieuw.")
+                        return render(request, 'return_create_detail.html',
+                                      {
+                                          'form': form,
+                                          'headerData': ViewServiceUtility.get_header_data(),
+                                          'env': environment,
+                                          'return_order': return_order,
+                                          'store_data': ViewServiceUtility.get_current_store_data(),
+                                          'payment_methods': ViewServiceUtility.get_payment_methods(),
+                                          'brands': ViewServiceUtility.get_all_brands(),
+                                          'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                          'meta': CreateReturnSEOService.get_meta_object(),
+
+
+                                      })
+
+                if not AddressManager.fetch_and_validate_address(address, postal_code, house_number, city, country):
+                    form.add_error(
+                        None, "Het ingevoerde adres is onjuist. Controleer het en probeer opnieuw.")
+                    return render(request, 'return_create_detail.html',
+                                  {
+                                      'form': form,
+                                      'headerData': ViewServiceUtility.get_header_data(),
+                                      'env': environment,
+                                      'return_order': return_order,
+                                      'store_data': ViewServiceUtility.get_current_store_data(),
+                                      'payment_methods': ViewServiceUtility.get_payment_methods(),
+                                      'brands': ViewServiceUtility.get_all_brands(),
+                                      'store_motivations': ViewServiceUtility.get_store_motivations(),
+                                      'meta': CreateReturnSEOService.get_meta_object(),
+
+
+                                  })
 
                 redirect_url = reverse('confirm_return') + \
                     f'?return_id={return_id}'

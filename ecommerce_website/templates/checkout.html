@@ -27,7 +27,6 @@
       <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
         Uw gegevens
       </h1>
-
       <form
         id="checkout-form"
         method="POST"
@@ -37,11 +36,13 @@
         {% csrf_token %}
         <input
           type="hidden"
-          name="billing_toggle"
+          name="alternate_billing"
           id="billing_toggle_input"
-          value="{{ order_info.alternate_billing }}"
+          value="{{ order_info.alternate_billing.value }}"
         />
-
+        {% if order_info.errors %}
+          {% include 'components/messages/warning_message.html' with message="Er zijn fouten opgetreden bij de registratie:" error_messages=order_info.errors %}
+        {% endif %}
         <div
           class="lg:grid lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16"
         >
@@ -72,7 +73,7 @@
                           type="radio"
                           value="Dhr"
                           required
-                          {% if order_info.salutation == "Meneer" %}checked{% endif %}
+                          {% if order_info.salutation.value == "Dhr" %}checked{% endif %}
                           class="h-4 w-4 border-gray-300 text-orange-500 focus:ring-orange-400"
                         />
                         <label
@@ -87,7 +88,7 @@
                           name="salutation"
                           type="radio"
                           value="Mevr"
-                          {% if order_info.salutation == "Mevrouw" %}checked{% endif %}
+                          {% if order_info.salutation.value == "Mevr" %}checked{% endif %}
                           class="h-4 w-4 border-gray-300 text-orange-500 focus:ring-orange-400"
                         />
                         <label
@@ -102,7 +103,7 @@
                           name="salutation"
                           type="radio"
                           value="Geen van beiden"
-                          {% if order_info.salutation == "Geen van beiden" %}checked{% endif %}
+                          {% if order_info.salutation.value == "Geen van beiden" %}checked{% endif %}
                           class="h-4 w-4 border-gray-300 text-orange-500 focus:ring-orange-400"
                         />
                         <label
@@ -130,12 +131,20 @@
                         type="text"
                         id="first_name"
                         name="first_name"
-                        value="{{ order_info.first_name }}"
+                        value="{{ order_info.first_name.value }}"
                         autocomplete="first_name"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
                     </div>
+                    {% if order_info.first_name.errors %}
+                      <p
+                        id="first_name-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ order_info.first_name.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
 
                   <div>
@@ -150,11 +159,19 @@
                         type="text"
                         id="last_name"
                         name="last_name"
-                        value="{{ order_info.last_name }}"
+                        value="{{ order_info.last_name.value }}"
                         autocomplete="last_name"
                         class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                         required
                       />
+                      {% if order_info.last_name.errors %}
+                        <p
+                          id="last_name-error"
+                          class="text-red-500 text-sm mt-1"
+                        >
+                          {{ order_info.last_name.errors|striptags }}
+                        </p>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -170,11 +187,19 @@
                       type="email"
                       id="email_address"
                       name="email_address"
-                      value="{{ order_info.email }}"
+                      value="{{ order_info.email_address.value }}"
                       autocomplete="email_address"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
+                    {% if order_info.email_address.errors %}
+                      <p
+                        id="email_address-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ order_info.email_address.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
                 <div class="mt-4">
@@ -190,10 +215,15 @@
                       name="phone"
                       id="phone"
                       autocomplete="phone"
-                      value="{{ order_info.phone }}"
+                      value="{{ order_info.phone.value }}"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
+                    {% if order_info.phone.errors %}
+                      <p id="phone-error" class="text-red-500 text-sm mt-1">
+                        {{ order_info.phone.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -246,11 +276,16 @@
                       type="text"
                       name="address"
                       id="address"
-                      value="{{ order_info.address }}"
+                      value="{{ order_info.address.value }}"
                       autocomplete="address"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
+                    {% if order_info.address.errors %}
+                      <p id="address-error" class="text-red-500 text-sm mt-1">
+                        {{ order_info.address.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
 
@@ -266,31 +301,19 @@
                       type="text"
                       name="house_number"
                       id="house_number"
-                      value="{{ order_info.house_number }}"
+                      value="{{ order_info.house_number.value }}"
                       autocomplete="house_number"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    for="city"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    Plaats <span class="text-red-500">*</span>
-                  </label>
-                  <div class="mt-1">
-                    <input
-                      type="text"
-                      name="city"
-                      id="city"
-                      value="{{ order_info.city }}"
-                      autocomplete="city"
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-                      required
-                    />
+                    {% if order_info.house_number.errors %}
+                      <p
+                        id="house_number-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ order_info.house_number.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
                 <div>
@@ -305,13 +328,46 @@
                       type="text"
                       name="postal_code"
                       id="postal_code"
-                      value="{{ order_info.postal_code }}"
+                      value="{{ order_info.postal_code.value }}"
                       autocomplete="postal_code"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
+                    {% if order_info.postal_code.errors %}
+                      <p
+                        id="postal_code-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ order_info.postal_code.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
+                <div>
+                  <label
+                    for="city"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Plaats <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="city"
+                      id="city"
+                      value="{{ order_info.city.value }}"
+                      autocomplete="city"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                      required
+                    />
+                    {% if order_info.city.errors %}
+                      <p id="city-error" class="text-red-500 text-sm mt-1">
+                        {{ order_info.city.errors|striptags }}
+                      </p>
+                    {% endif %}
+                  </div>
+                </div>
+
                 <div>
                   <label
                     for="country"
@@ -326,22 +382,27 @@
                       autocomplete="country"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
-                      {% if order_info.country == "Nederland" %}
+                      {% if order_info.country.value == "Nederland" %}
                         <option value="Nederland" selected>Nederland</option>
                       {% else %}
                         <option value="Nederland">Nederland</option>
                       {% endif %}
-                      {% if order_info.country == "Duitsland" %}
+                      {% if order_info.country.value == "Duitsland" %}
                         <option value="Duitsland" selected>Duitsland</option>
                       {% else %}
                         <option value="Duitsland">Duitsland</option>
                       {% endif %}
-                      {% if order_info.country == "België" %}
+                      {% if order_info.country.value == "België" %}
                         <option value="België" selected>België</option>
                       {% else %}
                         <option value="België">België</option>
                       {% endif %}
                     </select>
+                    {% if order_info.country.errors %}
+                      <p id="country-error" class="text-red-500 text-sm mt-1">
+                        {{ order_info.country.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -368,11 +429,19 @@
                       type="text"
                       name="billing_address"
                       id="billing_address"
-                      value="{{ order_info.billing_address }}"
+                      value="{{ order_info.billing_address.value }}"
                       autocomplete="billing_address"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
+                    {% if order_info.billing_address.errors %}
+                      <p
+                        id="billing_address-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ order_info.billing_address.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
                 <div>
@@ -387,30 +456,19 @@
                       type="text"
                       name="billing_house_number"
                       id="billing_house_number"
-                      value="{{ order_info.billing_house_number }}"
+                      value="{{ order_info.billing_house_number.value }}"
                       autocomplete="billing_house_number"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
-                  </div>
-                </div>
-                <div>
-                  <label
-                    for="billing_city"
-                    class="block text-sm font-medium text-gray-700"
-                  >
-                    Plaats <span class="text-red-500">*</span>
-                  </label>
-                  <div class="mt-1">
-                    <input
-                      type="text"
-                      name="billing_city"
-                      id="billing_city"
-                      value="{{ order_info.billing_city }}"
-                      autocomplete="billing_city"
-                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-                      required
-                    />
+                    {% if order_info.billing_house_number.errors %}
+                      <p
+                        id="billing_house_number-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ order_info.billing_house_number.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
                 <div>
@@ -425,13 +483,49 @@
                       type="text"
                       name="billing_postal_code"
                       id="billing_postal_code"
-                      value="{{ order_info.billing_postal_code }}"
+                      value="{{ order_info.billing_postal_code.value }}"
                       autocomplete="billing_postal_code"
                       class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                       required
                     />
+                    {% if order_info.billing_postal_code.errors %}
+                      <p
+                        id="billing_postal_code-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ order_info.billing_postal_code.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
+                <div>
+                  <label
+                    for="billing_city"
+                    class="block text-sm font-medium text-gray-700"
+                  >
+                    Plaats <span class="text-red-500">*</span>
+                  </label>
+                  <div class="mt-1">
+                    <input
+                      type="text"
+                      name="billing_city"
+                      id="billing_city"
+                      value="{{ order_info.billing_city.value }}"
+                      autocomplete="billing_city"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                      required
+                    />
+                    {% if order_info.billing_city.errors %}
+                      <p
+                        id="billing_city-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ order_info.billing_city.errors|striptags }}
+                      </p>
+                    {% endif %}
+                  </div>
+                </div>
+
                 <div>
                   <label
                     for="billing_country"
@@ -444,25 +538,33 @@
                       id="billing_country"
                       name="billing_country"
                       autocomplete="billing_country"
-                      value="{{ order_info.billing_country }}"
+                      value="{{ order_info.billing_country.value }}"
                       class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
-                      {% if order_info.billing_country == "Nederland" %}
+                      {% if order_info.billing_country.value == "Nederland" %}
                         <option value="Nederland" selected>Nederland</option>
                       {% else %}
                         <option value="Nederland">Nederland</option>
                       {% endif %}
-                      {% if order_info.billing_country == "Duitsland" %}
+                      {% if order_info.billing_country.value == "Duitsland" %}
                         <option value="Duitsland" selected>Duitsland</option>
                       {% else %}
                         <option value="Duitsland">Duitsland</option>
                       {% endif %}
-                      {% if order_info.billing_country == "België" %}
+                      {% if order_info.billing_country.value == "België" %}
                         <option value="België" selected>België</option>
                       {% else %}
                         <option value="België">België</option>
                       {% endif %}
                     </select>
+                    {% if order_info.billing_country.errors %}
+                      <p
+                        id="billing_country-error"
+                        class="text-red-500 text-sm mt-1"
+                      >
+                        {{ order_info.billing_country.errors|striptags }}
+                      </p>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -593,94 +695,195 @@
   </div>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Get the hidden input element
       const billingToggleInput = document.getElementById('billing_toggle_input')
+      const initialBillingState = billingToggleInput.value === 'True'
 
-      // Get its value
-      const initialBillingState = billingToggleInput.value === 'true'
-
-      // Use this value to initialize your billing toggle logic
       initializeBillingToggle(initialBillingState)
+      const form = document.getElementById('checkout-form')
+
+      form.addEventListener('submit', function () {
+        showSpinner() // Show the spinner before submitting
+      })
     })
 
-    // Function to initialize the toggle based on the initial value
+    // Fetch and validate address
+    async function fetchAddress(
+      postalCode,
+      houseNumber,
+      street,
+      city,
+      country,
+      isBilling = false,
+    ) {
+      try {
+        showSpinner() // Show spinner before request
+
+        const requestBody = {
+          postal_code: postalCode,
+          house_number: houseNumber,
+          street: street,
+          city: city,
+          country: country,
+        }
+
+        let response = await fetch('/get-address/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        })
+
+        let data = await response.json()
+        console.log(`API Response (${isBilling ? 'Billing' : 'Normal'}):`, data)
+
+        resetErrorIndicators(isBilling)
+
+        if (data && !data.error) {
+          let prefix = isBilling ? 'billing_' : ''
+          document.getElementById(`${prefix}address`).value = data.address || ''
+          document.getElementById(`${prefix}postal_code`).value =
+            data.postal_code || ''
+          document.getElementById(`${prefix}city`).value = data.city || ''
+          document.getElementById(`${prefix}country`).value =
+            data.country || 'Nederland'
+        } else {
+          showErrorIndicators(data, isBilling)
+        }
+      } catch (error) {
+        console.error(
+          `Error fetching ${isBilling ? 'Billing' : 'Normal'} address:`,
+          error,
+        )
+        showErrorIndicators({ error: 'Failed to fetch address' }, isBilling)
+      } finally {
+        hideSpinner() // Hide spinner after request completes
+      }
+    }
+
+    // Reset error indicators
+    function resetErrorIndicators(isBilling = false) {
+      let prefix = isBilling ? 'billing_' : ''
+      ;['address', 'postal_code', 'house_number', 'city', 'country'].forEach(
+        (field) => {
+          document.getElementById(`${prefix}${field}`).style.border = ''
+        },
+      )
+    }
+
+    // Show error indicators
+    function showErrorIndicators(data, isBilling = false) {
+      let prefix = isBilling ? 'billing_' : ''
+      if (data.error) {
+        ;['address', 'postal_code', 'house_number', 'city', 'country'].forEach(
+          (field) => {
+            if (!data[field]) {
+              document.getElementById(`${prefix}${field}`).style.border =
+                '1px solid red'
+            }
+          },
+        )
+      }
+    }
+
+    // Attach event listeners to normal address fields
+    ;['address', 'postal_code', 'house_number', 'city', 'country'].forEach(
+      (field) => {
+        document
+          .getElementById(field)
+          .addEventListener('blur', validateAddresses)
+      },
+    )
+
+    // Attach event listeners to billing address fields (validate only if toggle is active)
+    ;[
+      'billing_address',
+      'billing_postal_code',
+      'billing_house_number',
+      'billing_city',
+      'billing_country',
+    ].forEach((field) => {
+      document.getElementById(field).addEventListener('blur', validateAddresses)
+    })
+
+    // Validate both normal and billing addresses if billing is enabled
+    function validateAddresses() {
+      let street = document.getElementById('address').value.trim()
+      let houseNumber = document.getElementById('house_number').value.trim()
+      let postalCode = document.getElementById('postal_code').value.trim()
+      let city = document.getElementById('city').value.trim()
+      let country = document.getElementById('country').value.trim()
+
+      fetchAddress(postalCode, houseNumber, street, city, country, false) // Validate normal address
+
+      if (document.getElementById('billing_toggle_input').value === 'true') {
+        let billingStreet = document
+          .getElementById('billing_address')
+          .value.trim()
+        let billingHouseNumber = document
+          .getElementById('billing_house_number')
+          .value.trim()
+        let billingPostalCode = document
+          .getElementById('billing_postal_code')
+          .value.trim()
+        let billingCity = document.getElementById('billing_city').value.trim()
+        let billingCountry = document
+          .getElementById('billing_country')
+          .value.trim()
+
+        fetchAddress(
+          billingPostalCode,
+          billingHouseNumber,
+          billingStreet,
+          billingCity,
+          billingCountry,
+          true,
+        ) // Validate billing address
+      }
+    }
+
+    // Initialize billing toggle
     function initializeBillingToggle(isActive) {
+      toggleBillingUI(isActive)
+    }
+
+    // Toggle UI state and enable/disable billing fields
+    function toggleBillingUI(isActive) {
       const toggle = document.getElementById('billing_toggle')
       const thumb = document.getElementById('billing_toggle_thumb')
       const alternateBilling = document.getElementById('alternate_billing')
       const billingFields = alternateBilling.querySelectorAll('input')
-      const hiddenInput = document.getElementById('billing_toggle_input') // Hidden input for the toggle value
+      const hiddenInput = document.getElementById('billing_toggle_input')
 
       if (isActive) {
-        // Set toggle to active state
         toggle.setAttribute('aria-checked', 'true')
-        toggle.classList.remove('bg-gray-200')
-        toggle.classList.add('bg-orange-500')
-        thumb.classList.remove('translate-x-0')
-        thumb.classList.add('translate-x-5')
+        toggle.classList.replace('bg-gray-200', 'bg-orange-500')
+        thumb.classList.replace('translate-x-0', 'translate-x-5')
         alternateBilling.classList.remove('hidden')
         hiddenInput.value = 'true'
 
-        // Enable input fields for form submission
         billingFields.forEach((field) => {
           field.disabled = false
         })
       } else {
-        // Set toggle to inactive state
         toggle.setAttribute('aria-checked', 'false')
-        toggle.classList.remove('bg-orange-500')
-        toggle.classList.add('bg-gray-200')
-        thumb.classList.remove('translate-x-5')
-        thumb.classList.add('translate-x-0')
+        toggle.classList.replace('bg-orange-500', 'bg-gray-200')
+        thumb.classList.replace('translate-x-5', 'translate-x-0')
         alternateBilling.classList.add('hidden')
         hiddenInput.value = 'false'
 
-        // Disable input fields to exclude them from form submission
         billingFields.forEach((field) => {
           field.disabled = true
         })
       }
     }
 
-    // Function to handle toggle changes
+    // Handle billing toggle click
     function toggleBilling() {
-      const toggle = document.getElementById('billing_toggle')
-      const thumb = document.getElementById('billing_toggle_thumb')
-      const alternateBilling = document.getElementById('alternate_billing')
-      const billingFields = alternateBilling.querySelectorAll('input')
-      const hiddenInput = document.getElementById('billing_toggle_input') // Hidden input for the toggle value
-
-      const isActive = toggle.getAttribute('aria-checked') === 'true'
-
-      if (isActive) {
-        // Switch to inactive state
-        toggle.setAttribute('aria-checked', 'false')
-        toggle.classList.remove('bg-orange-500')
-        toggle.classList.add('bg-gray-200')
-        thumb.classList.remove('translate-x-5')
-        thumb.classList.add('translate-x-0')
-        alternateBilling.classList.add('hidden')
-        hiddenInput.value = 'false'
-
-        // Disable input fields to exclude them from form submission
-        billingFields.forEach((field) => {
-          field.disabled = true
-        })
-      } else {
-        // Switch to active state
-        toggle.setAttribute('aria-checked', 'true')
-        toggle.classList.remove('bg-gray-200')
-        toggle.classList.add('bg-orange-500')
-        thumb.classList.remove('translate-x-0')
-        thumb.classList.add('translate-x-5')
-        alternateBilling.classList.remove('hidden')
-        hiddenInput.value = 'true'
-
-        // Enable input fields for form submission
-        billingFields.forEach((field) => {
-          field.disabled = false
-        })
-      }
+      const isActive =
+        document.getElementById('billing_toggle_input').value === 'true'
+      toggleBillingUI(!isActive)
+      validateAddresses() // Validate again when toggled
     }
   </script>
 {% endblock %}

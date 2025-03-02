@@ -1,8 +1,6 @@
 {% extends 'components/main.html' %}
 {% load static tailwind_tags %}
 
-{% block title %}Home{% endblock %}
-
 {% block content %}
   <div class="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
     <div class="border-b pb-12 border-gray-200 pt-24 relative">
@@ -30,7 +28,6 @@
       </div>
     </div>
   </div>
-
   <div class="mx-auto max-w-7xl  lg:flex lg:gap-x-16 lg:px-8">
     <h1 class="sr-only">General Settings</h1>
     <aside
@@ -121,10 +118,9 @@
               Vul hier je persoonlijke informatie in.
             </p>
           </div>
+          {% csrf_token %}
 
           <form id="form-account" class="md:col-span-2" method="POST">
-            {% csrf_token %}
-
             <div
               class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6"
             >
@@ -143,6 +139,10 @@
                     placeholder="{{ account.first_name }}"
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
+                  <p
+                    id="first_name_error"
+                    class="text-red-500 text-sm mt-1"
+                  ></p>
                 </div>
               </div>
 
@@ -161,6 +161,7 @@
                     placeholder="{{ account.last_name }}"
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
+                  <p id="last_name_error" class="text-red-500 text-sm mt-1"></p>
                 </div>
               </div>
 
@@ -180,7 +181,7 @@
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
                 </div>
-                <div class="error-message"></div>
+                <p id="email_error" class="text-red-500 text-sm mt-1"></p>
                 <!-- Error message container -->
               </div>
 
@@ -198,6 +199,7 @@
                     placeholder="{{ account.phone_number|default_if_none:'Voer telefoonnummer in' }}"
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
+                  <p id="phone_error" class="text-red-500 text-sm mt-1"></p>
                 </div>
               </div>
             </div>
@@ -249,9 +251,9 @@
               Vul hier je persoonlijke adresgegevens in.
             </p>
           </div>
+          {% csrf_token %}
 
           <form id="form-delivery-address" class="md:col-span-2" method="POST">
-            {% csrf_token %}
             <div
               class="grid grid-cols-1 gap-x-6 gap-y-8 sm:max-w-xl sm:grid-cols-6 "
             >
@@ -268,14 +270,9 @@
                     id="address"
                     autocomplete="address"
                     placeholder="{{ account.address }}"
-                    value="{{ form.address.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
-                  {% if form.address.errors %}
-                    <p id="address_error" class="text-red-500 text-sm mt-1">
-                      {{ form.address.errors|striptags }}
-                    </p>
-                  {% endif %}
+                  <p id="address_error" class="text-red-500 text-sm mt-1"></p>
                 </div>
               </div>
 
@@ -289,22 +286,17 @@
                   <input
                     type="text"
                     name="house_number"
-                    id="house-number"
+                    id="house_number"
                     autocomplete="house_number"
                     placeholder="{{ account.house_number }}"
-                    value="{{ form.house_number.value }}"
                     pattern="[0-9]*"
                     class=" block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                                 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
-                  {% if form.house_number.errors %}
-                    <p
-                      id="house_number_error"
-                      class="text-red-500 text-sm mt-1"
-                    >
-                      {{ form.house_number.errors|striptags }}
-                    </p>
-                  {% endif %}
+                  <p
+                    id="house_number_error"
+                    class="text-red-500 text-sm mt-1"
+                  ></p>
                 </div>
               </div>
 
@@ -319,16 +311,14 @@
                     type="text"
                     name="postal_code"
                     id="postal_code"
-                    autocomplete="postal-code"
+                    autocomplete="postal_code"
                     placeholder="{{ account.postal_code }}"
-                    value="{{ form.postal_code.value }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
-                  {% if form.postal_code.errors %}
-                    <p id="postal_code_error" class="text-red-500 text-sm mt-1">
-                      {{ form.postal_code.errors|striptags }}
-                    </p>
-                  {% endif %}
+                  <p
+                    id="postal_code_error"
+                    class="text-red-500 text-sm mt-1"
+                  ></p>
                 </div>
               </div>
 
@@ -336,7 +326,7 @@
                 <label
                   for="city"
                   class="block text-sm font-medium leading-6 text-gray-900"
-                  >Stad</label
+                  >Plaats</label
                 >
                 <div class="mt-2">
                   <input
@@ -344,15 +334,10 @@
                     name="city"
                     id="city"
                     autocomplete="city"
-                    value="{{ form.city.value }}"
                     placeholder="{{ account.city }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
-                  {% if form.city.errors %}
-                    <p id="city_error" class="text-red-500 text-sm mt-1">
-                      {{ form.city.errors|striptags }}
-                    </p>
-                  {% endif %}
+                  <p id="city_error" class="text-red-500 text-sm mt-1"></p>
                 </div>
               </div>
               <div class="sm:col-span-3">
@@ -384,11 +369,7 @@
                       <option value="België">België</option>
                     {% endif %}
                   </select>
-                  {% if form.country.errors %}
-                    <p id="country_error" class="text-red-500 text-sm mt-1">
-                      {{ form.country.errors|striptags }}
-                    </p>
-                  {% endif %}
+                  <p id="country_error" class="text-red-500 text-sm mt-1"></p>
                 </div>
               </div>
             </div>
@@ -553,6 +534,158 @@
     </div>
   </div>
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Function to fetch address data based on postal code, house number, street, city, and country from Django backend
+      async function fetchAddress(
+        postalCode,
+        houseNumber,
+        street,
+        city,
+        country,
+      ) {
+        try {
+          showSpinner() // Show the spinner before making the request
+
+          // Create the payload (data to send in the body)
+          const requestBody = {
+            postal_code: postalCode,
+            house_number: houseNumber,
+            street: street, // Include street in the payload
+            city: city, // Include city in the payload
+            country: country, // Include country in the payload
+          }
+
+          // Call your Django backend to get address data
+          let response = await fetch('/get-address/', {
+            method: 'POST', // Use POST method
+            headers: {
+              'Content-Type': 'application/json', // Tell the server we're sending JSON
+            },
+            body: JSON.stringify(requestBody), // Send the payload as JSON in the body
+          })
+
+          // Handle the response
+          let data = await response.json()
+          console.log('API Response:', data)
+
+          // Reset the visual error indications
+          resetErrorIndicators()
+
+          if (data && !data.error) {
+            // Fill the form fields with the address data from the response
+            document.getElementById('address').value = data.address || ''
+            document.getElementById('postal_code').value =
+              data.postal_code || ''
+            document.getElementById('city').value = data.city || ''
+            document.getElementById('country').value =
+              data.country || 'Nederland' // Default country
+          } else {
+            // Handle error case: if data contains error or no data
+            showErrorIndicators(data)
+          }
+        } catch (error) {
+          console.error('Fout bij ophalen adres:', error)
+          showErrorIndicators({
+            error: 'Er is een fout opgetreden bij het ophalen van het adres.',
+          })
+        } finally {
+          hideSpinner() // Hide the spinner after the request completes
+        }
+      }
+
+      // Reset error indicators for all address fields
+      function resetErrorIndicators() {
+        document.getElementById('address').style.border = ''
+        document.getElementById('postal_code').style.border = ''
+        document.getElementById('house_number').style.border = ''
+        document.getElementById('city').style.border = ''
+        document.getElementById('country').style.border = ''
+      }
+
+      // Show error indicators (red borders) for relevant fields
+      function showErrorIndicators(data) {
+        // Check if the error is related to a specific field and apply the red border
+        if (data.error) {
+          // You can customize this logic further to show borders on specific fields
+          if (!data.address) {
+            document.getElementById('address').style.border = '1px solid red'
+          }
+          if (!data.postal_code) {
+            document.getElementById('postal_code').style.border =
+              '1px solid red'
+          }
+          if (!data.house_number) {
+            document.getElementById('house_number').style.border =
+              '1px solid red'
+          }
+          if (!data.city) {
+            document.getElementById('city').style.border = '1px solid red'
+          }
+          if (!data.country) {
+            document.getElementById('country').style.border = '1px solid red'
+          }
+        }
+      }
+
+      // Listen for street input changes (address field)
+      document.getElementById('address').addEventListener('blur', function () {
+        let street = this.value.trim()
+        let houseNumber = document.getElementById('house_number').value.trim()
+        let postalCode = document.getElementById('postal_code').value.trim()
+        let city = document.getElementById('city').value.trim()
+        let country = document.getElementById('country').value.trim()
+
+        fetchAddress(postalCode, houseNumber, street, city, country)
+      })
+
+      // Listen for postal code input changes
+      document
+        .getElementById('postal_code')
+        .addEventListener('blur', function () {
+          let postalCode = this.value.trim()
+          let houseNumber = document.getElementById('house_number').value.trim()
+          let street = document.getElementById('address').value.trim()
+          let city = document.getElementById('city').value.trim()
+          let country = document.getElementById('country').value.trim()
+
+          fetchAddress(postalCode, houseNumber, street, city, country)
+        })
+
+      // Listen for house number input changes
+      document
+        .getElementById('house_number')
+        .addEventListener('blur', function () {
+          let houseNumber = this.value.trim()
+          let postalCode = document.getElementById('postal_code').value.trim()
+          let street = document.getElementById('address').value.trim()
+          let city = document.getElementById('city').value.trim()
+          let country = document.getElementById('country').value.trim()
+
+          fetchAddress(postalCode, houseNumber, street, city, country)
+        })
+
+      // Listen for city input changes
+      document.getElementById('city').addEventListener('blur', function () {
+        let city = this.value.trim()
+        let houseNumber = document.getElementById('house_number').value.trim()
+        let postalCode = document.getElementById('postal_code').value.trim()
+        let street = document.getElementById('address').value.trim()
+        let country = document.getElementById('country').value.trim()
+
+        fetchAddress(postalCode, houseNumber, street, city, country)
+      })
+
+      // Listen for country input changes
+      document.getElementById('country').addEventListener('blur', function () {
+        let country = this.value.trim()
+        let houseNumber = document.getElementById('house_number').value.trim()
+        let postalCode = document.getElementById('postal_code').value.trim()
+        let street = document.getElementById('address').value.trim()
+        let city = document.getElementById('city').value.trim()
+
+        fetchAddress(postalCode, houseNumber, street, city, country)
+      })
+    })
     const modal = document.getElementById('confirmDeleteModal')
 
     function showConfirmDeleteModal() {
@@ -606,10 +739,10 @@
 
       switch (section) {
         case 'account':
+          showSpinner()
           const formAccount = document.getElementById('form-account')
 
           const formDataAccount = new FormData(formAccount)
-
           fetch('/change_account_information/', {
             method: 'POST',
             headers: {
@@ -620,84 +753,39 @@
             .then((response) => response.json())
             .then((data) => {
               if (data.status === 'success') {
-                location.reload()
+                console.log(data)
+                localStorage.setItem('success_message', data.message) // Store message before reload
+                location.reload() // Reload the page
               } else {
                 const errors = data.errors
                 const errorElements =
                   formAccount.querySelectorAll('.error-message')
 
-                // Remove existing error messages that are not in the current error response
-                errorElements.forEach((el) => {
-                  const inputFieldId = el.id.replace('_error', '') // Extract input field ID from error message ID
-                  if (!(inputFieldId in errors)) {
-                    el.remove() // Remove error message if the field is not in the current errors
-                  }
-                })
-
                 // Display error messages for each field
                 Object.keys(errors).forEach((field) => {
                   const errorMessage = errors[field]
-                  const inputField = formAccount.querySelector(`#${field}`)
-                  if (inputField) {
-                    const existingError = formAccount.querySelector(
-                      `#${field}_error`,
-                    )
-                    if (!existingError) {
-                      const errorContainer = document.createElement('p')
-                      errorContainer.id = `${field}_error`
-                      errorContainer.classList.add(
-                        'error-message',
-                        'text-red-500',
-                        'text-sm',
-                        'mt-1',
-                      )
-                      errorContainer.textContent = errorMessage
-                      inputField.parentNode.appendChild(errorContainer)
-                    }
-                  }
+                  const inputField = formAccount.querySelector(
+                    `#${field}_error`,
+                  )
+
+                  inputField.textContent = errorMessage
                 })
               }
             })
             .catch((error) => {
               console.error('Error:', error)
             })
+            .finally(() => hideSpinner())
 
           break
         case 'adresgegevens':
+          showSpinner()
+
           const formDeliveryAddress = document.getElementById(
             'form-delivery-address',
           )
 
           const formDataDeliveryAddress = new FormData(formDeliveryAddress)
-
-          const houseNumberField =
-            formDeliveryAddress.querySelector('#house-number')
-          const errorContainer = document.getElementById('house_number_error')
-
-          if (!houseNumberField.checkValidity()) {
-            // If house number field is invalid, show error message or handle accordingly
-            const errorMessage = houseNumberField.validationMessage
-
-            if (errorContainer) {
-              // If error container exists, update the error message
-              errorContainer.textContent = errorMessage
-            } else {
-              // If error container does not exist, create and append a new error container
-              const newErrorContainer = document.createElement('p')
-              newErrorContainer.id = 'house_number_error'
-              newErrorContainer.classList.add('text-red-500', 'text-sm', 'mt-1')
-              newErrorContainer.textContent = errorMessage
-              houseNumberField.parentNode.appendChild(newErrorContainer)
-            }
-
-            return // Prevent form submission if validation fails
-          } else {
-            // If validation passes, remove the error message if it exists
-            if (errorContainer) {
-              errorContainer.remove()
-            }
-          }
-
           fetch('/change_delivery_address_information/', {
             method: 'POST',
             headers: {
@@ -712,30 +800,24 @@
               } else {
                 const errors = data.errors
                 const errorElements =
-                  formAccount.querySelectorAll('.error-message')
+                  formDeliveryAddress.querySelectorAll('.error-message')
                 errorElements.forEach((el) => el.remove())
-                console.log(errors)
                 // Display error messages for each field
                 Object.keys(errors).forEach((field) => {
                   const errorMessage = errors[field]
-                  console.log(errorMessage)
 
-                  const inputField = formAccount.querySelector(`#${field}`)
-                  const errorContainer = document.createElement('p') // Use <p> instead of <div> for consistency with your example
-                  errorContainer.id = `${field}_error`
-                  errorContainer.classList.add(
-                    'text-red-500',
-                    'text-sm',
-                    'mt-1',
+                  const inputField = formDeliveryAddress.querySelector(
+                    `#${field}_error`,
                   )
-                  errorContainer.textContent = errorMessage
-                  inputField.parentNode.appendChild(errorContainer)
+
+                  inputField.textContent = errorMessage
                 })
               }
             })
             .catch((error) => {
               console.error('Error:', error)
             })
+            .finally(() => hideSpinner())
 
           break
         default:
