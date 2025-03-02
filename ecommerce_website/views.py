@@ -292,7 +292,7 @@ def new_password(request, token):
             return render(request, "new_password.html", {'token': token, 'error_message': "Wachtwoorden komen niet overeen.", 'meta': NewPasswordSEOService.get_meta_object()})
 
         try:
-            uidb64, unused_token = token.split('-', 1)
+            uidb64, token = token.split('-', 1)
             uid = urlsafe_base64_decode(uidb64).decode()
             user = Account.objects.get(pk=uid)
 
