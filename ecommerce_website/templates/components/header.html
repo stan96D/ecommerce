@@ -8,25 +8,25 @@
 </style>
 <header class="bg-white border-b border-gray-200 top-0 z-10">
   <div class="bg-gray-100">
-    <!-- {% if env == "test" %}
+    {% if env == "test" %}
       <div
         style="background-color: red; color: white; padding: 10px; text-align: center;"
       >
         <strong>Testomgeving</strong>
       </div>
-    {% elif env == "prod" %}
+    <!-- {% elif env == "prod" %}
       <div
         style="background-color: green; color: white; padding: 10px; text-align: center;"
       >
         <strong>Productieomgeving</strong>
-      </div>
+      </div> -->
     {% elif env == "dev" %}
       <div
         style="background-color: blue; color: white; padding: 10px; text-align: center;"
       >
         <strong>Developmentomgeving</strong>
       </div>
-    {% endif %} -->
+    {% endif %}
     {% if current_sale %}
       <a href="/discounts" class="block">
         <div
