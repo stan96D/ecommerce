@@ -79,14 +79,16 @@ elif ENVIRONMENT == "test":
 
     BASE_URL = 'https://test.goedkoopstevloerenshop.nl'
     ALLOWED_HOSTS = ['test.goedkoopstevloerenshop.nl',
-                     'goedkoopstevloerenshop.nl', '159.69.81.128']
+                     '159.69.81.128']
 
     NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
 
 else:
+    DEBUG = False
+
     BASE_URL = 'https://goedkoopstevloerenshop.nl'
     ALLOWED_HOSTS = ['goedkoopstevloerenshop.nl',
-                     'test.goedkoopstevloerenshop.nl', '159.69.81.128']
+                     '159.69.81.128']
 
     NPM_BIN_PATH = "/usr/bin/npm"  # Replace with the output from 'which npm'
 
@@ -189,7 +191,7 @@ elif ENVIRONMENT == "test":
         }
     }
 
-else:
+elif ENVIRONMENT == "prod":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
