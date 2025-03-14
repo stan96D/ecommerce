@@ -12,11 +12,9 @@ class StoreMotivationViewService(ViewServiceInterface):
                 'icon': item.icon,
                 'name': item.name,
                 'text': item.text,
-                'image': item.image.url if item.image else '',
                 'for_homepage': json.dumps(item.for_homepage)
             }
             productViews.append(productView)
-        print(productViews)
         return productViews
 
     def get(self, item):
@@ -24,7 +22,6 @@ class StoreMotivationViewService(ViewServiceInterface):
             'icon': item.icon,
             'name': item.name,
             'text': item.text,
-            'image': item.image.url if item.image else '',
             'for_homepage': json.dumps(item.for_homepage)
         }
         return productView

@@ -203,22 +203,26 @@ class WebShopConfig:
                 "title": "Vloeren",
                 "description": "De beste topmerken",
                 "url": "products/?Producttype=Vloer",
-                "image_path": "hero4.jpeg"
+                "image_path": "hero4.jpeg",
+                "extra_tag": "Top kwaliteit"
             },
             "hero2":
             {
                 "title": "Click PVC",
                 "description": "Makkelijk om zelf te leggen",
                 "url": "products/?Vloertype=Click",
-                "image_path": "hero2.jpeg"
+                "image_path": "hero2.jpeg",
+                "extra_tag": "Nu ook"
+
             },
             "hero3":
             {
                 "title": "Kortingen",
                 "description": "Nu tijdelijk nóg goedkoper",
                 "url": "/discounts",
+                "image_path": "hero1.jpeg",
+                "extra_tag": "Uitverkoop"
 
-                "image_path": "hero1.jpeg"
             },
         }
 

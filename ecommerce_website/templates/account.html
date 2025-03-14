@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="mx-auto max-w-7xl  lg:flex lg:gap-x-16 lg:px-8">
-    <h1 class="sr-only">General Settings</h1>
+    <h1 class="sr-only">Algemene instellingen</h1>
     <aside
       class="flex overflow-x-auto border-b border-gray-900/5 py-4 lg:block lg:w-64 lg:flex-none lg:border-0 lg:py-20"
     >
@@ -136,7 +136,7 @@
                     name="first_name"
                     id="first_name"
                     autocomplete="first_name"
-                    placeholder="{{ account.first_name }}"
+                    value="{{ account.first_name }}"
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
                   <p
@@ -158,7 +158,7 @@
                     name="last_name"
                     id="last_name"
                     autocomplete="last_name"
-                    placeholder="{{ account.last_name }}"
+                    value="{{ account.last_name }}"
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
                   <p id="last_name_error" class="text-red-500 text-sm mt-1"></p>
@@ -177,7 +177,7 @@
                     name="email"
                     type="email"
                     autocomplete="email"
-                    placeholder="{{ account.email }}"
+                    value="{{ account.email }}"
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
                 </div>
@@ -196,7 +196,7 @@
                     id="phone"
                     name="phone"
                     autocomplete="phone"
-                    placeholder="{{ account.phone_number|default_if_none:'Voer telefoonnummer in' }}"
+                    value="{{ account.phone_number|default_if_none:'Voer telefoonnummer in' }}"
                     class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-orange-500 sm:text-sm sm:leading-6"
                   />
                   <p id="phone_error" class="text-red-500 text-sm mt-1"></p>
@@ -269,7 +269,7 @@
                     name="address"
                     id="address"
                     autocomplete="address"
-                    placeholder="{{ account.address }}"
+                    value="{{ account.address }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
                   <p id="address_error" class="text-red-500 text-sm mt-1"></p>
@@ -288,7 +288,7 @@
                     name="house_number"
                     id="house_number"
                     autocomplete="house_number"
-                    placeholder="{{ account.house_number }}"
+                    value="{{ account.house_number }}"
                     pattern="[0-9]*"
                     class=" block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300
                                 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
@@ -312,7 +312,7 @@
                     name="postal_code"
                     id="postal_code"
                     autocomplete="postal_code"
-                    placeholder="{{ account.postal_code }}"
+                    value="{{ account.postal_code }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
                   <p
@@ -334,7 +334,7 @@
                     name="city"
                     id="city"
                     autocomplete="city"
-                    placeholder="{{ account.city }}"
+                    value="{{ account.city }}"
                     class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
                   />
                   <p id="city_error" class="text-red-500 text-sm mt-1"></p>
