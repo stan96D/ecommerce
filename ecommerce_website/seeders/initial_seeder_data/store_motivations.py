@@ -4,7 +4,7 @@ store_motivations = [
         "active": True,
         "text": "Heb je vragen over je vloer of je order? Stuur ons dan gerust een bericht, wij reageren binnen één werkdag!",
         "for_homepage": True,
-        "icon": "fa-undo-alt",
+        "icon": "fa-headset",
                 "sort_order": 4,
 
     },
