@@ -1,0 +1,4956 @@
+{
+    "products": {
+        "created": [
+            "400092469",
+            {
+                "sku": "400092469",
+                "image": "https://www.unilinflooring.nl/images/products/large/Mexican Ash 20216.jpeg"
+            },
+            {
+                "sku": "400092469",
+                "image": "https://www.unilinflooring.nl/images/products/large/Roots_Mexican Ash 20216_dessin-WEB1280.jpg"
+            },
+            "400096109",
+            {
+                "sku": "400096109",
+                "image": "https://www.unilinflooring.nl/images/products/large/413966 - Beautifloor Klik Vinyl Regione Umbrie.jpg"
+            },
+            "400096114",
+            {
+                "sku": "400096114",
+                "image": "https://www.unilinflooring.nl/images/products/large/413971 - Beautifloor Klik Vinyl Regione Ligurie.jpg"
+            },
+            "400096110",
+            {
+                "sku": "400096110",
+                "image": "https://www.unilinflooring.nl/images/products/large/413967 - Beautifloor Klik Vinyl Regione Veneto.jpg"
+            },
+            "400096112",
+            {
+                "sku": "400096112",
+                "image": "https://www.unilinflooring.nl/images/products/large/413969 - Beautifloor Klik Vinyl Regione Abruzzen.jpg"
+            },
+            "400096113",
+            {
+                "sku": "400096113",
+                "image": "https://www.unilinflooring.nl/images/products/large/413970 - Beautifloor Klik Vinyl Regione Campania.jpg"
+            },
+            "400096108",
+            {
+                "sku": "400096108",
+                "image": "https://www.unilinflooring.nl/images/products/large/413965 - Beautifloor Klik Vinyl Regione Trentino.jpg"
+            },
+            "400096111",
+            {
+                "sku": "400096111",
+                "image": "https://www.unilinflooring.nl/images/products/large/413968 - Beautifloor Klik Vinyl Regione Piemonte.jpg"
+            },
+            "400096107",
+            {
+                "sku": "400096107",
+                "image": "https://www.unilinflooring.nl/images/products/large/413973 - Beautifloor Klik Vinyl Regione Lazio.jpg"
+            },
+            "400102836",
+            {
+                "sku": "400102836",
+                "image": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            "400102837",
+            {
+                "sku": "400102837",
+                "image": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            "400102839",
+            {
+                "sku": "400102839",
+                "image": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            "400102838",
+            {
+                "sku": "400102838",
+                "image": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            "400102840",
+            {
+                "sku": "400102840",
+                "image": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            "400102841",
+            {
+                "sku": "400102841",
+                "image": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            {
+                "sku": "01026",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/ded36d60b0a2369f51a68eabdbae9f3c/m/0/m01026_4.png"
+            },
+            {
+                "sku": "01026",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/03111ea32e7a15c6c7b56b97ccfcee90/m/0/m01026.png"
+            },
+            {
+                "sku": "01026",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/03111ea32e7a15c6c7b56b97ccfcee90/m/0/m01026_4.png"
+            },
+            "94601",
+            {
+                "sku": "94601",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/66e13a58c63f9cc09176873d9b6b0af7/o/9/o94599_1_1.jpg"
+            },
+            {
+                "sku": "94601",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/ded36d60b0a2369f51a68eabdbae9f3c/o/9/o94599_1_1.jpg"
+            },
+            {
+                "sku": "94601",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/ded36d60b0a2369f51a68eabdbae9f3c/o/9/o94599_2_1_1.jpg"
+            },
+            {
+                "sku": "94601",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/03111ea32e7a15c6c7b56b97ccfcee90/o/9/o94599_1_1.jpg"
+            },
+            {
+                "sku": "94601",
+                "image": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/03111ea32e7a15c6c7b56b97ccfcee90/o/9/o94599_2_1_1.jpg"
+            }
+        ],
+        "updated": [
+            "400064020",
+            "635312",
+            "637434",
+            "633309",
+            "633253",
+            "633141",
+            "01042",
+            "04194",
+            "04030",
+            "01475",
+            "09905",
+            "02160",
+            "02126",
+            "02212",
+            "05253",
+            "05252"
+        ],
+        "failed": [],
+        "changes": [
+            {
+                "sku": "400092469",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/Mexican Ash 20216.jpeg"
+            },
+            {
+                "sku": "400096109",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/413966 - Beautifloor Klik Vinyl Regione Umbrie.jpg"
+            },
+            {
+                "sku": "400096114",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/413971 - Beautifloor Klik Vinyl Regione Ligurie.jpg"
+            },
+            {
+                "sku": "400096110",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/413967 - Beautifloor Klik Vinyl Regione Veneto.jpg"
+            },
+            {
+                "sku": "400096112",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/413969 - Beautifloor Klik Vinyl Regione Abruzzen.jpg"
+            },
+            {
+                "sku": "400096113",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/413970 - Beautifloor Klik Vinyl Regione Campania.jpg"
+            },
+            {
+                "sku": "400096108",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/413965 - Beautifloor Klik Vinyl Regione Trentino.jpg"
+            },
+            {
+                "sku": "400096111",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/413968 - Beautifloor Klik Vinyl Regione Piemonte.jpg"
+            },
+            {
+                "sku": "400096107",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/413973 - Beautifloor Klik Vinyl Regione Lazio.jpg"
+            },
+            {
+                "sku": "400102836",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            {
+                "sku": "400102837",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            {
+                "sku": "400102839",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            {
+                "sku": "400102838",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            {
+                "sku": "400102840",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            {
+                "sku": "400102841",
+                "field": "thumbnail",
+                "new_value": "https://www.unilinflooring.nl/images/products/large/"
+            },
+            {
+                "sku": "400064020",
+                "changes": {
+                    "selling_percentage": {
+                        "from": "1.5",
+                        "to": "1.3"
+                    }
+                }
+            },
+            {
+                "sku": "635312",
+                "changes": {
+                    "selling_percentage": {
+                        "from": "1.15",
+                        "to": "1.3"
+                    }
+                }
+            },
+            {
+                "sku": "637434",
+                "changes": {
+                    "selling_percentage": {
+                        "from": "1.8",
+                        "to": "1.3"
+                    }
+                }
+            },
+            {
+                "sku": "633309",
+                "changes": {
+                    "selling_percentage": {
+                        "from": "1.7",
+                        "to": "1.3"
+                    }
+                }
+            },
+            {
+                "sku": "633253",
+                "changes": {
+                    "selling_percentage": {
+                        "from": "1.5",
+                        "to": "1.3"
+                    }
+                }
+            },
+            {
+                "sku": "633141",
+                "changes": {
+                    "selling_percentage": {
+                        "from": "1.5",
+                        "to": "1.3"
+                    }
+                }
+            },
+            {
+                "sku": "01042",
+                "changes": {
+                    "price": {
+                        "from": "29.98",
+                        "to": "27.97"
+                    },
+                    "unit_price": {
+                        "from": "85.15",
+                        "to": "79.43"
+                    }
+                }
+            },
+            {
+                "sku": "04194",
+                "changes": {
+                    "price": {
+                        "from": "44.82",
+                        "to": "68.95"
+                    },
+                    "unit_price": {
+                        "from": "118.32",
+                        "to": "182.03"
+                    }
+                }
+            },
+            {
+                "sku": "04030",
+                "changes": {
+                    "price": {
+                        "from": "34.96",
+                        "to": "29.95"
+                    },
+                    "unit_price": {
+                        "from": "69.92",
+                        "to": "59.9"
+                    }
+                }
+            },
+            {
+                "sku": "01475",
+                "changes": {
+                    "name": {
+                        "from": "BOEN prestige visgraat eik nature LN vlak 70x470mm",
+                        "to": "BOEN prestige visgraat eik nature LN 70x470mm"
+                    },
+                    "price": {
+                        "from": "32.26",
+                        "to": "37.95"
+                    },
+                    "unit_price": {
+                        "from": "84.84",
+                        "to": "99.81"
+                    }
+                }
+            },
+            {
+                "sku": "94601",
+                "field": "thumbnail",
+                "new_value": "https://www.plintenenprofielencentrale.nl/media/catalog/product/cache/66e13a58c63f9cc09176873d9b6b0af7/o/9/o94599_1_1.jpg"
+            },
+            {
+                "sku": "09905",
+                "changes": {
+                    "price": {
+                        "from": "23.96",
+                        "to": "30.95"
+                    },
+                    "unit_price": {
+                        "from": "40.1",
+                        "to": "51.81"
+                    }
+                }
+            },
+            {
+                "sku": "02160",
+                "changes": {
+                    "price": {
+                        "from": "12.71",
+                        "to": "21.19"
+                    },
+                    "unit_price": {
+                        "from": "63.69",
+                        "to": "106.15"
+                    }
+                }
+            },
+            {
+                "sku": "02126",
+                "changes": {
+                    "price": {
+                        "from": "13.08",
+                        "to": "18.69"
+                    },
+                    "unit_price": {
+                        "from": "43.69",
+                        "to": "62.42"
+                    }
+                }
+            },
+            {
+                "sku": "02212",
+                "changes": {
+                    "price": {
+                        "from": "9.97",
+                        "to": "19.94"
+                    },
+                    "unit_price": {
+                        "from": "33.3",
+                        "to": "66.59"
+                    }
+                }
+            },
+            {
+                "sku": "05253",
+                "changes": {
+                    "price": {
+                        "from": "14.74",
+                        "to": "11.85"
+                    },
+                    "unit_price": {
+                        "from": "23.51",
+                        "to": "18.9"
+                    }
+                }
+            },
+            {
+                "sku": "05252",
+                "changes": {
+                    "price": {
+                        "from": "12.96",
+                        "to": "11.85"
+                    },
+                    "unit_price": {
+                        "from": "20.67",
+                        "to": "18.9"
+                    }
+                }
+            }
+        ],
+        "not_updated": [
+            "400081516",
+            "400081940",
+            "400091836",
+            "400089759",
+            "400097637",
+            "400081749",
+            "400081793",
+            "05068",
+            "400093752",
+            "400081779",
+            "400081632"
+        ],
+        "stock_updated": [
+            {
+                "sku": "400092469",
+                "stock": 0
+            },
+            {
+                "sku": "400096109",
+                "stock": 30
+            },
+            {
+                "sku": "400096114",
+                "stock": 68
+            },
+            {
+                "sku": "400096110",
+                "stock": 82
+            },
+            {
+                "sku": "400096112",
+                "stock": 57
+            },
+            {
+                "sku": "400096113",
+                "stock": 30
+            },
+            {
+                "sku": "400096108",
+                "stock": 46
+            },
+            {
+                "sku": "400096111",
+                "stock": 73
+            },
+            {
+                "sku": "400096107",
+                "stock": 74
+            },
+            {
+                "sku": "400102836",
+                "stock": 0
+            },
+            {
+                "sku": "400102837",
+                "stock": 0
+            },
+            {
+                "sku": "400102839",
+                "stock": 0
+            },
+            {
+                "sku": "400102838",
+                "stock": 0
+            },
+            {
+                "sku": "400102840",
+                "stock": 0
+            },
+            {
+                "sku": "400102841",
+                "stock": 0
+            },
+            {
+                "sku": "94601",
+                "stock": 100
+            }
+        ],
+        "images_updated": [],
+        "images_failed": []
+    },
+    "attributes": {
+        "created": [
+            {
+                "sku": "400092469",
+                "attribute": "Omschrijving",
+                "value": "Mexican Ash combineert lichte, warme tinten met een subtiele houtnerf, wat zorgt voor een frisse en uitnodigende sfeer."
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Verpakking",
+                "value": "3.62 m²"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Links",
+                "value": {
+                    "Brochures": "https://pro.moduleo.com/nl-nl/documents?filter=languages.eq.nl-nl/documenttype.eq.brochure&page=1&page_size=36&view_size=36",
+                    "Algemene installatierichtlijnen": "https://pro.moduleo.com/-/media/d808c16fc4e6511bad8588b465cb6504.ashx?mode=inline&filename=MOD_Installation_LVT_FlexDBRoots_NL-NL.pdf"
+                }
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Merk",
+                "value": "Moduleo"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Afmeting",
+                "value": "19.6 x 132.0 cm"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Lengte",
+                "value": "19.6",
+                "unit": "cm"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Breedte",
+                "value": "132.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Oppervlakte",
+                "value": "0.26 m²"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Dikte",
+                "value": "2.5",
+                "unit": "mm"
+            },
+            {
+                "sku": "400092469",
+                "attribute": "Gebruiksklasse",
+                "value": "33"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Omschrijving",
+                "value": "Bent u op zoek naar een vloer die niet alleen mooi is, maar ook eenvoudig te installeren en onderhouden is? Dan is de collectie Beautifloor Vinyl vloeren de perfecte keuze voor u. Door de krasbestendige toplaag bent u verzekerd van jarenlang woonplezier.Comfortabel: Een vinyl vloer voelt plezierig aan uw voeten en is daardoor erg comfortabel. U kunt deze ook zonder enig probleem op vloerverwarming installeren. Tezamen met het geluiddempende en warmteisolerende karakter verhoogt deze vloer het woongenot.Anti-allergisch: De Beautifloor Vinyl vloeren zijn zeer geschikt voor mensen met een allergie. De vloeren zijn namelijk antibacterieel, antistatisch en vrij van schadelijke stoffen. Door het vuilafstotende karakter is de vloer ook eenvoudig te onderhouden."
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Verpakking",
+                "value": "3.97 m²"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Afmeting",
+                "value": "1235.0 x 230.0 cm"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Lengte",
+                "value": "1235.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Breedte",
+                "value": "230.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Oppervlakte",
+                "value": "28.4 m²"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400096109",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Omschrijving",
+                "value": "Bent u op zoek naar een vloer die niet alleen mooi is, maar ook eenvoudig te installeren en onderhouden is? Dan is de collectie Beautifloor Vinyl vloeren de perfecte keuze voor u. Door de krasbestendige toplaag bent u verzekerd van jarenlang woonplezier.Comfortabel: Een vinyl vloer voelt plezierig aan uw voeten en is daardoor erg comfortabel. U kunt deze ook zonder enig probleem op vloerverwarming installeren. Tezamen met het geluiddempende en warmteisolerende karakter verhoogt deze vloer het woongenot.Anti-allergisch: De Beautifloor Vinyl vloeren zijn zeer geschikt voor mensen met een allergie. De vloeren zijn namelijk antibacterieel, antistatisch en vrij van schadelijke stoffen. Door het vuilafstotende karakter is de vloer ook eenvoudig te onderhouden."
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Verpakking",
+                "value": "3.97 m²"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Afmeting",
+                "value": "1235.0 x 230.0 cm"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Lengte",
+                "value": "1235.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Breedte",
+                "value": "230.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Oppervlakte",
+                "value": "28.4 m²"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400096114",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Omschrijving",
+                "value": "Bent u op zoek naar een vloer die niet alleen mooi is, maar ook eenvoudig te installeren en onderhouden is? Dan is de collectie Beautifloor Vinyl vloeren de perfecte keuze voor u. Door de krasbestendige toplaag bent u verzekerd van jarenlang woonplezier.Comfortabel: Een vinyl vloer voelt plezierig aan uw voeten en is daardoor erg comfortabel. U kunt deze ook zonder enig probleem op vloerverwarming installeren. Tezamen met het geluiddempende en warmteisolerende karakter verhoogt deze vloer het woongenot.Anti-allergisch: De Beautifloor Vinyl vloeren zijn zeer geschikt voor mensen met een allergie. De vloeren zijn namelijk antibacterieel, antistatisch en vrij van schadelijke stoffen. Door het vuilafstotende karakter is de vloer ook eenvoudig te onderhouden."
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Verpakking",
+                "value": "3.97 m²"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Afmeting",
+                "value": "1235.0 x 230.0 cm"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Lengte",
+                "value": "1235.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Breedte",
+                "value": "230.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Oppervlakte",
+                "value": "28.4 m²"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400096110",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Omschrijving",
+                "value": "Bent u op zoek naar een vloer die niet alleen mooi is, maar ook eenvoudig te installeren en onderhouden is? Dan is de collectie Beautifloor Vinyl vloeren de perfecte keuze voor u. Door de krasbestendige toplaag bent u verzekerd van jarenlang woonplezier.Comfortabel: Een vinyl vloer voelt plezierig aan uw voeten en is daardoor erg comfortabel. U kunt deze ook zonder enig probleem op vloerverwarming installeren. Tezamen met het geluiddempende en warmteisolerende karakter verhoogt deze vloer het woongenot.Anti-allergisch: De Beautifloor Vinyl vloeren zijn zeer geschikt voor mensen met een allergie. De vloeren zijn namelijk antibacterieel, antistatisch en vrij van schadelijke stoffen. Door het vuilafstotende karakter is de vloer ook eenvoudig te onderhouden."
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Verpakking",
+                "value": "3.97 m²"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Afmeting",
+                "value": "1235.0 x 230.0 cm"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Lengte",
+                "value": "1235.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Breedte",
+                "value": "230.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Oppervlakte",
+                "value": "28.4 m²"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400096112",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Omschrijving",
+                "value": "Bent u op zoek naar een vloer die niet alleen mooi is, maar ook eenvoudig te installeren en onderhouden is? Dan is de collectie Beautifloor Vinyl vloeren de perfecte keuze voor u. Door de krasbestendige toplaag bent u verzekerd van jarenlang woonplezier.Comfortabel: Een vinyl vloer voelt plezierig aan uw voeten en is daardoor erg comfortabel. U kunt deze ook zonder enig probleem op vloerverwarming installeren. Tezamen met het geluiddempende en warmteisolerende karakter verhoogt deze vloer het woongenot.Anti-allergisch: De Beautifloor Vinyl vloeren zijn zeer geschikt voor mensen met een allergie. De vloeren zijn namelijk antibacterieel, antistatisch en vrij van schadelijke stoffen. Door het vuilafstotende karakter is de vloer ook eenvoudig te onderhouden."
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Verpakking",
+                "value": "3.97 m²"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Afmeting",
+                "value": "1235.0 x 230.0 cm"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Lengte",
+                "value": "1235.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Breedte",
+                "value": "230.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Oppervlakte",
+                "value": "28.4 m²"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400096113",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Omschrijving",
+                "value": "Bent u op zoek naar een vloer die niet alleen mooi is, maar ook eenvoudig te installeren en onderhouden is? Dan is de collectie Beautifloor Vinyl vloeren de perfecte keuze voor u. Door de krasbestendige toplaag bent u verzekerd van jarenlang woonplezier.Comfortabel: Een vinyl vloer voelt plezierig aan uw voeten en is daardoor erg comfortabel. U kunt deze ook zonder enig probleem op vloerverwarming installeren. Tezamen met het geluiddempende en warmteisolerende karakter verhoogt deze vloer het woongenot.Anti-allergisch: De Beautifloor Vinyl vloeren zijn zeer geschikt voor mensen met een allergie. De vloeren zijn namelijk antibacterieel, antistatisch en vrij van schadelijke stoffen. Door het vuilafstotende karakter is de vloer ook eenvoudig te onderhouden."
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Verpakking",
+                "value": "3.97 m²"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Afmeting",
+                "value": "1235.0 x 230.0 cm"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Lengte",
+                "value": "1235.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Breedte",
+                "value": "230.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Oppervlakte",
+                "value": "28.4 m²"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400096108",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Omschrijving",
+                "value": "Bent u op zoek naar een vloer die niet alleen mooi is, maar ook eenvoudig te installeren en onderhouden is? Dan is de collectie Beautifloor Vinyl vloeren de perfecte keuze voor u. Door de krasbestendige toplaag bent u verzekerd van jarenlang woonplezier.Comfortabel: Een vinyl vloer voelt plezierig aan uw voeten en is daardoor erg comfortabel. U kunt deze ook zonder enig probleem op vloerverwarming installeren. Tezamen met het geluiddempende en warmteisolerende karakter verhoogt deze vloer het woongenot.Anti-allergisch: De Beautifloor Vinyl vloeren zijn zeer geschikt voor mensen met een allergie. De vloeren zijn namelijk antibacterieel, antistatisch en vrij van schadelijke stoffen. Door het vuilafstotende karakter is de vloer ook eenvoudig te onderhouden."
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Verpakking",
+                "value": "3.97 m²"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Afmeting",
+                "value": "1235.0 x 230.0 cm"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Lengte",
+                "value": "1235.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Breedte",
+                "value": "230.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Oppervlakte",
+                "value": "28.4 m²"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400096111",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Omschrijving",
+                "value": "Bent u op zoek naar een vloer die niet alleen mooi is, maar ook eenvoudig te installeren en onderhouden is? Dan is de collectie Beautifloor Vinyl vloeren de perfecte keuze voor u. Door de krasbestendige toplaag bent u verzekerd van jarenlang woonplezier.Comfortabel: Een vinyl vloer voelt plezierig aan uw voeten en is daardoor erg comfortabel. U kunt deze ook zonder enig probleem op vloerverwarming installeren. Tezamen met het geluiddempende en warmteisolerende karakter verhoogt deze vloer het woongenot.Anti-allergisch: De Beautifloor Vinyl vloeren zijn zeer geschikt voor mensen met een allergie. De vloeren zijn namelijk antibacterieel, antistatisch en vrij van schadelijke stoffen. Door het vuilafstotende karakter is de vloer ook eenvoudig te onderhouden."
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Verpakking",
+                "value": "3.97 m²"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Afmeting",
+                "value": "1235.0 x 230.0 cm"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Lengte",
+                "value": "1235.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Breedte",
+                "value": "230.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Oppervlakte",
+                "value": "28.4 m²"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400096107",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Omschrijving",
+                "value": "De Premier is een visgraat kwaliteit PVC Design vloer met een XL-afmeting van 74,93 x 15,24 cm en is tevens Embossed in Register (EIR). Deze serie bestaat uit 8 kleuren en kan eventueel samen met de President serie gebruikt worden voor de creatie van een prachtige nieuwe vloer in elke gewenste woon- en projectruimte."
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Verpakking",
+                "value": "4.11 m²"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Afmeting",
+                "value": "74.9 x 3.2 cm"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Lengte",
+                "value": "74.9",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Breedte",
+                "value": "3.2",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Oppervlakte",
+                "value": "0.02 m²"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Pakinhoud",
+                "value": "4"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Gebruiksklasse",
+                "value": "33"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Warmteweerstand",
+                "value": "0"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Groef",
+                "value": "V4"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Garantie",
+                "value": "15 jaar (residentieel gebruik) en 8 jaar (commercieel gebruik)"
+            },
+            {
+                "sku": "400102836",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Omschrijving",
+                "value": "De Premier is een visgraat kwaliteit PVC Design vloer met een XL-afmeting van 74,93 x 15,24 cm en is tevens Embossed in Register (EIR). Deze serie bestaat uit 8 kleuren en kan eventueel samen met de President serie gebruikt worden voor de creatie van een prachtige nieuwe vloer in elke gewenste woon- en projectruimte."
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Verpakking",
+                "value": "4.11 m²"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Afmeting",
+                "value": "74.9 x 3.2 cm"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Lengte",
+                "value": "74.9",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Breedte",
+                "value": "3.2",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Oppervlakte",
+                "value": "0.02 m²"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Pakinhoud",
+                "value": "4"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Gebruiksklasse",
+                "value": "33"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Warmteweerstand",
+                "value": "0"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Groef",
+                "value": "V4"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Garantie",
+                "value": "15 jaar (residentieel gebruik) en 8 jaar (commercieel gebruik)"
+            },
+            {
+                "sku": "400102837",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Omschrijving",
+                "value": "De President is een kwaliteit PVC Design vloer met een plankafmeting van 150 cm x 23 cm in een Embossed in Register (EIR) uitvoering. Deze serie bestaat uit 8 kleuren en kan eventueel samen met de Premier serie gebruikt worden voor de creatie van een prachtige nieuwe vloer in elke gewenste woon- en projectruimte."
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Verpakking",
+                "value": "3.45 m²"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Afmeting",
+                "value": "150.0 x 23.0 cm"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Lengte",
+                "value": "150.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Breedte",
+                "value": "23.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Oppervlakte",
+                "value": "0.35 m²"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Gebruiksklasse",
+                "value": "33"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Warmteweerstand",
+                "value": "0"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Groef",
+                "value": "V4"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Garantie",
+                "value": "15 jaar (residentieel gebruik) en 8 jaar (commercieel gebruik)"
+            },
+            {
+                "sku": "400102839",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Omschrijving",
+                "value": "De President is een kwaliteit PVC Design vloer met een plankafmeting van 150 cm x 23 cm in een Embossed in Register (EIR) uitvoering. Deze serie bestaat uit 8 kleuren en kan eventueel samen met de Premier serie gebruikt worden voor de creatie van een prachtige nieuwe vloer in elke gewenste woon- en projectruimte."
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Verpakking",
+                "value": "3.45 m²"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Afmeting",
+                "value": "150.0 x 23.0 cm"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Lengte",
+                "value": "150.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Breedte",
+                "value": "23.0",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Oppervlakte",
+                "value": "0.35 m²"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Gebruiksklasse",
+                "value": "33"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Warmteweerstand",
+                "value": "0"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Groef",
+                "value": "V4"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Garantie",
+                "value": "15 jaar (residentieel gebruik) en 8 jaar (commercieel gebruik)"
+            },
+            {
+                "sku": "400102838",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Omschrijving",
+                "value": "De Ministre is een kwaliteit PVC Design vloer met een plankafmeting van 121,92 cm x 22,86 cm in een Standard Embossed uitvoering. Deze serie bestaat uit 8 kleuren en past in elke gewenste woon- en projectruimte."
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Verpakking",
+                "value": "3.34 m²"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Afmeting",
+                "value": "121.92 x 22.86 cm"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Lengte",
+                "value": "121.92",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Breedte",
+                "value": "22.86",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Oppervlakte",
+                "value": "0.28 m²"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Gebruiksklasse",
+                "value": "32"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Warmteweerstand",
+                "value": "0"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Groef",
+                "value": "V4"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Garantie",
+                "value": "10 jaar (residentieel gebruik) en 5 jaar (commercieel gebruik)"
+            },
+            {
+                "sku": "400102840",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Omschrijving",
+                "value": "De Ministre is een kwaliteit PVC Design vloer met een plankafmeting van 121,92 cm x 22,86 cm in een Standard Embossed uitvoering. Deze serie bestaat uit 8 kleuren en past in elke gewenste woon- en projectruimte."
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Verpakking",
+                "value": "3.34 m²"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Links",
+                "value": {}
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Merk",
+                "value": "Beautifloor"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Afmeting",
+                "value": "121.92 x 22.86 cm"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Lengte",
+                "value": "121.92",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Breedte",
+                "value": "22.86",
+                "unit": "cm"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Oppervlakte",
+                "value": "0.28 m²"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Dikte",
+                "value": "2",
+                "unit": "mm"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Pakinhoud",
+                "value": "3"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Gebruiksklasse",
+                "value": "32"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Warmteweerstand",
+                "value": "0"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Groef",
+                "value": "V4"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Garantie",
+                "value": "10 jaar (residentieel gebruik) en 5 jaar (commercieel gebruik)"
+            },
+            {
+                "sku": "400102841",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Omschrijving",
+                "value": "De matte, donkerbruine nuance van de Rose Herringbone Dryback brengt onmiddellijk diepte en warmte in elke ruimte. Deze vloer is een uitgelezen keuze voor een klassiek of landelijk interieur en biedt tegelijkertijd een gedurfd contrast in een modern, minimalistisch design. Daarnaast is de vloer geluiddempend, uitstekend geschikt voor vloerverwarming en -koeling, 100% waterbestendig, voelt warm en natuurgetrouw aan en is hygiënisch en onderhoudsvriendelijk."
+            },
+            {
+                "sku": "94601",
+                "attribute": "Merk",
+                "value": "OTIUM at Home"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Verpakking",
+                "value": "3.48 m²"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Type",
+                "value": "PVC"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Collectie",
+                "value": "Herringbone"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Eenheid",
+                "value": "m²"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Producttype",
+                "value": "Vloer"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Lengte",
+                "value": "76.2",
+                "unit": "cm"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Breedte",
+                "value": "15.24",
+                "unit": "cm"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Dikte",
+                "value": "2.5",
+                "unit": "mm"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Afmeting",
+                "value": "76.2 x 15.24 cm"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Oppervlakte",
+                "value": "0.12 m²"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Toplaagdikte",
+                "value": "0.55",
+                "unit": "mm"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Decor",
+                "value": "Rose"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Weekmakervrij",
+                "value": "Ftalaatvrije weekmakers"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Geschikt voor vloerverwarming",
+                "value": "Ja"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Model",
+                "value": "Visgraat"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Aantal planken per pak",
+                "value": "30"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Unieke planken per decor",
+                "value": "8L + 8R"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Legwijze",
+                "value": "Verlijmd"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Warmteweerstand",
+                "value": "0.017"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Vellingkant",
+                "value": "Micro 4V"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Oppervlaktestructuur",
+                "value": "Houtstructuur"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Verbinding",
+                "value": "Geen"
+            },
+            {
+                "sku": "94601",
+                "attribute": "REACH certifcaat",
+                "value": "Ja"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Gebruiksklasse huishoudelijk",
+                "value": "23"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Gebruiksklasse commercieel",
+                "value": "33 (AC5)"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Garantie huishoudelijk",
+                "value": "15 jaar"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Garantie commercieel",
+                "value": "10 jaar"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Geschikt voor vloerkoeling",
+                "value": "Ja"
+            },
+            {
+                "sku": "94601",
+                "attribute": "Vloertype",
+                "value": "Dryback"
+            }
+        ],
+        "updated": [],
+        "failed": [
+            {
+                "sku": "400092509",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092509",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092509",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092503",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092503",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092503",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099250",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099250",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099250",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092500",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092500",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092500",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092506",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092506",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092506",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092496",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092496",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092496",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092508",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092508",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092508",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099248",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099248",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099248",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092507",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092507",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092507",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099402",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099402",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099402",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092504",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092504",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092504",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092498",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092498",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092498",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099247",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099247",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099247",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092510",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092510",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092510",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092501",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092501",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092501",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092505",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092505",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092505",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092499",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092499",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092499",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092502",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092502",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092502",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099291",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099291",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099291",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092497",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092497",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092497",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092509",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092509",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092509",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092499",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092499",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092499",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092502",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092502",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092502",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092503",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092503",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092503",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099250",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099250",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099250",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092500",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092500",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092500",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092506",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092506",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092506",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099402",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099402",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099402",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099291",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099291",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099291",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092504",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092504",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092504",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092496",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092496",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092496",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092510",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092510",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092510",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092498",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092498",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092498",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092501",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092501",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092501",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092497",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092497",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092497",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092508",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092508",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092508",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099247",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099247",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099247",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099248",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099248",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400099248",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092507",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092507",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092507",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092505",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092505",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400092505",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089696",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089696",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089696",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089684",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089684",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089684",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089682",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089682",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089682",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089683",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089683",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089683",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089699",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089699",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089699",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089700",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089700",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089700",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089695",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089695",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089695",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400090133",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400090133",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400090133",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089611",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089611",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089611",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089697",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089697",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089697",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089698",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089698",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089698",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400090133",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400090133",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400090133",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089699",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089699",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089699",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089701",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089701",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089701",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089700",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089700",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089700",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089696",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089696",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089696",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089684",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089684",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089684",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089698",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089698",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089698",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089611",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089611",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089611",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089697",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089697",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089697",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089682",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089682",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089682",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089695",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089695",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089695",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089683",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089683",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400089683",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093761",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093761",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093761",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093762",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093762",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093762",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093763",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093763",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093763",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400094012",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400094012",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400094012",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093759",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093759",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093759",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093760",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093760",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093760",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093761",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093761",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093761",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093763",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093763",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093763",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093762",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093762",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093762",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400094012",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400094012",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400094012",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093759",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093759",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093759",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093760",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093760",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400093760",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081564",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081564",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081564",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081562",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081562",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081562",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081563",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081563",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081563",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081559",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081559",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081559",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081561",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081561",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081561",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081560",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081560",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081560",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081564",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081564",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081564",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081562",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081562",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081562",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081563",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081563",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081563",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081559",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081559",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081559",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081561",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081561",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081561",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081560",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081560",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "400081560",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01288",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01288",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01288",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01288",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01467",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01467",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01467",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01467",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01024",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01024",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01024",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01024",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01470",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01470",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01470",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01470",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04018",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04018",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04018",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04018",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01026",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01026",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01026",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01026",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04012",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04012",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04012",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04012",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04718",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04718",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04718",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04718",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01023",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01023",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01023",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01023",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "03813",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "03813",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "03813",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "03813",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02009",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02009",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02009",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02009",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02010",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02010",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02010",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02010",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02017",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02017",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02017",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02017",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01289",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01289",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01289",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01289",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01016",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01016",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01016",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01016",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01013",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01013",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01013",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01013",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01324",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01324",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01324",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01324",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01031",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01031",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01031",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01031",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02015",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02015",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02015",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02015",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01042",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01042",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01042",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01042",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01469",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01469",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01469",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01469",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01017",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01017",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01017",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01017",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01471",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01471",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01471",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01471",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01570",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01570",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01570",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01570",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01002",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01002",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01002",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01002",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04017",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04017",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04017",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04017",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04194",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04194",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04194",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04194",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01574",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01574",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01574",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01574",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01573",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01573",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01573",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01573",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01572",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01572",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01572",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01572",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01571",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01571",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01571",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01571",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01569",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01569",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01569",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01569",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01575",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01575",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01575",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01575",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01045",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01045",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01045",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01045",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01044",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01044",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01044",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01044",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01040",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01040",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01040",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01040",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01036",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01036",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01036",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01036",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04016",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01288",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01288",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01288",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01288",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01467",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01467",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01467",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01467",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01024",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01024",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01024",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01024",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01470",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01470",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01470",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01470",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04018",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04018",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04018",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04018",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01026",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01026",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01026",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01026",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04012",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04012",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04012",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04012",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04718",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04718",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04718",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04718",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01023",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01023",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01023",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01023",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "03813",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "03813",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "03813",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "03813",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02009",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02009",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02009",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02009",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02010",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02010",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02010",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02010",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02017",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02017",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02017",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02017",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01289",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01289",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01289",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01289",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01016",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01016",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01016",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01016",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01013",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01013",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01013",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01013",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01324",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01324",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01324",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01324",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01031",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01031",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01031",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01031",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02015",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02015",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02015",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "02015",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01042",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01042",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01042",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01042",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01469",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01469",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01469",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01469",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01017",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01017",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01017",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01017",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01471",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01471",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01471",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01471",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01570",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01570",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01570",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01570",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01002",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01002",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01002",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01002",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04017",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04017",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04017",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04017",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04194",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04194",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04194",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "04194",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01574",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01574",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01574",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01574",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01573",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01573",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01573",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01573",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01572",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01572",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01572",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01572",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01571",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01571",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01571",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01571",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01569",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01569",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01569",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01569",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01575",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01575",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01575",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01575",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01045",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01045",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01045",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01045",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01044",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01044",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01044",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01044",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01040",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01040",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01040",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01040",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01036",
+                "attribute": "Lengte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01036",
+                "attribute": "Breedte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01036",
+                "attribute": "Dikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            },
+            {
+                "sku": "01036",
+                "attribute": "Toplaagdikte",
+                "error": "get() returned more than one ProductAttribute -- it returned 2!"
+            }
+        ],
+        "changes": []
+    },
+    "categories": {
+        "main_categories_created": [],
+        "main_categories_updated": [
+            "PVC",
+            "PVC",
+            "PVC",
+            "Laminaat",
+            "Laminaat",
+            "Laminaat",
+            "Laminaat",
+            "Lamelparket",
+            "Lamelparket",
+            "Lamelparket",
+            "Vinyl",
+            "Plinten",
+            "Ondervloeren"
+        ],
+        "subcategories_created": [],
+        "sub_subcategories_created": [
+            "BaseFloor",
+            "BaseFloor",
+            "BaseFloor"
+        ]
+    },
+    "filters": {
+        "created": [
+            {
+                "filter": "Merk",
+                "values": [
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Vloer"
+                ]
+            },
+            {
+                "filter": "Type",
+                "values": [
+                    "Laminaat"
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "values": [
+                    "Click"
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    8.0,
+                    8.0,
+                    8.0,
+                    8.0,
+                    8.0,
+                    8.0,
+                    8.0,
+                    8.0
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    63.0,
+                    63.0,
+                    63.0,
+                    63.0,
+                    63.0,
+                    63.0,
+                    63.0,
+                    63.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    12.6,
+                    12.6,
+                    12.6,
+                    12.6,
+                    12.6,
+                    12.6,
+                    12.6,
+                    12.6
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Plinten"
+                ]
+            },
+            {
+                "filter": "Dikte",
+                "values": [
+                    0.5
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "values": [
+                    80.0,
+                    2400.0,
+                    240.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "values": [
+                    2.5
+                ]
+            },
+            {
+                "filter": "Merk",
+                "values": [
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Producttype",
+                "values": [
+                    "Ondervloeren"
+                ]
+            }
+        ],
+        "updated": [
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    ""
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1235.0
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    ""
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1235.0
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1235.0
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    ""
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1235.0
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1235.0
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    "Click"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "Beautifloor",
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Lengte",
+                "added_values": [
+                    1261.0
+                ]
+            },
+            {
+                "filter": "Breedte",
+                "added_values": [
+                    192.0
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    ""
+                ]
+            },
+            {
+                "filter": "Merk",
+                "added_values": [
+                    "BaseFloor"
+                ]
+            },
+            {
+                "filter": "Vloertype",
+                "added_values": [
+                    ""
+                ]
+            }
+        ]
+    }
+}
