@@ -117,5 +117,7 @@ urlpatterns = [
     path('terms-and-conditions/', views.static_html_view,
          name='terms_and_conditions'),
     path('disclaimer/', views.static_html_view,
-         name='disclaimer')
+         name='disclaimer'),
+    path('privacy/', views.static_html_view,
+         name='privacy')
 ]

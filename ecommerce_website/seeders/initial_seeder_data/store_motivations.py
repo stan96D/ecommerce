@@ -20,7 +20,7 @@ store_motivations = [
     {
         "name": "Goedkoopste van Nederland en België",
         "active": True,
-        "text": "Wij bieden de goedkoopste vloeren van Nederland, België en Duitsland. Nergens anders krijg je zulke topvloeren voor deze prijs!",
+        "text": "Wij bieden de goedkoopste vloeren van Nederland en België. Nergens anders krijg je zulke topvloeren voor deze prijs!",
         "for_homepage": True,
         "icon": "fa-tag",
         "sort_order": 1,

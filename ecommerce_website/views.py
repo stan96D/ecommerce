@@ -72,6 +72,10 @@ def static_html_view(request):
         data = WebShopConfig.disclaimer()
         category_name = "Disclaimer"
         meta = DisclaimerSEOService().get_meta_object()
+    elif route_name == 'privacy':
+        data = WebShopConfig.privacy()
+        category_name = "Privacy"
+        meta = PrivacySEOService().get_meta_object()
 
     else:
         data = 'Geen content om weer te geven'
