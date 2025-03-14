@@ -461,6 +461,6 @@ class WebShopConfig:
     @staticmethod
     def socials():
         return {
-            "facebook": "https://www.facebook.com/profile.php?id=61567918600273",
+            "facebook": "https://www.facebook.com/profile.php?id=61568346537138",
             "instagram": "https://www.instagram.com/goedkoopstevloerenshop/"
         }
