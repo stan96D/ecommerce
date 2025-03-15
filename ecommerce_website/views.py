@@ -58,6 +58,7 @@ def set_cookie_consent(request):
     request.session['cookie_consent'] = 'accepted'
     return JsonResponse({'status': 'success'})
 
+
 def custom_404_view(request, exception):
     return render(request, '404.html', status=404)
 
@@ -1411,8 +1412,12 @@ def discount_products(request, category='Kortingen'):
 
     page_obj = paginator.get_page(page)
 
-    filter_data = ProductFilterService.get_products_filters_by_products(
-        products, "Assortiment", combined_filters)
+    if is_filter:
+        filter_data = ProductFilterService.get_products_filters_by_products(
+            products, "Assortiment", combined_filters)
+    else:
+        filter_data = ProductFilterService.get_product_filters_by_category(
+            "Assortiment")
     print(
         f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
 
