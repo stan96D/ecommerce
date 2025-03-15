@@ -3,7 +3,24 @@ from django.contrib import admin
 # Register your models here.
 from .models import *
 
-admin.site.register(Product)
+from django.contrib import admin
+from .models import Product
+from django.contrib import admin
+from .models import Product, ProductSale, Sale
+from django.contrib import admin
+from .models import Sale, ProductSale
+
+
+class ProductAdmin(admin.ModelAdmin):
+    # Enable search in admin panel
+    search_fields = ['name', 'sku']
+    # Display these fields in admin list
+    list_display = ['name',  'sku']
+
+
+# Register the Sale admin
+admin.site.register(Sale)
+admin.site.register(Product, ProductAdmin)
 admin.site.register(ProductAttribute)
 admin.site.register(ProductAttributeType)
 admin.site.register(ProductStock)
@@ -13,7 +30,6 @@ admin.site.register(ProductFilter)
 admin.site.register(Order)
 admin.site.register(OrderLine)
 admin.site.register(ProductSale)
-admin.site.register(Sale)
 admin.site.register(DeliveryMethod)
 admin.site.register(Account)
 admin.site.register(StoreMotivation)
