@@ -8,14 +8,6 @@ category_data = [
         "subcategories": []
     },
     {
-        "name": "Laminaat",
-        "active": True,
-        "for_homepage": True,
-        "description": "Laminaatvloeren zijn een populaire keuze vanwege hun betaalbaarheid en veelzijdigheid. Met een breed scala aan stijlen, van houtlook tot tegellook, kunnen ze naadloos passen in elk type interieur. Onze laminaatvloeren zijn niet alleen makkelijk te onderhouden, maar ook extreem kras- en slijtvast, waardoor ze perfect zijn voor drukbezochte gebieden in je huis.",
-        "thumbnail": "category_thumbnails/laminaat-category.jpeg",
-        "subcategories": []
-    },
-    {
         "name": "Lamelparket",
         "active": True,
         "for_homepage": True,
@@ -23,6 +15,15 @@ category_data = [
         "thumbnail": "category_thumbnails/lamelparket-category.jpeg",
         "subcategories": []
     },
+    {
+        "name": "Laminaat",
+        "active": True,
+        "for_homepage": True,
+        "description": "Laminaatvloeren zijn een populaire keuze vanwege hun betaalbaarheid en veelzijdigheid. Met een breed scala aan stijlen, van houtlook tot tegellook, kunnen ze naadloos passen in elk type interieur. Onze laminaatvloeren zijn niet alleen makkelijk te onderhouden, maar ook extreem kras- en slijtvast, waardoor ze perfect zijn voor drukbezochte gebieden in je huis.",
+        "thumbnail": "category_thumbnails/laminaat-category.jpeg",
+        "subcategories": []
+    },
+
     {
         "name": "Vinyl",
         "active": True,
