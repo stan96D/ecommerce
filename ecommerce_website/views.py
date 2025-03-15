@@ -1415,9 +1415,11 @@ def discount_products(request, category='Kortingen'):
     if is_filter:
         filter_data = ProductFilterService.get_products_filters_by_products(
             products, "Assortiment", combined_filters)
-    else:
+    elif len(products) > 0:
         filter_data = ProductFilterService.get_product_filters_by_category(
             "Assortiment")
+    else:
+        filter_data = []
     print(
         f"Retrieved filter data - Time elapsed: {time.time() - start_time:.4f} seconds")
 

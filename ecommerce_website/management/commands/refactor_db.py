@@ -60,6 +60,7 @@ class Command(BaseCommand):
 
             # Define the list of refactor methods
             refactor_methods = [
+                'create_opening_sale',
                 'add_product_attribute_to_product',
                 'refactor_product_attributes_for_all_products',
                 'refactor_product_filters_for_all_products',
