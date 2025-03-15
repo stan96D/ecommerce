@@ -65,7 +65,8 @@ class ViewServiceUtility:
     def get_header_data():
         header_data = cache.get('header_data')
         if not header_data:
-            header_data = ProductCategoryService().get_all_active_head_product_categories()
+            header_data = ProductCategoryService(
+            ).get_all_active_head_product_categories_with_max()
             cache.set('header_data', header_data, timeout=3600)
         return header_data
 

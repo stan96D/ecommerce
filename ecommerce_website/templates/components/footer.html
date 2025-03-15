@@ -77,9 +77,9 @@
                 {% for header in headerData %}
                   <li>
                     <a
-                      href="/products/{{ header }}"
+                      href="/products/{{ header.name }}"
                       class="text-base leading-6 text-gray-800 hover:text-orange-500"
-                      >{{ header }}</a
+                      >{{ header.name }}</a
                     >
                   </li>
                 {% endfor %}
