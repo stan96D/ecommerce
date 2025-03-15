@@ -16,6 +16,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['name', 'sku']
     # Display these fields in admin list
     list_display = ['name',  'sku']
+    exclude = ['thumbnail_url']
 
 
 # Register the Sale admin
