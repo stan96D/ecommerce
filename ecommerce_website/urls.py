@@ -13,6 +13,11 @@ handler404 = 'ecommerce_website.views.custom_404_view'
 
 
 urlpatterns = [
+    # Cookies
+    path('set-cookie-consent/', views.set_cookie_consent,
+         name='set_cookie_consent'),
+
+
     # API
     path('get-address/',
          views.get_address, name='get_address'),

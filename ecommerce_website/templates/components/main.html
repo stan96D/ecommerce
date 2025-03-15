@@ -38,7 +38,7 @@
     />
   </head>
 
-  <body class="bg-gray-100">
+  <body>
     {% include 'components/header.html' %}
 
     <main>
@@ -69,57 +69,59 @@
     </button>
 
     {% include 'components/footer.html' %}
+    {% if not request.session.cookie_consent %}
+      <!-- Cookie Consent Modal -->
+      <div
+        id="cookieConsentModal"
+        class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 p-4"
+      >
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full">
+          <div class="flex justify-between items-center">
+            <h2 class="text-2xl font-semibold text-black">Privacy & Cookies</h2>
+          </div>
+          <p class="text-orange-500 text-sm">Uw privacy is belangrijk</p>
 
-    <!-- Cookie Consent Modal -->
-    <div
-      id="cookieConsentModal"
-      class="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 p-4 hidden"
-    >
-      <div class="bg-white rounded-lg shadow-lg p-6 max-w-lg w-full">
-        <div class="flex justify-between items-center">
-          <h2 class="text-2xl font-semibold text-black">Privacy & Cookies</h2>
-        </div>
-        <p class="text-orange-500 text-sm">Uw privacy is belangrijk</p>
+          <div class="mt-6">
+            <p class="text-gray-900 text-sm">
+              Wij gebruiken <span class="font-semibold">functionele</span> en
+              <span class="font-semibold">analytische</span> cookies om u de
+              beste ervaring op onze website te bieden. Deze cookies helpen ons
+              de website goed te laten functioneren en uw voorkeuren te
+              onthouden.
+            </p>
 
-        <div class="mt-6">
-          <p class="text-gray-900 text-sm">
-            Wij gebruiken <span class="font-semibold">functionele</span> en
-            <span class="font-semibold">analytische</span> cookies om u de beste
-            ervaring op onze website te bieden. Deze cookies helpen ons de
-            website goed te laten functioneren en uw voorkeuren te onthouden.
-          </p>
+            <p class="mt-2 text-gray-900 text-sm">
+              <span class="font-semibold">Functionele cookies</span> zijn
+              essentieel om de basisfunctionaliteiten van onze website te
+              ondersteunen, zoals het onthouden van je instellingen,
+              winkelmandje en voorkeuren.
+            </p>
+            <p class="mt-2 text-gray-900 text-sm">
+              <span class="font-semibold">Analytische cookies</span> helpen ons
+              bij het analyseren van uw gebruik van de website, zodat we deze
+              kunnen verbeteren en de gebruikerservaring kunnen optimaliseren.
+            </p>
 
-          <p class="mt-6 text-gray-900 text-sm">
-            <span class="font-semibold">Functionele cookies</span> zijn
-            essentieel om de basisfunctionaliteiten van onze website te
-            ondersteunen, zoals het onthouden van je instellingen, winkelmandje
-            en voorkeuren.
-          </p>
-          <p class="mt-2 text-gray-900 text-sm">
-            <span class="font-semibold">Analytische cookies</span> helpen
-            ons bij het analyseren van uw gebruik van de website, zodat we deze
-            kunnen verbeteren en de gebruikerservaring kunnen optimaliseren.
-          </p>
-
-          <p class="mt-8 text-gray-600 text-xs">
-            Door onze site te blijven gebruiken, gaat u akkoord met ons gebruik
-            van cookies. Voor meer informatie kunt u ons
-            <a href="/privacy" class="text-orange-500 hover:text-orange-600"
-              >privacybeleid</a
+            <p class="mt-6 text-gray-600 text-xs">
+              Door onze site te blijven gebruiken, gaat u akkoord met ons
+              gebruik van cookies. Voor meer informatie kunt u ons
+              <a href="/privacy" class="text-orange-500 hover:text-orange-600"
+                >privacybeleid</a
+              >
+              raadplegen.
+            </p>
+          </div>
+          <div class="mt-4">
+            <button
+              id="acceptCookies"
+              class="w-full bg-orange-500 text-white text-sm font-semibold py-3 px-6 rounded-md shadow-md hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition-all duration-300"
             >
-            raadplegen.
-          </p>
-        </div>
-        <div class="mt-4">
-          <button
-            id="acceptCookies"
-            class="w-full bg-orange-500 text-white text-sm font-semibold py-3 px-6 rounded-md shadow-md hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-opacity-50 transition-all duration-300"
-          >
-            Accepteren
-          </button>
+              Accepteren
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    {% endif %}
   </body>
 
   <script>
@@ -156,18 +158,25 @@
       document.getElementById('spinner-container').classList.add('hidden')
     }
 
-    // Show modal if the user hasn't accepted cookies yet in this session
-    $(document).ready(function () {
-      console.log(sessionStorage.getItem('cookieConsent'))
-      if (sessionStorage.getItem('cookieConsent') !== 'accepted') {
-        $('#cookieConsentModal').removeClass('hidden') // Show the modal
-      }
-
-      // Handle the "Accept" button click
-      $('#acceptCookies').click(function () {
-        sessionStorage.setItem('cookieConsent', 'accepted') // Store consent in sessionStorage
-        $('#cookieConsentModal').addClass('hidden') // Hide the modal
+    document
+      .getElementById('acceptCookies')
+      .addEventListener('click', function () {
+        fetch("{% url 'set_cookie_consent' %}", {
+          method: 'POST',
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': '{{ csrf_token }}',
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === 'success') {
+              document
+                .getElementById('cookieConsentModal')
+                .classList.add('hidden')
+            }
+          })
+          .catch((error) => console.error('Error:', error))
       })
-    })
   </script>
 </html>
