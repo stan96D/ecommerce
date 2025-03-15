@@ -54,6 +54,10 @@ environment = EnvLoader.get_env()
 url_manager = EncapsulatedURLManager.get_url_manager(environment)
 
 
+def set_cookie_consent(request):
+    request.session['cookie_consent'] = 'accepted'
+    return JsonResponse({'status': 'success'})
+
 def custom_404_view(request, exception):
     return render(request, '404.html', status=404)
 

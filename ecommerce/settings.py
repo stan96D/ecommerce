@@ -24,10 +24,6 @@ load_dotenv(BASE_DIR / '.env')
 ENVIRONMENT = os.getenv('DJANGO_ENV', 'dev')
 SECRET_KEY = os.getenv(
     'SECRET_KEY')
-SENDER_EMAIL = os.getenv(
-    'SENDER_EMAIL')
-ADMIN_EMAIL = os.getenv(
-    'ADMIN_EMAIL')
 
 
 # Static files (CSS, JavaScript, Images)
