@@ -115,7 +115,6 @@ class ProductionSeeder():
             "ondervloer": "Ondervloeren",
         }
 
-        MAX_VALUES = 6
 
         grouped_products = {}
 
@@ -133,21 +132,21 @@ class ProductionSeeder():
                 }
 
             if product.get("Merk"):
-                if len(grouped_products[product_type]["Merk"]) < MAX_VALUES:
+                if len(grouped_products[product_type]["Merk"]):
                     grouped_products[product_type]["Merk"].add(product["Merk"])
 
             if product.get("Collectie"):
-                if len(grouped_products[product_type]["Collectie"]) < MAX_VALUES:
+                if len(grouped_products[product_type]["Collectie"]):
                     grouped_products[product_type]["Collectie"].add(
                         product["Collectie"])
 
             if product.get("Vloertype"):
-                if len(grouped_products[product_type]["Vloertype"]) < MAX_VALUES:
+                if len(grouped_products[product_type]["Vloertype"]):
                     grouped_products[product_type]["Vloertype"].add(
                         product["Vloertype"])
 
             if product.get("Kleur"):
-                if len(grouped_products[product_type]["Kleur"]) < MAX_VALUES:
+                if len(grouped_products[product_type]["Kleur"]):
                     grouped_products[product_type]["Kleur"].add(
                         product["Kleur"])
 
