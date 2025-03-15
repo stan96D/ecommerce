@@ -7,7 +7,7 @@ from ecommerce_website.models import *
 def create_opening_sale():
     # Define sale details
     sale_name = "Openingskorting"
-    description = "Om onze opening te vieren met jullie, bieden wij jullie allemaal 5% korting aan. Leggen die vloeren!"
+    description = "5% Openingskorting op alle artikelen. Leggen die vloeren!"
     start_date = now().date()
     end_date = start_date + timedelta(days=30)
     discount_percentage = 5  # 5% discount
