@@ -340,8 +340,7 @@ class StoreMotivation(models.Model):
     text = models.CharField(max_length=200, null=True)
     icon = models.CharField(max_length=20, null=True, blank=True)
     for_homepage = models.BooleanField(default=True)
-    image = models.ImageField(
-        upload_to='store_motivation_images/', null=True, blank=True)
+    sort_order = models.IntegerField(default=None, null=True)
 
 
 class OrderLine(models.Model):

@@ -60,7 +60,7 @@ class PaymentReturnViewService:
                     "text": (
                         "Zodra uw order is betaald, nemen wij het van daaruit over. Onze bezorgservice neemt de door u gekozen afleverdatum in behandeling en stemt met u hierbij het gewenste tijdstip af. "
                         "Indien nodig nemen zij contact met u op om een alternatieve datum af te stemmen.<br><br>"
-                        "Wij leveren uw bestelling normaal gesproken binnen <strong>96 uur</strong> op werkdagen, overal in <strong>Nederland</strong>, <strong>België</strong> en <strong>Duitsland</strong>.<br><br>"
+                        "Wij leveren uw bestelling normaal gesproken binnen <strong>96 uur</strong> op werkdagen, overal in <strong>Nederland</strong> en <strong>België</strong>.<br><br>"
                         "Wij begrijpen hoe belangrijk het is om uw bestelling op tijd en in perfecte staat te ontvangen, en daarom besteden wij extra aandacht aan elk detail. Echter zou het altijd kunnen door bepaalde factoren dat dit uit kan lopen. Wij informeren u hier spoedig over.<br><br>"
                         "Heeft u speciale verzoeken of vragen over de levering? Neem gerust <a href='/contact-service' class='font-medium text-orange-500'>contact met ons op</a>, wij staan klaar om u te helpen."
                     ),
@@ -70,13 +70,14 @@ class PaymentReturnViewService:
             "name": "Betaling & verzending",
             "header": "Uw bestelling, onze zorg!",
             "description": (
-                "Wij maken het bestellen en leveren van uw vloeren eenvoudig en betrouwbaar.<br><br>"
-                "Tijdens het plaatsen van uw order kunt u direct een gewenste afleverdatum invullen. Deze wordt doorgegeven aan onze <a class='font-medium text-orange-500' href='#delivery'>bezorgservice</a>, die contact met u opneemt om de details van de levering te bevestigen.<br><br>"
-                "Na het plaatsen van uw order kunt u kiezen uit verschillende betaalmethoden zoals <strong>iDEAL</strong>, <strong>creditcard</strong>, of <strong>PayPal</strong>. "
+                "Wij willen het bestellen en ontvangen van uw vloeren zo eenvoudig en zorgeloos mogelijk maken.<br><br>"
+                "Tijdens het plaatsen van uw bestelling kunt u een gewenste afleverdatum opgeven. Wij geven deze door aan onze <a class='font-medium text-orange-500' href='#delivery'>bezorgservice</a>, die vervolgens contact met u opneemt om de levering te bevestigen en de details af te stemmen. "
+                "Voor de betaling bieden wij verschillende veilige opties, zoals <strong>iDEAL</strong>, <strong>creditcard</strong> en <strong>PayPal</strong>. "
                 "Uw bestelling wordt pas verwerkt nadat de betaling is voltooid.<br><br>"
-                "Bestellingen boven de <strong>€500</strong> worden gratis verzonden, terwijl voor bestellingen onder dit bedrag slechts <strong>€50</strong> aan verzendkosten wordt gerekend. "
-                "Wij leveren normaal gesproken binnen <strong>96 uur</strong> op werkdagen, en bezorgen overal in <strong>Nederland</strong>, <strong>België</strong> en <strong>Duitsland</strong>. "
-                "Onze bezorgservice zorgt ervoor dat uw bestelling snel en in perfecte staat bij u wordt afgeleverd. Echter kan het altijd zijn dat dit proces uit loopt, wij houden u hier gelijk van op de hoogte!<br><br>"
-                "<strong>Heeft u vragen over onze procedures?</strong> Neem gerust <a href='/contact-service' class='font-medium text-orange-500'>contact met ons op</a>!"
+                "Bij bestellingen vanaf <strong>€500</strong> nemen wij de verzendkosten voor onze rekening. Voor bestellingen onder dit bedrag rekenen wij een vaste bijdrage van <strong>€50</strong>. "
+                "Wij streven ernaar uw bestelling binnen <strong>96 uur</strong> op werkdagen te leveren en bezorgen in <strong>Nederland</strong> en <strong>België</strong>. "
+                "Onze bezorgservice doet er alles aan om uw bestelling op tijd en in perfecte staat af te leveren.<br><br>"
+                "Hoewel we zorgvuldig te werk gaan, kunnen er soms onvoorziene omstandigheden zijn die invloed hebben op de levertijd. Mocht dit het geval zijn, dan brengen we u hier tijdig van op de hoogte. <br><br>"
+                "<strong>Heeft u vragen over deze procedure?</strong> Neem gerust <a href='/contact-service' class='font-medium text-orange-500'>contact met ons op</a>!"
             ),
         }

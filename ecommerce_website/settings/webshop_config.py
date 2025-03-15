@@ -5,7 +5,101 @@ class WebShopConfig:
 
     @staticmethod
     def customBrand():
-        return "Cheapito"
+        return "BaseFloor"
+
+    @staticmethod
+    def privacy():
+        return """
+    <h2><strong>Privacyverklaring</strong></h2>
+    <p>Goedkoopste Vloerenwebshop B.V., gevestigd in Maastricht, is verantwoordelijk voor de verwerking van persoonsgegevens zoals vermeld in deze privacyverklaring.</p>
+    <br>
+
+    <h3><strong>Contactinformatie</strong></h3>
+    <p>Goedkoopste Vloerenwebshop B.V.<br>
+    E-mailadres: <a href="mailto:info@goedkoopstevloerenwebshop.nl">info@goedkoopstevloerenwebshop.nl</a><br>
+    Website: <a href="https://www.goedkoopstevloerenwebshop.nl/" target="_blank">www.goedkoopstevloerenwebshop.nl</a><br>
+    U kunt ons bereiken via <a href="mailto:info@goedkoopstevloerenwebshop.nl">info@goedkoopstevloerenwebshop.nl</a>.
+    </p>
+    <br>
+
+    <h3><strong>Verwerking van persoonsgegevens</strong></h3>
+    <p>Wij verzamelen uw persoonsgegevens wanneer u gebruikmaakt van onze diensten en/of deze zelf aan ons verstrekt. Hieronder vindt u een lijst van de persoonsgegevens die wij verwerken:</p>
+    <br>
+    <ul>
+        <li>Voor- en achternaam</li>
+        <li>Adres</li>
+        <li>Telefoonnummer</li>
+        <li>E-mailadres</li>
+    </ul>
+    <br>
+
+    <h3><strong>Bijzondere en/of gevoelige persoonsgegevens</strong></h3>
+    <p>Onze website is niet bedoeld om gegevens te verzamelen van bezoekers die jonger zijn dan 16 jaar, tenzij zij toestemming hebben van hun ouders of voogd.<br>
+    Wij kunnen niet verifiëren of een bezoeker ouder is dan 16.<br>
+    We adviseren ouders om betrokken te zijn bij de online activiteiten van hun kinderen, zodat gegevens over minderjarigen niet zonder toestemming worden verzameld.</p>
+    <br>
+    <p>Als u vermoedt dat wij persoonlijke gegevens van een minderjarige hebben verzameld zonder toestemming, neem dan contact met ons op via 
+    <a href="mailto:info@goedkoopstevloerenwebshop.nl">info@goedkoopstevloerenwebshop.nl</a>, en wij zullen deze informatie verwijderen.</p>
+    <br>
+
+    <h3><strong>Doeleinden van verwerking van persoonsgegevens</strong></h3>
+    <p>Wij verwerken uw persoonsgegevens voor de volgende doeleinden:</p>
+    <br>
+    <ul>
+        <li>Informatie over uw activiteiten op onze website</li>
+        <li>Het afhandelen van betalingen</li>
+        <li>Verzending van onze nieuwsbrief en/of promotionele materialen</li>
+        <li>Contact opnemen via telefoon of e-mail voor onze dienstverlening</li>
+        <li>Mogelijkheid om een account aan te maken</li>
+        <li>Levering van goederen en diensten aan u</li>
+    </ul>
+    <br>
+    <p>Daarnaast analyseren wij uw gedrag op onze website om deze te verbeteren en het aanbod beter af te stemmen op uw voorkeuren.<br>
+    Ook verwerken wij persoonsgegevens indien wij hier wettelijk toe verplicht zijn, bijvoorbeeld voor belastingdoeleinden.</p>
+    <br>
+
+    <h3><strong>Geautomatiseerde besluitvorming</strong></h3>
+    <p>Wij nemen geen beslissingen op basis van geautomatiseerde verwerking die wezenlijke effecten hebben op individuen.</p>
+    <br>
+
+    <h3><strong>Duur van het bewaren van persoonsgegevens</strong></h3>
+    <p>Wij bewaren uw gegevens maximaal zeven jaar, in overeenstemming met de wettelijke termijn zoals vastgelegd in de Wet op de Rijksbelastingen.<br>
+    Inactieve accounts worden automatisch na 18 maanden verwijderd.</p>
+    <br>
+
+    <h3><strong>Delen van persoonsgegevens met derden</strong></h3>
+    <p>Wij delen uw persoonsgegevens uitsluitend met derden wanneer dit nodig is om een overeenkomst uit te voeren of om aan wettelijke verplichtingen te voldoen.</p>
+    <br>
+    <p>Wij sluiten verwerkersovereenkomsten met bedrijven die uw gegevens namens ons verwerken, zodat zij een vergelijkbaar niveau van beveiliging en vertrouwelijkheid kunnen waarborgen.<br>
+    Wij blijven echter verantwoordelijk voor deze verwerking.</p>
+    <br>
+
+    <h3><strong>Cookies</strong></h3>
+    <p>Wij maken gebruik van functionele, analytische en tracking cookies. Een cookie is een klein tekstbestand dat op uw apparaat wordt opgeslagen bij uw eerste bezoek aan onze website.</p>
+    <br>
+    <p>Wij gebruiken cookies om:</p>
+    <br>
+    <ul>
+        <li>De website goed te laten functioneren</li>
+        <li>Uw voorkeuren te onthouden</li>
+        <li>Uw surfgedrag te analyseren voor gepersonaliseerde inhoud en advertenties</li>
+    </ul>
+    <br>
+    <p>Bij uw eerste bezoek heeft u al informatie ontvangen over deze cookies en toestemming gegeven voor hun plaatsing.</p>
+    <br>
+    <p>U kunt cookies uitschakelen via uw browserinstellingen en eerder opgeslagen gegevens verwijderen.</p>
+    <br>
+
+    <h3><strong>Cookies van derden</strong></h3>
+    <p>Ook derden zoals adverteerders of sociale media kunnen cookies plaatsen op onze website. Hieronder vindt u een overzicht van deze partijen:</p>
+    <br>
+    <ul>
+        <li>Google Analytics</li>
+        <li>Instagram</li>
+        <li>Facebook</li>
+    </ul>
+    <br>
+    """
 
     @staticmethod
     def disclaimer():
@@ -114,7 +208,7 @@ class WebShopConfig:
         <li><strong>5.3</strong> De ondernemer streeft naar levering binnen de vermelde termijn. Bij vertraging wordt de consument hiervan tijdig op de hoogte gesteld.</li>
         <li><strong>5.4</strong> De ondernemer levert alleen de producten. Het leggen van de vloer dient door de consument zelf te worden uitgevoerd.</li>
         <li><strong>5.5</strong> De ondernemer accepteert geen retour van overgebleven producten, tenzij deze voldoen aan onze retourvoorwaarden.</li>
-        <li><strong>5.6</strong> Levertijden zijn indicatief en afhankelijk van de leverancier. De ondernemer kan niet aansprakelijk worden gesteld voor eventuele vertragingen veroorzaakt door de leverancier.</li>
+        <li><strong>5.6</strong> Levertijden zijn afhankelijk van de leverancier en de fabriek en kunnen variëren. De ondernemer is niet aansprakelijk voor eventuele vertragingen in de levering.</li>
 
     </ul>
 
@@ -134,7 +228,7 @@ class WebShopConfig:
                 <li><strong>Fabricagefouten en zichtbare schade:</strong> Garantie wordt verleend op fabricagefouten, exorbitante kleurverschillen en beschadigingen die vóór het leggen van de vloer zijn geconstateerd.</li>
                 <li><strong>Uitsluitingen van de garantie:</strong>
                     <ul style="margin-left: 20px; line-height: 1.6;">
-                        <li>Zelf gelegde vloeren: Er wordt geen garantie gegeven op bollingen, spleten of het loslaten van de klikverbinding als de vloer zelf is gelegd.</li>
+                        <li>Er wordt geen garantie gegeven op bollingen, spleten of het loslaten van de klikverbinding bij het leggen van de vloer.</li>
                         <li>Slijtage en beschadigingen: Krassen, butsen en andere gebruikssporen vallen niet onder de fabrieksgarantie.</li>
                         <li>Ondeugdelijk gebruik of onderhoud: Schade door ondeugdelijk gebruik, zoals overmatig vocht, puntbelasting door stoelen, naaldhakken, of schoenen met steentjes, valt niet onder de garantie.</li>
                     </ul>
@@ -168,7 +262,7 @@ class WebShopConfig:
     <ul style="margin-left: 20px; line-height: 1.6;">
         <li><strong>9.1</strong> De ondernemer respecteert de privacy van de consument en verwerkt persoonsgegevens conform de Algemene Verordening Gegevensbescherming (AVG).</li>
         <li><strong>9.2</strong> Persoonsgegevens worden uitsluitend gebruikt voor de uitvoering van de overeenkomst.</li>
-        <li><strong>9.3</strong> De consument is zelf verantwoordelijk voor het correct en volledig invullen van zijn gegevens. Onjuiste gegevens kunnen leiden tot vertragingen of andere problemen waarvoor de ondernemer niet aansprakelijk is.</li>
+        <li><strong>9.3</strong> De consument is zelf verantwoordelijk voor het correct verstrekken van de persoonlijke en adresgegevens voor de levering. Eventuele extra kosten als gevolg van onjuiste gegevens zijn voor rekening van de consument.</li>
 
     </ul>
 
@@ -203,22 +297,26 @@ class WebShopConfig:
                 "title": "Vloeren",
                 "description": "De beste topmerken",
                 "url": "products/?Producttype=Vloer",
-                "image_path": "hero4.jpeg"
+                "image_path": "hero4.jpeg",
+                "extra_tag": "Top kwaliteit"
             },
             "hero2":
             {
                 "title": "Click PVC",
                 "description": "Makkelijk om zelf te leggen",
                 "url": "products/?Vloertype=Click",
-                "image_path": "hero2.jpeg"
+                "image_path": "hero2.jpeg",
+                "extra_tag": "Nu ook"
+
             },
             "hero3":
             {
                 "title": "Kortingen",
                 "description": "Nu tijdelijk nóg goedkoper",
                 "url": "/discounts",
+                "image_path": "hero1.jpeg",
+                "extra_tag": "Uitverkoop"
 
-                "image_path": "hero1.jpeg"
             },
         }
 
@@ -363,6 +461,6 @@ class WebShopConfig:
     @staticmethod
     def socials():
         return {
-            "facebook": "https://www.facebook.com/profile.php?id=61567918600273",
+            "facebook": "https://www.facebook.com/profile.php?id=61568346537138",
             "instagram": "https://www.instagram.com/goedkoopstevloerenshop/"
         }

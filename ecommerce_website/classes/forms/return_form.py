@@ -52,7 +52,6 @@ class ReturnForm(forms.Form):
     country = forms.ChoiceField(
         choices=[
             ("Nederland", "Nederland"),
-            ("Duitsland", "Duitsland"),
             ("België", "België"),
         ],
         required=True,
@@ -92,7 +91,6 @@ class ReturnForm(forms.Form):
     billing_country = forms.ChoiceField(
         choices=[
             ("Nederland", "Nederland"),
-            ("Duitsland", "Duitsland"),
             ("België", "België"),
         ],
         required=False,

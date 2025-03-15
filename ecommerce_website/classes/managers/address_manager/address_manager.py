@@ -36,9 +36,8 @@ class AddressManager:
         address = address_data.get('address', {})
         return {
             'street': address.get('road'),
-            'city': address.get('city'),
-            # Default to 'Nederland' if no country
-            'country': address.get('country', 'Nederland'),
+            'city': address.get('city') or address.get('town') or address.get('village'),
+            'country': address.get('country'),
             'postal_code': address.get('postcode'),
         }
 
@@ -54,7 +53,18 @@ class AddressManager:
             if not address_data.get(field):
                 return False, f"Missing required field: {field}"
 
-        # Additional validation for house number can be added here if needed
+        # Normalize country to ensure it matches the local name
+        country = address_data.get('country')
+        if country:
+            if "België" in country:
+                # Normalize to the local value
+                address_data['country'] = "België"
+            elif "Nederland" in country:
+                # Normalize to the local value
+                address_data['country'] = "Nederland"
+            else:
+                return False, f"Unsupported country: {country}"
+
         return True, None
 
     @staticmethod

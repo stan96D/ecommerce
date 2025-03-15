@@ -57,8 +57,8 @@ class ContactService:
             "extra": "Kom je ergens niet uit?",
             "name": "Klantenservice",
             "header": "Wij regelen het voor u!",
-            "description": "Bij onze klantenservice staat het leveren van de best mogelijke service centraal.<br><br>"
-            "Wij doen er alles aan om uw bestelling snel en zonder problemen bij u af te leveren. "
-            "Wij begrijpen dat een vlotte en betrouwbare <a class='font-medium text-orange-500' href='/payment-return-service#delivery'>levering</a> essentieel is, en daarom zetten we alles op alles om ervoor te zorgen dat u de vloeren die u besteld hebt, snel en in goede staat ontvangt.<br><br>"
-            "Onze service is niet alleen voor u een prioriteit, maar ook voor ons. <strong>Mocht er iets misgaan of mocht de levering langer duren dan verwacht, dan staan wij klaar om u te helpen en het probleem snel op te lossen.</strong>"
+            "description": "Bij onze klantenservice streven we ernaar om u de best mogelijke service te bieden.<br><br>"
+            "Wij doen ons uiterste best om uw bestelling snel en probleemloos bij u af te leveren. Omdat een vlotte en betrouwbare <a class='font-medium text-orange-500' href='/payment-return-service#delivery'>levering</a> voor ons net zo belangrijk is als voor u, werken we nauw samen met onze leveranciers en fabrikanten om uw bestelling zo snel mogelijk in goede staat te bezorgen.<br><br>"
+            "Hoewel we alles in het werk stellen om een tijdige levering te garanderen, kunnen levertijden variëren door factoren buiten onze controle. Mocht er onverhoopt vertraging optreden, dan informeren we u zo snel mogelijk en zoeken we samen naar een passende <strong>oplossing</strong>."
+
         }
