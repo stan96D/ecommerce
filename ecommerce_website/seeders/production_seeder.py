@@ -115,7 +115,6 @@ class ProductionSeeder():
             "ondervloer": "Ondervloeren",
         }
 
-
         grouped_products = {}
 
         for product in products_data_json:
@@ -132,23 +131,19 @@ class ProductionSeeder():
                 }
 
             if product.get("Merk"):
-                if len(grouped_products[product_type]["Merk"]):
-                    grouped_products[product_type]["Merk"].add(product["Merk"])
+                grouped_products[product_type]["Merk"].add(product["Merk"])
 
             if product.get("Collectie"):
-                if len(grouped_products[product_type]["Collectie"]):
-                    grouped_products[product_type]["Collectie"].add(
-                        product["Collectie"])
+                grouped_products[product_type]["Collectie"].add(
+                    product["Collectie"])
 
             if product.get("Vloertype"):
-                if len(grouped_products[product_type]["Vloertype"]):
-                    grouped_products[product_type]["Vloertype"].add(
-                        product["Vloertype"])
+                grouped_products[product_type]["Vloertype"].add(
+                    product["Vloertype"])
 
             if product.get("Kleur"):
-                if len(grouped_products[product_type]["Kleur"]):
-                    grouped_products[product_type]["Kleur"].add(
-                        product["Kleur"])
+                grouped_products[product_type]["Kleur"].add(
+                    product["Kleur"])
 
         print(grouped_products)
         for category in category_data:
