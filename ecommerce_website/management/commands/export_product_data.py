@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 from django.core.management.base import BaseCommand
 from ecommerce_website.services.export_service.product_export_service import ProductExportService
+from ecommerce_website.services.export_service.google_merchant_export_service import GoogleMerchantExportService
 
 
 class Command(BaseCommand):
@@ -14,15 +15,20 @@ class Command(BaseCommand):
             inquirer.List(
                 'format',
                 message="Select the export format",
-                choices=['csv', 'json', 'excel'],
+                choices=['csv', 'json', 'excel', 'google'],
                 default='csv',  # Default is CSV
             ),
         ]
         answers = inquirer.prompt(questions)
         file_format = answers['format']
 
+        if file_format == "google":
+            product_export_service = GoogleMerchantExportService()
+
+        else:
+            product_export_service = ProductExportService()
+
         # For Products
-        product_export_service = ProductExportService()
         export_data = product_export_service.export(file_format=file_format)
 
         # Generate a unique timestamp for the filename
@@ -43,6 +49,9 @@ class Command(BaseCommand):
         elif file_format == 'excel':
             data_filename = os.path.join(
                 data_folder, f"product_export_{unique_id}.xlsx")
+        elif file_format == 'google':
+            data_filename = os.path.join(
+                data_folder, f"product_export_{unique_id}.xlsx")
 
         # Save the exported data to a file
         if file_format == 'csv':
@@ -54,6 +63,9 @@ class Command(BaseCommand):
         elif file_format == 'excel':
             with open(data_filename, 'wb') as file:  # Binary write for Excel
                 file.write(export_data)
-
+        elif file_format == 'google':
+            with open(data_filename, 'wb') as file:  # Binary write for Excel
+                file.write(export_data)
+                
         self.stdout.write(self.style.SUCCESS(
             f"Exported product data to {data_filename}"))
