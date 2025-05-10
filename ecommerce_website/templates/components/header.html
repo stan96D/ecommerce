@@ -42,8 +42,8 @@
                 U heeft nog
                 <span class="font-bold"
                   >{{ current_sale.days_left }}
-                  dag{{ current_sale.days_left|pluralize:"" }}</span
-                >
+                  {{ current_sale.days_left|pluralize:"dag,dagen" }}
+                </span>
                 om te profiteren van deze korting!
               {% else %}
                 Korting beschikbaar tot
