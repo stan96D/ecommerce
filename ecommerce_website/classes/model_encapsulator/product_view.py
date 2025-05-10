@@ -113,6 +113,8 @@ class ProductDetailView:
         self.sale_price = product.sale_price
         self.unit_sale_price = product.unit_sale_price
 
+        self.active = product.active
+
         product_specifications = {
             "Algemene Specificaties": {},
             "Overige Specificaties": {},

@@ -795,6 +795,14 @@ def confirm_order(request):
         if not cart_service.is_valid:
             return redirect('cart')
 
+        product_ids = [item['product_id'] for item in cart_service.cart_items]
+
+        if not ProductService.are_products_valid(product_ids):
+            cart_service.clear_cart()
+            messages.error(
+                request, "Er heeft zich een probleem opgetreden.")
+            return redirect('cart')
+
         form = PaymentForm(request.POST)
         if not form.is_valid():
             order = ViewServiceUtility.get_order_info(request)
@@ -2093,13 +2101,18 @@ def add_to_cart(request):
         product_id = request.POST.get('product_id')
         pack_quantity = request.POST.get('packs')
         is_product_detail = request.POST.get('is_product_detail')
-        print(type(is_product_detail), request.POST)
+
         try:
             quantity = int(pack_quantity)
         except (TypeError, ValueError):
             quantity = 1
 
         product = ProductService().get_product_by_id(product_id)
+
+        if not product.active:
+            messages.add_message(
+                request, messages.ERROR, 'Dit product is momenteel niet beschikbaar en kan niet worden toegevoegd aan je winkelmand.')
+            return redirect(request.META.get('HTTP_REFERER', '/'))
 
         ShoppingCartService(request).add_item(product.id, quantity)
 
