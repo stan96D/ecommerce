@@ -1,7 +1,5 @@
 from django.core.management.base import BaseCommand
-from django.core.management import call_command
 from ecommerce_website.seeders.product_updater import ProductUpdater
-from ecommerce_website.seeders.production_seeder import ProductionSeeder
 import json
 import traceback
 

@@ -9,6 +9,7 @@ from ecommerce_website.classes.helpers.token_generator.token_generator import Re
 from ecommerce_website.classes.managers.url_manager.url_manager import *
 from ecommerce_website.classes.helpers.env_loader import *
 from ecommerce.settings import BASE_DIR
+from email.mime.application import MIMEApplication
 
 url_manager = EncapsulatedURLManager.get_url_manager(EnvLoader.get_env())
 
@@ -65,6 +66,47 @@ class HTMLMailManager(BaseMailManager):
                     img = MIMEImage(img_file.read(), name="logo.png")
                     img.add_header('Content-ID', '<logo>')
                     msg.attach(img)
+
+            logger.info(f"Sending email to {recipient_email}")
+            server.send_message(msg)
+
+            server.quit()
+
+            logger.info("Email sent successfully!")
+            return "Email sent successfully!"
+        except Exception as e:
+            logger.error(f"Failed to send email. Error: {str(e)}")
+            return f"Failed to send email. Error: {str(e)}"
+
+    def send_file(self, sender_email, sender_password, recipient_email, subject, message, timeout=0, file=None):
+        try:
+            logger.info("Starting email sending process.")
+            smtp_server = 'smtp.strato.com'
+            smtp_port = 587
+
+            logger.debug(
+                f"Connecting to SMTP server: {smtp_server} on port {smtp_port}")
+            server = smtplib.SMTP(smtp_server, smtp_port, timeout)
+            server.starttls()
+
+            logger.debug(f"Logging in with sender email: {sender_email}")
+            server.login(sender_email, sender_password)
+
+            msg = MIMEMultipart()
+            msg['From'] = sender_email
+            msg['To'] = recipient_email
+            msg['Subject'] = subject
+
+            logger.debug(f"Attaching HTML message content")
+            msg.attach(MIMEText(message, 'html'))
+
+            if file:
+                logger.debug(f"Attaching file {file}")
+                with open(file, 'rb') as attachment_file:
+                    part = MIMEApplication(
+                        attachment_file.read(), Name=os.path.basename(file))
+                    part['Content-Disposition'] = f'attachment; filename="{os.path.basename(file)}"'
+                    msg.attach(part)
 
             logger.info(f"Sending email to {recipient_email}")
             server.send_message(msg)

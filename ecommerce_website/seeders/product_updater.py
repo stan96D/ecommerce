@@ -3,10 +3,29 @@ import json
 from datetime import datetime
 from decimal import Decimal
 from ecommerce_website.services.database_import_service.product_update_service import ProductUpdateService
-from ecommerce_website.seeders.initial_seeder_data.category_data import category_data
+from ecommerce_website.models import Product
+from django.db import transaction
 
 
 class ProductUpdater:
+    def deactivate_products_by_skus(self, sku_list):
+        """
+        Bulk deactivate products by setting 'active' to False based on a list of SKUs.
+        """
+        if not sku_list:
+            print("No SKUs provided to deactivate.")
+            return 0
+
+        try:
+            with transaction.atomic():
+                updated_count = Product.objects.filter(
+                    sku__in=sku_list).update(active=False)
+                print(f"{updated_count} products deactivated.")
+                return updated_count
+        except Exception as e:
+            print(f"Failed to deactivate products: {str(e)}")
+            return 0
+
     def update_products(self, products_data_json):
         # Generate the report by importing product data
         reports = ProductUpdateService().import_product_data(products_data_json)
@@ -38,3 +57,5 @@ class ProductUpdater:
             print(f"Report successfully written to {data_filename}")
         except Exception as e:
             print(f"Failed to write report: {str(e)}")
+
+        return data_filename  # Return the path to the generated report
