@@ -3,6 +3,8 @@ from io import StringIO, BytesIO
 import csv
 import json
 from openpyxl import Workbook
+from openpyxl.styles import Font
+from openpyxl.utils import get_column_letter
 
 # Setting up logging configuration
 logging.basicConfig(level=logging.INFO)
@@ -124,6 +126,48 @@ class BaseExportService:
         # Return the Excel file as bytes
         return excel_output.getvalue()
 
+    def export_to_google_merchant_excel(self):
+        """
+        Export the data in Google Merchant-compatible Excel format.
+        """
+
+        self.log_start()
+        data = self.get_data()
+
+        # Define Google Merchant headers
+        headers = [
+            "id", "title", "description", "availability", "link", "image link",
+            "price", "sale price", "identifier exists", "gtin", "mpn", "brand", "product detail",
+            "condition", "color", "size", "gender", "material", "pattern", "age group",
+            "multipack", "is bundle", "unit pricing measure", "unit pricing base measure",
+            "energy efficiency class", "min energy efficiency class", "max energy efficiency class",
+            "item group id", "sell on google quantity"
+        ]
+
+        # Create workbook
+        wb = Workbook()
+        sheet = wb.active
+        sheet.title = "Merchant Products"
+
+        # Write header with bold styling
+        sheet.append(headers)
+        for col_num, _ in enumerate(headers, 1):
+            col_letter = get_column_letter(col_num)
+            sheet[f"{col_letter}1"].font = Font(bold=True)
+
+        # Expect `process_record()` to return dictionary matching above fields
+        for record in data:
+            row = [record.get(header, "") for header in headers]
+            sheet.append(row)
+
+        # Save to BytesIO
+        excel_output = BytesIO()
+        wb.save(excel_output)
+        excel_output.seek(0)
+
+        self.log_finish()
+        return excel_output.getvalue()
+
     def export(self, file_format="csv"):
         """
         Export the data in the requested file format (CSV, JSON, or Excel).
@@ -134,5 +178,7 @@ class BaseExportService:
             return self.export_to_json()
         elif file_format == "excel":
             return self.export_to_excel()
+        elif file_format == "google":
+            return self.export_to_google_merchant_excel()
         else:
             raise ValueError(f"Unsupported file format: {file_format}")

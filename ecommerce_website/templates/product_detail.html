@@ -342,17 +342,24 @@
                 Vul alsjeblieft een waarde in.
               </p>
             {% endif %}
-            <!-- Submit button -->
-            <div class="mt-10 flex">
-              <button
-                type="submit"
-                class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-orange-500 px-8 py-3 text-base font-medium text-white hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
-              >
-                In winkelmand
-                {% if current_cart != 0 %}
-                  ({{ current_cart }})
-                {% endif %}
-              </button>
+            <div class="mt-10 flex items-center">
+              {% if product.active %}
+                <button
+                  type="submit"
+                  class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-orange-500 px-8 py-3 text-base font-medium text-white hover:bg-orange-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                >
+                  In winkelmand
+                  {% if current_cart != 0 %}
+                    ({{ current_cart }})
+                  {% endif %}
+                </button>
+              {% else %}
+                <div
+                  class="w-full text-center bg-red-100 border border-red-300 text-red-600 py-4 px-6 rounded-md text-base font-semibold"
+                >
+                  Dit product is momenteel niet beschikbaar
+                </div>
+              {% endif %}
 
               <button
                 type="button"

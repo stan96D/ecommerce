@@ -5,15 +5,9 @@ from ecommerce_website.services.database_import_service.base_database_import_ser
 from ecommerce_website.db_mapper.sql_db_mapper import SQLDatabaseMapper
 from ecommerce_website.models import *
 from ecommerce_website.db_mapper.data import *
-import requests
-from django.core.files import File
-from io import BytesIO
 from django.db import transaction
 from ecommerce_website.classes.helpers.numeric_value_normalizer import extract_value_and_unit
 
-import requests
-from io import BytesIO
-from django.core.files import File
 from ecommerce_website.services.product_filter_service.product_filter_service import ProductFilterService
 from ecommerce_website.settings.webshop_config import *
 
@@ -412,10 +406,9 @@ class ProductUpdateService(DatabaseImportServiceInterface):
                     product.thumbnail_url = image_url
                     product.save()
                     report["changes"].append(
-                            {"sku": product.sku, "field": "thumbnail", "new_value": image_url})
+                        {"sku": product.sku, "field": "thumbnail", "new_value": image_url})
                     print(f"Thumbnail added for product {
-                            product.sku}: {image_url}")
-
+                        product.sku}: {image_url}")
 
             for image_url in product_data.get("images", []):
 
@@ -427,12 +420,12 @@ class ProductUpdateService(DatabaseImportServiceInterface):
 
                  # Create a new ProductImage instance and save the image
                 product_image = ProductImage(
-                        product=product, image_url=image_url)
+                    product=product, image_url=image_url)
 
                 product_image.save()  # Save the ProductImage instance to the database
 
                 report["created"].append(
-                        {"sku": product.sku, "image": image_url})
+                    {"sku": product.sku, "image": image_url})
 
         except Exception as e:
             print(f"Failed to handle images for Product '{

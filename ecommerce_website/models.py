@@ -105,6 +105,7 @@ class Product(models.Model):
         max_digits=5, decimal_places=2, default=0.00)
     sku = models.CharField(
         max_length=50, unique=True, db_index=True)
+    active = models.BooleanField(default=True)
 
     @property
     def buy_price_excl_tax(self):
