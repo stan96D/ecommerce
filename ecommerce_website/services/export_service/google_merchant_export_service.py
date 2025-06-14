@@ -4,7 +4,7 @@ from ecommerce_website.services.export_service.base_export_service import BaseEx
 
 class GoogleMerchantExportService(BaseExportService):
     def __init__(self, queryset=None):
-        queryset = queryset or Product.objects.all()
+        queryset = queryset or Product.objects.filter(is_active=True)
         super().__init__(queryset)
 
     def process_record(self, product):

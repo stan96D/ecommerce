@@ -518,8 +518,13 @@ class ProductService(ProductServiceInterface):
         products_by_category = Product.objects.prefetch_related(
             'attributes__attribute_type',
             QueryPrefetcher.createAttributePrefetch(
-                ['Producttype', 'Eenheid', 'Merk'])
-        ).filter(search_query).distinct()
+                ['Producttype', 'Eenheid', 'Merk']
+            )
+        ).filter(
+            search_query,
+            active=True  # Ensure product is active
+        ).distinct()
+
 
         # Apply options filters
         for query in option_attribute_queries:
