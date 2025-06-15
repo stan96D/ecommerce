@@ -55,8 +55,9 @@ class Command(BaseCommand):
     def send_email_with_attachment(self, file_path):
         sender_email = os.getenv('SENDER_EMAIL')
         sender_password = os.getenv('SENDER_PASSWORD')
+        env = os.getenv('DJANGO_ENV')
         recipient_email = 'stan-deckers@live.nl'
-        subject = 'Product Data Update Rapportage'
+        subject = env + ': Product Data Update Rapportage'
 
         message = (
             "Hallo,<br><br>"
