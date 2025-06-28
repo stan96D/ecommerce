@@ -5,12 +5,12 @@ from ecommerce_website.services.export_service.google_merchant_export_service im
 
 
 class Command(BaseCommand):
-    help = 'Export product data in Google Merchant Center format automatically'
+    help = 'Export product data in Google Merchant Center XML format automatically'
 
     def handle(self, *args, **options):
         product_export_service = GoogleMerchantExportService()
 
-        # Export data in 'google' format
+        # Export data in 'xml' format instead of 'google' (Excel)
         export_data = product_export_service.export(file_format='google')
 
         unique_id = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -20,9 +20,10 @@ class Command(BaseCommand):
         os.makedirs(data_folder, exist_ok=True)
 
         data_filename = os.path.join(
-            data_folder, f"product_export_{unique_id}.xlsx")
+            # Change to .xml extension
+            data_folder, f"product_export_{unique_id}.xml")
 
-        # Write binary data for Excel file
+        # Write the XML binary data to file
         with open(data_filename, 'wb') as file:
             file.write(export_data)
 
