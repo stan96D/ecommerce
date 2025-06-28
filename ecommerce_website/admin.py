@@ -1,3 +1,4 @@
+from decimal import InvalidOperation
 from django.contrib import admin
 
 # Register your models here.
@@ -11,12 +12,47 @@ from django.contrib import admin
 from .models import Sale, ProductSale
 
 
+from decimal import InvalidOperation
+
+
 class ProductAdmin(admin.ModelAdmin):
-    # Enable search in admin panel
     search_fields = ['name', 'sku']
-    # Display these fields in admin list
-    list_display = ['name',  'sku']
+    list_display = ['name', 'sku']
     exclude = ['thumbnail_url']
+    readonly_fields = [
+        'unit_selling_price_excl_tax',
+        'selling_price_excl_tax',
+        'unit_selling_price',
+        'selling_price',
+    ]
+
+    def unit_selling_price_excl_tax(self, obj):
+        try:
+            return round(obj.unit_selling_price_excl_tax, 2)
+        except (AttributeError, InvalidOperation):
+            return "-"
+    unit_selling_price_excl_tax.short_description = 'Unit Selling Price Excl. Tax'
+
+    def selling_price_excl_tax(self, obj):
+        try:
+            return round(obj.selling_price_excl_tax, 2)
+        except (AttributeError, InvalidOperation):
+            return "-"
+    selling_price_excl_tax.short_description = 'Selling Price Excl. Tax'
+
+    def unit_selling_price(self, obj):
+        try:
+            return round(obj.unit_selling_price, 2)
+        except (AttributeError, InvalidOperation):
+            return "-"
+    unit_selling_price.short_description = 'Unit Selling Price (Incl. Tax)'
+
+    def selling_price(self, obj):
+        try:
+            return round(obj.selling_price, 2)
+        except (AttributeError, InvalidOperation):
+            return "-"
+    selling_price.short_description = 'Selling Price (Incl. Tax)'
 
 
 # Register the Sale admin
