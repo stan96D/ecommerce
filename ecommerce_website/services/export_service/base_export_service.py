@@ -128,7 +128,6 @@ class BaseExportService:
         # Return the Excel file as bytes
         return excel_output.getvalue()
 
-
     def export_to_google_merchant_xml(self):
         self.log_start()
         data = self.get_data()
@@ -141,8 +140,9 @@ class BaseExportService:
         channel = ET.SubElement(rss, "channel")
 
         # Required channel info
-        ET.SubElement(channel, "title").text = "Your Store Name"
-        ET.SubElement(channel, "link").text = "https://yourstore.example.com"
+        ET.SubElement(channel, "title").text = "Goedkoopstevloerenshop.nl"
+        ET.SubElement(
+            channel, "link").text = "https://goedkoopstevloerenshop.nl"
         ET.SubElement(
             channel, "description").text = "Product feed for Google Merchant"
 
@@ -175,18 +175,19 @@ class BaseExportService:
             add_g_tag("age_group", record.get("age group"))
             add_g_tag("multipack", record.get("multipack"))
             add_g_tag("is_bundle", record.get("is bundle"))
-            add_g_tag("unit_pricing_measure", record.get("unit pricing measure"))
+            add_g_tag("unit_pricing_measure",
+                      record.get("unit pricing measure"))
             add_g_tag("unit_pricing_base_measure",
-                    record.get("unit pricing base measure"))
+                      record.get("unit pricing base measure"))
             add_g_tag("energy_efficiency_class",
-                    record.get("energy efficiency class"))
+                      record.get("energy efficiency class"))
             add_g_tag("min_energy_efficiency_class",
-                    record.get("min energy efficiency class"))
+                      record.get("min energy efficiency class"))
             add_g_tag("max_energy_efficiency_class",
-                    record.get("max energy efficiency class"))
+                      record.get("max energy efficiency class"))
             add_g_tag("item_group_id", record.get("item group id"))
             add_g_tag("sell_on_google_quantity",
-                    record.get("sell on google quantity"))
+                      record.get("sell on google quantity"))
 
         tree = ET.ElementTree(rss)
         output = BytesIO()
@@ -195,7 +196,6 @@ class BaseExportService:
 
         self.log_finish()
         return output.getvalue()
-
 
     def export(self, file_format="csv"):
         """
