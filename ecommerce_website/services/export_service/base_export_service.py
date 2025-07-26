@@ -1,3 +1,5 @@
+import xml.etree.ElementTree as ET
+from io import BytesIO
 import logging
 from io import StringIO, BytesIO
 import csv
@@ -126,47 +128,74 @@ class BaseExportService:
         # Return the Excel file as bytes
         return excel_output.getvalue()
 
-    def export_to_google_merchant_excel(self):
-        """
-        Export the data in Google Merchant-compatible Excel format.
-        """
-
+    def export_to_google_merchant_xml(self):
         self.log_start()
         data = self.get_data()
 
-        # Define Google Merchant headers
-        headers = [
-            "id", "title", "description", "availability", "link", "image link",
-            "price", "sale price", "identifier exists", "gtin", "mpn", "brand", "product detail",
-            "condition", "color", "size", "gender", "material", "pattern", "age group",
-            "multipack", "is bundle", "unit pricing measure", "unit pricing base measure",
-            "energy efficiency class", "min energy efficiency class", "max energy efficiency class",
-            "item group id", "sell on google quantity"
-        ]
+        # Google Merchant XML namespace
+        NS = "http://base.google.com/ns/1.0"
+        ET.register_namespace('', NS)
 
-        # Create workbook
-        wb = Workbook()
-        sheet = wb.active
-        sheet.title = "Merchant Products"
+        rss = ET.Element("rss", version="2.0", attrib={"xmlns:g": NS})
+        channel = ET.SubElement(rss, "channel")
 
-        # Write header with bold styling
-        sheet.append(headers)
-        for col_num, _ in enumerate(headers, 1):
-            col_letter = get_column_letter(col_num)
-            sheet[f"{col_letter}1"].font = Font(bold=True)
+        # Required channel info
+        ET.SubElement(channel, "title").text = "Goedkoopstevloerenshop.nl"
+        ET.SubElement(
+            channel, "link").text = "https://goedkoopstevloerenshop.nl"
+        ET.SubElement(
+            channel, "description").text = "Product feed for Google Merchant"
 
-        # Expect `process_record()` to return dictionary matching above fields
         for record in data:
-            row = [record.get(header, "") for header in headers]
-            sheet.append(row)
+            item = ET.SubElement(channel, "item")
+            # Map Google Merchant fields (make sure your records use correct keys or map accordingly)
 
-        # Save to BytesIO
-        excel_output = BytesIO()
-        wb.save(excel_output)
-        excel_output.seek(0)
+            def add_g_tag(tag, text):
+                if text:
+                    ET.SubElement(item, f"{{{NS}}}{tag}").text = str(text)
+
+            add_g_tag("id", record.get("id"))
+            add_g_tag("title", record.get("title"))
+            add_g_tag("description", record.get("description"))
+            add_g_tag("link", record.get("link"))
+            add_g_tag("image_link", record.get("image link"))
+            add_g_tag("availability", record.get("availability"))
+            add_g_tag("price", record.get("price"))
+            add_g_tag("sale_price", record.get("sale price"))
+            add_g_tag("identifier_exists", record.get("identifier exists"))
+            add_g_tag("gtin", record.get("gtin"))
+            add_g_tag("mpn", record.get("mpn"))
+            add_g_tag("brand", record.get("brand"))
+            add_g_tag("condition", record.get("condition"))
+            add_g_tag("color", record.get("color"))
+            add_g_tag("size", record.get("size"))
+            add_g_tag("gender", record.get("gender"))
+            add_g_tag("material", record.get("material"))
+            add_g_tag("pattern", record.get("pattern"))
+            add_g_tag("age_group", record.get("age group"))
+            add_g_tag("multipack", record.get("multipack"))
+            add_g_tag("is_bundle", record.get("is bundle"))
+            add_g_tag("unit_pricing_measure",
+                      record.get("unit pricing measure"))
+            add_g_tag("unit_pricing_base_measure",
+                      record.get("unit pricing base measure"))
+            add_g_tag("energy_efficiency_class",
+                      record.get("energy efficiency class"))
+            add_g_tag("min_energy_efficiency_class",
+                      record.get("min energy efficiency class"))
+            add_g_tag("max_energy_efficiency_class",
+                      record.get("max energy efficiency class"))
+            add_g_tag("item_group_id", record.get("item group id"))
+            add_g_tag("sell_on_google_quantity",
+                      record.get("sell on google quantity"))
+
+        tree = ET.ElementTree(rss)
+        output = BytesIO()
+        tree.write(output, encoding="utf-8", xml_declaration=True)
+        output.seek(0)
 
         self.log_finish()
-        return excel_output.getvalue()
+        return output.getvalue()
 
     def export(self, file_format="csv"):
         """
@@ -179,6 +208,6 @@ class BaseExportService:
         elif file_format == "excel":
             return self.export_to_excel()
         elif file_format == "google":
-            return self.export_to_google_merchant_excel()
+            return self.export_to_google_merchant_xml()
         else:
             raise ValueError(f"Unsupported file format: {file_format}")

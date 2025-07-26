@@ -108,14 +108,24 @@ class Product(models.Model):
     active = models.BooleanField(default=True)
 
     @property
-    def buy_price_excl_tax(self):
-        tax_multiplier = Decimal("1.00") + (self.tax / Decimal('100'))
-        return round(self.price / tax_multiplier, 2)
+    def unit_selling_price_excl_tax(self):
+        excl_tax = self.unit_price
+
+        selling_price_excl_tax = round(
+            excl_tax * self.selling_percentage, 2)
+
+        return selling_price_excl_tax * \
+            WebShopConfig.shipping_margin()
 
     @property
-    def unit_buy_price_excl_tax(self):
-        tax_multiplier = Decimal("1.00") + (self.tax / Decimal('100'))
-        return round(self.unit_price / tax_multiplier, 2)
+    def selling_price_excl_tax(self):
+        excl_tax = self.price
+
+        selling_price_excl_tax = round(
+            excl_tax * self.selling_percentage, 2)
+
+        return selling_price_excl_tax * \
+            WebShopConfig.shipping_margin()
 
     @property
     def unit_selling_price(self):

@@ -929,11 +929,12 @@ class AdminMailSender:
         self.sender_email = os.getenv('SENDER_EMAIL')
         self.sender_password = os.getenv('SENDER_PASSWORD')
         self.recipient_email = os.getenv('ADMIN_EMAIL')
+        self.env = os.getenv('DJANGO_ENV')
         self.mail_manager = mail_manager
         self.company_name = store_name
 
     def send_order_confirmation(self, order):
-        subject = f"Orderbevestiging {order.order_number} {
+        subject = self.env + f": Orderbevestiging {order.order_number} {
             order.first_name} {order.last_name}"
 
         # Group order lines by supplier
@@ -1070,7 +1071,7 @@ class AdminMailSender:
                                       self.recipient_email, subject, message)
 
     def send_return_order_confirmation(self, return_order):
-        subject = f"Retourbevestiging {return_order.order.order_number} {
+        subject = self.env + f": Retourbevestiging {return_order.order.order_number} {
             return_order.order.first_name} {return_order.order.last_name}"
 
         full_address = "{}&nbsp;{} \n{}&nbsp;{} \n{}".format(

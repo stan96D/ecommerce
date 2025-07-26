@@ -15,6 +15,7 @@ class Command(BaseCommand):
             inquirer.List(
                 'format',
                 message="Select the export format",
+                # Changed 'google' to 'google_xml'
                 choices=['csv', 'json', 'excel', 'google'],
                 default='csv',  # Default is CSV
             ),
@@ -28,8 +29,9 @@ class Command(BaseCommand):
         else:
             product_export_service = ProductExportService()
 
-        # For Products
-        export_data = product_export_service.export(file_format=file_format)
+        # Export the data
+        export_data = product_export_service.export(
+            file_format=file_format)
 
         # Generate a unique timestamp for the filename
         unique_id = datetime.now().strftime("%Y%m%d_%H%M%S")  # Format: YYYYMMDD_HHMMSS
@@ -51,21 +53,21 @@ class Command(BaseCommand):
                 data_folder, f"product_export_{unique_id}.xlsx")
         elif file_format == 'google':
             data_filename = os.path.join(
-                data_folder, f"product_export_{unique_id}.xlsx")
+                data_folder, f"product_export_{unique_id}.xml")
 
         # Save the exported data to a file
-        if file_format == 'csv':
-            with open(data_filename, 'w', encoding='utf-8-sig') as file:
-                file.write(export_data)
-        elif file_format == 'json':
+        if file_format in ['csv', 'json']:
+            # These are text formats, write with utf-8 encoding
             with open(data_filename, 'w', encoding='utf-8') as file:
                 file.write(export_data)
-        elif file_format == 'excel':
-            with open(data_filename, 'wb') as file:  # Binary write for Excel
-                file.write(export_data)
         elif file_format == 'google':
-            with open(data_filename, 'wb') as file:  # Binary write for Excel
+            # Google export returns bytes (XML), write in binary mode
+            with open(data_filename, 'wb') as file:
                 file.write(export_data)
-                
+        elif file_format == 'excel':
+            # Excel is binary data
+            with open(data_filename, 'wb') as file:
+                file.write(export_data)
+
         self.stdout.write(self.style.SUCCESS(
             f"Exported product data to {data_filename}"))
